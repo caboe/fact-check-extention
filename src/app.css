@@ -1,3 +1,15 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* src/app.css */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 10px;
+	box-sizing: border-box;
+	width: 300px;
+}
+button {
+	cursor: pointer;
+}
