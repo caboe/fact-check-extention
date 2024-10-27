@@ -46,6 +46,9 @@
 
 		loading = true;
 		result = '';
+		const length = 100;
+		// const role = 'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.'
+		const role = 'Du bist ein Experte und weißt auf fehlerhafte und umstrittene Fakten hin.';
 
 		try {
 			const response = await fetch(endpoint.url, {
@@ -54,7 +57,18 @@
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${endpoint.apiKey}`
 				},
-				body: JSON.stringify({ text: selectedText })
+				body: JSON.stringify({
+					model: 'gpt-4o-mini',
+					messages: [
+						{
+							role: 'system',
+							content: role + ' Your answer should be around' + length + 'words in length.'
+							// content:
+							// 'You are a helpful assistant. You providing short answers with around 100 words.',
+						},
+						{ role: 'user', content: selectedText }
+					]
+				})
 			});
 
 			if (!response.ok) {
@@ -62,7 +76,7 @@
 			}
 
 			const data = await response.json();
-			result = JSON.stringify(data, null, 2);
+			result = data.choices[0].message.content;
 		} catch (err: any) {
 			result = 'Fehler beim Fact Check: ' + err.message;
 		} finally {
@@ -122,6 +136,7 @@
 		margin-top: 10px;
 		height: 150px;
 		overflow-y: auto;
+		width: 320px;
 	}
 	.factcheck-container {
 		padding: 10px;
