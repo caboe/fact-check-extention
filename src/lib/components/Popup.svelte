@@ -1,9 +1,9 @@
 <!-- src/components/Popup.svelte -->
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import Config from './Config.svelte';
 	import FactCheck from './FactCheck.svelte';
-	import { writable } from 'svelte/store';
+	import state from '../../popupState.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -11,12 +11,10 @@
 		apiKey: string;
 	}
 
-	const showConfig = writable<boolean>(false);
-
 	onMount(() => {
 		chrome.storage.local.get('endpoints', (data: { endpoints?: Endpoint[] }) => {
 			if (!data.endpoints || data.endpoints.length === 0) {
-				showConfig.set(true);
+				state.showConfig = true;
 			}
 		});
 
@@ -27,7 +25,7 @@
 		) => {
 			if (area === 'local' && changes.endpoints) {
 				if (!changes.endpoints.newValue || changes.endpoints.newValue.length === 0) {
-					showConfig.set(true);
+					state.showConfig = true;
 				}
 			}
 		};
@@ -39,7 +37,7 @@
 	});
 </script>
 
-{#if $showConfig}
+{#if state.showConfig}
 	<Config />
 {:else}
 	<FactCheck />

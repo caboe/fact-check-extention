@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import EndpointList from './EndpointList.svelte';
 	import AddEndpointForm from './AddEndpointForm.svelte';
+	import popupState from '../../popupState.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -47,4 +48,5 @@
 			onclick={() => (showAddForm = true)}>+</button
 		>
 	{/if}
+	<button onclick={() => (popupState.showConfig = false)}>Close</button>
 </div>

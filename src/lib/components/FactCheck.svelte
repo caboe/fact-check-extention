@@ -1,6 +1,7 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import popupState from '../../popupState.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -97,7 +98,12 @@
 </script>
 
 <div class="mx-1 p-3">
-	<button class="rounded-xl border-2 border-gray-900 p-1" onclick={checkFact}> e </button>
+	<button
+		class="rounded-xl border-2 border-gray-900 p-1"
+		onclick={() => (popupState.showConfig = true)}
+	>
+		e
+	</button>
 	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
 	<textarea
 		id="selected-text"
