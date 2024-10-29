@@ -8,6 +8,7 @@ export default defineConfig({
 	publicDir: 'public', // Stellen Sie sicher, dass dies auf 'public' gesetzt ist
 	build: {
 		outDir: 'dist',
+		cssCodeSplit: true, // Aktivieren des CSS-Code-Splitting
 		rollupOptions: {
 			input: {
 				popup: path.resolve(__dirname, 'src/main.ts'), // Einstiegspunkt für Popup

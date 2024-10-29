@@ -96,16 +96,27 @@
 	}
 </script>
 
-<div class="factcheck-container">
-	<textarea bind:value={selectedText} placeholder="Markierten Text hier bearbeiten..."></textarea>
-	<div class="controls">
-		<label for="endpoints">API Endpoint:</label>
-		<select id="endpoints" bind:value={selectedEndpoint}>
+<div class="mx-1 p-3">
+	<button class="rounded-xl border-2 border-gray-900 p-1" on:click={checkFact}> e </button>
+	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
+	<textarea
+		id="selected-text"
+		class="h-64 w-full resize-x rounded-xl"
+		bind:value={selectedText}
+		placeholder="Markierten Text hier bearbeiten..."
+	></textarea>
+	<div class="mt-3 flex flex-col gap-2">
+		<label for="endpoints" class="text-md font-bold">API Endpoint:</label>
+		<select class="rounded-xl" id="endpoints" bind:value={selectedEndpoint}>
 			{#each endpoints as endpoint}
 				<option>{endpoint.title}</option>
 			{/each}
 		</select>
-		<button on:click={checkFact} disabled={loading || !selectedText}>
+		<button
+			class="rounded-xl border-2 border-gray-900 p-2"
+			on:click={checkFact}
+			disabled={loading || !selectedText}
+		>
 			{#if loading}
 				Prüfe...
 			{:else}
@@ -114,45 +125,13 @@
 		</button>
 	</div>
 	{#if result}
-		<div class="result-section">
-			<div class="result">
-				<pre>{result}</pre>
+		<div>
+			<div class="mb-2 max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-1">
+				{result}
 			</div>
-			<button on:click={copyResult}>In Zwischenablage kopieren</button>
+			<button class="rounded-xl border-2 border-gray-900 p-2" on:click={copyResult}>
+				In Zwischenablage kopieren
+			</button>
 		</div>
 	{/if}
 </div>
-
-<style>
-	textarea {
-		width: 100%;
-		height: 100px;
-		resize: vertical;
-	}
-	.result {
-		white-space: pre-wrap;
-		background: #f0f0f0;
-		padding: 10px;
-		margin-top: 10px;
-		height: 150px;
-		overflow-y: auto;
-		width: 320px;
-	}
-	.factcheck-container {
-		padding: 10px;
-		width: 300px;
-	}
-	.controls {
-		margin-top: 10px;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-	.controls select,
-	.controls button {
-		width: 100%;
-	}
-	.result-section {
-		margin-top: 10px;
-	}
-</style>

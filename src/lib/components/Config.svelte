@@ -33,8 +33,8 @@
 	}
 </script>
 
-<div class="config-container">
-	<h2>API Endpunkte</h2>
+<div class="w-[300px] rounded-lg bg-white p-4 shadow-md">
+	<div class="mb-4">API Endpunkte</div>
 	<EndpointList {endpoints} on:delete={(event) => deleteEndpoint(event.detail)} />
 	{#if showAddForm}
 		<AddEndpointForm
@@ -42,20 +42,9 @@
 			on:cancel={() => (showAddForm = false)}
 		/>
 	{:else}
-		<button class="add-button" on:click={() => (showAddForm = true)}>+</button>
+		<button
+			class="w-full rounded-md bg-blue-500 p-2 text-lg font-bold text-white hover:bg-blue-700"
+			on:click={() => (showAddForm = true)}>+</button
+		>
 	{/if}
 </div>
-
-<style>
-	.config-container {
-		padding: 10px;
-		width: 300px;
-	}
-	.add-button {
-		margin-top: 10px;
-		width: 100%;
-	}
-	h2 {
-		margin-bottom: 10px;
-	}
-</style>
