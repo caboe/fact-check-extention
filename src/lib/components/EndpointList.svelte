@@ -2,7 +2,11 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	export let endpoints: { title: string }[] = [];
+	interface Props {
+		endpoints?: { title: string }[];
+	}
+
+	let { endpoints = [] }: Props = $props();
 	const dispatch = createEventDispatcher<{ delete: string }>();
 
 	function confirmDelete(title: string) {
@@ -16,7 +20,7 @@
 	{#each endpoints as endpoint}
 		<li class="endpoint-item">
 			<span>{endpoint.title}</span>
-			<button class="delete-button" on:click={() => confirmDelete(endpoint.title)}>-</button>
+			<button class="delete-button" onclick={() => confirmDelete(endpoint.title)}>-</button>
 		</li>
 	{/each}
 </ul>

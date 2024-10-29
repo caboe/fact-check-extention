@@ -8,11 +8,11 @@
 		apiKey: string;
 	}
 
-	let selectedText: string = '';
-	let endpoints: Endpoint[] = [];
-	let selectedEndpoint: string = '';
-	let result: string = '';
-	let loading: boolean = false;
+	let selectedText: string = $state('');
+	let endpoints: Endpoint[] = $state([]);
+	let selectedEndpoint: string = $state('');
+	let result: string = $state('');
+	let loading: boolean = $state(false);
 
 	onMount(() => {
 		// Anfrage an Content Script, um den markierten Text zu erhalten
@@ -97,7 +97,7 @@
 </script>
 
 <div class="mx-1 p-3">
-	<button class="rounded-xl border-2 border-gray-900 p-1" on:click={checkFact}> e </button>
+	<button class="rounded-xl border-2 border-gray-900 p-1" onclick={checkFact}> e </button>
 	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
 	<textarea
 		id="selected-text"
@@ -114,7 +114,7 @@
 		</select>
 		<button
 			class="rounded-xl border-2 border-gray-900 p-2"
-			on:click={checkFact}
+			onclick={checkFact}
 			disabled={loading || !selectedText}
 		>
 			{#if loading}
@@ -129,7 +129,7 @@
 			<div class="mb-2 max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-1">
 				{result}
 			</div>
-			<button class="rounded-xl border-2 border-gray-900 p-2" on:click={copyResult}>
+			<button class="rounded-xl border-2 border-gray-900 p-2" onclick={copyResult}>
 				In Zwischenablage kopieren
 			</button>
 		</div>

@@ -9,9 +9,9 @@
 		apiKey: string;
 	}
 
-	let title: string = '';
-	let url: string = '';
-	let apiKey: string = '';
+	let title: string = $state('');
+	let url: string = $state('');
+	let apiKey: string = $state('');
 
 	function add() {
 		if (title && url && apiKey) {
@@ -44,8 +44,8 @@
 		<input id="apiKey" bind:value={apiKey} type="password" placeholder="Ihr API-Schlüssel" />
 	</div>
 	<div class="buttons">
-		<button on:click={cancel}>Abbrechen</button>
-		<button on:click={add}>Hinzufügen</button>
+		<button onclick={cancel}>Abbrechen</button>
+		<button onclick={add}>Hinzufügen</button>
 	</div>
 </div>
 

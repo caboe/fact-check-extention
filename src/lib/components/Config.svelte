@@ -10,8 +10,8 @@
 		apiKey: string;
 	}
 
-	let endpoints: Endpoint[] = [];
-	let showAddForm: boolean = false;
+	let endpoints: Endpoint[] = $state([]);
+	let showAddForm: boolean = $state(false);
 
 	onMount(() => {
 		chrome.storage.local.get('endpoints', (data: { endpoints?: Endpoint[] }) => {
@@ -44,7 +44,7 @@
 	{:else}
 		<button
 			class="w-full rounded-md bg-blue-500 p-2 text-lg font-bold text-white hover:bg-blue-700"
-			on:click={() => (showAddForm = true)}>+</button
+			onclick={() => (showAddForm = true)}>+</button
 		>
 	{/if}
 </div>
