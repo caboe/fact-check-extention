@@ -1,9 +1,9 @@
 <!-- src/components/Config.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import EndpointList from './EndpointList.svelte';
 	import AddEndpointForm from './AddEndpointForm.svelte';
-	import popupState from '../../popupState.svelte';
+	import EndpointList from './EndpointList.svelte';
+	import Settings from './Settings.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -34,7 +34,8 @@
 	}
 </script>
 
-<div class="w-[300px] rounded-lg bg-white p-4 shadow-md">
+<div class="mx-1 p-3">
+	<Settings />
 	<div class="mb-4">API Endpunkte</div>
 	<EndpointList {endpoints} on:delete={(event) => deleteEndpoint(event.detail)} />
 	{#if showAddForm}
@@ -48,5 +49,4 @@
 			onclick={() => (showAddForm = true)}>+</button
 		>
 	{/if}
-	<button onclick={() => (popupState.showConfig = false)}>Close</button>
 </div>

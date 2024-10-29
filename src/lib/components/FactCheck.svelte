@@ -1,7 +1,7 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import popupState from '../../popupState.svelte';
+	import Settings from './Settings.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -98,12 +98,6 @@
 </script>
 
 <div class="mx-1 p-3">
-	<button
-		class="rounded-xl border-2 border-gray-900 p-1"
-		onclick={() => (popupState.showConfig = true)}
-	>
-		e
-	</button>
 	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
 	<textarea
 		id="selected-text"
@@ -112,7 +106,10 @@
 		placeholder="Markierten Text hier bearbeiten..."
 	></textarea>
 	<div class="mt-3 flex flex-col gap-2">
-		<label for="endpoints" class="text-md font-bold">API Endpoint:</label>
+		<div class="flex items-center justify-between">
+			<label for="endpoints" class="text-md font-bold">API Endpoint:</label>
+			<Settings />
+		</div>
 		<select class="rounded-xl" id="endpoints" bind:value={selectedEndpoint}>
 			{#each endpoints as endpoint}
 				<option>{endpoint.title}</option>
