@@ -130,13 +130,12 @@
 		</button>
 	</div>
 	{#if result}
-		<div>
-			<div class="mb-2 max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-1">
-				{result}
-			</div>
-			<button class="variant-filled-success btn" onclick={copyResult}>
+		<label for="selected-text" class="label mt-3">
+			<span class="text-md font-bold"> Ergebnis </span>
+			<textarea id="selected-text" bind:value={result} class="textarea" rows="4"></textarea>
+			<button class="variant-filled-success btn w-full" onclick={copyResult}>
 				In Zwischenablage kopieren
 			</button>
-		</div>
+		</label>
 	{/if}
 </div>
