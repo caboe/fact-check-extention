@@ -1,19 +1,17 @@
 <script lang="ts">
-	import popupState from '../../popupState.svelte';
+	import popupState from '../../../popupState.svelte';
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
 <button
 	type="button"
-	class="btn-icon btn-icon-sm variant-filled"
+	class="variant-filled btn-icon btn-icon-sm"
 	onclick={() => (popupState.showConfig = !popupState.showConfig)}
 >
 	<svg
-		class="h-6 w-6 text-gray-50 dark:text-gray-900"
+		class="h-6 w-6 text-slate-50"
 		aria-hidden="true"
 		xmlns="http://www.w3.org/2000/svg"
-		width="24"
-		height="24"
 		fill="currentColor"
 		viewBox="0 0 24 24"
 	>

@@ -1,6 +1,6 @@
-<!-- src/components/EndpointList.svelte -->
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import RemoveIcon from './icons/RemoveIcon.svelte';
 
 	interface Props {
 		endpoints?: { title: string }[];
@@ -16,33 +16,16 @@
 	}
 </script>
 
-<ul>
-	{#each endpoints as endpoint}
-		<li class="endpoint-item">
-			<span>{endpoint.title}</span>
-			<button class="delete-button" onclick={() => confirmDelete(endpoint.title)}>-</button>
-		</li>
-	{/each}
-</ul>
-
-<style>
-	.endpoint-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 5px 0;
-	}
-	.delete-button {
-		background: red;
-		color: white;
-		border: none;
-		cursor: pointer;
-		padding: 2px 5px;
-		border-radius: 3px;
-	}
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-</style>
+{#if endpoints.length === 0}
+	<p class="text-center text-base font-bold">Keine Endpunkte hinzugefügt</p>
+{:else}
+	<p class="text-center text-base font-bold">Konfigurierte Endpunkte</p>
+	<ul class="my-4 list-none p-0">
+		{#each endpoints as endpoint}
+			<li class="endpoint-item align-center flex justify-between gap-2">
+				<span>{endpoint.title}</span>
+				<RemoveIcon onclick={() => confirmDelete(endpoint.title)} />
+			</li>
+		{/each}
+	</ul>
+{/if}

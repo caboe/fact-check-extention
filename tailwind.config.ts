@@ -24,7 +24,7 @@ const config = {
 	plugins: [
 		forms,
 		skeleton({
-			themes: { preset: ['skeleton'] }
+			themes: { preset: ['seafoam'] }
 		})
 	]
 } satisfies Config;

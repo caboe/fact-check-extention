@@ -1,7 +1,7 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Settings from './Settings.svelte';
+	import Settings from './icons/SettingsIcon.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -99,10 +99,12 @@
 
 <div class="mx-1 p-3">
 	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
+
 	<textarea
 		id="selected-text"
-		class="h-64 w-full resize-x rounded-xl"
 		bind:value={selectedText}
+		class="textarea"
+		rows="4"
 		placeholder="Markierten Text hier bearbeiten..."
 	></textarea>
 	<div class="mt-3 flex flex-col gap-2">
@@ -110,13 +112,13 @@
 			<label for="endpoints" class="text-md font-bold">API Endpoint:</label>
 			<Settings />
 		</div>
-		<select class="rounded-xl" id="endpoints" bind:value={selectedEndpoint}>
+		<select class="select" id="endpoints" bind:value={selectedEndpoint}>
 			{#each endpoints as endpoint}
 				<option>{endpoint.title}</option>
 			{/each}
 		</select>
 		<button
-			class="rounded-xl border-2 border-gray-900 p-2"
+			class="variant-filled-primary btn"
 			onclick={checkFact}
 			disabled={loading || !selectedText}
 		>
@@ -132,7 +134,7 @@
 			<div class="mb-2 max-h-64 overflow-y-auto rounded-xl bg-slate-50 p-1">
 				{result}
 			</div>
-			<button class="rounded-xl border-2 border-gray-900 p-2" onclick={copyResult}>
+			<button class="variant-filled-success btn" onclick={copyResult}>
 				In Zwischenablage kopieren
 			</button>
 		</div>

@@ -3,7 +3,8 @@
 	import { onMount } from 'svelte';
 	import AddEndpointForm from './AddEndpointForm.svelte';
 	import EndpointList from './EndpointList.svelte';
-	import Settings from './Settings.svelte';
+	import Settings from './icons/SettingsIcon.svelte';
+	import CloseIcon from './icons/CloseIcon.svelte';
 
 	interface Endpoint {
 		title: string;
@@ -35,8 +36,10 @@
 </script>
 
 <div class="mx-1 p-3">
-	<Settings />
-	<div class="mb-4">API Endpunkte</div>
+	<div class="mb-4 flex items-center justify-between">
+		<div class="text-md font-bold">API Endpunkte</div>
+		<CloseIcon />
+	</div>
 	<EndpointList {endpoints} on:delete={(event) => deleteEndpoint(event.detail)} />
 	{#if showAddForm}
 		<AddEndpointForm
@@ -44,9 +47,8 @@
 			on:cancel={() => (showAddForm = false)}
 		/>
 	{:else}
-		<button
-			class="w-full rounded-md bg-blue-500 p-2 text-lg font-bold text-white hover:bg-blue-700"
-			onclick={() => (showAddForm = true)}>+</button
+		<button class="variant-filled-success btn w-full" onclick={() => (showAddForm = true)}
+			>New Endpoint</button
 		>
 	{/if}
 </div>
