@@ -14,7 +14,13 @@
 	let selectedEndpoint: string = $state('');
 	let result: string = $state('');
 	let loading: boolean = $state(false);
-	let step = 0;
+	let step = $state(0);
+
+	$effect(() => {
+		if (selectedText.trim().length > 1 && step === 0) {
+			step = 1;
+		}
+	});
 
 	$effect(() => {
 		// Anfrage an Content Script, um den markierten Text zu erhalten
@@ -42,7 +48,12 @@
 	});
 
 	async function checkFact() {
-		if (!selectedEndpoint) return;
+		if (!selectedEndpoint) {
+			step = 1;
+			return;
+		}
+		step = 2;
+
 		const endpoint = endpoints.find((ep) => ep.title === selectedEndpoint);
 		if (!endpoint) return;
 
