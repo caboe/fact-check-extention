@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Settings from './icons/SettingsIcon.svelte';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	interface Endpoint {
 		title: string;
@@ -14,8 +15,9 @@
 	let selectedEndpoint: string = $state('');
 	let result: string = $state('');
 	let loading: boolean = $state(false);
+	let step = 0;
 
-	onMount(() => {
+	$effect(() => {
 		// Anfrage an Content Script, um den markierten Text zu erhalten
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
@@ -97,47 +99,79 @@
 				alert('Fehler beim Kopieren: ' + err.message);
 			});
 	}
+
+	function selectedTokenLength() {
+		if (!selectedText) return 0;
+		if (selectedText.replaceAll(' ', '').length === 0) return 0;
+		return selectedText.trim().split(' ').length;
+	}
 </script>
 
 <div class="mx-1 p-3">
-	<label for="selected-text" class="text-md font-bold">Markierter Text:</label>
-
-	<textarea
-		id="selected-text"
-		bind:value={selectedText}
-		class="textarea"
-		rows="4"
-		placeholder="Markierten Text hier bearbeiten..."
-	></textarea>
-	<div class="mt-3 flex flex-col gap-2">
-		<div class="flex items-center justify-between">
-			<label for="endpoints" class="text-md font-bold">API Endpoint:</label>
-			<Settings />
-		</div>
-		<select class="select" id="endpoints" bind:value={selectedEndpoint}>
-			{#each endpoints as endpoint}
-				<option>{endpoint.title}</option>
-			{/each}
-		</select>
-		<button
-			class="variant-filled-primary btn"
-			onclick={checkFact}
-			disabled={loading || !selectedText}
-		>
-			{#if loading}
-				Prüfe...
-			{:else}
-				Prüfen
-			{/if}
-		</button>
-	</div>
-	{#if result}
-		<label for="selected-text" class="label mt-3">
-			<span class="text-md font-bold"> Ergebnis </span>
-			<textarea id="selected-text" bind:value={result} class="textarea" rows="4"></textarea>
-			<button class="variant-filled-success btn w-full" onclick={copyResult}>
-				In Zwischenablage kopieren
-			</button>
-		</label>
-	{/if}
+	<Accordion autocollapse spacing="space-y-1">
+		<AccordionItem open={step === 0}>
+			{#snippet summary()}
+				<label for="selected-text" class="text-md font-bold">
+					Markierter Text {selectedTokenLength()
+						? `(${selectedTokenLength()} Wörter)`
+						: '- bitte einfügen'}</label
+				>
+			{/snippet}
+			{#snippet content()}
+				<textarea
+					id="selected-text"
+					bind:value={selectedText}
+					class="textarea"
+					rows="4"
+					placeholder="Markierten Text hier bearbeiten..."
+				></textarea>
+			{/snippet}
+		</AccordionItem>
+		<AccordionItem open={step === 1}>
+			{#snippet summary()}
+				<label for="selected-text" class="text-md font-bold">API Endpoint</label>
+			{/snippet}
+			{#snippet content()}
+				<div class="mt-3 flex flex-col gap-2">
+					<div class="flex items-center justify-between">
+						<label for="endpoints" class="text-md">Configure:</label>
+						<Settings />
+					</div>
+					<select class="select" id="endpoints" bind:value={selectedEndpoint}>
+						{#each endpoints as endpoint}
+							<option>{endpoint.title}</option>
+						{/each}
+					</select>
+					<button
+						class="variant-filled-primary btn"
+						onclick={checkFact}
+						disabled={loading || !selectedText}
+					>
+						{#if loading}
+							Prüfe...
+						{:else}
+							Prüfen
+						{/if}
+					</button>
+				</div>
+			{/snippet}
+		</AccordionItem>
+		<AccordionItem open={step === 2}>
+			{#snippet summary()}
+				<label for="selected-text" class="text-md font-bold">Ergebnis</label>
+			{/snippet}
+			{#snippet content()}
+				{#if result}
+					<textarea id="selected-text" bind:value={result} class="textarea" rows="4"></textarea>
+					<button class="variant-filled-success btn w-full" onclick={copyResult}>
+						In Zwischenablage kopieren
+					</button>
+				{:else if loading}
+					Prüfe...
+				{:else}
+					Noch nicht geprüft
+				{/if}
+			{/snippet}
+		</AccordionItem>
+	</Accordion>
 </div>
