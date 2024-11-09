@@ -1,8 +1,7 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import Settings from './icons/SettingsIcon.svelte';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import Settings from './icons/SettingsIcon.svelte';
 
 	interface Endpoint {
 		title: string;
