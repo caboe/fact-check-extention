@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import Settings from './icons/SettingsIcon.svelte';
+	import { SlideToggle } from '@skeletonlabs/skeleton';
 
 	interface Endpoint {
 		title: string;
@@ -15,6 +16,8 @@
 	let result: string = $state('');
 	let loading: boolean = $state(false);
 	let step = $state(0);
+	let range = $state(50);
+	let isAnswer = $state(false);
 
 	$effect(() => {
 		if (selectedText.trim().length > 1 && step === 0) {
@@ -59,11 +62,14 @@
 
 		loading = true;
 		result = '';
-		const length = 100;
 		// const role = 'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.'
 		// const role = 'Du bist ein Experte und weißt auf fehlerhafte und umstrittene Fakten hin.';
-		const role =
+		const factCheckRole =
 			'You are an expert and subject the input to a critical review. You are aware of all erroneous and controversial statements in the text. You present your statement as a list,  with mentioning facts.';
+
+		const answerRole =
+			'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.';
+		const role = isAnswer ? answerRole : factCheckRole;
 
 		try {
 			const response = await fetch(endpoint.url, {
@@ -77,7 +83,7 @@
 					messages: [
 						{
 							role: 'system',
-							content: role + ' Your answer should be around' + length + 'words in length.'
+							content: role + ' Your answer should be around' + range + ' words in length.'
 							// content:
 							// 'You are a helpful assistant. You providing short answers with around 100 words.',
 						},
@@ -122,9 +128,9 @@
 		<AccordionItem open={step === 0}>
 			{#snippet summary()}
 				<label for="selected-text" class="text-md font-bold">
-					Markierter Text {selectedTokenLength()
+					Markierter Text {@html selectedTokenLength()
 						? `(${selectedTokenLength()} Wörter)`
-						: '- bitte einfügen'}</label
+						: '- <span class="text-red-500">bitte einfügen</span>'}</label
 				>
 			{/snippet}
 			{#snippet content()}
@@ -139,12 +145,12 @@
 		</AccordionItem>
 		<AccordionItem open={step === 1}>
 			{#snippet summary()}
-				<label for="selected-text" class="text-md font-bold">API Endpoint</label>
+				<label for="endpoints" class="text-md font-bold">API Endpoint</label>
 			{/snippet}
 			{#snippet content()}
 				<div class="mt-3 flex flex-col gap-2">
 					<div class="flex items-center justify-between">
-						<label for="endpoints" class="text-md">Configure:</label>
+						<div class="text-md">Configure:</div>
 						<Settings />
 					</div>
 					<select class="select" id="endpoints" bind:value={selectedEndpoint}>
@@ -152,6 +158,16 @@
 							<option>{endpoint.title}</option>
 						{/each}
 					</select>
+					<div class="flex items-center justify-between gap-2">
+						<div>Fact Check</div>
+						<SlideToggle name="slide" bind:checked={isAnswer} />
+						<div>Answer</div>
+					</div>
+					<div class="flex flex-col items-center justify-between gap-2">
+						<input type="range" min="3" max="500" bind:value={range} class="mt-2" />
+						<div class="text-sm">Antwortlänge ca. {range} Wörter</div>
+					</div>
+
 					<button
 						class="variant-filled-primary btn"
 						onclick={checkFact}
