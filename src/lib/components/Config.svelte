@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import AddEndpointForm from './AddEndpointForm.svelte';
 	import EndpointList from './EndpointList.svelte';
-	import Settings from './icons/SettingsIcon.svelte';
 	import CloseIcon from './icons/CloseIcon.svelte';
 
 	interface Endpoint {

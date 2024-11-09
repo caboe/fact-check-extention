@@ -49,7 +49,9 @@
 		result = '';
 		const length = 100;
 		// const role = 'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.'
-		const role = 'Du bist ein Experte und weißt auf fehlerhafte und umstrittene Fakten hin.';
+		// const role = 'Du bist ein Experte und weißt auf fehlerhafte und umstrittene Fakten hin.';
+		const role =
+			'You are an expert and subject the input to a critical review. You are aware of all erroneous and controversial statements in the text. You present your statement as a list,  with mentioning facts.';
 
 		try {
 			const response = await fetch(endpoint.url, {
