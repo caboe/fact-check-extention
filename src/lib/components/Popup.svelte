@@ -4,6 +4,9 @@
 	import Config from './Config.svelte';
 	import FactCheck from './FactCheck.svelte';
 	import state from '../../popupState.svelte';
+	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+	import { i18n } from '../i18n';
+	import * as m from '../paraglide/messages';
 
 	interface Endpoint {
 		title: string;
@@ -37,8 +40,11 @@
 	});
 </script>
 
-{#if state.showConfig}
-	<Config />
-{:else}
-	<FactCheck />
-{/if}
+<ParaglideJS {i18n}>
+	{m.hello_world}
+	{#if state.showConfig}
+		<Config />
+	{:else}
+		<FactCheck />
+	{/if}
+</ParaglideJS>
