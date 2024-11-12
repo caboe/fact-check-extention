@@ -1,10 +1,17 @@
+import { paraglide } from '@inlang/paraglide-sveltekit/vite';
 // vite.config.ts
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import path from 'path';
 
 export default defineConfig({
-	plugins: [svelte()],
+	plugins: [
+		paraglide({
+			project: './project.inlang',
+			outdir: './src/lib/paraglide'
+		}),
+		svelte()
+	],
 	publicDir: 'public', // Stellen Sie sicher, dass dies auf 'public' gesetzt ist
 	build: {
 		outDir: 'dist',

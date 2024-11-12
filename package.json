@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev  --debug",
     "build": "vite build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
@@ -13,6 +13,7 @@
     "lint": "prettier --check . && eslint ."
   },
   "devDependencies": {
+    "@inlang/paraglide-sveltekit": "^0.11.5",
     "@skeletonlabs/skeleton": "^2.10.3",
     "@skeletonlabs/tw-plugin": "^0.4.0",
     "@sveltejs/adapter-auto": "^3.0.0",
