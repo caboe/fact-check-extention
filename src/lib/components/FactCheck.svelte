@@ -3,6 +3,7 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import Settings from './icons/SettingsIcon.svelte';
 	import { SlideToggle } from '@skeletonlabs/skeleton';
+	import L from './L';
 
 	interface Endpoint {
 		title: string;
@@ -128,9 +129,9 @@
 		<AccordionItem open={step === 0}>
 			{#snippet summary()}
 				<label for="selected-text" class="text-md font-bold">
-					Markierter Text {@html selectedTokenLength()
-						? `(${selectedTokenLength()} Wörter)`
-						: '- <span class="text-red-500">bitte einfügen</span>'}</label
+					{@html selectedTokenLength()
+						? L.markedText({ wordCount: selectedTokenLength() })
+						: `<span class="text-red-500">${L.enterText()}</span>`}</label
 				>
 			{/snippet}
 			{#snippet content()}
@@ -139,18 +140,18 @@
 					bind:value={selectedText}
 					class="textarea"
 					rows="4"
-					placeholder="Markierten Text hier bearbeiten..."
+					placeholder={L.editText()}
 				></textarea>
 			{/snippet}
 		</AccordionItem>
 		<AccordionItem open={step === 1}>
 			{#snippet summary()}
-				<label for="endpoints" class="text-md font-bold">API Endpoint</label>
+				<label for="endpoints" class="text-md font-bold">{L.apiEndpoint()}</label>
 			{/snippet}
 			{#snippet content()}
 				<div class="mt-3 flex flex-col gap-2">
 					<div class="flex items-center justify-between">
-						<div class="text-md">Configure:</div>
+						<div class="text-md">{L.configureApi()}</div>
 						<Settings />
 					</div>
 					<select class="select" id="endpoints" bind:value={selectedEndpoint}>
@@ -159,13 +160,13 @@
 						{/each}
 					</select>
 					<div class="flex items-center justify-between gap-2">
-						<div>Fact Check</div>
+						<div>{L.factCheck()}</div>
 						<SlideToggle name="slide" bind:checked={isAnswer} />
-						<div>Answer</div>
+						<div>{L.response()}</div>
 					</div>
 					<div class="flex flex-col items-center justify-between gap-2">
 						<input type="range" min="3" max="500" bind:value={range} class="mt-2" />
-						<div class="text-sm">Antwortlänge ca. {range} Wörter</div>
+						<div class="text-sm">{L.responseLength({ responseLength: range })}</div>
 					</div>
 
 					<button
@@ -174,9 +175,9 @@
 						disabled={loading || !selectedText}
 					>
 						{#if loading}
-							Prüfe...
+							{L.checkingProgress()}
 						{:else}
-							Prüfen
+							{L.apiCta()}
 						{/if}
 					</button>
 				</div>
@@ -184,18 +185,18 @@
 		</AccordionItem>
 		<AccordionItem open={step === 2}>
 			{#snippet summary()}
-				<label for="selected-text" class="text-md font-bold">Ergebnis</label>
+				<label for="selected-text" class="text-md font-bold">{L.response()}</label>
 			{/snippet}
 			{#snippet content()}
 				{#if result}
 					<textarea id="selected-text" bind:value={result} class="textarea" rows="4"></textarea>
 					<button class="variant-filled-success btn w-full" onclick={copyResult}>
-						In Zwischenablage kopieren
+						{L.copy()}
 					</button>
 				{:else if loading}
-					Prüfe...
+					{L.checkingProgress()}
 				{:else}
-					Noch nicht geprüft
+					{L.notChecked()}
 				{/if}
 			{/snippet}
 		</AccordionItem>

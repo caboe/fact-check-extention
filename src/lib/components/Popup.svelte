@@ -1,9 +1,9 @@
 <!-- src/components/Popup.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import state from '../../popupState.svelte';
 	import Config from './Config.svelte';
 	import FactCheck from './FactCheck.svelte';
-	import state from '../../popupState.svelte';
 
 	interface Endpoint {
 		title: string;
