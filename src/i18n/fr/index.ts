@@ -25,7 +25,9 @@ const fr = {
 	noConfiguredEndpoints: "Aucun point de terminaison ajouté jusqu'à présent",
 	editText: 'Modifier le texte ici...',
 	notChecked: 'Non vérifié',
-	enterText: 'Entrez le texte ici.'
+	enterText: 'Entrez le texte ici.',
+	characterLabel: 'ERépondre dans le style de cette personne (facultatif)',
+	characterPlaceholder: 'Edgar Allan Poe'
 } satisfies Translation;
 
 export default fr;

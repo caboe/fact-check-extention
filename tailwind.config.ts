@@ -26,6 +26,37 @@ const config = {
 		skeleton({
 			themes: { preset: ['seafoam'] }
 		})
+	],
+	safelist: [
+		'slide-toggle',
+		'inline-block',
+		'bg-white',
+		'rounded-full',
+		'hover:brightness-[105%]',
+		'dark:hover:brightness-110',
+		'cursor-pointer',
+		'slide-toggle-label',
+		'unstyled',
+		'flex',
+		'items-center',
+		'slide-toggle-label',
+		'slide-toggle-track',
+		'transition-all',
+		'duration-[200ms]',
+		'w-16',
+		'h-8',
+		'bg-surface-900',
+		'dark:bg-surface-300',
+		'bg-surface-400',
+		'dark:bg-surface-700',
+		'slide-toggle-thumb',
+		'w-[50%]',
+		'h-full',
+		'scale-[0.8]',
+		'shadow',
+		'bg-white/75',
+		'translate-x-full',
+		'hidden'
 	]
 } satisfies Config;
 

@@ -1,24 +1,18 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
-	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem, SlideToggle } from '@skeletonlabs/skeleton';
+	import endpoints from './Endpoints.svelte';
 	import Settings from './icons/SettingsIcon.svelte';
-	import { SlideToggle } from '@skeletonlabs/skeleton';
-	import L from './L';
-
-	interface Endpoint {
-		title: string;
-		url: string;
-		apiKey: string;
-	}
+	import L from './L.svelte';
 
 	let selectedText: string = $state('');
-	let endpoints: Endpoint[] = $state([]);
-	let selectedEndpoint: string = $state('');
 	let result: string = $state('');
 	let loading: boolean = $state(false);
 	let step = $state(0);
 	let range = $state(50);
 	let isAnswer = $state(false);
+	let character = $state('');
+	let endpointSelect: HTMLSelectElement | null = $state(null);
 
 	$effect(() => {
 		if (selectedText.trim().length > 1 && step === 0) {
@@ -39,26 +33,16 @@
 				});
 			}
 		});
-
-		// Lade Endpunkte aus dem Speicher
-		chrome.storage.local.get('endpoints', (data: { endpoints?: Endpoint[] }) => {
-			if (data.endpoints) {
-				endpoints = data.endpoints;
-				if (endpoints.length > 0) {
-					selectedEndpoint = endpoints[0].title;
-				}
-			}
-		});
 	});
 
 	async function checkFact() {
-		if (!selectedEndpoint) {
+		if (!endpoints.selected) {
 			step = 1;
 			return;
 		}
 		step = 2;
 
-		const endpoint = endpoints.find((ep) => ep.title === selectedEndpoint);
+		const endpoint = endpoints.value.find((ep) => ep.title === endpoints.selected?.title);
 		if (!endpoint) return;
 
 		loading = true;
@@ -87,6 +71,10 @@
 							content: role + ' Your answer should be around' + range + ' words in length.'
 							// content:
 							// 'You are a helpful assistant. You providing short answers with around 100 words.',
+						},
+						{
+							role: 'system',
+							content: `Answer in the style of ${character || 'friedly person'}`
 						},
 						{ role: 'user', content: selectedText }
 					]
@@ -122,6 +110,18 @@
 		if (selectedText.replaceAll(' ', '').length === 0) return 0;
 		return selectedText.trim().split(' ').length;
 	}
+
+	function selectCurrent() {
+		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title);
+		const option = endpointSelect?.getElementsByTagName('option')[idx];
+		if (option) option.selected = true;
+	}
+
+	$effect(() => {
+		endpoints.selected;
+		endpointSelect;
+		selectCurrent();
+	});
 </script>
 
 <div class="mx-1 p-3">
@@ -154,21 +154,40 @@
 						<div class="text-md">{L.configureApi()}</div>
 						<Settings />
 					</div>
-					<select class="select" id="endpoints" bind:value={selectedEndpoint}>
-						{#each endpoints as endpoint}
+
+					<select
+						bind:this={endpointSelect}
+						class="select"
+						id="endpoints"
+						bind:value={endpoints.selected}
+					>
+						{#each endpoints.value as endpoint}
 							<option>{endpoint.title}</option>
 						{/each}
 					</select>
-					<div class="flex items-center justify-between gap-2">
+					<div class="grid grid-cols-[1fr_auto_1fr] items-center justify-between gap-2">
 						<div>{L.factCheck()}</div>
-						<SlideToggle name="slide" bind:checked={isAnswer} />
-						<div>{L.response()}</div>
+						<div class="text-center">
+							<SlideToggle name="slide" bind:checked={isAnswer} />
+						</div>
+						<div class="text-right">{L.response()}</div>
 					</div>
+					<label
+						class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all"
+						class:max-h-[100px]={isAnswer}
+					>
+						<div class="text-sm">{L.characterLabel()}</div>
+						<input
+							class="input"
+							type="text"
+							bind:value={character}
+							placeholder={L.characterPlaceholder()}
+						/>
+					</label>
 					<div class="flex flex-col items-center justify-between gap-2">
 						<input type="range" min="3" max="500" bind:value={range} class="mt-2" />
 						<div class="text-sm">{L.responseLength({ responseLength: range })}</div>
 					</div>
-
 					<button
 						class="variant-filled-primary btn"
 						onclick={checkFact}

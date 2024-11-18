@@ -24,7 +24,9 @@ const en = {
 	noConfiguredEndpoints: 'No endpoints added',
 	editText: 'Edit text here ...',
 	notChecked: 'Not checked',
-	enterText: 'Enter text here.'
+	enterText: 'Enter text here.',
+	characterLabel: 'Enter a character (optional)',
+	characterPlaceholder: 'Edgar Allen Poe'
 } satisfies BaseTranslation;
 
 export default en;

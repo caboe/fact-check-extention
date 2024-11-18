@@ -114,6 +114,14 @@ type RootTranslation = {
 	 * E​n​t​e​r​ ​t​e​x​t​ ​h​e​r​e​.
 	 */
 	enterText: string
+	/**
+	 * E​n​t​e​r​ ​a​ ​c​h​a​r​a​c​t​e​r​ ​(​o​p​t​i​o​n​a​l​)
+	 */
+	characterLabel: string
+	/**
+	 * E​d​g​a​r​ ​A​l​l​e​n​ ​P​o​e
+	 */
+	characterPlaceholder: string
 }
 
 export type TranslationFunctions = {
@@ -213,6 +221,14 @@ export type TranslationFunctions = {
 	 * Enter text here.
 	 */
 	enterText: () => LocalizedString
+	/**
+	 * Enter a character (optional)
+	 */
+	characterLabel: () => LocalizedString
+	/**
+	 * Edgar Allen Poe
+	 */
+	characterPlaceholder: () => LocalizedString
 }
 
 export type Formatters = {}

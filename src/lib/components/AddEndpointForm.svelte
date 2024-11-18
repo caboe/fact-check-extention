@@ -1,14 +1,8 @@
-<!-- src/components/AddEndpointForm.svelte -->
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import L from './L';
+	import { Endpoint } from './Endpoints.svelte';
+	import L from './L.svelte';
 	const dispatch = createEventDispatcher();
-
-	interface Endpoint {
-		title: string;
-		url: string;
-		apiKey: string;
-	}
 
 	let title: string = $state('');
 	let url: string = $state('');

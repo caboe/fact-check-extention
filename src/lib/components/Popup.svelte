@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import state from '../../popupState.svelte';
 	import Config from './Config.svelte';
+	import endpoints from './Endpoints.svelte';
 	import FactCheck from './FactCheck.svelte';
 
 	interface Endpoint {
@@ -12,28 +13,7 @@
 	}
 
 	onMount(() => {
-		chrome.storage.local.get('endpoints', (data: { endpoints?: Endpoint[] }) => {
-			if (!data.endpoints || data.endpoints.length === 0) {
-				state.showConfig = true;
-			}
-		});
-
-		// Listener für Änderungen im Storage
-		const storageListener = (
-			changes: Record<string, chrome.storage.StorageChange>,
-			area: string
-		) => {
-			if (area === 'local' && changes.endpoints) {
-				if (!changes.endpoints.newValue || changes.endpoints.newValue.length === 0) {
-					state.showConfig = true;
-				}
-			}
-		};
-		chrome.storage.onChanged.addListener(storageListener);
-
-		return () => {
-			chrome.storage.onChanged.removeListener(storageListener);
-		};
+		if (!endpoints.value.length) state.showConfig = true;
 	});
 </script>
 

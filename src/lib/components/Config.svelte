@@ -1,37 +1,15 @@
-<!-- src/components/Config.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import AddEndpointForm from './AddEndpointForm.svelte';
 	import EndpointList from './EndpointList.svelte';
+	import endpoints from './Endpoints.svelte';
 	import CloseIcon from './icons/CloseIcon.svelte';
-	import L from './L';
+	import L from './L.svelte';
 
-	interface Endpoint {
-		title: string;
-		url: string;
-		apiKey: string;
-	}
-
-	let endpoints: Endpoint[] = $state([]);
 	let showAddForm: boolean = $state(false);
 
-	onMount(() => {
-		chrome.storage.local.get('endpoints', (data: { endpoints?: Endpoint[] }) => {
-			if (data.endpoints) {
-				endpoints = data.endpoints;
-			}
-		});
-	});
-
-	function addEndpoint(newEndpoint: Endpoint) {
-		endpoints = [...endpoints, newEndpoint];
-		chrome.storage.local.set({ endpoints });
-		showAddForm = false;
-	}
-
 	function deleteEndpoint(title: string) {
-		endpoints = endpoints.filter((ep) => ep.title !== title);
-		chrome.storage.local.set({ endpoints });
+		endpoints.delete(title);
+		showAddForm = false;
 	}
 </script>
 
@@ -40,15 +18,15 @@
 		<div class="text-md font-bold">{L.apiEndpoint()}</div>
 		<CloseIcon />
 	</div>
-	<EndpointList {endpoints} on:delete={(event) => deleteEndpoint(event.detail)} />
+	<EndpointList on:delete={(event) => deleteEndpoint(event.detail)} />
 	{#if showAddForm}
 		<AddEndpointForm
-			on:add={(event) => addEndpoint(event.detail)}
+			on:add={(event) => endpoints.add(event.detail)}
 			on:cancel={() => (showAddForm = false)}
 		/>
 	{:else}
-		<button class="variant-filled-success btn w-full" onclick={() => (showAddForm = true)}
-			>{L.newEndpoint()}</button
-		>
+		<button class="variant-filled-success btn w-full" onclick={() => (showAddForm = true)}>
+			{L.newEndpoint()}
+		</button>
 	{/if}
 </div>
