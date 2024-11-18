@@ -42,9 +42,6 @@
 		}
 		step = 2;
 
-		const endpoint = endpoints.value.find((ep) => ep.title === endpoints.selected?.title);
-		if (!endpoint) return;
-
 		loading = true;
 		result = '';
 		// const role = 'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.'
@@ -57,11 +54,11 @@
 		const role = isAnswer ? answerRole : factCheckRole;
 
 		try {
-			const response = await fetch(endpoint.url, {
+			const response = await fetch(endpoints.selected.url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${endpoint.apiKey}`
+					Authorization: `Bearer ${endpoints.selected.apiKey}`
 				},
 				body: JSON.stringify({
 					model: 'gpt-4o-mini',
