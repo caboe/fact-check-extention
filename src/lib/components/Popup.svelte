@@ -6,13 +6,8 @@
 	import endpoints from './Endpoints.svelte';
 	import FactCheck from './FactCheck.svelte';
 
-	interface Endpoint {
-		title: string;
-		url: string;
-		apiKey: string;
-	}
-
-	onMount(() => {
+	onMount(async () => {
+		await endpoints.load();
 		if (!endpoints.value.length) state.showConfig = true;
 	});
 </script>
