@@ -8,11 +8,11 @@
 	interface Props {
 		open: boolean;
 		checkFact: () => Promise<void>;
+		selectedText: string;
 	}
 
-	let { open, checkFact }: Props = $props();
+	let { open, checkFact, selectedText }: Props = $props();
 
-	let selectedText: string = $state('');
 	let loading: boolean = $state(false);
 	let step = $state(0);
 	let range = $state(50);

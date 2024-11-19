@@ -52,7 +52,6 @@
 		const answerRole =
 			'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.';
 		const role = isAnswer ? answerRole : factCheckRole;
-
 		try {
 			const response = await fetch(endpoints.selected.url, {
 				method: 'POST',
@@ -61,7 +60,7 @@
 					Authorization: `Bearer ${endpoints.selected.apiKey}`
 				},
 				body: JSON.stringify({
-					model: 'gpt-4',
+					model: 'gpt-4o-mini',
 					messages: [
 						{
 							role: 'system',
@@ -95,7 +94,7 @@
 <div class="mx-1 p-3">
 	<Accordion autocollapse spacing="space-y-4">
 		<Selected open={step === 0} bind:selectedText />
-		<Connection open={step === 1} {checkFact} />
-		<Response open={step === 2} {result} {loading}></Response>
+		<Connection open={step === 1} {checkFact} {selectedText} />
+		<Response open={step === 2} {result} {loading} />
 	</Accordion>
 </div>
