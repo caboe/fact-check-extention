@@ -93,7 +93,7 @@
 </script>
 
 <div class="mx-1 p-3">
-	<Accordion autocollapse spacing="space-y-1">
+	<Accordion autocollapse spacing="space-y-4">
 		<Selected open={step === 0} bind:selectedText />
 		<Connection open={step === 1} {checkFact} />
 		<Response open={step === 2} {result} {loading}></Response>
