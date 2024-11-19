@@ -57,6 +57,8 @@ const config = {
 		'bg-white/75',
 		'translate-x-full',
 		'hidden'
+		// 'grid',
+		// 'grid-cols-[16px_1fr]'
 	]
 } satisfies Config;
 

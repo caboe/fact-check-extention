@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Endpoint } from './Endpoints.svelte';
+	import { type Endpoint } from './Endpoints.svelte';
 	import L from './L.svelte';
 	const dispatch = createEventDispatcher();
 
