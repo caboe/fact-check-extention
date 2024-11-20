@@ -15,20 +15,16 @@
 	let character = $state('');
 
 	$effect(() => {
-		if (selectedText.trim().length > 1 && step === 0) {
-			step = 1;
-		}
-	});
-
-	$effect(() => {
 		// Anfrage an Content Script, um den markierten Text zu erhalten
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {
 						selectedText = response.text;
+						step = 1;
 					} else {
 						selectedText = '';
+						step = 0;
 					}
 				});
 			}
