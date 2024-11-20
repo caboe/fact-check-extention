@@ -28,7 +28,10 @@ const en = {
 	characterLabel: 'Enter a character (optional)',
 	characterPlaceholder: 'Edgar Allen Poe',
 	chooseTemplate: 'Choose a template (optional)',
-	choose: 'Choose ...'
+	choose: 'Choose ...',
+	endpointExists: 'An endpoint with this name already exists.',
+	saveAnyway: 'No API key provided, save anyway?',
+	fieldsMissing: 'Please fill in all fields.'
 } satisfies BaseTranslation;
 
 export default en;

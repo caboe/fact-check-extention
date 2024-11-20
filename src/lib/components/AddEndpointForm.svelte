@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { type Endpoint } from './Endpoints.svelte';
+	import endpoints, { type Endpoint } from './Endpoints.svelte';
 	import L from './L.svelte';
-	const dispatch = createEventDispatcher();
+
+	interface Props {
+		showAddForm: boolean;
+	}
+
+	let { showAddForm = $bindable() }: Props = $props();
 
 	let title: string = $state('');
 	let url: string = $state('');
@@ -36,20 +40,21 @@
 	}
 
 	function add() {
+		if (endpoints.value.some((endpoint) => endpoint.title === title)) {
+			alert(L.endpointExists());
+			return;
+		}
 		if (title && url) {
-			if (!apiKey && !confirm('Kein API Key angegeben, trotzdem API-Endpunkt speichern')) return;
+			if (!apiKey && !confirm(L.saveAnyway())) return;
 			const newEndpoint: Endpoint = { title, url, apiKey };
-			dispatch('add', newEndpoint);
+			endpoints.add(newEndpoint);
 			title = '';
 			url = '';
 			apiKey = '';
+			showAddForm = false;
 		} else {
-			alert('Bitte alle Felder ausfüllen.');
+			alert(L.fieldsMissing());
 		}
-	}
-
-	function cancel() {
-		dispatch('cancel');
 	}
 </script>
 
@@ -84,7 +89,9 @@
 		/>
 	</label>
 	<div class="mt-4 flex justify-between">
-		<button class="variant-filled-warning btn" onclick={cancel}>{L.cancel()}</button>
+		<button class="variant-filled-warning btn" onclick={() => (showAddForm = false)}
+			>{L.cancel()}</button
+		>
 		<button class="variant-filled-success btn" onclick={add}>{L.add()}</button>
 	</div>
 </div>

@@ -130,6 +130,18 @@ type RootTranslation = {
 	 * C​h​o​o​s​e​ ​.​.​.
 	 */
 	choose: string
+	/**
+	 * A​n​ ​e​n​d​p​o​i​n​t​ ​w​i​t​h​ ​t​h​i​s​ ​n​a​m​e​ ​a​l​r​e​a​d​y​ ​e​x​i​s​t​s​.
+	 */
+	endpointExists: string
+	/**
+	 * N​o​ ​A​P​I​ ​k​e​y​ ​p​r​o​v​i​d​e​d​,​ ​s​a​v​e​ ​a​n​y​w​a​y​?
+	 */
+	saveAnyway: string
+	/**
+	 * P​l​e​a​s​e​ ​f​i​l​l​ ​i​n​ ​a​l​l​ ​f​i​e​l​d​s​.
+	 */
+	fieldsMissing: string
 }
 
 export type TranslationFunctions = {
@@ -245,6 +257,18 @@ export type TranslationFunctions = {
 	 * Choose ...
 	 */
 	choose: () => LocalizedString
+	/**
+	 * An endpoint with this name already exists.
+	 */
+	endpointExists: () => LocalizedString
+	/**
+	 * No API key provided, save anyway?
+	 */
+	saveAnyway: () => LocalizedString
+	/**
+	 * Please fill in all fields.
+	 */
+	fieldsMissing: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -58,16 +58,15 @@ class UnifiedStorage {
 	async add(endpoint: Endpoint): Promise<void> {
 		const state = await this.getUnifiedState();
 		const endpoints = state.endpoints || [];
-		if (!endpoints.some((e) => e.url === endpoint.url)) {
-			endpoints.push(endpoint);
-			await this.setUnifiedState({ endpoints });
-		}
+		endpoints.push(endpoint);
+		await this.setUnifiedState({ endpoints });
 	}
 
-	async delete(endpointUrl: string): Promise<void> {
+	async delete(endpointTitle: string): Promise<void> {
 		const state = await this.getUnifiedState();
 		const endpoints = state.endpoints || [];
-		const updatedEndpoints = endpoints.filter((e) => e.url !== endpointUrl);
+		const updatedEndpoints = endpoints.filter((e) => e.title !== endpointTitle);
+
 		await this.setUnifiedState({
 			endpoints: updatedEndpoints.length > 0 ? updatedEndpoints : null
 		});

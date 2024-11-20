@@ -29,7 +29,10 @@ const fr = {
 	characterLabel: 'ERépondre dans le style de cette personne (facultatif)',
 	characterPlaceholder: 'Edgar Allan Poe',
 	chooseTemplate: 'Choisissez un modèle (facultatif)',
-	choose: 'Choisir ...'
+	choose: 'Choisir ...',
+	endpointExists: 'Un point de terminaison avec ce nom existe déjà.',
+	saveAnyway: 'Aucune clé API fournie, enregistrer quand même ?',
+	fieldsMissing: 'Veuillez remplir tous les champs.'
 } satisfies Translation;
 
 export default fr;

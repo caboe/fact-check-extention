@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import endpoints from './Endpoints.svelte';
 	import RemoveIcon from './icons/RemoveIcon.svelte';
 	import L from './L.svelte';
 
-	const dispatch = createEventDispatcher<{ delete: string }>();
-
 	function confirmDelete(title: string) {
 		if (confirm(`Möchten Sie den Endpunkt "${title}" wirklich löschen?`)) {
-			dispatch('delete', title);
+			endpoints.delete(title);
 		}
 	}
 </script>

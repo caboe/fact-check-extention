@@ -29,7 +29,10 @@ const de = {
 	characterLabel: 'Im Stil dieser Person antworten (optional)',
 	characterPlaceholder: 'Edgar Allan Poe',
 	chooseTemplate: 'Wählen Sie eine Vorlage (optional)',
-	choose: 'Wählen ...'
+	choose: 'Wählen ...',
+	endpointExists: 'Endpoint mit diesem Namen existiert schon.',
+	saveAnyway: 'Kein API-Key angegeben, trotzdem speichern?',
+	fieldsMissing: 'Bitte alle Felder ausfüllen.'
 } satisfies Translation;
 
 export default de;

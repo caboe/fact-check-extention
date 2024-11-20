@@ -20,10 +20,7 @@
 	</div>
 	<EndpointList on:delete={(event) => deleteEndpoint(event.detail)} />
 	{#if showAddForm}
-		<AddEndpointForm
-			on:add={(event) => endpoints.add(event.detail)}
-			on:cancel={() => (showAddForm = false)}
-		/>
+		<AddEndpointForm bind:showAddForm />
 	{:else}
 		<button class="variant-filled-success btn w-full" onclick={() => (showAddForm = true)}>
 			{L.newEndpoint()}
