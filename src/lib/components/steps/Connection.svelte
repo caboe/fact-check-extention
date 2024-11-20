@@ -54,16 +54,20 @@
 				<div class="text-md">{L.configureApi()}</div>
 				<Settings />
 			</div>
-			<select
-				bind:this={endpointSelect}
-				class="select"
-				id="endpoints"
-				bind:value={endpoints.selected}
-			>
-				{#each endpoints.value as endpoint}
-					<option value={endpoint}>{endpoint.title}</option>
-				{/each}
-			</select>
+			{#if endpoints.value.length === 1}
+				<span class="text-center text-lg font-bold">{endpoints.value[0].title}</span>
+			{:else}
+				<select
+					bind:this={endpointSelect}
+					class="select"
+					id="endpoints"
+					bind:value={endpoints.selected}
+				>
+					{#each endpoints.value as endpoint}
+						<option value={endpoint}>{endpoint.title}</option>
+					{/each}
+				</select>
+			{/if}
 			<div class="grid grid-cols-[1fr_auto_1fr] items-center justify-between gap-2">
 				<div>{L.factCheck()}</div>
 				<div class="text-center">
