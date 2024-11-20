@@ -26,7 +26,9 @@ const en = {
 	notChecked: 'Not checked',
 	enterText: 'Enter text here.',
 	characterLabel: 'Enter a character (optional)',
-	characterPlaceholder: 'Edgar Allen Poe'
+	characterPlaceholder: 'Edgar Allen Poe',
+	chooseTemplate: 'Choose a template (optional)',
+	choose: 'Choose ...'
 } satisfies BaseTranslation;
 
 export default en;

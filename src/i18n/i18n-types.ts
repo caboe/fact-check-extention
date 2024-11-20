@@ -122,6 +122,14 @@ type RootTranslation = {
 	 * E​d​g​a​r​ ​A​l​l​e​n​ ​P​o​e
 	 */
 	characterPlaceholder: string
+	/**
+	 * C​h​o​o​s​e​ ​a​ ​t​e​m​p​l​a​t​e​ ​(​o​p​t​i​o​n​a​l​)
+	 */
+	chooseTemplate: string
+	/**
+	 * C​h​o​o​s​e​ ​.​.​.
+	 */
+	choose: string
 }
 
 export type TranslationFunctions = {
@@ -229,6 +237,14 @@ export type TranslationFunctions = {
 	 * Edgar Allen Poe
 	 */
 	characterPlaceholder: () => LocalizedString
+	/**
+	 * Choose a template (optional)
+	 */
+	chooseTemplate: () => LocalizedString
+	/**
+	 * Choose ...
+	 */
+	choose: () => LocalizedString
 }
 
 export type Formatters = {}

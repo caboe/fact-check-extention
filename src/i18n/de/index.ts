@@ -27,7 +27,9 @@ const de = {
 	notChecked: 'Nicht geprüft',
 	enterText: 'Text hier eingeben.',
 	characterLabel: 'Im Stil dieser Person antworten (optional)',
-	characterPlaceholder: 'Edgar Allan Poe'
+	characterPlaceholder: 'Edgar Allan Poe',
+	chooseTemplate: 'Wählen Sie eine Vorlage (optional)',
+	choose: 'Wählen ...'
 } satisfies Translation;
 
 export default de;
