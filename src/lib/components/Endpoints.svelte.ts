@@ -32,7 +32,7 @@ class Endpoints {
 	}
 
 	async delete(title: string) {
-		localStorage.delete(title);
+		await localStorage.delete(title);
 		await this.updateFromStore();
 	}
 
