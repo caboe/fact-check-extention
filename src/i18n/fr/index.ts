@@ -32,7 +32,9 @@ const fr = {
 	choose: 'Choisir ...',
 	endpointExists: 'Un point de terminaison avec ce nom existe déjà.',
 	saveAnyway: 'Aucune clé API fournie, enregistrer quand même ?',
-	fieldsMissing: 'Veuillez remplir tous les champs.'
+	fieldsMissing: 'Veuillez remplir tous les champs.',
+	copied: 'Résultat copié dans le presse-papiers !',
+	copyError: 'Erreur lors de la copie : {error:string}' as `${string}{error}${string}`
 } satisfies Translation;
 
 export default fr;

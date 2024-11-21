@@ -31,7 +31,9 @@ const en = {
 	choose: 'Choose ...',
 	endpointExists: 'An endpoint with this name already exists.',
 	saveAnyway: 'No API key provided, save anyway?',
-	fieldsMissing: 'Please fill in all fields.'
+	fieldsMissing: 'Please fill in all fields.',
+	copied: 'Result copied to clipboard!',
+	copyError: 'Error copying: {error:string}'
 } satisfies BaseTranslation;
 
 export default en;

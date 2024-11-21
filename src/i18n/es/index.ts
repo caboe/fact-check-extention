@@ -32,7 +32,9 @@ const es = {
 	choose: 'Elegir ...',
 	endpointExists: 'Ya existe un endpoint con este nombre.',
 	saveAnyway: 'No se proporcionó clave API, ¿guardar de todos modos?',
-	fieldsMissing: 'Por favor, complete todos los campos.'
+	fieldsMissing: 'Por favor, complete todos los campos.',
+	copied: 'Resultado copiado al portapapeles!',
+	copyError: 'Error al copiar: {error:string}' as `${string}{error}${string}`
 } satisfies Translation;
 
 export default es;

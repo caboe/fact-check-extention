@@ -15,10 +15,10 @@
 		navigator.clipboard
 			.writeText(result)
 			.then(() => {
-				alert('Ergebnis in die Zwischenablage kopiert!');
+				alert(L.copied());
 			})
 			.catch((err) => {
-				alert('Fehler beim Kopieren: ' + err.message);
+				alert(L.copyError({ error: err.message }));
 			});
 	}
 </script>

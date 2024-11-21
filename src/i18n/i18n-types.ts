@@ -142,6 +142,15 @@ type RootTranslation = {
 	 * P​l​e​a​s​e​ ​f​i​l​l​ ​i​n​ ​a​l​l​ ​f​i​e​l​d​s​.
 	 */
 	fieldsMissing: string
+	/**
+	 * R​e​s​u​l​t​ ​c​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​!
+	 */
+	copied: string
+	/**
+	 * E​r​r​o​r​ ​c​o​p​y​i​n​g​:​ ​{​e​r​r​o​r​}
+	 * @param {string} error
+	 */
+	copyError: RequiredParams<'error'>
 }
 
 export type TranslationFunctions = {
@@ -269,6 +278,14 @@ export type TranslationFunctions = {
 	 * Please fill in all fields.
 	 */
 	fieldsMissing: () => LocalizedString
+	/**
+	 * Result copied to clipboard!
+	 */
+	copied: () => LocalizedString
+	/**
+	 * Error copying: {error}
+	 */
+	copyError: (arg: { error: string }) => LocalizedString
 }
 
 export type Formatters = {}
