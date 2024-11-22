@@ -12,8 +12,9 @@
 	});
 </script>
 
-{#if state.showConfig}
+<span class:hidden={!state.showConfig}>
 	<Config />
-{:else}
+</span>
+<span class:hidden={state.showConfig}>
 	<FactCheck />
-{/if}
+</span>
