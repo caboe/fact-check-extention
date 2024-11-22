@@ -11,29 +11,33 @@
 	let title: string = $state('');
 	let url: string = $state('');
 	let apiKey: string = $state('');
+	let isStream = $state(false);
 	let apiKeyInput: HTMLInputElement;
 	let selectedValue: string | undefined = $state(undefined);
+	let model = $state('');
 
-	type EndpointTemplate = Omit<Endpoint, 'apiKey'> & { keyRequred: boolean };
+	type EndpointTemplate = Omit<Endpoint, 'apiKey'>;
 	type EndpointTemplateMap = Record<string, EndpointTemplate>;
 
 	const endpointTemplateMap: EndpointTemplateMap = {
 		chatGpt: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
-			keyRequred: true
+			isStream: false,
+			model: 'gpt-4o-mini'
 		},
 		ollama: {
 			title: 'Ollama',
 			url: 'http://localhost:11434/api/generate',
-			keyRequred: false
+			isStream: true,
+			model: 'llama3.2:latest'
 		}
 	};
 
 	function prefillFields() {
 		if (!selectedValue) return;
 		if (selectedValue in endpointTemplateMap) {
-			({ title, url } = endpointTemplateMap[selectedValue]);
+			({ title, url, model, isStream } = endpointTemplateMap[selectedValue]);
 			apiKeyInput.focus();
 		}
 		selectedValue = undefined;
@@ -46,12 +50,14 @@
 		}
 		if (title && url) {
 			if (!apiKey && !confirm(L.saveAnyway())) return;
-			const newEndpoint: Endpoint = { title, url, apiKey };
+			const newEndpoint: Endpoint = { title, url, apiKey, isStream, model };
 			endpoints.add(newEndpoint);
 			title = '';
 			url = '';
 			apiKey = '';
+			isStream = false;
 			showAddForm = false;
+			model = '';
 		} else {
 			alert(L.fieldsMissing());
 		}
@@ -76,6 +82,16 @@
 	<label class="label mb-2" for="url">
 		<span>{L.url()}</span>
 		<input class="input" id="url" bind:value={url} placeholder={L.urlPlaceholder()} />
+	</label>
+	<div class="label mb-2 flex items-center gap-1" style="--tw-space-y-reverse:10px;">
+		<label for="stream"> Stream</label>
+		<span>
+			<input class="checkbox mb-1" type="checkbox" id="stream" bind:value={isStream} />
+		</span>
+	</div>
+	<label class="label mb-2" for="model">
+		<span>Model</span>
+		<input class="input" id="model" bind:value={model} />
 	</label>
 	<label class="label mb-2" for="apiKey">
 		<span>{L.apiKey()}</span>

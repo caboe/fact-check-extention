@@ -97,36 +97,77 @@ Many people who deny climate change do so out of convenience, misinformation, or
 For the survival of humanity, it is important to firmly oppose climate change deniers. Remain factual and point out the contradictions of the other person.`;
 		const role = isAnswer ? answerRole : factCheckRole;
 		try {
+			const requestBody = endpoints.selected.isStream
+				? {
+						model: endpoints.selected.model,
+						prompt: `${generatedRole} Your answer should be around ${range} words in length.\nAnswer in the style of ${character || 'Albert Einstein'}\n${selectedText}`
+					}
+				: {
+						model: endpoints.selected.model,
+						messages: [
+							{
+								role: 'system',
+								content: `${generatedRole} Your answer should be around ${range} words in length.`
+							},
+							{
+								role: 'system',
+								content: `Answer in the style of ${character || 'Albert Einstein'}`
+							},
+							{ role: 'user', content: selectedText }
+						]
+					};
+
 			const response = await fetch(endpoints.selected.url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${endpoints.selected.apiKey}`
 				},
-				body: JSON.stringify({
-					model: 'gpt-4o-mini',
-					messages: [
-						{
-							role: 'system',
-							content: generatedRole + ' Your answer should be around' + range + ' words in length.'
-							// content:
-							// 'You are a helpful assistant. You providing short answers with around 100 words.',
-						},
-						{
-							role: 'system',
-							content: `Answer in the style of ${character || 'Dieter Nuhr'}`
-						},
-						{ role: 'user', content: selectedText }
-					]
-				})
+				body: JSON.stringify(requestBody)
 			});
 
 			if (!response.ok) {
 				throw new Error(`HTTP-Fehler! Status: ${response.status}`);
 			}
 
-			const data = await response.json();
-			result = data.choices[0].message.content;
+			if (endpoints.selected.isStream) {
+				// Verarbeitung für ReadableStream
+				const reader = response.body!.getReader();
+				const decoder = new TextDecoder('utf-8');
+				let resultText = '';
+				let done = false;
+				let buffer = '';
+
+				while (!done) {
+					const { value, done: readerDone } = await reader.read();
+					done = readerDone;
+					if (value) {
+						const chunk = decoder.decode(value, { stream: true });
+						buffer += chunk;
+
+						let lines = buffer.split('\n');
+						buffer = lines.pop()!; // Die letzte Zeile könnte unvollständig sein
+
+						for (let line of lines) {
+							if (line.trim() === '') continue;
+							try {
+								const parsed = JSON.parse(line);
+								if (parsed && parsed.response) {
+									resultText += parsed.response;
+								}
+							} catch (e) {
+								// Parsing-Fehler behandeln
+								console.error('Parsing error:', e);
+							}
+						}
+					}
+				}
+				result = resultText;
+			} else {
+				// Verarbeitung für JSON-Response
+				const data = await response.json();
+				result = data.choices[0].message.content;
+			}
 		} catch (err: any) {
 			result = 'Fehler beim Fact Check: ' + err.message;
 		} finally {

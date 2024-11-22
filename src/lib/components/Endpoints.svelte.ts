@@ -4,6 +4,8 @@ export interface Endpoint {
 	title: string;
 	url: string;
 	apiKey: string;
+	isStream: boolean;
+	model: string;
 }
 
 class Endpoints {

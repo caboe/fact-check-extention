@@ -1,8 +1,4 @@
-export interface Endpoint {
-	title: string;
-	url: string;
-	apiKey: string;
-}
+import { Endpoint } from './Endpoints.svelte';
 
 type StorageBackend = chrome.storage.LocalStorageArea | Storage;
 
