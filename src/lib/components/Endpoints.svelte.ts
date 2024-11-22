@@ -1,4 +1,4 @@
-import localStorage from './LocalStorage.svelte';
+import localStorage from './UnifiedStorage.svelte';
 
 export interface Endpoint {
 	title: string;
@@ -18,7 +18,9 @@ class Endpoints {
 		await this.updateFromStore();
 
 		if (this.#value.length > 0) {
-			this.#selected = this.#value[0];
+			const lastUsedTitle = await localStorage.getLastUsed();
+			this.#selected =
+				this.#value.find((endpoint) => endpoint.title === lastUsedTitle) || this.#value[0];
 		}
 	}
 

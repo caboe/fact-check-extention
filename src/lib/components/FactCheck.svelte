@@ -5,6 +5,7 @@
 	import Connection from './steps/Connection.svelte';
 	import Response from './steps/Response.svelte';
 	import Selected from './steps/Selected.svelte';
+	import unifiedStorage from './UnifiedStorage.svelte';
 
 	let selectedText: string = $state('');
 	let result: string = $state('');
@@ -38,8 +39,10 @@
 		}
 		step = 2;
 
+		unifiedStorage.setLastUsed(endpoints.selected.title);
 		loading = true;
 		result = '';
+
 		// const role = 'You are a climate expert who is angry that the climate catastrophe is being trivialized and therefore responds angrily, but with mentioning facts.'
 		// const role = 'Du bist ein Experte und weißt auf fehlerhafte und umstrittene Fakten hin.';
 		const factCheckRole =
