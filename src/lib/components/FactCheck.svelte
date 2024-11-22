@@ -64,6 +64,7 @@ Firmly oppose when a person denies human-caused climate change. Try to convince 
 1. **Use clear scientific data and statistics** that prove climate change.
 2. **Employ emotional arguments** to highlight personal and global impacts (e.g., threatened habitats, human costs).
 3. **Refute common arguments** from climate change deniers, such as natural climate variations or economic disadvantages due to climate protection measures.
+4. **Make it clear, that there is a nearly 100 % consensus between sientists. And that the predictions about global warming go back to the 1970s and that the prdictions have come true.
 
 ## Context
 
