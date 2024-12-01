@@ -14,7 +14,6 @@
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
-		// Request to Content Script, getting marked text
 		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
