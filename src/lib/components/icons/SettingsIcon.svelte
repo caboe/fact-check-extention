@@ -1,5 +1,5 @@
 <script lang="ts">
-	import popupState from '../../../popupState.svelte';
+	import popupState from '../../../popupState.svelte'
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->

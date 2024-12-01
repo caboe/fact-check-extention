@@ -1,4 +1,4 @@
-import type { Translation } from '../i18n-types';
+import type { Translation } from '../i18n-types'
 
 const fr = {
 	markedText: 'Texte marqué ({wordCount:number} mots)' as `${string}{wordCount}${string}`,
@@ -26,15 +26,15 @@ const fr = {
 	editText: 'Modifier le texte ici...',
 	notChecked: 'Non vérifié',
 	enterText: 'Entrez le texte ici.',
-	characterLabel: 'ERépondre dans le style de cette personne (facultatif)',
-	characterPlaceholder: 'Edgar Allan Poe',
+	personLabel: 'ERépondre dans le style de cette personne (facultatif)',
+	personPlaceholder: 'Edgar Allan Poe',
 	chooseTemplate: 'Choisissez un modèle (facultatif)',
 	choose: 'Choisir ...',
 	endpointExists: 'Un point de terminaison avec ce nom existe déjà.',
 	saveAnyway: 'Aucune clé API fournie, enregistrer quand même ?',
 	fieldsMissing: 'Veuillez remplir tous les champs.',
 	copied: 'Résultat copié dans le presse-papiers !',
-	copyError: 'Erreur lors de la copie : {error:string}' as `${string}{error}${string}`
-} satisfies Translation;
+	copyError: 'Erreur lors de la copie : {error:string}' as `${string}{error}${string}`,
+} satisfies Translation
 
-export default fr;
+export default fr

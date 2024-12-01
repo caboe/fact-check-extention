@@ -1,65 +1,60 @@
 <script lang="ts">
-	import endpoints, { type Endpoint } from './Endpoints.svelte';
-	import L from './L.svelte';
+	import endpoints, { type Endpoint } from '../state/endpoints.svelte'
+	import L from '../state/L.svelte'
+	import view from '../state/view.svelte'
 
-	interface Props {
-		showAddForm: boolean;
-	}
+	let title: string = $state('')
+	let url: string = $state('')
+	let apiKey: string = $state('')
+	let isStream = $state(false)
+	let apiKeyInput: HTMLInputElement
+	let selectedValue: string | undefined = $state(undefined)
+	let model = $state('')
 
-	let { showAddForm = $bindable() }: Props = $props();
-
-	let title: string = $state('');
-	let url: string = $state('');
-	let apiKey: string = $state('');
-	let isStream = $state(false);
-	let apiKeyInput: HTMLInputElement;
-	let selectedValue: string | undefined = $state(undefined);
-	let model = $state('');
-
-	type EndpointTemplate = Omit<Endpoint, 'apiKey'>;
-	type EndpointTemplateMap = Record<string, EndpointTemplate>;
+	type EndpointTemplate = Omit<Endpoint, 'apiKey'>
+	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
 		chatGpt: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
 			isStream: false,
-			model: 'gpt-4o-mini'
+			model: 'gpt-4o-mini',
 		},
 		ollama: {
 			title: 'Ollama',
 			url: 'http://localhost:11434/api/generate',
 			isStream: true,
-			model: 'llama3.2:latest'
-		}
-	};
+			model: 'llama3.2:latest',
+		},
+	}
 
 	function prefillFields() {
-		if (!selectedValue) return;
+		if (!selectedValue) return
 		if (selectedValue in endpointTemplateMap) {
-			({ title, url, model, isStream } = endpointTemplateMap[selectedValue]);
-			apiKeyInput.focus();
+			;({ title, url, model, isStream } = endpointTemplateMap[selectedValue])
+			apiKeyInput.focus()
 		}
-		selectedValue = undefined;
+		selectedValue = undefined
 	}
 
 	function add() {
 		if (endpoints.value.some((endpoint) => endpoint.title === title)) {
-			alert(L.endpointExists());
-			return;
+			alert(L.endpointExists())
+			return
 		}
 		if (title && url) {
-			if (!apiKey && !confirm(L.saveAnyway())) return;
-			const newEndpoint: Endpoint = { title, url, apiKey, isStream, model };
-			endpoints.add(newEndpoint);
-			title = '';
-			url = '';
-			apiKey = '';
-			isStream = false;
-			showAddForm = false;
-			model = '';
+			if (!apiKey && !confirm(L.saveAnyway())) return
+			const newEndpoint: Endpoint = { title, url, apiKey, isStream, model }
+			endpoints.add(newEndpoint)
+			title = ''
+			url = ''
+			apiKey = ''
+			isStream = false
+			view.showAddEndpointForm = false
+			model = ''
 		} else {
-			alert(L.fieldsMissing());
+			alert(L.fieldsMissing())
 		}
 	}
 </script>
@@ -105,7 +100,7 @@
 		/>
 	</label>
 	<div class="mt-4 flex justify-between">
-		<button class="variant-filled-warning btn" onclick={() => (showAddForm = false)}
+		<button class="variant-filled-warning btn" onclick={() => (view.showAddEndpointForm = false)}
 			>{L.cancel()}</button
 		>
 		<button class="variant-filled-success btn" onclick={add}>{L.add()}</button>

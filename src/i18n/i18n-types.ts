@@ -115,13 +115,13 @@ type RootTranslation = {
 	 */
 	enterText: string
 	/**
-	 * E​n​t​e​r​ ​a​ ​c​h​a​r​a​c​t​e​r​ ​(​o​p​t​i​o​n​a​l​)
+	 * E​n​t​e​r​ ​a​ ​p​e​r​s​o​n​ ​(​o​p​t​i​o​n​a​l​)
 	 */
-	characterLabel: string
+	personLabel: string
 	/**
 	 * E​d​g​a​r​ ​A​l​l​e​n​ ​P​o​e
 	 */
-	characterPlaceholder: string
+	personPlaceholder: string
 	/**
 	 * C​h​o​o​s​e​ ​a​ ​t​e​m​p​l​a​t​e​ ​(​o​p​t​i​o​n​a​l​)
 	 */
@@ -251,13 +251,13 @@ export type TranslationFunctions = {
 	 */
 	enterText: () => LocalizedString
 	/**
-	 * Enter a character (optional)
+	 * Enter a person (optional)
 	 */
-	characterLabel: () => LocalizedString
+	personLabel: () => LocalizedString
 	/**
 	 * Edgar Allen Poe
 	 */
-	characterPlaceholder: () => LocalizedString
+	personPlaceholder: () => LocalizedString
 	/**
 	 * Choose a template (optional)
 	 */

@@ -1,7 +1,7 @@
 class PopupState {
-	public showConfig: boolean = $state(false);
+	public showConfig: boolean = $state(false)
 }
 
-const popupState = new PopupState();
+const popupState = new PopupState()
 
-export default popupState;
+export default popupState

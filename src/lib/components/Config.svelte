@@ -1,15 +1,14 @@
 <script lang="ts">
-	import AddEndpointForm from './AddEndpointForm.svelte';
-	import EndpointList from './EndpointList.svelte';
-	import endpoints from './Endpoints.svelte';
-	import CloseIcon from './icons/CloseIcon.svelte';
-	import L from './L.svelte';
-
-	let showAddForm: boolean = $state(false);
+	import endpoints from '../state/endpoints.svelte'
+	import L from '../state/L.svelte'
+	import view from '../state/view.svelte'
+	import AddEndpointForm from './AddEndpointForm.svelte'
+	import EndpointList from './EndpointList.svelte'
+	import CloseIcon from './icons/CloseIcon.svelte'
 
 	function deleteEndpoint(title: string) {
-		endpoints.delete(title);
-		showAddForm = false;
+		endpoints.delete(title)
+		view.showAddEndpointForm = false
 	}
 </script>
 
@@ -19,10 +18,13 @@
 		<CloseIcon />
 	</div>
 	<EndpointList on:delete={(event) => deleteEndpoint(event.detail)} />
-	{#if showAddForm}
-		<AddEndpointForm bind:showAddForm />
+	{#if view.showAddEndpointForm}
+		<AddEndpointForm />
 	{:else}
-		<button class="variant-filled-success btn w-full" onclick={() => (showAddForm = true)}>
+		<button
+			class="variant-filled-success btn w-full"
+			onclick={() => (view.showAddEndpointForm = true)}
+		>
 			{L.newEndpoint()}
 		</button>
 	{/if}

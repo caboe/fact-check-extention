@@ -1,42 +1,39 @@
 <script lang="ts">
-	import { AccordionItem, SlideToggle } from '@skeletonlabs/skeleton';
-	import endpoints from '../Endpoints.svelte';
-	import Settings from '../icons/SettingsIcon.svelte';
-	import L from '../L.svelte';
-	import connection from '../svg/connection.svg';
+	import { AccordionItem, SlideToggle } from '@skeletonlabs/skeleton'
+	import endpoints from '../../state/endpoints.svelte'
+	import Settings from '../icons/SettingsIcon.svelte'
+	import L from '../../state/L.svelte'
+	import connection from '../svg/connection.svg'
+	import apiRequest from '../../state/apiRequest.svelte'
+	import view from '../../state/view.svelte'
 
 	interface Props {
-		open: boolean;
-		checkFact: () => Promise<void>;
-		selectedText: string;
+		open: boolean
+		checkFact: () => Promise<void>
 	}
 
-	let { open, checkFact, selectedText }: Props = $props();
+	let { open, checkFact }: Props = $props()
 
-	let loading: boolean = $state(false);
-	let step = $state(0);
-	let range = $state(50);
-	let isAnswer = $state(false);
-	let character = $state('');
-	let endpointSelect: HTMLSelectElement | null = $state(null);
+	// TODO
+	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
-		if (selectedText.trim().length > 1 && step === 0) {
-			step = 1;
+		if (apiRequest.selectedText.trim().length > 1 && view.step === 0) {
+			view.step = 1
 		}
-	});
+	})
 
 	function selectCurrent() {
-		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title);
-		const option = endpointSelect?.getElementsByTagName('option')[idx];
-		if (option) option.selected = true;
+		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
+		const option = endpointSelect?.getElementsByTagName('option')[idx]
+		if (option) option.selected = true
 	}
 
 	$effect(() => {
-		endpoints.selected;
-		endpointSelect;
-		selectCurrent();
-	});
+		endpoints.selected
+		endpointSelect
+		selectCurrent()
+	})
 </script>
 
 <AccordionItem {open}>
@@ -71,32 +68,32 @@
 			<div class="grid grid-cols-[1fr_auto_1fr] items-center justify-between gap-2">
 				<div>{L.factCheck()}</div>
 				<div class="text-center">
-					<SlideToggle name="slide" bind:checked={isAnswer} />
+					<SlideToggle name="slide" bind:checked={apiRequest.isAnswer} />
 				</div>
 				<div class="text-right">{L.response()}</div>
 			</div>
 			<label
 				class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all"
-				class:max-h-[100px]={isAnswer}
+				class:max-h-[100px]={apiRequest.isAnswer}
 			>
-				<div class="text-sm">{L.characterLabel()}</div>
+				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"
 					type="text"
-					bind:value={character}
-					placeholder={L.characterPlaceholder()}
+					bind:value={apiRequest.person}
+					placeholder={L.personPlaceholder()}
 				/>
 			</label>
 			<div class="flex flex-col items-center justify-between gap-2">
-				<input type="range" min="3" max="500" bind:value={range} class="mt-2" />
-				<div class="text-sm">{L.responseLength({ responseLength: range })}</div>
+				<input type="range" min="3" max="500" bind:value={apiRequest.range} class="mt-2" />
+				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.range })}</div>
 			</div>
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}
-				disabled={loading || !selectedText}
+				disabled={apiRequest.loading || !apiRequest.selectedText}
 			>
-				{#if loading}
+				{#if apiRequest.loading}
 					{L.checkingProgress()}
 				{:else}
 					{L.apiCta()}

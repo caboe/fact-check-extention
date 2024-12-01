@@ -1,5 +1,5 @@
 <script lang="ts">
-	const { onclick }: { onclick: () => void } = $props();
+	const { onclick }: { onclick: () => void } = $props()
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->

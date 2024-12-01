@@ -1,4 +1,4 @@
-import type { BaseTranslation } from '../i18n-types';
+import type { BaseTranslation } from '../i18n-types'
 
 const en = {
 	markedText: 'Marked text ({wordCount:number} words)',
@@ -25,15 +25,15 @@ const en = {
 	editText: 'Edit text here ...',
 	notChecked: 'Not checked',
 	enterText: 'Enter text here.',
-	characterLabel: 'Enter a character (optional)',
-	characterPlaceholder: 'Edgar Allen Poe',
+	personLabel: 'Enter a person (optional)',
+	personPlaceholder: 'Edgar Allen Poe',
 	chooseTemplate: 'Choose a template (optional)',
 	choose: 'Choose ...',
 	endpointExists: 'An endpoint with this name already exists.',
 	saveAnyway: 'No API key provided, save anyway?',
 	fieldsMissing: 'Please fill in all fields.',
 	copied: 'Result copied to clipboard!',
-	copyError: 'Error copying: {error:string}'
-} satisfies BaseTranslation;
+	copyError: 'Error copying: {error:string}',
+} satisfies BaseTranslation
 
-export default en;
+export default en

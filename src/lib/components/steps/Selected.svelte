@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { AccordionItem } from '@skeletonlabs/skeleton';
-	import endpoints from '../Endpoints.svelte';
-	import L from '../L.svelte';
-	import comments from '../svg/comments.svg';
+	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import endpoints from '../../state/endpoints.svelte'
+	import L from '../../state/L.svelte'
+	import comments from '../svg/comments.svg'
+	import apiRequest from '../../state/apiRequest.svelte'
 
 	interface Props {
-		open: boolean;
-		selectedText: string;
+		open: boolean
 	}
 
-	let { open, selectedText = $bindable('') }: Props = $props();
+	let { open }: Props = $props()
 
-	let endpointSelect: HTMLSelectElement | null = $state(null);
+	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
 		// Request to Content Script, getting marked text
@@ -19,32 +19,32 @@
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {
-						selectedText = response.text;
+						apiRequest.selectedText = response.text
 					} else {
-						selectedText = '';
+						apiRequest.selectedText = ''
 					}
-				});
+				})
 			}
-		});
-	});
+		})
+	})
 
 	function selectedTokenLength() {
-		if (!selectedText) return 0;
-		if (selectedText.replaceAll(' ', '').length === 0) return 0;
-		return selectedText.trim().split(' ').length;
+		if (!apiRequest.selectedText) return 0
+		if (apiRequest.selectedText.replaceAll(' ', '').length === 0) return 0
+		return apiRequest.selectedText.trim().split(' ').length
 	}
 
 	function selectCurrent() {
-		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title);
-		const option = endpointSelect?.getElementsByTagName('option')[idx];
-		if (option) option.selected = true;
+		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
+		const option = endpointSelect?.getElementsByTagName('option')[idx]
+		if (option) option.selected = true
 	}
 
 	$effect(() => {
-		endpoints.selected;
-		endpointSelect;
-		selectCurrent();
-	});
+		endpoints.selected
+		endpointSelect
+		selectCurrent()
+	})
 </script>
 
 <AccordionItem {open}>
@@ -62,7 +62,7 @@
 	{#snippet content()}
 		<textarea
 			id="selected-text"
-			bind:value={selectedText}
+			bind:value={apiRequest.selectedText}
 			class="textarea"
 			rows="4"
 			placeholder={L.editText()}

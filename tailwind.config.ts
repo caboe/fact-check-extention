@@ -1,9 +1,9 @@
-import forms from '@tailwindcss/forms';
-import { join } from 'path';
-import type { Config } from 'tailwindcss';
+import forms from '@tailwindcss/forms'
+import { join } from 'path'
+import type { Config } from 'tailwindcss'
 
 // 1. Import the Skeleton plugin
-import { skeleton } from '@skeletonlabs/tw-plugin';
+import { skeleton } from '@skeletonlabs/tw-plugin'
 
 const config = {
 	// 2. Opt for dark mode to be handled via the class method
@@ -15,17 +15,17 @@ const config = {
 		join(
 			require.resolve('@skeletonlabs/skeleton'),
 			'../**/*.{html,js,svelte,ts}',
-			'./public/**/*.html'
-		)
+			'./public/**/*.html',
+		),
 	],
 	theme: {
-		extend: {}
+		extend: {},
 	},
 	plugins: [
 		forms,
 		skeleton({
-			themes: { preset: ['seafoam'] }
-		})
+			themes: { preset: ['seafoam'] },
+		}),
 	],
 	safelist: [
 		'slide-toggle',
@@ -56,10 +56,8 @@ const config = {
 		'shadow',
 		'bg-white/75',
 		'translate-x-full',
-		'hidden'
-		// 'grid',
-		// 'grid-cols-[16px_1fr]'
-	]
-} satisfies Config;
+		'hidden',
+	],
+} satisfies Config
 
-export default config;
+export default config

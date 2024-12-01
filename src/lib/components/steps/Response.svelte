@@ -1,25 +1,24 @@
 <script lang="ts">
-	import { AccordionItem } from '@skeletonlabs/skeleton';
-	import L from '../L.svelte';
-	import response from '../svg/response.svg';
+	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import apiRequest from '../../state/apiRequest.svelte'
+	import L from '../../state/L.svelte'
+	import response from '../svg/response.svg'
 
 	interface Props {
-		open: boolean;
-		result: string;
-		loading: boolean;
+		open: boolean
 	}
 
-	let { open, result, loading }: Props = $props();
+	let { open }: Props = $props()
 
 	function copyResult() {
 		navigator.clipboard
-			.writeText(result)
+			.writeText(apiRequest.result)
 			.then(() => {
-				alert(L.copied());
+				alert(L.copied())
 			})
 			.catch((err) => {
-				alert(L.copyError({ error: err.message }));
-			});
+				alert(L.copyError({ error: err.message }))
+			})
 	}
 </script>
 
@@ -36,12 +35,13 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if result}
-			<textarea id="selected-text" bind:value={result} class="textarea" rows="4"></textarea>
+		{#if apiRequest.result}
+			<textarea id="selected-text" bind:value={apiRequest.result} class="textarea" rows="4"
+			></textarea>
 			<button class="variant-filled-success btn w-full" onclick={copyResult}>
 				{L.copy()}
 			</button>
-		{:else if loading}
+		{:else if apiRequest.loading}
 			{L.checkingProgress()}
 		{:else}
 			{L.notChecked()}

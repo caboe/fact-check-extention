@@ -1,11 +1,11 @@
 <script lang="ts">
-	import endpoints from './Endpoints.svelte';
-	import RemoveIcon from './icons/RemoveIcon.svelte';
-	import L from './L.svelte';
+	import endpoints from '../state/endpoints.svelte'
+	import RemoveIcon from './icons/RemoveIcon.svelte'
+	import L from '../state/L.svelte'
 
 	function confirmDelete(title: string) {
 		if (confirm(`Möchten Sie den Endpunkt "${title}" wirklich löschen?`)) {
-			endpoints.delete(title);
+			endpoints.delete(title)
 		}
 	}
 </script>
