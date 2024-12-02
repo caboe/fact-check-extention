@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { AccordionItem, SlideToggle } from '@skeletonlabs/skeleton'
-	import endpoints from '../../state/endpoints.svelte'
-	import Settings from '../icons/SettingsIcon.svelte'
-	import L from '../../state/L.svelte'
-	import connection from '../svg/connection.svg'
+	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import apiRequest from '../../state/apiRequest.svelte'
+	import endpoints from '../../state/endpoints.svelte'
+	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
+	import roles from '../../util/roles.svelte'
+	import Settings from '../icons/SettingsIcon.svelte'
+	import connection from '../svg/connection.svg'
 
 	interface Props {
 		open: boolean
@@ -14,7 +15,6 @@
 
 	let { open, checkFact }: Props = $props()
 
-	// TODO
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
@@ -65,17 +65,18 @@
 					{/each}
 				</select>
 			{/if}
-			<div class="grid grid-cols-[1fr_auto_1fr] items-center justify-between gap-2">
+			<div class="grid grid-cols-1 items-center justify-between gap-2">
 				<div>{L.factCheck()}</div>
 				<div class="text-center">
-					<SlideToggle name="slide" bind:checked={apiRequest.isAnswer} />
+					<select class="select" bind:value={apiRequest.roleKey}>
+						{#each roles as [value, title]}
+							<option {value}>{title}</option>
+						{/each}
+					</select>
 				</div>
 				<div class="text-right">{L.response()}</div>
 			</div>
-			<label
-				class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all"
-				class:max-h-[100px]={apiRequest.isAnswer}
-			>
+			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">
 				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"

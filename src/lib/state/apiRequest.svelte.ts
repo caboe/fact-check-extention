@@ -1,6 +1,8 @@
+import { Key } from '../util/roles.svelte'
+
 class ApiRequest {
 	range = $state(50)
-	isAnswer = $state(false)
+	roleKey: Key | undefined = $state(undefined)
 	person = $state('')
 	loading = $state(false)
 	result = $state('')

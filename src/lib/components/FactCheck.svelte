@@ -4,7 +4,7 @@
 	import Connection from './steps/Connection.svelte'
 	import Response from './steps/Response.svelte'
 	import Selected from './steps/Selected.svelte'
-	import checkFact from '../util/checkFact'
+	import checkFact from '../util/checkFact.svelte'
 	import apiRequest from '../state/apiRequest.svelte'
 	import view from '../state/view.svelte'
 
