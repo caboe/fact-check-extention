@@ -1,10 +1,12 @@
 import { Endpoint } from '../state/endpoints.svelte'
+import { Key } from './roles.svelte'
 
 type StorageBackend = chrome.storage.LocalStorageArea | Storage
 
 interface UnifiedState {
 	endpoints: Endpoint[] | null
 	lastUsed: string | null
+	lastRoleKey: Key | null
 }
 
 // Wrapper für Chrome Storage und window.localStorage zur Vereinfachung von Tests
@@ -27,13 +29,15 @@ class UnifiedStorage {
 					const rawState = items[this.key]
 					const state: UnifiedState = rawState
 						? JSON.parse(rawState)
-						: { endpoints: null, lastUsed: null }
+						: { endpoints: null, lastUsed: null, lastRoleKey: null }
 					resolve(state)
 				})
 			})
 		} else {
 			const item = this.storage.getItem(this.key)
-			const state: UnifiedState = item ? JSON.parse(item) : { endpoints: null, lastUsed: null }
+			const state: UnifiedState = item
+				? JSON.parse(item)
+				: { endpoints: null, lastUsed: null, lastRoleKey: null }
 			return state
 		}
 	}
@@ -82,7 +86,6 @@ class UnifiedStorage {
 		return state.endpoints
 	}
 
-	// Neue Methoden für lastUsed
 	async setLastUsed(value: string): Promise<void> {
 		const state = await this.getUnifiedState()
 		state.lastUsed = value
@@ -92,6 +95,17 @@ class UnifiedStorage {
 	async getLastUsed(): Promise<string | null> {
 		const state = await this.getUnifiedState()
 		return state.lastUsed
+	}
+
+	async setLastRoleKey(value: string): Promise<void> {
+		const state = await this.getUnifiedState()
+		state.lastRoleKey = value
+		await this.setUnifiedState(state)
+	}
+
+	async getLastRoleKey(): Promise<string | null> {
+		const state = await this.getUnifiedState()
+		return state.lastRoleKey
 	}
 }
 
@@ -103,3 +117,5 @@ export const remove = unifiedStorage.delete.bind(unifiedStorage)
 export const set = unifiedStorage.set.bind(unifiedStorage)
 export const setLastUsed = unifiedStorage.setLastUsed.bind(unifiedStorage)
 export const getLastUsed = unifiedStorage.getLastUsed.bind(unifiedStorage)
+export const setLastRoleKey = unifiedStorage.setLastRoleKey.bind(unifiedStorage)
+export const getLastRoleKey = unifiedStorage.getLastRoleKey.bind(unifiedStorage)

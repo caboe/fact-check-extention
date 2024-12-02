@@ -13,13 +13,14 @@ interface ApiRequestMessage {
 type ApiRequestBody = { model: string } & (ApiRequestPrompt | ApiRequestMessage)
 
 export default async function checkFact() {
-	if (!endpoints.selected) {
+	if (!endpoints.selected || !apiRequest.roleKey) {
 		view.step = 1
 		return
 	}
 	view.step = 2
 
 	unifiedStorage.setLastUsed(endpoints.selected.title)
+	unifiedStorage.setLastRoleKey(apiRequest.roleKey)
 	apiRequest.loading = true
 	apiRequest.result = ''
 

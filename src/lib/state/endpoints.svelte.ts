@@ -17,7 +17,7 @@ class Endpoints {
 	}
 
 	async load() {
-		await this.updateFromStore()
+		await this.#updateFromStore()
 
 		if (this.#value.length > 0) {
 			const lastUsedTitle = await localStorage.getLastUsed()
@@ -26,18 +26,18 @@ class Endpoints {
 		}
 	}
 
-	private async updateFromStore() {
+	async #updateFromStore() {
 		this.#value = (await localStorage.getEndpoints()) ?? []
 	}
 
 	async add(newEndpoint: Endpoint) {
 		await localStorage.add(newEndpoint)
-		await this.updateFromStore()
+		await this.#updateFromStore()
 	}
 
 	async delete(title: string) {
 		await localStorage.delete(title)
-		await this.updateFromStore()
+		await this.#updateFromStore()
 	}
 
 	get value() {
