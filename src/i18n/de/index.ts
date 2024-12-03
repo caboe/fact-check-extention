@@ -5,6 +5,10 @@ const de = {
 	apiEndpoint: 'API-Endpunkt',
 	configureApi: 'Konfigurieren',
 	factCheck: 'Faktencheck',
+	style: 'Sprachstil',
+	friendly: 'Freundlich',
+	neutral: 'Neutral',
+	critical: 'Kritisch',
 	response: 'Antwort',
 	responseLength:
 		'Antwortlänge ca. {responseLength: number} Wörter' as `${string}{responseLength}${string}`,

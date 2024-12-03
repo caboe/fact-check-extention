@@ -34,6 +34,22 @@ type RootTranslation = {
 	 */
 	factCheck: string
 	/**
+	 * T​o​n​e​ ​o​f​ ​s​p​e​e​c​h
+	 */
+	style: string
+	/**
+	 * F​r​i​e​n​d​l​y
+	 */
+	friendly: string
+	/**
+	 * N​e​u​t​r​a​l
+	 */
+	neutral: string
+	/**
+	 * C​r​i​t​i​c​a​l
+	 */
+	critical: string
+	/**
 	 * R​e​s​p​o​n​s​e
 	 */
 	response: string
@@ -170,6 +186,22 @@ export type TranslationFunctions = {
 	 * Fact Check
 	 */
 	factCheck: () => LocalizedString
+	/**
+	 * Tone of speech
+	 */
+	style: () => LocalizedString
+	/**
+	 * Friendly
+	 */
+	friendly: () => LocalizedString
+	/**
+	 * Neutral
+	 */
+	neutral: () => LocalizedString
+	/**
+	 * Critical
+	 */
+	critical: () => LocalizedString
 	/**
 	 * Response
 	 */

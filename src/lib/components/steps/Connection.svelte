@@ -66,11 +66,11 @@
 				</select>
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				<div>{L.factCheck()}</div>
+				<div>{L.style()}</div>
 				<div class="text-center">
 					<select class="select" bind:value={apiRequest.roleKey}>
 						{#each roles as [value, title]}
-							<option {value}>{title}</option>
+							<option {value}>{L[value]()}</option>
 						{/each}
 					</select>
 				</div>

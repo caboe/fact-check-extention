@@ -5,6 +5,10 @@ const es = {
 	apiEndpoint: 'Punto final de la API',
 	configureApi: 'Configurar',
 	factCheck: 'Verificación de hechos',
+	style: 'Tono de habla',
+	friendly: 'Amable',
+	neutral: 'Neutral',
+	critical: 'Crítico',
 	response: 'Respuesta',
 	responseLength:
 		'Longitud de la respuesta aprox. {responseLength: number} palabras' as `${string}{responseLength}${string}`,

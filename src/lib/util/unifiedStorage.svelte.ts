@@ -97,13 +97,13 @@ class UnifiedStorage {
 		return state.lastUsed
 	}
 
-	async setLastRoleKey(value: string): Promise<void> {
+	async setLastRoleKey(value: Key): Promise<void> {
 		const state = await this.getUnifiedState()
 		state.lastRoleKey = value
 		await this.setUnifiedState(state)
 	}
 
-	async getLastRoleKey(): Promise<string | null> {
+	async getLastRoleKey(): Promise<Key | null> {
 		const state = await this.getUnifiedState()
 		return state.lastRoleKey
 	}
