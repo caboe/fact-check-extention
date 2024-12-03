@@ -50,12 +50,7 @@ export default async function checkFact() {
 			throw new Error(`HTTP-Fehler! Status: ${response.status}`)
 		}
 
-		if (endpoints.selected.isStream) {
-			handleStreamResponse(response)
-		} else {
-			const data = await response.json()
-			apiRequest.result = data.choices[0].message.content
-		}
+		handleStreamResponse(response)
 	} catch (err: unknown) {
 		// TODO
 		apiRequest.result = 'Error during fact check: ' + (err as Error).message

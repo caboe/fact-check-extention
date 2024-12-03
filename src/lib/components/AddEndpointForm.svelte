@@ -6,7 +6,6 @@
 	let title: string = $state('')
 	let url: string = $state('')
 	let apiKey: string = $state('')
-	let isStream = $state(false)
 	let apiKeyInput: HTMLInputElement
 	let selectedValue: string | undefined = $state(undefined)
 	let model = $state('')
@@ -18,13 +17,11 @@
 		chatGpt: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
-			isStream: false,
 			model: 'gpt-4o-mini',
 		},
 		ollama: {
 			title: 'Ollama',
 			url: 'http://localhost:11434/api/chat',
-			isStream: true,
 			model: 'llama3.2:latest',
 		},
 	}
@@ -32,7 +29,7 @@
 	function prefillFields() {
 		if (!selectedValue) return
 		if (selectedValue in endpointTemplateMap) {
-			;({ title, url, model, isStream } = endpointTemplateMap[selectedValue])
+			;({ title, url, model } = endpointTemplateMap[selectedValue])
 			apiKeyInput.focus()
 		}
 		selectedValue = undefined
@@ -45,12 +42,11 @@
 		}
 		if (title && url) {
 			if (!apiKey && !confirm(L.saveAnyway())) return
-			const newEndpoint: Endpoint = { title, url, apiKey, isStream, model }
+			const newEndpoint: Endpoint = { title, url, apiKey, model }
 			endpoints.add(newEndpoint)
 			title = ''
 			url = ''
 			apiKey = ''
-			isStream = false
 			view.showAddEndpointForm = false
 			model = ''
 		} else {
@@ -78,12 +74,6 @@
 		<span>{L.url()}</span>
 		<input class="input" id="url" bind:value={url} placeholder={L.urlPlaceholder()} />
 	</label>
-	<div class="label mb-2 flex items-center gap-1" style="--tw-space-y-reverse:10px;">
-		<label for="stream"> Stream</label>
-		<span>
-			<input class="checkbox mb-1" type="checkbox" id="stream" bind:value={isStream} />
-		</span>
-	</div>
 	<label class="label mb-2" for="model">
 		<span>Model</span>
 		<input class="input" id="model" bind:value={model} />

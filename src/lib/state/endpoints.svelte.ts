@@ -4,7 +4,6 @@ export interface Endpoint {
 	title: string
 	url: string
 	apiKey: string
-	isStream: boolean
 	model: string
 }
 
@@ -32,6 +31,7 @@ class Endpoints {
 
 	async add(newEndpoint: Endpoint) {
 		await localStorage.add(newEndpoint)
+		this.selected = newEndpoint
 		await this.#updateFromStore()
 	}
 
