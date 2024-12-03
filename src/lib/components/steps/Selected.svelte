@@ -14,7 +14,7 @@
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
-		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {

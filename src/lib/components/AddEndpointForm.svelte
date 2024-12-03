@@ -23,7 +23,7 @@
 		},
 		ollama: {
 			title: 'Ollama',
-			url: 'http://localhost:11434/api/generate',
+			url: 'http://localhost:11434/api/chat',
 			isStream: true,
 			model: 'llama3.2:latest',
 		},

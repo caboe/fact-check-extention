@@ -9,8 +9,7 @@
 	import view from '../state/view.svelte'
 
 	$effect(() => {
-		// Anfrage an Content Script, um den markierten Text zu erhalten
-		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {

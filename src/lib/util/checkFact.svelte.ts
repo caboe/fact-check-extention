@@ -1,16 +1,9 @@
 import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
 import view from '../state/view.svelte'
+import handleStreamResponse from './handleStreamResponse.svelte'
 import roles from './roles.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
-
-interface ApiRequestPrompt {
-	prompt: string
-}
-interface ApiRequestMessage {
-	messages: { role: string; content: string }[]
-}
-type ApiRequestBody = { model: string } & (ApiRequestPrompt | ApiRequestMessage)
 
 export default async function checkFact() {
 	if (!endpoints.selected || !apiRequest.roleKey) {
@@ -29,24 +22,18 @@ export default async function checkFact() {
 		throw new Error(`Unknown role key: ${apiRequest.roleKey}`)
 	}
 
-	let requestBody: ApiRequestBody
-
-	if (endpoints.selected.isStream) {
-		requestBody = {
-			model: endpoints.selected.model,
-			prompt: `${apiRequest.selectedText}\n\n${role[2]} Your answer should be around ${apiRequest.range} words in length.`,
-		}
-	} else {
-		requestBody = {
-			model: endpoints.selected.model,
-			messages: [
-				{
-					role: 'system',
-					content: `${role[2]} Your answer should be around ${apiRequest.range} words in length.`,
-				},
-				{ role: 'user', content: apiRequest.selectedText },
-			],
-		}
+	const requestBody = {
+		model: endpoints.selected.model,
+		messages: [
+			{
+				role: 'system',
+				content: `${role[2]}. Your answer should be around ${apiRequest.range} words in length.`,
+			},
+			{
+				role: 'user',
+				content: apiRequest.selectedText,
+			},
+		],
 	}
 
 	try {
@@ -64,38 +51,8 @@ export default async function checkFact() {
 		}
 
 		if (endpoints.selected.isStream) {
-			const reader = response.body!.getReader()
-			const decoder = new TextDecoder('utf-8')
-			let resultText = ''
-			let done = false
-			let buffer = ''
-
-			while (!done) {
-				const { value, done: readerDone } = await reader.read()
-				done = readerDone
-				if (value) {
-					const chunk = decoder.decode(value, { stream: true })
-					buffer += chunk
-
-					const lines = buffer.split('\n')
-					buffer = lines.pop()! // Die letzte Zeile könnte unvollständig sein
-
-					for (const line of lines) {
-						if (line.trim() === '') continue
-						try {
-							const parsed = JSON.parse(line)
-							if (parsed && parsed.response) {
-								resultText += parsed.response
-							}
-						} catch (e) {
-							console.error('Parsing error:', e)
-						}
-					}
-				}
-			}
-			apiRequest.result = resultText
+			handleStreamResponse(response)
 		} else {
-			// Verarbeitung für JSON-Response
 			const data = await response.json()
 			apiRequest.result = data.choices[0].message.content
 		}
