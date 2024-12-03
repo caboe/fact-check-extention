@@ -17,11 +17,9 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	$effect(() => {
-		if (apiRequest.selectedText.trim().length > 1 && view.step === 0) {
-			view.step = 1
-		}
-	})
+	if (apiRequest.selectedText.trim().length > 1 && view.step === 0) {
+		view.step = 1
+	}
 
 	function selectCurrent() {
 		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
