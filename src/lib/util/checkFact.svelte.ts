@@ -28,7 +28,11 @@ export default async function checkFact() {
 		messages: [
 			{
 				role: 'system',
-				content: `${role[2]}. Your answer should be around ${apiRequest.range} words in length.`,
+				content: role[2],
+			},
+			{
+				role: 'system',
+				content: ` Your answer should be around ${apiRequest.range} words in length.`,
 			},
 			{
 				role: 'user',
