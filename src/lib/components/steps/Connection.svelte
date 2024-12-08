@@ -34,7 +34,7 @@
 	})
 </script>
 
-<AccordionItem {open}>
+<AccordionItem {open} on:click>
 	{#snippet summary()}
 		<label for="endpoints" class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold">
 			<img src={connection} class="h-4 w-4" alt="Response Icon" />

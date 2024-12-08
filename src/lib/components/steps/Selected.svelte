@@ -46,7 +46,7 @@
 	})
 </script>
 
-<AccordionItem {open}>
+<AccordionItem {open} on:click>
 	{#snippet summary()}
 		<label
 			for="selected-text"

@@ -27,8 +27,8 @@
 
 <div class="mx-1 p-3">
 	<Accordion autocollapse spacing="space-y-4">
-		<Selected open={view.step === 0} />
-		<Connection open={view.step === 1} {checkFact} />
-		<Response open={view.step === 2} />
+		<Selected open={view.step === 0} on:click={() => (view.step = 0)} />
+		<Connection open={view.step === 1} on:click={() => (view.step = 1)} {checkFact} />
+		<Response open={view.step === 2} on:click={() => (view.step = 2)} />
 	</Accordion>
 </div>
