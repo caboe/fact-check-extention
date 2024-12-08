@@ -10,6 +10,8 @@
 
 	let { open }: Props = $props()
 
+	let textareaEl: HTMLTextAreaElement | null = $state(null)
+
 	function copyResult() {
 		navigator.clipboard
 			.writeText(apiRequest.result)
@@ -19,6 +21,17 @@
 			.catch((err) => {
 				alert(L.copyError({ error: err.message }))
 			})
+	}
+
+	$effect(() => {
+		apiRequest.result
+		autoGrow()
+	})
+
+	function autoGrow() {
+		if (!textareaEl) return
+		textareaEl.style.height = '5px'
+		textareaEl.style.height = textareaEl.scrollHeight + 'px'
 	}
 </script>
 
@@ -36,7 +49,13 @@
 	{/snippet}
 	{#snippet content()}
 		{#if apiRequest.result}
-			<textarea id="selected-text" bind:value={apiRequest.result} class="textarea" rows="4"
+			<textarea
+				id="selected-text"
+				bind:this={textareaEl}
+				oninput={autoGrow}
+				bind:value={apiRequest.result}
+				class="textarea max-h-64 min-h-8"
+				rows="1"
 			></textarea>
 			<button class="variant-filled-success btn w-full" onclick={copyResult}>
 				{L.copy()}
