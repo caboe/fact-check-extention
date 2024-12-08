@@ -19,15 +19,20 @@ export default async function handleStreamResponse(response: Response) {
 			//last line might be incomplete
 			buffer = lines.pop()!
 
-			for (const line of lines) {
-				if (line.trim() === '') continue
+			for (const rawLine of lines) {
+				if (rawLine.trim() === '') continue
+				// TODO: For unknown resaons, ChatGPT needs thsi
+				const line = rawLine.replace('data: ', '')
+
+				const parsed = await JSON.parse(line)
+				if (!parsed) continue
+
+				if (parsed.choices?.[0].finish_reason) break
 				try {
-					const parsed = JSON.parse(line)
-					if (parsed && parsed.response) {
-						resultText += parsed.response
-					}
-					if (parsed && parsed.message.content) {
+					if (parsed.message) {
 						resultText += parsed.message.content
+					} else if (parsed.choices[0].delta.content) {
+						resultText += parsed.choices[0].delta.content
 					}
 				} catch (e) {
 					console.error('Parsing error:', e)

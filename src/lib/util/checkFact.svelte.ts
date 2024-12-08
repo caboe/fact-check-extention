@@ -24,6 +24,7 @@ export default async function checkFact() {
 
 	const requestBody = {
 		model: endpoints.selected.model,
+		stream: true,
 		messages: [
 			{
 				role: 'system',
