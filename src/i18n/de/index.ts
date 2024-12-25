@@ -1,6 +1,9 @@
 import type { Translation } from '../i18n-types'
 
 const de = {
+	introduction: `<p><h5 class="font-bold">Hallo!</h5>Schön, dass du meine Chrome-Erweiterung für den KI-gestützten Faktencheck ausprobierst. Dieses Tool soll dir helfen, Informationen im Netz schneller zu überprüfen und die Glaubwürdigkeit von Texten besser einzuschätzen.</p>
+<p><strong>Wichtiger Hinweis:</strong> Obwohl diese Erweiterung auf fortschrittlicher KI basiert, ist sie nicht unfehlbar. Künstliche Intelligenz kann in manchen Fällen „halluzinieren“, d.h. falsche oder irreführende Informationen liefern. Daher ist es wichtig, die Ergebnisse kritisch zu hinterfragen und im Zweifelsfall zusätzliche Recherchen anzustellen, insbesondere wenn die Ergebnisse unerwartet oder „suspekt“ erscheinen. Betrachte die Ergebnisse des Faktenchecks immer als ersten Anhaltspunkt und nicht als endgültige Wahrheit. Nutze die Erweiterung als Unterstützung für deine eigene kritische Auseinandersetzung mit Informationen.</p>`,
+	letsGo: "Los geht's",
 	markedText: 'Markierter Text ({wordCount:number} Wörter)' as `${string}{wordCount}${string}`,
 	apiEndpoint: 'API-Endpunkt',
 	configureApi: 'Konfigurieren',

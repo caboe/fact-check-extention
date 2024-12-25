@@ -1,6 +1,9 @@
 import type { Translation } from '../i18n-types'
 
 const es = {
+	introduction: `<p><h5 class="font-bold">¡Hola!</h5> Nos alegra que estés probando nuestra extensión de Chrome para la verificación de datos impulsada por IA. Esta herramienta está diseñada para ayudarte a verificar rápidamente la información en línea y evaluar mejor la credibilidad de los textos.</p>
+<p><strong>Nota importante:</strong> Aunque esta extensión se basa en IA avanzada, no es infalible. La inteligencia artificial a veces puede "alucinar", es decir, proporcionar información falsa o engañosa. Por lo tanto, es importante examinar críticamente los resultados y, en caso de duda, realizar investigaciones adicionales, especialmente si los resultados parecen inesperados o "sospechosos". Considera siempre los resultados de la verificación de datos como un punto de partida y no como la verdad absoluta. Utiliza la extensión como apoyo para tu propio compromiso crítico con la información.</p>`,
+	letsGo: '¡Vamos!',
 	markedText: 'Texto marcado ({wordCount:number} palabras)' as `${string}{wordCount}${string}`,
 	apiEndpoint: 'Punto final de la API',
 	configureApi: 'Configurar',

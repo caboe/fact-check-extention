@@ -7,26 +7,27 @@ interface UnifiedState {
 	endpoints: Endpoint[] | null
 	lastUsed: string | null
 	lastRoleKey: Key | null
+	hasSeenIntroduction: boolean
 }
 
 // Wrapper für Chrome Storage und window.localStorage zur Vereinfachung von Tests
 class UnifiedStorage {
-	private storage: StorageBackend
-	private readonly key = 'unifiedState'
+	#storage: StorageBackend
+	readonly #key = 'unifiedState'
 
 	constructor() {
 		if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-			this.storage = chrome.storage.local
+			this.#storage = chrome.storage.local
 		} else {
-			this.storage = window.localStorage
+			this.#storage = window.localStorage
 		}
 	}
 
 	private async getUnifiedState(): Promise<UnifiedState> {
-		if (this.isChromeStorage(this.storage)) {
+		if (this.isChromeStorage(this.#storage)) {
 			return new Promise<UnifiedState>((resolve) => {
-				this.storage.get(this.key, (items: Record<string, string>) => {
-					const rawState = items[this.key]
+				this.#storage.get(this.#key, (items: Record<string, string>) => {
+					const rawState = items[this.#key]
 					const state: UnifiedState = rawState
 						? JSON.parse(rawState)
 						: { endpoints: null, lastUsed: null, lastRoleKey: null }
@@ -34,7 +35,7 @@ class UnifiedStorage {
 				})
 			})
 		} else {
-			const item = this.storage.getItem(this.key)
+			const item = this.#storage.getItem(this.#key)
 			const state: UnifiedState = item
 				? JSON.parse(item)
 				: { endpoints: null, lastUsed: null, lastRoleKey: null }
@@ -43,14 +44,14 @@ class UnifiedStorage {
 	}
 
 	private async setUnifiedState(state: UnifiedState): Promise<void> {
-		if (this.isChromeStorage(this.storage)) {
+		if (this.isChromeStorage(this.#storage)) {
 			return new Promise<void>((resolve) => {
 				const serialized = JSON.stringify(state)
-				this.storage.set({ [this.key]: serialized }, () => resolve())
+				this.#storage.set({ [this.#key]: serialized }, () => resolve())
 			})
 		} else {
 			const serialized = JSON.stringify(state)
-			this.storage.setItem(this.key, serialized)
+			this.#storage.setItem(this.#key, serialized)
 		}
 	}
 
@@ -107,6 +108,17 @@ class UnifiedStorage {
 		const state = await this.getUnifiedState()
 		return state.lastRoleKey
 	}
+
+	async setHasSeenIntroduction(): Promise<void> {
+		const state = await this.getUnifiedState()
+		state.hasSeenIntroduction = true
+		await this.setUnifiedState(state)
+	}
+
+	async getHasSeenIntroduction(): Promise<boolean> {
+		const state = await this.getUnifiedState()
+		return !!state.hasSeenIntroduction
+	}
 }
 
 const unifiedStorage = new UnifiedStorage()
@@ -119,3 +131,5 @@ export const setLastUsed = unifiedStorage.setLastUsed.bind(unifiedStorage)
 export const getLastUsed = unifiedStorage.getLastUsed.bind(unifiedStorage)
 export const setLastRoleKey = unifiedStorage.setLastRoleKey.bind(unifiedStorage)
 export const getLastRoleKey = unifiedStorage.getLastRoleKey.bind(unifiedStorage)
+export const setHasSeenIntroduction = unifiedStorage.setHasSeenIntroduction.bind(unifiedStorage)
+export const getHasSeenIntroduction = unifiedStorage.getHasSeenIntroduction.bind(unifiedStorage)

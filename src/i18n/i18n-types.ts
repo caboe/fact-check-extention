@@ -17,6 +17,15 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
+	 * <​p​>​<​h​5​ ​c​l​a​s​s​=​"​f​o​n​t​-​b​o​l​d​"​>​H​e​l​l​o​!​<​/​h​5​>​W​e​'​r​e​ ​g​l​a​d​ ​y​o​u​'​r​e​ ​t​r​y​i​n​g​ ​o​u​t​ ​o​u​r​ ​C​h​r​o​m​e​ ​e​x​t​e​n​s​i​o​n​ ​f​o​r​ ​A​I​-​p​o​w​e​r​e​d​ ​f​a​c​t​-​c​h​e​c​k​i​n​g​.​ ​T​h​i​s​ ​t​o​o​l​ ​i​s​ ​d​e​s​i​g​n​e​d​ ​t​o​ ​h​e​l​p​ ​y​o​u​ ​q​u​i​c​k​l​y​ ​v​e​r​i​f​y​ ​i​n​f​o​r​m​a​t​i​o​n​ ​o​n​l​i​n​e​ ​a​n​d​ ​b​e​t​t​e​r​ ​a​s​s​e​s​s​ ​t​h​e​ ​c​r​e​d​i​b​i​l​i​t​y​ ​o​f​ ​t​e​x​t​s​.​<​/​p​>​
+​<​p​>​<​s​t​r​o​n​g​>​I​m​p​o​r​t​a​n​t​ ​N​o​t​e​:​<​/​s​t​r​o​n​g​>​ ​A​l​t​h​o​u​g​h​ ​t​h​i​s​ ​e​x​t​e​n​s​i​o​n​ ​i​s​ ​b​a​s​e​d​ ​o​n​ ​a​d​v​a​n​c​e​d​ ​A​I​,​ ​i​t​ ​i​s​ ​n​o​t​ ​i​n​f​a​l​l​i​b​l​e​.​ ​A​r​t​i​f​i​c​i​a​l​ ​i​n​t​e​l​l​i​g​e​n​c​e​ ​c​a​n​ ​s​o​m​e​t​i​m​e​s​ ​"​h​a​l​l​u​c​i​n​a​t​e​,​"​ ​i​.​e​.​,​ ​p​r​o​v​i​d​e​ ​f​a​l​s​e​ ​o​r​ ​m​i​s​l​e​a​d​i​n​g​ ​i​n​f​o​r​m​a​t​i​o​n​.​ ​T​h​e​r​e​f​o​r​e​,​ ​i​t​ ​i​s​ ​i​m​p​o​r​t​a​n​t​ ​t​o​ ​c​r​i​t​i​c​a​l​l​y​ ​e​x​a​m​i​n​e​ ​t​h​e​ ​r​e​s​u​l​t​s​ ​a​n​d​,​ ​i​f​ ​i​n​ ​d​o​u​b​t​,​ ​c​o​n​d​u​c​t​ ​a​d​d​i​t​i​o​n​a​l​ ​r​e​s​e​a​r​c​h​,​ ​e​s​p​e​c​i​a​l​l​y​ ​i​f​ ​t​h​e​ ​r​e​s​u​l​t​s​ ​a​p​p​e​a​r​ ​u​n​e​x​p​e​c​t​e​d​ ​o​r​ ​"​s​u​s​p​i​c​i​o​u​s​.​"​ ​A​l​w​a​y​s​ ​c​o​n​s​i​d​e​r​ ​t​h​e​ ​f​a​c​t​-​c​h​e​c​k​i​n​g​ ​r​e​s​u​l​t​s​ ​a​s​ ​a​ ​s​t​a​r​t​i​n​g​ ​p​o​i​n​t​ ​a​n​d​ ​n​o​t​ ​a​s​ ​t​h​e​ ​u​l​t​i​m​a​t​e​ ​t​r​u​t​h​.​ ​U​s​e​ ​t​h​e​ ​e​x​t​e​n​s​i​o​n​ ​a​s​ ​s​u​p​p​o​r​t​ ​f​o​r​ ​y​o​u​r​ ​o​w​n​ ​c​r​i​t​i​c​a​l​ ​e​n​g​a​g​e​m​e​n​t​ ​w​i​t​h​ ​i​n​f​o​r​m​a​t​i​o​n​.​<​/​p​>
+	 */
+	introduction: string
+	/**
+	 * L​e​t​'​s​ ​g​e​t​ ​s​t​a​r​t​e​d​!
+	 */
+	letsGo: string
+	/**
 	 * M​a​r​k​e​d​ ​t​e​x​t​ ​(​{​w​o​r​d​C​o​u​n​t​}​ ​w​o​r​d​s​)
 	 * @param {number} wordCount
 	 */
@@ -170,6 +179,15 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
+	/**
+	 * <p><h5 class="font-bold">Hello!</h5>We're glad you're trying out our Chrome extension for AI-powered fact-checking. This tool is designed to help you quickly verify information online and better assess the credibility of texts.</p>
+<p><strong>Important Note:</strong> Although this extension is based on advanced AI, it is not infallible. Artificial intelligence can sometimes "hallucinate," i.e., provide false or misleading information. Therefore, it is important to critically examine the results and, if in doubt, conduct additional research, especially if the results appear unexpected or "suspicious." Always consider the fact-checking results as a starting point and not as the ultimate truth. Use the extension as support for your own critical engagement with information.</p>
+	 */
+	introduction: () => LocalizedString
+	/**
+	 * Let's get started!
+	 */
+	letsGo: () => LocalizedString
 	/**
 	 * Marked text ({wordCount} words)
 	 */
