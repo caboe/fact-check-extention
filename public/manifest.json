@@ -2,8 +2,8 @@
 	"manifest_version": 3,
 	"name": "Fact Check Extension",
 	"version": "1.0",
-	"description": "Führt Fact Checks für markierten Text durch.",
-	"permissions": ["storage", "activeTab", "scripting", "clipboardWrite"],
+	"description": "Performs fact checks for selected text.",
+	"permissions": ["storage", "activeTab", "clipboardWrite"],
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
