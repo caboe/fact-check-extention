@@ -32,7 +32,7 @@ export default async function checkFact() {
 			},
 			{
 				role: 'system',
-				content: ` Your answer should be around ${apiRequest.range} words in length.`,
+				content: `Always respond in the same language as the last user request. Your answer should be about ${apiRequest.range} words long.`,
 			},
 			{
 				role: 'user',
