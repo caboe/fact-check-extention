@@ -9,12 +9,14 @@ import de from './de'
 import en from './en'
 import es from './es'
 import fr from './fr'
+import pt from './pt'
 
 const localeTranslations = {
 	de,
 	en,
 	es,
 	fr,
+	pt,
 }
 
 export const loadLocale = (locale: Locales): void => {

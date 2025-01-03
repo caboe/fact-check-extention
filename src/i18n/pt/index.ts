@@ -1,0 +1,48 @@
+import type { Translation } from '../i18n-types'
+
+const pt = {
+	introduction: `<p><h5 class="font-bold">Olá!</h5> Estamos felizes por você estar experimentando nossa extensão do Chrome para verificação de fatos com IA. Esta ferramenta foi projetada para ajudá-lo a verificar rapidamente informações online e avaliar melhor a credibilidade dos textos.</p>
+<p><strong>Nota importante:</strong> Embora esta extensão seja baseada em IA avançada, ela não é infalível. A inteligência artificial às vezes pode "alucinar", ou seja, fornecer informações falsas ou enganosas. Portanto, é importante examinar criticamente os resultados e, em caso de dúvida, realizar pesquisas adicionais, especialmente se os resultados parecerem inesperados ou "suspeitos". Considere sempre os resultados da verificação de fatos como um ponto de partida e não como a verdade absoluta. Use a extensão como suporte para seu próprio engajamento crítico com as informações.</p>`,
+	letsGo: 'Vamos lá!',
+	markedText: 'Texto marcado ({wordCount:number} palavras)' as `${string}{wordCount}${string}`,
+	apiEndpoint: 'Endpoint da API',
+	configureApi: 'Configurar',
+	factCheck: 'Verificação de fatos',
+	style: 'Tom de fala',
+	friendly: 'Amigável',
+	neutral: 'Neutro',
+	critical: 'Crítico',
+	response: 'Resposta',
+	responseLength:
+		'Comprimento da resposta aprox. {responseLength: number} palavras' as `${string}{responseLength}${string}`,
+	apiCta: 'Verificar',
+	result: 'Resultado',
+	checkingProgress: 'Verificando...',
+	copy: 'Copiar',
+	configuredEndpoints: 'Endpoints configurados',
+	newEndpoint: 'Novo endpoint',
+	title: 'Título',
+	titelPlaceholder: 'Exemplo: API de verificação de fatos',
+	url: 'URL',
+	urlPlaceholder: 'https://api.example.com/factcheck',
+	apiKey: 'Chave da API',
+	apiKeyPlaceholder: 'Sua chave da API',
+	cancel: 'Cancelar',
+	add: 'Adicionar',
+	updateEndpoint: 'Atualizar endpoint',
+	noConfiguredEndpoints: 'Nenhum endpoint configurado',
+	editText: 'Editar texto aqui...',
+	notChecked: 'Não verificado',
+	enterText: 'Digite o texto aqui.',
+	personLabel: 'Responder no estilo desta pessoa (opcional)',
+	personPlaceholder: 'Edgar Allan Poe',
+	chooseTemplate: 'Escolha um modelo (opcional)',
+	choose: 'Escolher ...',
+	endpointExists: 'Já existe um endpoint com este nome.',
+	saveAnyway: 'Nenhuma chave API fornecida, salvar mesmo assim?',
+	fieldsMissing: 'Por favor, preencha todos os campos.',
+	copied: 'Resultado copiado para a área de transferência!',
+	copyError: 'Erro ao copiar: {error:string}' as `${string}{error}${string}`,
+} satisfies Translation
+
+export default pt

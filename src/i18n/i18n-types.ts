@@ -10,6 +10,7 @@ export type Locales =
 	| 'en'
 	| 'es'
 	| 'fr'
+	| 'pt'
 
 export type Translation = RootTranslation
 
@@ -123,6 +124,10 @@ type RootTranslation = {
 	 * a​d​d
 	 */
 	add: string
+	/**
+	 * U​p​d​a​t​e​ ​E​n​d​p​o​i​n​t
+	 */
+	updateEndpoint: string
 	/**
 	 * N​o​ ​e​n​d​p​o​i​n​t​s​ ​a​d​d​e​d
 	 */
@@ -284,6 +289,10 @@ export type TranslationFunctions = {
 	 * add
 	 */
 	add: () => LocalizedString
+	/**
+	 * Update Endpoint
+	 */
+	updateEndpoint: () => LocalizedString
 	/**
 	 * No endpoints added
 	 */

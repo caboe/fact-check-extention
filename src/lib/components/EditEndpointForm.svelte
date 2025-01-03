@@ -1,6 +1,7 @@
 <script lang="ts">
 	import endpoints from '../state/endpoints.svelte'
 	import { type Endpoint } from '../state/endpoints.svelte'
+	import L from '../state/L.svelte'
 
 	const { endpoint } = $props<{
 		endpoint: Endpoint
@@ -49,5 +50,5 @@
 		<input type="text" id="model" bind:value={model} class="input-bordered input" required />
 	</div>
 
-	<button type="submit" class="variant-filled-success btn w-full"> Update Endpoint </button>
+	<button type="submit" class="variant-filled-success btn w-full"> {L.updateEndpoint()} </button>
 </form>

@@ -28,6 +28,7 @@ const en = {
 	apiKeyPlaceholder: 'Your API key',
 	cancel: 'Cancel',
 	add: 'add',
+	updateEndpoint: 'Update Endpoint',
 	noConfiguredEndpoints: 'No endpoints added',
 	editText: 'Edit text here ...',
 	notChecked: 'Not checked',

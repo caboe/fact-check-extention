@@ -28,7 +28,7 @@
 {#if view.showEditEndpointForm}
 	<div class="mb-4">
 		<EditEndpointForm endpoint={editingEndpoint!} />
-		<button onclick={closeEdit} class="variant-filled-error btn mt-2 w-full"> Cancel </button>
+		<button onclick={closeEdit} class="variant-filled-error btn mt-2 w-full"> {L.cancel()} </button>
 	</div>
 {:else}
 	{#if endpoints.value.length === 0}

@@ -29,6 +29,7 @@ const es = {
 	apiKeyPlaceholder: 'Su clave de API',
 	cancel: 'Cancelar',
 	add: 'Añadir',
+	updateEndpoint: 'Actualizar punto final',
 	noConfiguredEndpoints: 'No se han añadido puntos finales hasta ahora',
 	editText: 'Editar texto aquí...',
 	notChecked: 'No verificado',
