@@ -1,8 +1,8 @@
 {
 	"manifest_version": 3,
-	"name": "Fact Check Extension",
+	"name": "Fact Checker - GPT connector",
 	"version": "1.0",
-	"description": "Performs fact checks for selected text.",
+	"description": "Simply select the text and have it tested for correctness by your configured GPT.",
 	"permissions": ["storage", "activeTab", "clipboardWrite"],
 	"action": {
 		"default_popup": "popup.html",
