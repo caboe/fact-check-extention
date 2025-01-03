@@ -1,15 +1,21 @@
 <script lang="ts">
 	import popupState from '../../../popupState.svelte'
+
+	interface Props {
+		class?: string
+		onclick?: () => void
+	}
+
+	let {
+		class: className = '',
+		onclick = () => (popupState.showConfig = !popupState.showConfig),
+	}: Props = $props()
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button
-	type="button"
-	class="variant-filled btn-icon btn-icon-sm"
-	onclick={() => (popupState.showConfig = !popupState.showConfig)}
->
+<button type="button" class={className} {onclick}>
 	<svg
-		class="h-6 w-6 text-slate-50"
+		class="currentColor h-6 w-6"
 		aria-hidden="true"
 		xmlns="http://www.w3.org/2000/svg"
 		fill="currentColor"

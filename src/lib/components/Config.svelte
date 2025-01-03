@@ -17,10 +17,10 @@
 		<div class="text-md font-bold">{L.apiEndpoint()}</div>
 		<CloseIcon />
 	</div>
-	<EndpointList on:delete={(event) => deleteEndpoint(event.detail)} />
+	<EndpointList on:delete={(event: CustomEvent<string>) => deleteEndpoint(event.detail)} />
 	{#if view.showAddEndpointForm}
 		<AddEndpointForm />
-	{:else}
+	{:else if !view.showEditEndpointForm}
 		<button
 			class="variant-filled-success btn w-full"
 			onclick={() => (view.showAddEndpointForm = true)}

@@ -76,6 +76,14 @@ class UnifiedStorage {
 		await this.setUnifiedState(state)
 	}
 
+	async edit(originalTitle: string, updatedEndpoint: Endpoint): Promise<void> {
+		const state = await this.getUnifiedState()
+		const endpoints = state.endpoints || []
+		const updatedEndpoints = endpoints.map((e) => (e.title === originalTitle ? updatedEndpoint : e))
+		state.endpoints = updatedEndpoints
+		await this.setUnifiedState(state)
+	}
+
 	async set(endpoints: Endpoint[]): Promise<void> {
 		const state = await this.getUnifiedState()
 		state.endpoints = endpoints

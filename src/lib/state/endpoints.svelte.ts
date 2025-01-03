@@ -40,6 +40,16 @@ class Endpoints {
 		await this.#updateFromStore()
 	}
 
+	async edit(originalTitle: string, updatedEndpoint: Endpoint) {
+		await localStorage.edit(originalTitle, updatedEndpoint)
+		await this.#updateFromStore()
+
+		// Update selected endpoint if it was edited
+		if (this.#selected?.title === originalTitle) {
+			this.#selected = updatedEndpoint
+		}
+	}
+
 	get value() {
 		return this.#value
 	}
