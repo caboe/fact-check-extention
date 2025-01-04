@@ -14,7 +14,17 @@
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
-		chatGpt: {
+		deepSeek: {
+			title: 'DeepSeek',
+			url: 'https://api.deepseek.com/chat/completions',
+			model: 'deepseek-chat',
+		},
+		gemini: {
+			title: 'Gemini',
+			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+			model: 'gemini-2.0-flash-exp',
+		},
+		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
 			model: 'gpt-4o-mini',

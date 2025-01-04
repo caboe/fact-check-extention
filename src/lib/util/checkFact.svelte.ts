@@ -28,11 +28,7 @@ export default async function checkFact() {
 		messages: [
 			{
 				role: 'system',
-				content: role[2],
-			},
-			{
-				role: 'system',
-				content: `Always respond in the same language as the last user request. Your answer should be about ${apiRequest.range} words long.`,
+				content: `${role[2]} Always respond in the **same language** as the last user request. If the user asks a question in German, respond in German. If the user asks a question in French, respond in French, and so on. Your answer should be about  ${apiRequest.range} words long.`,
 			},
 			{
 				role: 'user',
