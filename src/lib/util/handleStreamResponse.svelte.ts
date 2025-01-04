@@ -24,18 +24,25 @@ export default async function handleStreamResponse(response: Response) {
 				// TODO: For unknown resaons, ChatGPT needs thsi
 				const line = rawLine.replace('data: ', '')
 
-				const parsed = await JSON.parse(line)
-				if (!parsed) continue
+				// Skip non-JSON lines like "[DONE]"
+				if (line.trim() === '[DONE]') continue
 
-				if (parsed.choices?.[0].finish_reason) break
 				try {
-					if (parsed.message) {
-						resultText += parsed.message.content
-					} else if (parsed.choices[0].delta.content) {
+					const parsed = JSON.parse(line)
+
+					// Handle Gemini response format
+					if (parsed.candidates?.[0]?.content?.parts?.[0]?.text) {
+						resultText += parsed.candidates[0].content.parts[0].text
+					}
+					// Fallback to OpenAI format for compatibility
+					else if (parsed.choices?.[0]?.delta?.content) {
 						resultText += parsed.choices[0].delta.content
+					} else if (parsed.message?.content) {
+						resultText += parsed.message.content
 					}
 				} catch (e) {
 					console.error('Parsing error:', e)
+					continue
 				}
 			}
 		}
