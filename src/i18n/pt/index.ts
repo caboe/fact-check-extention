@@ -1,8 +1,9 @@
 import type { Translation } from '../i18n-types'
 
 const pt = {
-	introduction: `<p><h5 class="font-bold">Olá!</h5> Estamos felizes por você estar experimentando nossa extensão do Chrome para verificação de fatos com IA. Esta ferramenta foi projetada para ajudá-lo a verificar rapidamente informações online e avaliar melhor a credibilidade dos textos.</p>
-<p><strong>Nota importante:</strong> Embora esta extensão seja baseada em IA avançada, ela não é infalível. A inteligência artificial às vezes pode "alucinar", ou seja, fornecer informações falsas ou enganosas. Portanto, é importante examinar criticamente os resultados e, em caso de dúvida, realizar pesquisas adicionais, especialmente se os resultados parecerem inesperados ou "suspeitos". Considere sempre os resultados da verificação de fatos como um ponto de partida e não como a verdade absoluta. Use a extensão como suporte para seu próprio engajamento crítico com as informações.</p>`,
+	introduction: `Esta ferramenta foi desenvolvida para ajudar você a verificar informações na internet de forma mais rápida e avaliar melhor a credibilidade dos textos.</p>
+<p>Configure uma GPT que irá realizar a verificação de fatos.</p>
+<><strong>Observação importante:</strong> Embora esta extensão seja baseada em IA avançada, ela não é infalível. A inteligência artificial pode, em alguns casos, 'alucinar', ou seja, fornecer informações falsas ou enganosas. Por isso, é importante questionar criticamente os resultados e, em caso de dúvida, fazer pesquisas adicionais, especialmente se os resultados parecerem inesperados ou 'suspeitos.' Sempre veja os resultados da verificação de fatos como um primeiro ponto de referência e não como a verdade definitiva. Use a extensão como um suporte para sua própria análise crítica das informações.`,
 	letsGo: 'Vamos lá!',
 	markedText: 'Texto marcado ({wordCount:number} palavras)' as `${string}{wordCount}${string}`,
 	apiEndpoint: 'Endpoint da API',

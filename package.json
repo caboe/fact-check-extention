@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"build:watch": "vite build --watch",
-		"release": "zip -r release-$(date +%Y-%m-%d).zip dist",
+		"release": "bun run check && bun run build && zip -r release-$(date +%Y-%m-%d).zip dist",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

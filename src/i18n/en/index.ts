@@ -1,8 +1,9 @@
 import type { BaseTranslation } from '../i18n-types'
 
 const en = {
-	introduction: `<p><h5 class="font-bold">Hello!</h5>We're glad you're trying out our Chrome extension for AI-powered fact-checking. This tool is designed to help you quickly verify information online and better assess the credibility of texts.</p>
-<p><strong>Important Note:</strong> Although this extension is based on advanced AI, it is not infallible. Artificial intelligence can sometimes "hallucinate," i.e., provide false or misleading information. Therefore, it is important to critically examine the results and, if in doubt, conduct additional research, especially if the results appear unexpected or "suspicious." Always consider the fact-checking results as a starting point and not as the ultimate truth. Use the extension as support for your own critical engagement with information.</p>`,
+	introduction: `This tool is designed to help you verify information on the web more quickly and better assess the credibility of texts.</p>
+	<p>Configure a GPT that will conduct the Fact Check.</p>
+	<p><strong>Important note:</strong> Although this extension is based on advanced AI, it is not infallible. Artificial intelligence can sometimes 'hallucinate,' i.e., provide false or misleading information. Therefore, it is important to critically question the results and, in case of doubt, conduct additional research, especially if the results seem unexpected or 'suspicious.' Always consider the fact-check results as a first point of reference rather than the final truth. Use the extension as support for your own critical examination of information.</p>`,
 	letsGo: "Let's get started!",
 	markedText: 'Marked text ({wordCount:number} words)',
 	apiEndpoint: 'API Endpoint',

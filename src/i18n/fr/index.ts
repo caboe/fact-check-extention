@@ -1,8 +1,9 @@
 import type { Translation } from '../i18n-types'
 
 const fr = {
-	introduction: `<p><h5 class="font-bold">Bonjour !</h5> Nous sommes ravis que vous essayiez notre extension Chrome pour la vérification des faits assistée par l'IA. Cet outil est conçu pour vous aider à vérifier rapidement les informations en ligne et à mieux évaluer la crédibilité des textes.</p>
-<p><strong>Note importante :</strong> Bien que cette extension soit basée sur une IA avancée, elle n'est pas infaillible. L'intelligence artificielle peut parfois « halluciner », c'est-à-dire fournir des informations fausses ou trompeuses. Par conséquent, il est important d'examiner les résultats de manière critique et, en cas de doute, d'effectuer des recherches supplémentaires, en particulier si les résultats semblent inattendus ou « suspects ». Considérez toujours les résultats de la vérification des faits comme un point de départ et non comme la vérité absolue. Utilisez l'extension comme un support pour votre propre engagement critique avec les informations.</p>`,
+	introduction: `Cet outil est conçu pour vous aider à vérifier plus rapidement les informations sur le web et à mieux évaluer la crédibilité des textes.</p>
+	<p>Configurez une GPT qui effectuera la vérification des faits.</p>
+	<p><strong>Remarque importante :</strong> Bien que cette extension repose sur une IA avancée, elle n’est pas infaillible. L’intelligence artificielle peut parfois 'halluciner', c’est-à-dire fournir des informations fausses ou trompeuses. Il est donc important de remettre en question les résultats de manière critique et, en cas de doute, d’effectuer des recherches supplémentaires, surtout si les résultats semblent inattendus ou 'suspects.' Considérez toujours les résultats de la vérification des faits comme un premier point de référence et non comme la vérité absolue. Utilisez cette extension comme un soutien pour votre propre analyse critique des informations.</p>`,
 	letsGo: 'Allons-y !',
 	markedText: 'Texte marqué ({wordCount:number} mots)' as `${string}{wordCount}${string}`,
 	apiEndpoint: 'Point de terminaison API',
