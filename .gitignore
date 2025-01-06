@@ -3,7 +3,7 @@ node_modules
 # Output
 .output
 .vercel
-release.zip
+release*.zip
 
 /.svelte-kit
 /build
