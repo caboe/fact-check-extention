@@ -46,9 +46,18 @@ export default async function checkFact() {
 			},
 			body: JSON.stringify(requestBody),
 		})
-
 		if (!response.ok) {
-			throw new Error(`HTTP-Fehler! Status: ${response.status}`)
+			try {
+				const errorResponse = await response.json()
+				const message = errorResponse[0]?.error?.message || errorResponse.error?.message
+				if (message) {
+					apiRequest.result = message
+					return
+				}
+			} catch (e) {
+				apiRequest.result = `HTTP-Error!  ${e}`
+			}
+			return
 		}
 
 		handleStreamResponse(response)
