@@ -32,7 +32,7 @@ const fr = {
 	add: 'Ajouter',
 	updateEndpoint: 'Mettre à jour le point de terminaison',
 	noConfiguredEndpoints: "Aucun point de terminaison ajouté jusqu'à présent",
-	editText: 'Modifier le texte ici...',
+	selectedText: 'Sélectionnez du texte sur la page ou collez-le ici.',
 	notChecked: 'Non vérifié',
 	enterText: 'Entrez le texte ici.',
 	personLabel: 'ERépondre dans le style de cette personne (facultatif)',

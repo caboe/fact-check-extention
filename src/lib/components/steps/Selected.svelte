@@ -64,7 +64,7 @@
 			bind:value={apiRequest.selectedText}
 			class="textarea"
 			rows="4"
-			placeholder={L.editText()}
+			placeholder={L.selectedText()}
 		></textarea>
 	{/snippet}
 </AccordionItem>

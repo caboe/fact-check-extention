@@ -134,9 +134,9 @@ type RootTranslation = {
 	 */
 	noConfiguredEndpoints: string
 	/**
-	 * E​d​i​t​ ​t​e​x​t​ ​h​e​r​e​ ​.​.​.
+	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​n​ ​t​h​e​ ​p​a​g​e​ ​o​r​ ​p​a​s​t​e​ ​i​t​ ​h​e​r​e​.
 	 */
-	editText: string
+	selectedText: string
 	/**
 	 * N​o​t​ ​c​h​e​c​k​e​d
 	 */
@@ -300,9 +300,9 @@ export type TranslationFunctions = {
 	 */
 	noConfiguredEndpoints: () => LocalizedString
 	/**
-	 * Edit text here ...
+	 * Select text on the page or paste it here.
 	 */
-	editText: () => LocalizedString
+	selectedText: () => LocalizedString
 	/**
 	 * Not checked
 	 */

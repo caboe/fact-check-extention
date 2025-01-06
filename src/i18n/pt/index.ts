@@ -32,7 +32,7 @@ const pt = {
 	add: 'Adicionar',
 	updateEndpoint: 'Atualizar endpoint',
 	noConfiguredEndpoints: 'Nenhum endpoint configurado',
-	editText: 'Editar texto aqui...',
+	selectedText: 'Selecione o texto na página ou cole-o aqui.',
 	notChecked: 'Não verificado',
 	enterText: 'Digite o texto aqui.',
 	personLabel: 'Responder no estilo desta pessoa (opcional)',

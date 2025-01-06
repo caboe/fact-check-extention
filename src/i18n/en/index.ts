@@ -31,7 +31,7 @@ const en = {
 	add: 'add',
 	updateEndpoint: 'Update Endpoint',
 	noConfiguredEndpoints: 'No endpoints added',
-	editText: 'Edit text here ...',
+	selectedText: 'Select text on the page or paste it here.',
 	notChecked: 'Not checked',
 	enterText: 'Enter text here.',
 	personLabel: 'Enter a person (optional)',
