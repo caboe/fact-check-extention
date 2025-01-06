@@ -31,7 +31,7 @@
 	function autoGrow() {
 		if (!textareaEl) return
 		textareaEl.style.height = '5px'
-		textareaEl.style.height = textareaEl.scrollHeight + 'px'
+		textareaEl.style.height = (textareaEl.scrollHeight || 100) + 'px'
 	}
 </script>
 
