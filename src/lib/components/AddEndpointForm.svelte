@@ -14,26 +14,27 @@
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
-		deepSeek: {
-			title: 'DeepSeek',
-			url: 'https://api.deepseek.com/chat/completions',
-			model: 'deepseek-chat',
+		ollama: {
+			title: 'Ollama',
+			url: 'http://localhost:11434/api/chat',
+			model: 'llama3.2:latest',
 		},
 		gemini: {
 			title: 'Gemini',
 			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
 			model: 'gemini-2.0-flash-exp',
 		},
+		deepSeek: {
+			title: 'DeepSeek',
+			url: 'https://api.deepseek.com/chat/completions',
+			model: 'deepseek-chat',
+		},
 		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
 			model: 'gpt-4o-mini',
 		},
-		ollama: {
-			title: 'Ollama',
-			url: 'http://localhost:11434/api/chat',
-			model: 'llama3.2:latest',
-		},
+
 	}
 
 	function prefillFields() {
