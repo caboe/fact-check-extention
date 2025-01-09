@@ -29,3 +29,6 @@ vite.config.ts.timestamp-*
 /.idea/fact-check-extension-2.iml
 /.idea/modules.xml
 /.idea/vcs.xml
+
+# VSCode
+.vscode
