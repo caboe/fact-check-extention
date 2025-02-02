@@ -1,4 +1,5 @@
 <script lang="ts">
+	import popupState from '../../popupState.svelte'
 	import tone, { type ITone } from '../util/tone.svelte'
 
 	const newTone: ITone = { value: [...tone.value] }
@@ -11,6 +12,10 @@
 		return newTone.value.some((e) => !e.thesis.trim() || !e.answer.trim())
 	}
 
+	function close() {
+		popupState.view = 'DEFAULT'
+	}
+
 	function saveEntries(e: Event) {
 		if (checkNotEmptyFields()) {
 			alert('Please fill in all fields')
@@ -18,6 +23,7 @@
 			return
 		}
 		tone.value = newTone.value
+		close()
 	}
 </script>
 
