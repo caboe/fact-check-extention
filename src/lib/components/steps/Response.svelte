@@ -3,6 +3,7 @@
 	import apiRequest from '../../state/apiRequest.svelte'
 	import L from '../../state/L.svelte'
 	import response from '../svg/response.svg'
+	import { set } from '../../util/unifiedStorage.svelte'
 
 	interface Props {
 		open: boolean
@@ -11,12 +12,16 @@
 	let { open }: Props = $props()
 
 	let textareaEl: HTMLTextAreaElement | null = $state(null)
+	let message: string = $state('')
 
 	function copyResult() {
 		navigator.clipboard
 			.writeText(apiRequest.result)
 			.then(() => {
-				alert(L.copied())
+				message = L.copied()
+				setTimeout(() => {
+					message = ''
+				}, 2000)
 			})
 			.catch((err) => {
 				alert(L.copyError({ error: err.message }))
@@ -64,6 +69,13 @@
 			{L.checkingProgress()}
 		{:else}
 			{L.notChecked()}
+		{/if}
+		{#if message}
+			<div class="absolute inset-0 bg-white/50 text-lg font-bold text-lime-700">
+				<span>
+					{message}
+				</span>
+			</div>
 		{/if}
 	{/snippet}
 </AccordionItem>
