@@ -8,7 +8,7 @@
 
 	let {
 		class: className = '',
-		onclick = () => (popupState.showConfig = !popupState.showConfig),
+		onclick = () => (popupState.view = popupState.view === 'CONFIG' ? 'DEFAULT' : 'CONFIG'),
 	}: Props = $props()
 </script>
 

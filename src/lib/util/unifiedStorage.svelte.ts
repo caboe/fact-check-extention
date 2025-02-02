@@ -1,12 +1,12 @@
 import { Endpoint } from '../state/endpoints.svelte'
-import { Key } from './roles.svelte'
+import { ITone } from './tone.svelte'
 
 type StorageBackend = chrome.storage.LocalStorageArea | Storage
 
 interface UnifiedState {
 	endpoints: Endpoint[] | null
 	lastUsed: string | null
-	lastRoleKey: Key | null
+	tone: ITone | null
 	hasSeenIntroduction: boolean
 }
 
@@ -106,15 +106,15 @@ class UnifiedStorage {
 		return state.lastUsed
 	}
 
-	async setLastRoleKey(value: Key): Promise<void> {
+	async setTone(value: ITone): Promise<void> {
 		const state = await this.getUnifiedState()
-		state.lastRoleKey = value
+		state.tone = value
 		await this.setUnifiedState(state)
 	}
 
-	async getLastRoleKey(): Promise<Key | null> {
+	async getTone(): Promise<ITone | null> {
 		const state = await this.getUnifiedState()
-		return state.lastRoleKey
+		return state.tone
 	}
 
 	async setHasSeenIntroduction(): Promise<void> {
@@ -137,7 +137,7 @@ export const remove = unifiedStorage.delete.bind(unifiedStorage)
 export const set = unifiedStorage.set.bind(unifiedStorage)
 export const setLastUsed = unifiedStorage.setLastUsed.bind(unifiedStorage)
 export const getLastUsed = unifiedStorage.getLastUsed.bind(unifiedStorage)
-export const setLastRoleKey = unifiedStorage.setLastRoleKey.bind(unifiedStorage)
-export const getLastRoleKey = unifiedStorage.getLastRoleKey.bind(unifiedStorage)
+export const setLastRoleKey = unifiedStorage.setTone.bind(unifiedStorage)
+export const getLastRoleKey = unifiedStorage.getTone.bind(unifiedStorage)
 export const setHasSeenIntroduction = unifiedStorage.setHasSeenIntroduction.bind(unifiedStorage)
 export const getHasSeenIntroduction = unifiedStorage.getHasSeenIntroduction.bind(unifiedStorage)

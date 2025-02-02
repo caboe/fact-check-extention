@@ -6,7 +6,7 @@
 <button
 	type="button"
 	class="variant-filled btn-icon btn-icon-sm"
-	onclick={() => (popupState.showConfig = !popupState.showConfig)}
+	onclick={() => (popupState.view = 'DEFAULT')}
 >
 	<svg
 		class="h-6 w-6 text-slate-50"

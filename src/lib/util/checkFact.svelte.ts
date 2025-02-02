@@ -2,25 +2,20 @@ import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
 import view from '../state/view.svelte'
 import handleStreamResponse from './handleStreamResponse.svelte'
-import roles from './roles.svelte'
+import role from './role.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
 
 export default async function checkFact() {
-	if (!endpoints.selected || !apiRequest.roleKey) {
+	if (!endpoints.selected) {
 		view.step = 1
 		return
 	}
 	view.step = 2
 
 	await unifiedStorage.setLastUsed(endpoints.selected.title)
-	await unifiedStorage.setLastRoleKey(apiRequest.roleKey)
+	// await unifiedStorage.setLastRoleKey(apiRequest.roleKey)
 	apiRequest.loading = true
 	apiRequest.result = ''
-
-	const role = roles.find((r) => r[0] === apiRequest.roleKey)
-	if (!role) {
-		throw new Error(`Unknown role key: ${apiRequest.roleKey}`)
-	}
 
 	const requestBody = {
 		model: endpoints.selected.model,

@@ -1,5 +1,5 @@
 class PopupState {
-	public showConfig: boolean = $state(false)
+	public view: 'CONFIG' | 'TONE' | 'DEFAULT' = $state('DEFAULT')
 }
 
 const popupState = new PopupState()

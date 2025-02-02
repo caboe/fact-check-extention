@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import popupState from '../../../popupState.svelte'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
-	import roles from '../../util/roles.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
 	import connection from '../svg/connection.svg'
 
@@ -66,11 +66,9 @@
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
 				<div>{L.style()}</div>
 				<div class="text-center">
-					<select class="select" bind:value={apiRequest.roleKey}>
-						{#each roles as [value, title]}
-							<option {value}>{L[value]()}</option>
-						{/each}
-					</select>
+					<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
+						{L.add()} TODO Role
+					</button>
 				</div>
 				<div class="text-right">{L.response()}</div>
 			</div>
