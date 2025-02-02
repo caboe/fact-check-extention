@@ -12,6 +12,8 @@ Examples:
 {tone}
 
 Your task:
-Respond to these theses in a fluent manner. Ensure your answer is fact-based, quick-witted, understandable, and to the point.`
+Respond to these theses in a fluent manner. Ensure your answer is fact-based, quick-witted, understandable, and to the point.
+
+Always respond in the **same language** as the last user request. If the user asks a question in German, respond in German. If the user asks a question in French, respond in French, and so on. Your answer should be about  {range} words long.`
 
 export default role
