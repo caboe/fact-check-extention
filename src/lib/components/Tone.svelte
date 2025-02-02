@@ -1,6 +1,7 @@
 <script lang="ts">
 	import popupState from '../../popupState.svelte'
 	import tone, { type ITone } from '../util/tone.svelte'
+	import CloseIcon from './icons/CloseIcon.svelte'
 
 	const newTone: ITone = { value: [...tone.value] }
 
@@ -28,6 +29,14 @@
 </script>
 
 <div class="container mx-auto p-4">
+	<div class="align-items grid grid-cols-[1fr_30px]">
+		<h2 class="text-2xl font-bold">Tone</h2>
+		<CloseIcon />
+	</div>
+	<p class="my-4 text-gray-600">
+		Align the tone of the responses to your personal style by adding some statement/response
+		examples.
+	</p>
 	<form onsubmit={saveEntries}>
 		{#each newTone.value as item}
 			<fieldset class="mb-4 grid grid-cols-1 gap-1">
