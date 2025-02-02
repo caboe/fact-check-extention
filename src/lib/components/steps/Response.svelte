@@ -4,6 +4,7 @@
 	import L from '../../state/L.svelte'
 	import response from '../svg/response.svg'
 	import { set } from '../../util/unifiedStorage.svelte'
+	import { fade } from 'svelte/transition'
 
 	interface Props {
 		open: boolean
@@ -71,7 +72,10 @@
 			{L.notChecked()}
 		{/if}
 		{#if message}
-			<div class="absolute inset-0 bg-white/50 text-lg font-bold text-lime-700">
+			<div
+				class="absolute inset-0 flex h-full items-center justify-center bg-white/80 text-lg font-bold text-lime-700"
+				transition:fade
+			>
 				<span>
 					{message}
 				</span>
