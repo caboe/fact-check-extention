@@ -65,7 +65,7 @@
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
 				<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
-					Configure tone of speach
+					{L.configureTone()}
 				</button>
 			</div>
 			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">

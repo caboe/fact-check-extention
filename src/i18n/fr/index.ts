@@ -54,6 +54,7 @@ const fr = {
 	newItemButton: 'Nouvel élément',
 	saveButton: 'Enregistrer',
 	fillAllFieldsAlert: 'Veuillez remplir tous les champs',
+	configureTone: 'Configurer le ton de la voix',
 } satisfies BaseTranslation
 
 export default fr

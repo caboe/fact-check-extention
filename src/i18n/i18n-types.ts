@@ -218,6 +218,10 @@ type RootTranslation = {
 	 * P​l​e​a​s​e​ ​f​i​l​l​ ​i​n​ ​a​l​l​ ​f​i​e​l​d​s
 	 */
 	fillAllFieldsAlert: string
+	/**
+	 * C​o​n​f​i​g​u​r​e​ ​t​o​n​e​ ​o​f​ ​s​p​e​e​c​h
+	 */
+	configureTone: string
 }
 
 export type TranslationFunctions = {
@@ -419,6 +423,10 @@ export type TranslationFunctions = {
 	 * Please fill in all fields
 	 */
 	fillAllFieldsAlert: () => LocalizedString
+	/**
+	 * Configure tone of speech
+	 */
+	configureTone: () => LocalizedString
 }
 
 export type Formatters = {}

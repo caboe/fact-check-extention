@@ -54,6 +54,7 @@ const pt = {
 	newItemButton: 'Novo item',
 	saveButton: 'Salvar',
 	fillAllFieldsAlert: 'Por favor, preencha todos os campos',
+	configureTone: 'Configurar tom de voz',
 } satisfies BaseTranslation
 
 export default pt

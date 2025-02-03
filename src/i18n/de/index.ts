@@ -44,7 +44,6 @@ const de = {
 	fieldsMissing: 'Bitte alle Felder ausfüllen.',
 	copied: 'Ergebnis in die Zwischenablage kopiert!',
 	copyError: 'Fehler beim Kopieren: {error:string}' as `${string}{error}${string}`,
-,
 	toneTitle: 'Ton',
 	toneDescription:
 		'Passen Sie den Ton der Antworten an Ihren persönlichen Stil an, indem Sie einige Beispiel-Aussagen/Antworten hinzufügen.',
@@ -55,6 +54,7 @@ const de = {
 	newItemButton: 'Neuer Eintrag',
 	saveButton: 'Speichern',
 	fillAllFieldsAlert: 'Bitte füllen Sie alle Felder aus',
+	configureTone: 'Konfigurieren des Sprachstils',
 } satisfies BaseTranslation
 
 export default de

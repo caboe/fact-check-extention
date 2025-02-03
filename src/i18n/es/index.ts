@@ -44,7 +44,6 @@ const es = {
 	fieldsMissing: 'Por favor, complete todos los campos.',
 	copied: 'Resultado copiado al portapapeles!',
 	copyError: 'Error al copiar: {error:string}' as `${string}{error}${string}`,
-,
 	toneTitle: 'Tono',
 	toneDescription:
 		'Alinea el tono de las respuestas con tu estilo personal añadiendo algunos ejemplos de afirmaciones/responses.',
@@ -55,6 +54,7 @@ const es = {
 	newItemButton: 'Nuevo elemento',
 	saveButton: 'Guardar',
 	fillAllFieldsAlert: 'Por favor, completa todos los campos',
+	configureTone: 'Configurar tono de voz',
 } satisfies BaseTranslation
 
 export default es

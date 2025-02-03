@@ -53,6 +53,7 @@ const en = {
 	newItemButton: 'New Item',
 	saveButton: 'Save',
 	fillAllFieldsAlert: 'Please fill in all fields',
+	configureTone: 'Configure tone of speech',
 } satisfies BaseTranslation
 
 export default en
