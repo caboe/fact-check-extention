@@ -2,6 +2,7 @@
 	import popupState from '../../popupState.svelte'
 	import tone, { type ITone } from '../util/tone.svelte'
 	import CloseIcon from './icons/CloseIcon.svelte'
+	import L from '../state/L.svelte'
 
 	const newTone: ITone = { value: [...tone.value] }
 
@@ -19,7 +20,7 @@
 
 	function saveEntries(e: Event) {
 		if (checkNotEmptyFields()) {
-			alert('Please fill in all fields')
+			alert(L.fillAllFieldsAlert())
 			e.preventDefault()
 			return
 		}
@@ -34,27 +35,26 @@
 		<CloseIcon />
 	</div>
 	<p class="my-4 text-gray-600">
-		Align the tone of the responses to your personal style by adding some statement/response
-		examples.
+		{L.toneDescription()}
 	</p>
 	<form onsubmit={saveEntries}>
 		{#each newTone.value as item}
 			<fieldset class="card mb-2 grid grid-cols-1 gap-1 rounded-md p-2">
 				<label class="label">
-					<span>Statement</span>
+					<span>{L.statementLabel()}</span>
 					<input
 						type="text"
 						bind:value={item.thesis}
-						placeholder="Enter controversial statement..."
+						placeholder={L.statementLabel()}
 						class="w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
 				</label>
 				<label class="label">
-					<span>Response</span>
+					<span>{L.responseLabel()}</span>
 					<input
 						type="text"
 						bind:value={item.answer}
-						placeholder="Enter factual response..."
+						placeholder={L.responseLabel()}
 						class="w-full rounded-md border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					/>
 				</label>
@@ -66,13 +66,13 @@
 				onclick={addNewEntry}
 				class="rounded-md bg-gray-200 px-4 py-2 text-gray-800 transition-colors duration-200 hover:bg-gray-300"
 			>
-				New Item
+				{L.newItemButton()}
 			</button>
 			<button
 				type="submit"
 				class="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-200 hover:bg-blue-600"
 			>
-				Save
+				{L.saveButton()}
 			</button>
 		</div>
 	</form>

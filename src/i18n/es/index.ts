@@ -1,4 +1,4 @@
-import type { Translation } from '../i18n-types'
+import type { BaseTranslation } from '../i18n-types'
 
 const es = {
 	introduction: `Esta herramienta está diseñada para ayudarte a verificar la información en la web de manera más rápida y a evaluar mejor la credibilidad de los textos.</p>
@@ -44,6 +44,17 @@ const es = {
 	fieldsMissing: 'Por favor, complete todos los campos.',
 	copied: 'Resultado copiado al portapapeles!',
 	copyError: 'Error al copiar: {error:string}' as `${string}{error}${string}`,
-} satisfies Translation
+,
+	toneTitle: 'Tono',
+	toneDescription:
+		'Alinea el tono de las respuestas con tu estilo personal añadiendo algunos ejemplos de afirmaciones/responses.',
+	statementLabel: 'Afirmación',
+	statementPlaceholder: 'Introduce una afirmación controvertida...',
+	responseLabel: 'Respuesta',
+	responsePlaceholder: 'Introduce una respuesta factual...',
+	newItemButton: 'Nuevo elemento',
+	saveButton: 'Guardar',
+	fillAllFieldsAlert: 'Por favor, completa todos los campos',
+} satisfies BaseTranslation
 
 export default es

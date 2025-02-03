@@ -43,6 +43,16 @@ const en = {
 	fieldsMissing: 'Please fill in all fields.',
 	copied: 'Result copied to clipboard!',
 	copyError: 'Error copying: {error:string}',
+	toneTitle: 'Tone',
+	toneDescription:
+		'Align the tone of the responses to your personal style by adding some statement/response examples.',
+	statementLabel: 'Statement',
+	statementPlaceholder: 'Enter controversial statement...',
+	responseLabel: 'Response',
+	responsePlaceholder: 'Enter factual response...',
+	newItemButton: 'New Item',
+	saveButton: 'Save',
+	fillAllFieldsAlert: 'Please fill in all fields',
 } satisfies BaseTranslation
 
 export default en

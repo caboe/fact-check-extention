@@ -182,6 +182,42 @@ type RootTranslation = {
 	 * @param {string} error
 	 */
 	copyError: RequiredParams<'error'>
+	/**
+	 * T​o​n​e
+	 */
+	toneTitle: string
+	/**
+	 * A​l​i​g​n​ ​t​h​e​ ​t​o​n​e​ ​o​f​ ​t​h​e​ ​r​e​s​p​o​n​s​e​s​ ​t​o​ ​y​o​u​r​ ​p​e​r​s​o​n​a​l​ ​s​t​y​l​e​ ​b​y​ ​a​d​d​i​n​g​ ​s​o​m​e​ ​s​t​a​t​e​m​e​n​t​/​r​e​s​p​o​n​s​e​ ​e​x​a​m​p​l​e​s​.
+	 */
+	toneDescription: string
+	/**
+	 * S​t​a​t​e​m​e​n​t
+	 */
+	statementLabel: string
+	/**
+	 * E​n​t​e​r​ ​c​o​n​t​r​o​v​e​r​s​i​a​l​ ​s​t​a​t​e​m​e​n​t​.​.​.
+	 */
+	statementPlaceholder: string
+	/**
+	 * R​e​s​p​o​n​s​e
+	 */
+	responseLabel: string
+	/**
+	 * E​n​t​e​r​ ​f​a​c​t​u​a​l​ ​r​e​s​p​o​n​s​e​.​.​.
+	 */
+	responsePlaceholder: string
+	/**
+	 * N​e​w​ ​I​t​e​m
+	 */
+	newItemButton: string
+	/**
+	 * S​a​v​e
+	 */
+	saveButton: string
+	/**
+	 * P​l​e​a​s​e​ ​f​i​l​l​ ​i​n​ ​a​l​l​ ​f​i​e​l​d​s
+	 */
+	fillAllFieldsAlert: string
 }
 
 export type TranslationFunctions = {
@@ -347,6 +383,42 @@ export type TranslationFunctions = {
 	 * Error copying: {error}
 	 */
 	copyError: (arg: { error: string }) => LocalizedString
+	/**
+	 * Tone
+	 */
+	toneTitle: () => LocalizedString
+	/**
+	 * Align the tone of the responses to your personal style by adding some statement/response examples.
+	 */
+	toneDescription: () => LocalizedString
+	/**
+	 * Statement
+	 */
+	statementLabel: () => LocalizedString
+	/**
+	 * Enter controversial statement...
+	 */
+	statementPlaceholder: () => LocalizedString
+	/**
+	 * Response
+	 */
+	responseLabel: () => LocalizedString
+	/**
+	 * Enter factual response...
+	 */
+	responsePlaceholder: () => LocalizedString
+	/**
+	 * New Item
+	 */
+	newItemButton: () => LocalizedString
+	/**
+	 * Save
+	 */
+	saveButton: () => LocalizedString
+	/**
+	 * Please fill in all fields
+	 */
+	fillAllFieldsAlert: () => LocalizedString
 }
 
 export type Formatters = {}
