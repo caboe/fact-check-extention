@@ -64,13 +64,9 @@
 				</select>
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				<div>{L.style()}</div>
-				<div class="text-center">
-					<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
-						{L.add()} TODO Role
-					</button>
-				</div>
-				<div class="text-right">{L.response()}</div>
+				<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
+					Configure tone of speach
+				</button>
 			</div>
 			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">
 				<div class="text-sm">{L.personLabel()}</div>
