@@ -39,7 +39,7 @@
 	</p>
 	<form onsubmit={saveEntries}>
 		{#each newTone.value as item}
-			<fieldset class="mb-4 grid grid-cols-1 gap-1">
+			<fieldset class="card mb-2 grid grid-cols-1 gap-1 rounded-md p-2">
 				<label class="label">
 					<span>Statement</span>
 					<input
