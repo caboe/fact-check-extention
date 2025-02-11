@@ -49,17 +49,25 @@ type RootTranslation = {
 	 */
 	style: string
 	/**
-	 * F​r​i​e​n​d​l​y
+	 * F​a​c​t​ ​a​n​d​ ​E​v​i​d​e​n​c​e
 	 */
-	friendly: string
+	factAndEvidence: string
 	/**
-	 * N​e​u​t​r​a​l
+	 * E​m​p​a​t​h​e​t​i​c
 	 */
-	neutral: string
+	empathetic: string
 	/**
-	 * C​r​i​t​i​c​a​l
+	 * H​u​m​o​r​o​u​s
 	 */
-	critical: string
+	humorous: string
+	/**
+	 * S​o​c​r​a​t​i​c
+	 */
+	socratic: string
+	/**
+	 * A​u​t​h​o​r​i​t​a​r​i​a​n
+	 */
+	authoritarian: string
 	/**
 	 * R​e​s​p​o​n​s​e
 	 */
@@ -216,17 +224,25 @@ export type TranslationFunctions = {
 	 */
 	style: () => LocalizedString
 	/**
-	 * Friendly
+	 * Fact and Evidence
 	 */
-	friendly: () => LocalizedString
+	factAndEvidence: () => LocalizedString
 	/**
-	 * Neutral
+	 * Empathetic
 	 */
-	neutral: () => LocalizedString
+	empathetic: () => LocalizedString
 	/**
-	 * Critical
+	 * Humorous
 	 */
-	critical: () => LocalizedString
+	humorous: () => LocalizedString
+	/**
+	 * Socratic
+	 */
+	socratic: () => LocalizedString
+	/**
+	 * Authoritarian
+	 */
+	authoritarian: () => LocalizedString
 	/**
 	 * Response
 	 */

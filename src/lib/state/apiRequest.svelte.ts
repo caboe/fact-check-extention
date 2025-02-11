@@ -1,9 +1,9 @@
-import { Key } from '../util/roles.svelte'
+import type { Key } from '../util/roles.svelte'
 import unifiedStorage from '../util/unifiedStorage.svelte'
 
 class ApiRequest {
 	range = $state(50)
-	roleKey: Key = $state('neutral')
+	roleKey: Key = $state('factAndEvidence')
 	person = $state('')
 	loading = $state(false)
 	result = $state('')

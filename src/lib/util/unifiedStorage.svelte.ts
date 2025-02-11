@@ -1,5 +1,5 @@
-import { Endpoint } from '../state/endpoints.svelte'
-import { Key } from './roles.svelte'
+import type { Endpoint } from '../state/endpoints.svelte'
+import type { Key } from './roles.svelte'
 
 type StorageBackend = chrome.storage.LocalStorageArea | Storage
 
