@@ -28,7 +28,7 @@ export default async function checkFact() {
 			},
 			{
 				role: 'user',
-				content: apiRequest.selectedText,
+				content: apiRequest.selectedContent,
 			},
 		],
 	}

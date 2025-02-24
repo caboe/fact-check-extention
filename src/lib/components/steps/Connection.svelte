@@ -17,7 +17,7 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	if (apiRequest.selectedText.trim().length > 1 && view.step === 0) {
+	if (apiRequest.selectedContent.trim().length > 1 && view.step === 0) {
 		view.step = 1
 	}
 
@@ -84,7 +84,7 @@
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}
-				disabled={apiRequest.loading || !apiRequest.selectedText}
+				disabled={apiRequest.loading || !apiRequest.selectedContent}
 			>
 				{#if apiRequest.loading}
 					{L.checkingProgress()}

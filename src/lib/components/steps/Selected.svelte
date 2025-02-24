@@ -13,14 +13,16 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
+	let isEditable: boolean = $derived(!apiRequest.selectedContent)
+
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {
-						apiRequest.selectedText = response.text
+						apiRequest.selectedContent = response.text
 					} else {
-						apiRequest.selectedText = ''
+						apiRequest.selectedContent = ''
 					}
 				})
 			}
@@ -28,9 +30,9 @@
 	})
 
 	function selectedTokenLength() {
-		if (!apiRequest.selectedText) return 0
-		if (apiRequest.selectedText.replaceAll(' ', '').length === 0) return 0
-		return apiRequest.selectedText.trim().split(' ').length
+		if (!apiRequest.selectedContent) return 0
+		if (apiRequest.selectedContent.replaceAll(' ', '').length === 0) return 0
+		return apiRequest.selectedContent.trim().split(' ').length
 	}
 
 	function selectCurrent() {
@@ -59,12 +61,16 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		<textarea
-			id="selected-text"
-			bind:value={apiRequest.selectedText}
-			class="textarea"
-			rows="4"
-			placeholder={L.selectedText()}
-		></textarea>
+		<!-- 		{#if isEditable}
+			<textarea
+				id="selected-text"
+				bind:value={apiRequest.selectedText}
+				class="textarea"
+				rows="4"
+				placeholder={L.selectedText()}
+			></textarea>
+		{:else} -->
+		<p class="max-h-60 overflow-scroll text-sm text-gray-500">{apiRequest.selectedContent}</p>
+		<!-- {/if} -->
 	{/snippet}
 </AccordionItem>

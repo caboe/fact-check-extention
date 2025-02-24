@@ -4,7 +4,7 @@ class ApiRequest {
 	person = $state('')
 	loading = $state(false)
 	result = $state('')
-	selectedText = $state('')
+	selectedContent = $state('')
 }
 
 const apiRequest = new ApiRequest()
