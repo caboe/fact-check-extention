@@ -42,6 +42,11 @@ export default async function checkFact() {
 			},
 			body: JSON.stringify(requestBody),
 		})
+		if (response.status === 403) {
+			apiRequest.result =
+				'Forbidden! If you are using Ollame, try to start it with "OLLAMA_ORIGINS=chrome-extension://* ollama serve"'
+			return
+		}
 		if (!response.ok) {
 			try {
 				const errorResponse = await response.json()
