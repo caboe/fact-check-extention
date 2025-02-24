@@ -2,16 +2,13 @@ import forms from '@tailwindcss/forms'
 import { join } from 'path'
 import type { Config } from 'tailwindcss'
 
-// 1. Import the Skeleton plugin
 import { skeleton } from '@skeletonlabs/tw-plugin'
 
 const config = {
-	// 2. Opt for dark mode to be handled via the class method
-	darkMode: 'class',
+	darkMode: 'media',
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
 		'./public/**/*.html',
-		// 3. Append the path to the Skeleton package
 		join(
 			require.resolve('@skeletonlabs/skeleton'),
 			'../**/*.{html,js,svelte,ts}',
@@ -24,7 +21,7 @@ const config = {
 	plugins: [
 		forms,
 		skeleton({
-			themes: { preset: ['seafoam'] },
+			themes: { preset: ['crimson'] },
 		}),
 	],
 	safelist: [
