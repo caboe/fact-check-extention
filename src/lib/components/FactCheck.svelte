@@ -16,7 +16,6 @@
 						apiRequest.selectedContent = response.text
 						view.step = 1
 					} else {
-						apiRequest.selectedContent = ''
 						view.step = 0
 					}
 				})
@@ -25,7 +24,7 @@
 	})
 </script>
 
-<div class="mx-1 p-3">
+<div class="p-1">
 	<Accordion autocollapse spacing="space-y-4">
 		<Selected open={view.step === 0} on:click={() => (view.step = 0)} />
 		<Connection open={view.step === 1} on:click={() => (view.step = 1)} {checkFact} />

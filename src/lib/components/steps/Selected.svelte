@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
+	import { setResult, setSelectedContent } from '../../util/unifiedStorage.svelte'
 	import comments from '../svg/comments.svg'
-	import apiRequest from '../../state/apiRequest.svelte'
 
 	interface Props {
 		open: boolean
@@ -13,16 +14,15 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	let isEditable: boolean = $derived(!apiRequest.selectedContent)
+	let isEditable: boolean = true //$derived(!apiRequest.selectedContent)
 
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {
-						apiRequest.selectedContent = response.text
-					} else {
-						apiRequest.selectedContent = ''
+						setSelectedContent(response.text)
+						setResult('')
 					}
 				})
 			}
@@ -61,16 +61,16 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		<!-- 		{#if isEditable}
+		{#if isEditable}
 			<textarea
 				id="selected-text"
-				bind:value={apiRequest.selectedText}
+				bind:value={apiRequest.selectedContent}
 				class="textarea"
 				rows="4"
 				placeholder={L.selectedText()}
 			></textarea>
-		{:else} -->
-		<p class="max-h-60 overflow-scroll text-sm text-gray-500">{apiRequest.selectedContent}</p>
-		<!-- {/if} -->
+		{:else}
+			<p class="max-h-60 overflow-scroll text-sm text-gray-500">{apiRequest.selectedContent}</p>
+		{/if}
 	{/snippet}
 </AccordionItem>

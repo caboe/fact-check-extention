@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import { fade } from 'svelte/transition'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import L from '../../state/L.svelte'
 	import response from '../svg/response.svg'
-	import { set } from '../../util/unifiedStorage.svelte'
-	import { fade } from 'svelte/transition'
 
 	interface Props {
 		open: boolean
@@ -24,7 +23,7 @@
 					message = ''
 				}, 2000)
 			})
-			.catch((err) => {
+			.catch((err: Error) => {
 				alert(L.copyError({ error: err.message }))
 			})
 	}

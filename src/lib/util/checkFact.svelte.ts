@@ -4,7 +4,7 @@ import view from '../state/view.svelte'
 import getSystemRole from './getSystemRole.svelte'
 import handleStreamResponse from './handleStreamResponse.svelte'
 import tone from './tone.svelte'
-import unifiedStorage from './unifiedStorage.svelte'
+import unifiedStorage, { setResult } from './unifiedStorage.svelte'
 
 export default async function checkFact() {
 	if (!endpoints.selected) {
@@ -48,6 +48,7 @@ export default async function checkFact() {
 			return
 		}
 		if (!response.ok) {
+			await setResult('')
 			try {
 				const errorResponse = await response.json()
 				const message = errorResponse[0]?.error?.message || errorResponse.error?.message

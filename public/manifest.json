@@ -1,9 +1,13 @@
 {
 	"manifest_version": 3,
-	"name": "Fact Checker - GPT connector",
-	"version": "1.0.2",
-	"description": "Simply select the text and have it tested for correctness by your configured GPT.",
-	"permissions": ["storage", "activeTab", "clipboardWrite"],
+	"name": "Fact Spreader",
+	"version": "1.0.3",
+	"description": "Fact Spreader is a Fact Checker GPT connector. Simply select the text and have it tested for correctness by your configured GPT.",
+	"permissions": [
+		"storage",
+		"activeTab",
+		"clipboardWrite"
+	],
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
@@ -17,8 +21,12 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["<all_urls>"],
-			"js": ["content.js"]
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"content.js"
+			]
 		}
 	],
 	"icons": {

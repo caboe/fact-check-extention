@@ -8,6 +8,17 @@ interface UnifiedState {
 	lastUsed: string | null
 	tone: ITone | null
 	hasSeenIntroduction: boolean
+	selectedContent: string | null
+	result: any | null
+}
+
+const emptyUnifiedState: UnifiedState = {
+	endpoints: null,
+	lastUsed: null,
+	tone: null,
+	hasSeenIntroduction: false,
+	selectedContent: null,
+	result: null,
 }
 
 // Wrapper für Chrome Storage und window.localStorage zur Vereinfachung von Tests
@@ -28,17 +39,13 @@ class UnifiedStorage {
 			return new Promise<UnifiedState>((resolve) => {
 				this.#storage.get(this.#key, (items: Record<string, string>) => {
 					const rawState = items[this.#key]
-					const state: UnifiedState = rawState
-						? JSON.parse(rawState)
-						: { endpoints: null, lastUsed: null, lastRoleKey: null }
+					const state: UnifiedState = rawState ? JSON.parse(rawState) : emptyUnifiedState
 					resolve(state)
 				})
 			})
 		} else {
 			const item = this.#storage.getItem(this.#key)
-			const state: UnifiedState = item
-				? JSON.parse(item)
-				: { endpoints: null, lastUsed: null, lastRoleKey: null }
+			const state: UnifiedState = item ? JSON.parse(item) : emptyUnifiedState
 			return state
 		}
 	}
@@ -127,6 +134,28 @@ class UnifiedStorage {
 		const state = await this.getUnifiedState()
 		return !!state.hasSeenIntroduction
 	}
+
+	async setSelectedContent(value: string): Promise<void> {
+		const state = await this.getUnifiedState()
+		state.selectedContent = value
+		await this.setUnifiedState(state)
+	}
+
+	async getSelectedContent(): Promise<string | null> {
+		const state = await this.getUnifiedState()
+		return state.selectedContent
+	}
+
+	async setResult(value: any): Promise<void> {
+		const state = await this.getUnifiedState()
+		state.result = value
+		await this.setUnifiedState(state)
+	}
+
+	async getResult(): Promise<any | null> {
+		const state = await this.getUnifiedState()
+		return state.result
+	}
 }
 
 const unifiedStorage = new UnifiedStorage()
@@ -139,5 +168,9 @@ export const setLastUsed = unifiedStorage.setLastUsed.bind(unifiedStorage)
 export const getLastUsed = unifiedStorage.getLastUsed.bind(unifiedStorage)
 export const setLastRoleKey = unifiedStorage.setTone.bind(unifiedStorage)
 export const getLastRoleKey = unifiedStorage.getTone.bind(unifiedStorage)
+export const setSelectedContent = unifiedStorage.setSelectedContent.bind(unifiedStorage)
+export const getSelectedContent = unifiedStorage.getSelectedContent.bind(unifiedStorage)
+export const setResult = unifiedStorage.setResult.bind(unifiedStorage)
+export const getResult = unifiedStorage.getResult.bind(unifiedStorage)
 export const setHasSeenIntroduction = unifiedStorage.setHasSeenIntroduction.bind(unifiedStorage)
 export const getHasSeenIntroduction = unifiedStorage.getHasSeenIntroduction.bind(unifiedStorage)

@@ -1,4 +1,5 @@
 import apiRequest from '../state/apiRequest.svelte'
+import { setResult } from './unifiedStorage.svelte'
 
 export default async function handleStreamResponse(response: Response) {
 	const reader = response.body!.getReader()
@@ -47,5 +48,6 @@ export default async function handleStreamResponse(response: Response) {
 			}
 		}
 		apiRequest.result = resultText
+		setResult(resultText)
 	}
 }
