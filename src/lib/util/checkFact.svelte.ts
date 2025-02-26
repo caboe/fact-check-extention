@@ -61,7 +61,7 @@ export default async function checkFact() {
 			return
 		}
 
-		handleStreamResponse(response)
+		await handleStreamResponse(response)
 	} catch (err: unknown) {
 		// TODO
 		apiRequest.result = 'Error during fact check: ' + (err as Error).message
