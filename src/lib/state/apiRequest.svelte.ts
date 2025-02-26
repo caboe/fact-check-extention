@@ -5,7 +5,7 @@ class ApiRequest {
 	tone: string = $state('')
 	person: string = $state('')
 	loading: boolean = $state(false)
-	result: string = $state('')
+	result: string | undefined = $state(undefined)
 	selectedContent: string = $state('')
 
 	constructor() {

@@ -15,6 +15,8 @@
 	let message: string = $state('')
 
 	function copyResult() {
+		if (!apiRequest.result) return
+
 		navigator.clipboard
 			.writeText(apiRequest.result)
 			.then(() => {
@@ -53,7 +55,7 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if apiRequest.result}
+		{#if apiRequest.result !== undefined}
 			<textarea
 				id="selected-text"
 				bind:this={textareaEl}

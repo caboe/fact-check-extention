@@ -14,9 +14,8 @@ export default async function checkFact() {
 	view.step = 2
 
 	await unifiedStorage.setLastUsed(endpoints.selected.title)
-	// await unifiedStorage.setLastRoleKey(apiRequest.roleKey)
 	apiRequest.loading = true
-	apiRequest.result = ''
+	apiRequest.result = undefined
 
 	const requestBody = {
 		model: endpoints.selected.model,

@@ -49,5 +49,6 @@ export default async function handleStreamResponse(response: Response) {
 		}
 		apiRequest.result = resultText
 		setResult(resultText)
+		apiRequest.loading = false
 	}
 }
