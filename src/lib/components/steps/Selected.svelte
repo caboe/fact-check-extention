@@ -5,26 +5,43 @@
 	import L from '../../state/L.svelte'
 	import { setResult, setSelectedContent } from '../../util/unifiedStorage.svelte'
 	import comments from '../svg/comments.svg'
+	import { isSelectedText, isSelectedImage, SelectedContent } from '../../../TSelectedContent'
 
 	interface Props {
 		open: boolean
 	}
 
+	type SelectedType = 'text' | 'image' | 'none'
+
 	let { open }: Props = $props()
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	let isEditable: boolean = true //$derived(!apiRequest.selectedContent)
+	let selectedType: SelectedType = $state('none')
 
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
-				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
-					if (response && response.text) {
-						setSelectedContent(response.text)
+				chrome.tabs.sendMessage(
+					tabs[0].id,
+					{ action: 'getSelectedContent' },
+					(response: SelectedContent) => {
+						console.log(22222, response)
 						setResult(undefined)
-					}
-				})
+
+						if (isSelectedText(response)) {
+							setSelectedContent(response.text)
+							selectedType = 'text'
+						} else if (isSelectedImage(response)) {
+							setSelectedContent(response.image)
+							apiRequest.selectedContent
+							selectedType = 'image'
+						} else {
+							setSelectedContent('')
+							selectedType = 'none'
+						}
+					},
+				)
 			}
 		})
 	})
@@ -67,7 +84,7 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if isEditable}
+		{#if selectedType === 'text'}
 			<textarea
 				id="selected-text"
 				value={apiRequest.selectedContent}
@@ -76,6 +93,8 @@
 				rows="4"
 				placeholder={L.selectedText()}
 			></textarea>
+		{:else if selectedType === 'image'}
+			<img src={apiRequest.selectedContent} alt="selected" class="w-max-full max-h-[300px]" />
 		{:else}
 			<p class="max-h-60 overflow-scroll text-sm text-gray-500">{apiRequest.selectedContent}</p>
 		{/if}

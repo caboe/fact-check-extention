@@ -11,7 +11,7 @@
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
-				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
+				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedContent' }, (response) => {
 					if (response && response.text) {
 						apiRequest.selectedContent = response.text
 						view.step = 1
