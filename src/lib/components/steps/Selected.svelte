@@ -26,7 +26,6 @@
 					tabs[0].id,
 					{ action: 'getSelectedContent' },
 					(response: SelectedContent) => {
-						console.log(22222, response)
 						setResult(undefined)
 
 						if (isSelectedText(response)) {
