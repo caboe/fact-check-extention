@@ -47,7 +47,7 @@ export default async function checkFact() {
 			return
 		}
 		if (!response.ok) {
-			await setResult('')
+			await setResult(undefined)
 			try {
 				const errorResponse = await response.json()
 				const message = errorResponse[0]?.error?.message || errorResponse.error?.message

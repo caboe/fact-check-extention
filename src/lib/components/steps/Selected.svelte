@@ -22,7 +22,7 @@
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedText' }, (response) => {
 					if (response && response.text) {
 						setSelectedContent(response.text)
-						setResult('')
+						setResult(undefined)
 					}
 				})
 			}
@@ -39,6 +39,12 @@
 		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
 		const option = endpointSelect?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
+	}
+
+	function textChange(event: Event) {
+		const target = event.target as HTMLTextAreaElement
+		setSelectedContent(target.value)
+		setResult(undefined)
 	}
 
 	$effect(() => {
@@ -64,7 +70,8 @@
 		{#if isEditable}
 			<textarea
 				id="selected-text"
-				bind:value={apiRequest.selectedContent}
+				value={apiRequest.selectedContent}
+				onchange={textChange}
 				class="textarea"
 				rows="4"
 				placeholder={L.selectedText()}
