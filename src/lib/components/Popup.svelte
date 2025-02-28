@@ -1,25 +1,22 @@
 <!-- src/components/Popup.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import popupState from '../../popupState.svelte'
 	import endpoints from '../state/endpoints.svelte'
-	import { getHasSeenIntroduction, setHasSeenIntroduction } from '../util/unifiedStorage.svelte'
+	import { PersistState } from '../util/unifiedState.svelte'
 	import Config from './Config.svelte'
 	import FactCheck from './FactCheck.svelte'
 	import Introduction from './Introduction.svelte'
 	import Tone from './Tone.svelte'
 
-	let showIntroduction = $state(false)
+	const hasSeenIntroduction = new PersistState<boolean>('hasSeenIntroduction', false)
 
 	function onclick() {
-		showIntroduction = false
-		setHasSeenIntroduction()
+		hasSeenIntroduction.value = true
+		console.log(123, hasSeenIntroduction.value)
 	}
 
-	onMount(async () => {
-		await endpoints.load()
-		if (!endpoints.value.length) popupState.view = 'CONFIG'
-		showIntroduction = !(await getHasSeenIntroduction())
+	$effect(() => {
+		if (!endpoints.value.endpoints.length) popupState.view = 'CONFIG'
 	})
 </script>
 
@@ -32,6 +29,6 @@
 <span class:hidden={popupState.view !== 'TONE'}>
 	<Tone />
 </span>
-{#if showIntroduction}
+{#if !hasSeenIntroduction.value}
 	<Introduction {onclick} />
 {/if}

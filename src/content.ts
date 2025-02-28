@@ -9,7 +9,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const selectedContent: SelectedContent = image
 			? { image }
 			: { text: window.getSelection()?.toString() || '' }
-		console.log({ selectedContent })
 
 		sendResponse(selectedContent)
 	}

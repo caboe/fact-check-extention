@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
-	import apiRequest from '../../state/apiRequest.svelte'
+	import { onMount } from 'svelte'
+	import { isSelectedImage, isSelectedText, SelectedContent } from '../../../TSelectedContent'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
-	import { setResult, setSelectedContent } from '../../util/unifiedStorage.svelte'
+	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import comments from '../svg/comments.svg'
-	import { isSelectedText, isSelectedImage, SelectedContent } from '../../../TSelectedContent'
 
 	interface Props {
 		open: boolean
@@ -22,8 +22,8 @@
 					tabs[0].id,
 					{ action: 'getSelectedContent' },
 					(response: SelectedContent) => {
-						setResult(undefined)
-						setSelectedContent(response)
+						unifiedStorage.value.result = undefined
+						unifiedStorage.value.selectedContent = response
 					},
 				)
 			}
@@ -31,34 +31,44 @@
 	})
 
 	function selectedTokenLength() {
-		if (!apiRequest.selectedContent) return 0
-		if (isSelectedImage(apiRequest.selectedContent)) return 0
-		if (!isSelectedText(apiRequest.selectedContent)) throw new Error('Unknown type')
-		if (apiRequest.selectedContent.text.replaceAll(' ', '').length === 0) return 0
-		return apiRequest.selectedContent.text.trim().split(' ').length
+		if (!unifiedStorage.value.selectedContent) return 0
+		if (isSelectedImage(unifiedStorage.value.selectedContent)) return 0
+		if (!isSelectedText(unifiedStorage.value.selectedContent)) throw new Error('Unknown type')
+		if (unifiedStorage.value.selectedContent.text.replaceAll(' ', '').length === 0) return 0
+		return unifiedStorage.value.selectedContent.text.trim().split(' ').length
 	}
 
 	function selectCurrent() {
-		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
+		const idx = endpoints.value.endpoints.findIndex(
+			(ep) => ep.title === endpoints.value.selected?.title,
+		)
 		const option = endpointSelect?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
 	}
 
 	function textChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
-		setSelectedContent({ text: target.value })
-		setResult(undefined)
+		unifiedStorage.value.selectedContent = { text: target.value }
+		unifiedStorage.value.result = undefined
 	}
 
 	function reset() {
-		setSelectedContent(null)
-		setResult(undefined)
+		unifiedStorage.value.selectedContent = null
+		unifiedStorage.value.result = undefined
 	}
 
 	$effect(() => {
-		endpoints.selected
+		endpoints.value.selected
 		endpointSelect
 		selectCurrent()
+	})
+
+	onMount(() => {
+		const { selectedContent } = unifiedStorage.value
+
+		if (!isSelectedText(selectedContent) && !isSelectedImage(selectedContent)) {
+			unifiedStorage.value.selectedContent = { text: '123' }
+		}
 	})
 </script>
 
@@ -78,26 +88,21 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<span onclick={reset} class="cursor-pointer text-red-500">reset</span>
-		{#if isSelectedText(apiRequest.selectedContent)}
+		{#if isSelectedText(unifiedStorage.value.selectedContent)}
 			<textarea
 				id="selected-text"
-				value={apiRequest.selectedContent.text}
+				value={unifiedStorage.value.selectedContent.text}
 				onchange={textChange}
 				class="textarea"
 				rows="4"
 				placeholder={L.selectedText()}
 			></textarea>
-		{:else if isSelectedImage(apiRequest.selectedContent)}
-			<img src={apiRequest.selectedContent.image} alt="selected" class="w-max-full max-h-[300px]" />
-		{:else}
-			<textarea
-				id="selected-text"
-				value={''}
-				onchange={textChange}
-				class="textarea"
-				rows="4"
-				placeholder={L.selectedText()}
-			></textarea>
+		{:else if isSelectedImage(unifiedStorage.value.selectedContent)}
+			<img
+				src={unifiedStorage.value.selectedContent.image}
+				alt="selected"
+				class="w-max-full max-h-[300px]"
+			/>
 		{/if}
 	{/snippet}
 </AccordionItem>

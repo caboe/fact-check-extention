@@ -1,4 +1,4 @@
-import localStorage from '../util/unifiedStorage.svelte'
+import { PersistState } from '../util/unifiedState.svelte'
 
 export interface Endpoint {
 	title: string
@@ -7,63 +7,43 @@ export interface Endpoint {
 	model: string
 }
 
-class Endpoints {
-	#value: Endpoint[] = $state([])
-	#selected: Endpoint | null = $state(null)
-
+class Endpoints extends PersistState<{
+	selected: Endpoint | null
+	endpoints: Endpoint[]
+	lastUsed: string | undefined
+}> {
 	constructor() {
+		super('endpoints', { selected: null, endpoints: [], lastUsed: undefined })
+		console.log('endpoints', this.value.selected)
+
 		this.load()
 	}
 
 	async load() {
-		await this.#updateFromStore()
-
-		if (this.#value.length > 0) {
-			const lastUsedTitle = await localStorage.getLastUsed()
-			this.#selected =
-				this.#value.find((endpoint) => endpoint.title === lastUsedTitle) || this.#value[0]
+		if (this.value.endpoints.length > 0) {
+			const lastUsedTitle = this.value.lastUsed
+			this.value.selected =
+				this.value.endpoints.find((endpoint) => endpoint.title === lastUsedTitle) ||
+				this.value.endpoints[0]
 		}
 	}
 
-	async #updateFromStore() {
-		this.#value = (await localStorage.getEndpoints()) ?? []
-	}
-
 	async add(newEndpoint: Endpoint) {
-		await localStorage.add(newEndpoint)
-		this.selected = newEndpoint
-		await this.#updateFromStore()
+		this.value.endpoints.push(newEndpoint)
+		this.value.selected = newEndpoint
 	}
 
 	async delete(title: string) {
 		await localStorage.delete(title)
-		await this.#updateFromStore()
 	}
 
 	async edit(originalTitle: string, updatedEndpoint: Endpoint) {
 		await localStorage.edit(originalTitle, updatedEndpoint)
-		await this.#updateFromStore()
 
 		// Update selected endpoint if it was edited
-		if (this.#selected?.title === originalTitle) {
-			this.#selected = updatedEndpoint
+		if (this.value.selected?.title === originalTitle) {
+			this.value.selected = updatedEndpoint
 		}
-	}
-
-	get value() {
-		return this.#value
-	}
-
-	set value(newValue: Endpoint[]) {
-		this.#value = newValue
-	}
-
-	get selected() {
-		return this.#selected
-	}
-
-	set selected(selected: Endpoint | null) {
-		this.#selected = selected
 	}
 }
 

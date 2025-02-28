@@ -1,21 +1,17 @@
-import { SelectedContent } from '../../TSelectedContent'
-import { getResult, getSelectedContent } from '../util/unifiedStorage.svelte'
+import { PersistState } from '../util/unifiedState.svelte'
 
-class ApiRequest {
-	range: number = $state(50)
-	tone: string = $state('')
-	person: string = $state('')
-	loading: boolean = $state(false)
-	result: string | undefined = $state(undefined)
-	selectedContent: SelectedContent | null = $state(null)
+interface IApiRequest {
+	range: number
+	loading: boolean
+}
 
+class ApiRequest extends PersistState<IApiRequest> {
 	constructor() {
-		this.readFromStorage()
-	}
-
-	async readFromStorage() {
-		this.selectedContent = await getSelectedContent()
-		this.result = (await getResult()) || ''
+		const initialValue: IApiRequest = {
+			range: 50,
+			loading: false,
+		}
+		super('apiRequest', initialValue)
 	}
 }
 

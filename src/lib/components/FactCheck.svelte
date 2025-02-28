@@ -7,13 +7,15 @@
 	import checkFact from '../util/checkFact.svelte'
 	import apiRequest from '../state/apiRequest.svelte'
 	import view from '../state/view.svelte'
+	import unifiedStorage from '../util/unifiedStorage.svelte'
 
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedContent' }, (response) => {
 					if (response && response.text) {
-						apiRequest.selectedContent = { text: response.text }
+						if (!apiRequest.value) return
+						unifiedStorage.value.selectedContent = { text: response.text }
 						view.step = 1
 					} else {
 						view.step = 0

@@ -4,6 +4,7 @@
 	import apiRequest from '../../state/apiRequest.svelte'
 	import L from '../../state/L.svelte'
 	import response from '../svg/response.svg'
+	import unifiedStorage from '../../util/unifiedStorage.svelte'
 
 	interface Props {
 		open: boolean
@@ -15,10 +16,10 @@
 	let message: string = $state('')
 
 	function copyResult() {
-		if (!apiRequest.result) return
+		if (!unifiedStorage.value.result) return
 
 		navigator.clipboard
-			.writeText(apiRequest.result)
+			.writeText(unifiedStorage.value.result)
 			.then(() => {
 				message = L.copied()
 				setTimeout(() => {
@@ -31,7 +32,7 @@
 	}
 
 	$effect(() => {
-		apiRequest.result
+		unifiedStorage.value.result
 		autoGrow()
 	})
 
@@ -55,19 +56,19 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if apiRequest.result !== undefined}
+		{#if unifiedStorage.value.result !== undefined}
 			<textarea
 				id="selected-text"
 				bind:this={textareaEl}
 				oninput={autoGrow}
-				bind:value={apiRequest.result}
+				bind:value={unifiedStorage.value.result}
 				class="textarea max-h-64 min-h-8"
 				rows="1"
 			></textarea>
 			<button class="variant-filled-success btn w-full" onclick={copyResult}>
 				{L.copy()}
 			</button>
-		{:else if apiRequest.loading}
+		{:else if apiRequest.value.loading}
 			{L.checkingProgress()}
 		{:else}
 			{L.notChecked()}
