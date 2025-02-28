@@ -13,7 +13,7 @@
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelectedContent' }, (response) => {
 					if (response && response.text) {
-						apiRequest.selectedContent = response.text
+						apiRequest.selectedContent = { text: response.text }
 						view.step = 1
 					} else {
 						view.step = 0

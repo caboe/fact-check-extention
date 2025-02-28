@@ -1,3 +1,4 @@
+import { SelectedContent } from '../../TSelectedContent'
 import { Endpoint } from '../state/endpoints.svelte'
 import { ITone } from './tone.svelte'
 
@@ -8,7 +9,7 @@ interface UnifiedState {
 	lastUsed: string | null
 	tone: ITone | null
 	hasSeenIntroduction: boolean
-	selectedContent: string | null
+	selectedContent: SelectedContent | null
 	result: any | null
 }
 
@@ -135,13 +136,13 @@ class UnifiedStorage {
 		return !!state.hasSeenIntroduction
 	}
 
-	async setSelectedContent(value: string): Promise<void> {
+	async setSelectedContent(value: SelectedContent | null): Promise<void> {
 		const state = await this.getUnifiedState()
 		state.selectedContent = value
 		await this.setUnifiedState(state)
 	}
 
-	async getSelectedContent(): Promise<string | null> {
+	async getSelectedContent(): Promise<SelectedContent | null> {
 		const state = await this.getUnifiedState()
 		return state.selectedContent
 	}

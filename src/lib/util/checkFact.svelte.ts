@@ -1,3 +1,4 @@
+import { isSelectedImage, isSelectedText } from '../../TSelectedContent'
 import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
 import view from '../state/view.svelte'
@@ -17,6 +18,33 @@ export default async function checkFact() {
 	apiRequest.loading = true
 	apiRequest.result = undefined
 
+	let content:
+		| string
+		| {
+				type: string
+				image_url: {
+					url: string
+				}
+		  }[]
+		| null = null
+
+	if (isSelectedImage(apiRequest.selectedContent)) {
+		content = [
+			{
+				type: 'image_url',
+				image_url: {
+					url: apiRequest.selectedContent.image,
+				},
+			},
+		]
+	}
+
+	if (isSelectedText(apiRequest.selectedContent)) {
+		content = apiRequest.selectedContent.text
+	}
+
+	if (!content) throw new Error('No content selected')
+
 	const requestBody = {
 		model: endpoints.selected.model,
 		stream: true,
@@ -27,7 +55,7 @@ export default async function checkFact() {
 			},
 			{
 				role: 'user',
-				content: apiRequest.selectedContent,
+				content,
 			},
 		],
 	}

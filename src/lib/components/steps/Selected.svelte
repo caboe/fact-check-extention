@@ -11,13 +11,9 @@
 		open: boolean
 	}
 
-	type SelectedType = 'text' | 'image' | 'none'
-
 	let { open }: Props = $props()
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
-
-	let selectedType: SelectedType = $state('none')
 
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
@@ -27,18 +23,7 @@
 					{ action: 'getSelectedContent' },
 					(response: SelectedContent) => {
 						setResult(undefined)
-
-						if (isSelectedText(response)) {
-							setSelectedContent(response.text)
-							selectedType = 'text'
-						} else if (isSelectedImage(response)) {
-							setSelectedContent(response.image)
-							apiRequest.selectedContent
-							selectedType = 'image'
-						} else {
-							setSelectedContent('')
-							selectedType = 'none'
-						}
+						setSelectedContent(response)
 					},
 				)
 			}
@@ -47,8 +32,10 @@
 
 	function selectedTokenLength() {
 		if (!apiRequest.selectedContent) return 0
-		if (apiRequest.selectedContent.replaceAll(' ', '').length === 0) return 0
-		return apiRequest.selectedContent.trim().split(' ').length
+		if (isSelectedImage(apiRequest.selectedContent)) return 0
+		if (!isSelectedText(apiRequest.selectedContent)) throw new Error('Unknown type')
+		if (apiRequest.selectedContent.text.replaceAll(' ', '').length === 0) return 0
+		return apiRequest.selectedContent.text.trim().split(' ').length
 	}
 
 	function selectCurrent() {
@@ -59,7 +46,7 @@
 
 	function textChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
-		setSelectedContent(target.value)
+		setSelectedContent({ text: target.value })
 		setResult(undefined)
 	}
 
@@ -83,19 +70,26 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if selectedType === 'text'}
+		{#if isSelectedText(apiRequest.selectedContent)}
 			<textarea
 				id="selected-text"
-				value={apiRequest.selectedContent}
+				value={apiRequest.selectedContent.text}
 				onchange={textChange}
 				class="textarea"
 				rows="4"
 				placeholder={L.selectedText()}
 			></textarea>
-		{:else if selectedType === 'image'}
-			<img src={apiRequest.selectedContent} alt="selected" class="w-max-full max-h-[300px]" />
+		{:else if isSelectedImage(apiRequest.selectedContent)}
+			<img src={apiRequest.selectedContent.image} alt="selected" class="w-max-full max-h-[300px]" />
 		{:else}
-			<p class="max-h-60 overflow-scroll text-sm text-gray-500">{apiRequest.selectedContent}</p>
+			<textarea
+				id="selected-text"
+				value={''}
+				onchange={textChange}
+				class="textarea"
+				rows="4"
+				placeholder={L.selectedText()}
+			></textarea>
 		{/if}
 	{/snippet}
 </AccordionItem>

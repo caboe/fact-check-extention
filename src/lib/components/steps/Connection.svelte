@@ -17,7 +17,7 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	if (apiRequest.selectedContent.trim().length > 1 && view.step === 0) {
+	if (!apiRequest.selectedContent && view.step === 0) {
 		view.step = 1
 	}
 

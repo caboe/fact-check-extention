@@ -1,3 +1,4 @@
+import { SelectedContent } from '../../TSelectedContent'
 import { getResult, getSelectedContent } from '../util/unifiedStorage.svelte'
 
 class ApiRequest {
@@ -6,14 +7,14 @@ class ApiRequest {
 	person: string = $state('')
 	loading: boolean = $state(false)
 	result: string | undefined = $state(undefined)
-	selectedContent: string = $state('')
+	selectedContent: SelectedContent | null = $state(null)
 
 	constructor() {
 		this.readFromStorage()
 	}
 
 	async readFromStorage() {
-		this.selectedContent = (await getSelectedContent()) || ''
+		this.selectedContent = await getSelectedContent()
 		this.result = (await getResult()) || ''
 	}
 }

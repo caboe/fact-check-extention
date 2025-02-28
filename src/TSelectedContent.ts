@@ -8,10 +8,12 @@ export type SelectedText = {
 
 export type SelectedContent = SelectedImage | SelectedText
 
-export function isSelectedImage(content: SelectedContent): content is SelectedImage {
+export function isSelectedImage(content: SelectedContent | null): content is SelectedImage {
+	if (!content) return false
 	return 'image' in content
 }
 
-export function isSelectedText(content: SelectedContent): content is SelectedText {
+export function isSelectedText(content: SelectedContent | null): content is SelectedText {
+	if (!content) return false
 	return 'text' in content
 }
