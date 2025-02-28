@@ -9,27 +9,25 @@ export interface Endpoint {
 
 class Endpoints extends PersistState<{
 	selected: Endpoint | null
-	endpoints: Endpoint[]
+	list: Endpoint[]
 	lastUsed: string | undefined
 }> {
 	constructor() {
-		super('endpoints', { selected: null, endpoints: [], lastUsed: undefined })
-		console.log('endpoints', this.value.selected)
+		super('endpoints', { selected: null, list: [], lastUsed: undefined })
 
 		this.load()
 	}
 
 	async load() {
-		if (this.value.endpoints.length > 0) {
+		if (this.value.list.length > 0) {
 			const lastUsedTitle = this.value.lastUsed
 			this.value.selected =
-				this.value.endpoints.find((endpoint) => endpoint.title === lastUsedTitle) ||
-				this.value.endpoints[0]
+				this.value.list.find((endpoint) => endpoint.title === lastUsedTitle) || this.value.list[0]
 		}
 	}
 
 	async add(newEndpoint: Endpoint) {
-		this.value.endpoints.push(newEndpoint)
+		this.value.list.push(newEndpoint)
 		this.value.selected = newEndpoint
 	}
 

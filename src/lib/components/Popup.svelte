@@ -16,7 +16,7 @@
 	}
 
 	$effect(() => {
-		if (!endpoints.value.endpoints.length) popupState.view = 'CONFIG'
+		if (!endpoints.value.list.length) popupState.view = 'CONFIG'
 	})
 </script>
 

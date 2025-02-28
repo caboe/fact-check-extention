@@ -23,9 +23,7 @@
 	}
 
 	function selectCurrent() {
-		const idx = endpoints.value.endpoints.findIndex(
-			(ep) => ep.title === endpoints.value.selected?.title,
-		)
+		const idx = endpoints.value.list.findIndex((ep) => ep.title === endpoints.value.selected?.title)
 		const option = endpointSelect?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
 	}
@@ -52,8 +50,8 @@
 				<div class="text-md">{L.configureApi()}</div>
 				<Settings />
 			</div>
-			{#if endpoints.value.endpoints.length === 1}
-				<span class="text-center text-lg font-bold">{endpoints.value.endpoints[0].title}</span>
+			{#if endpoints.value.list.length === 1}
+				<span class="text-center text-lg font-bold">{endpoints.value.list[0].title}</span>
 			{:else}
 				<select
 					bind:this={endpointSelect}
@@ -61,7 +59,7 @@
 					id="endpoints"
 					bind:value={endpoints.value.selected}
 				>
-					{#each endpoints.value.endpoints as endpoint}
+					{#each endpoints.value.list as endpoint}
 						<option value={endpoint}>{endpoint.title}</option>
 					{/each}
 				</select>

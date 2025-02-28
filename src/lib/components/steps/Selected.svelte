@@ -39,9 +39,7 @@
 	}
 
 	function selectCurrent() {
-		const idx = endpoints.value.endpoints.findIndex(
-			(ep) => ep.title === endpoints.value.selected?.title,
-		)
+		const idx = endpoints.value.list.findIndex((ep) => ep.title === endpoints.value.selected?.title)
 		const option = endpointSelect?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
 	}

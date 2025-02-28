@@ -51,7 +51,7 @@
 	}
 
 	function add() {
-		if (endpoints.value.endpoints.some((endpoint) => endpoint.title === title)) {
+		if (endpoints.value.list.some((endpoint) => endpoint.title === title)) {
 			alert(L.endpointExists())
 			return
 		}
