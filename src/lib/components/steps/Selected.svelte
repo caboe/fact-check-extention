@@ -50,6 +50,11 @@
 		setResult(undefined)
 	}
 
+	function reset() {
+		setSelectedContent(null)
+		setResult(undefined)
+	}
+
 	$effect(() => {
 		endpoints.selected
 		endpointSelect
@@ -70,6 +75,9 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<span onclick={reset} class="cursor-pointer text-red-500">reset</span>
 		{#if isSelectedText(apiRequest.selectedContent)}
 			<textarea
 				id="selected-text"
