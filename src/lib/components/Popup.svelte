@@ -12,21 +12,20 @@
 
 	function onclick() {
 		hasSeenIntroduction.value = true
-		console.log(123, hasSeenIntroduction.value)
 	}
 
 	$effect(() => {
-		if (!endpoints.value.list.length) popupState.view = 'CONFIG'
+		popupState.value = endpoints.value.list.length === 0 ? 'CONFIG' : 'DEFAULT'
 	})
 </script>
 
-<span class:hidden={popupState.view !== 'CONFIG'}>
+<span class:hidden={popupState.value !== 'CONFIG'}>
 	<Config />
 </span>
-<span class:hidden={popupState.view !== 'DEFAULT'}>
+<span class:hidden={popupState.value !== 'DEFAULT'}>
 	<FactCheck />
 </span>
-<span class:hidden={popupState.view !== 'TONE'}>
+<span class:hidden={popupState.value !== 'TONE'}>
 	<Tone />
 </span>
 {#if !hasSeenIntroduction.value}

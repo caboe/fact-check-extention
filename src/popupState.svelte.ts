@@ -1,7 +1,5 @@
-class PopupState {
-	public view: 'CONFIG' | 'TONE' | 'DEFAULT' = $state('DEFAULT')
-}
+import { PersistState } from './lib/util/unifiedState.svelte'
 
-const popupState = new PopupState()
+const popupState = new PersistState<'CONFIG' | 'TONE' | 'DEFAULT'>('popupState', 'DEFAULT')
 
 export default popupState
