@@ -65,7 +65,7 @@
 				</select>
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
+				<button class="variant-filled-primary btn" onclick={() => (popupState.value = 'TONE')}>
 					{L.configureTone()}
 				</button>
 			</div>

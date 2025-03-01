@@ -15,7 +15,7 @@
 	}
 
 	function close() {
-		popupState.view = 'DEFAULT'
+		popupState.value = 'DEFAULT'
 	}
 
 	function saveEntries(e: Event) {
