@@ -61,6 +61,22 @@
 		selectCurrent()
 	})
 
+	let imageSelectMode = $state(false)
+
+	function toggleImageSelectMode() {
+		imageSelectMode = !imageSelectMode
+		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+			if (tabs[0].id !== undefined) {
+				chrome.tabs.sendMessage(tabs[0].id, {
+					action: imageSelectMode ? 'enableImageSelect' : 'disableImageSelect',
+				})
+			}
+		})
+		if (imageSelectMode) {
+			window.close()
+		}
+	}
+
 	onMount(() => {
 		const { selectedContent } = unifiedStorage.value
 
@@ -83,9 +99,12 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<span onclick={reset} class="cursor-pointer text-red-500">reset</span>
+		<div class="grid grid-cols-2 gap-4">
+			<button onclick={reset} class="variant-filled btn cursor-pointer">reset</button>
+			<button onclick={toggleImageSelectMode} class="variant-filled btn">
+				{imageSelectMode ? 'Cancel select' : 'Select image'}
+			</button>
+		</div>
 		{#if isSelectedText(unifiedStorage.value.selectedContent)}
 			<textarea
 				id="selected-text"
