@@ -67,8 +67,8 @@
 
 	let imageSelectMode = $derived(isSelectedImage(unifiedStorage.value.selectedContent))
 
-	function toggleImageSelectMode() {
-		unifiedStorage.value.selectedContent = initContent(imageSelectMode ? 'text' : 'image')
+	function setContentSelectMode(mode: 'text' | 'image') {
+		unifiedStorage.value.selectedContent = initContent(mode)
 		imageSelectOnPage(false)
 	}
 
@@ -137,12 +137,6 @@
 	{#snippet content()}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="grid grid-cols-[1fr_auto_1fr_32px] items-center justify-center gap-4" {onclick}>
-			<span class="text-right">Text</span>
-			<SlideToggle name="slide" on:change={toggleImageSelectMode} checked={!!imageSelectMode} />
-			<span>Image</span>
-			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
-		</div>
 		{#if isSelectedText(unifiedStorage.value.selectedContent)}
 			<textarea
 				id="selected-text"
@@ -160,10 +154,15 @@
 					class="w-max-full max-h-[300px]"
 				/>
 			{:else}
-				<button class="btn cursor-pointer" onclick={selectImageOnPage}
-					>Please select an image.</button
-				>
+				<button class="btn cursor-pointer" onclick={selectImageOnPage}>
+					Please select an image.
+				</button>
 			{/if}
 		{/if}
+		<button onclick={() => setContentSelectMode('text')} class="btn btn-sm cursor-pointer">
+			Select Text
+		</button>
+		<button onclick={selectImageOnPage} class="btn btn-sm cursor-pointer"> Select Image </button>
+		<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
 	{/snippet}
 </AccordionItem>
