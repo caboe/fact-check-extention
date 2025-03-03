@@ -1,4 +1,4 @@
-import { PersistState } from './lib/util/unifiedState.svelte'
+import { PersistState } from './lib/util/PersistState.svelte'
 
 const popupState = new PersistState<'CONFIG' | 'TONE' | 'DEFAULT'>('popupState', 'DEFAULT')
 

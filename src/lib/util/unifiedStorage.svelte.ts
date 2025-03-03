@@ -1,9 +1,7 @@
-import { PersistState } from './unifiedState.svelte'
 import { SelectedContent } from '../../TSelectedContent'
-import { Endpoint } from '../state/endpoints.svelte'
+import { PersistState } from './PersistState.svelte'
 import { ITone } from './tone.svelte'
 interface IUnifiedState {
-	endpoints: Endpoint[] | null
 	lastUsed: string | null
 	tone: ITone | null
 	hasSeenIntroduction: boolean
@@ -14,7 +12,6 @@ interface IUnifiedState {
 class UnifiedStorage extends PersistState<IUnifiedState> {
 	constructor() {
 		const initialValue: IUnifiedState = {
-			endpoints: null,
 			lastUsed: null,
 			tone: null,
 			hasSeenIntroduction: false,

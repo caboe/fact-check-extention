@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { AccordionItem } from '@skeletonlabs/skeleton'
-	import { onMount } from 'svelte'
+	import { AccordionItem, SlideToggle } from '@skeletonlabs/skeleton'
 	import { isSelectedImage, isSelectedText, SelectedContent } from '../../../TSelectedContent'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
@@ -13,7 +12,7 @@
 
 	let { open }: Props = $props()
 
-	let endpointSelect: HTMLSelectElement | null = $state(null)
+	let endpointSelectEl: HTMLSelectElement | null = $state(null)
 
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
@@ -30,6 +29,11 @@
 		})
 	})
 
+	let hasSelected = $derived(
+		isSelectedImage(unifiedStorage.value.selectedContent) ||
+			isSelectedText(unifiedStorage.value.selectedContent),
+	)
+
 	function selectedTokenLength() {
 		if (!unifiedStorage.value.selectedContent) return 0
 		if (isSelectedImage(unifiedStorage.value.selectedContent)) return 0
@@ -40,7 +44,7 @@
 
 	function selectCurrent() {
 		const idx = endpoints.value.list.findIndex((ep) => ep.title === endpoints.value.selected?.title)
-		const option = endpointSelect?.getElementsByTagName('option')[idx]
+		const option = endpointSelectEl?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
 	}
 
@@ -51,20 +55,24 @@
 	}
 
 	function reset() {
-		unifiedStorage.value.selectedContent = null
+		unifiedStorage.value.selectedContent = { text: '' }
 		unifiedStorage.value.result = undefined
 	}
 
 	$effect(() => {
 		endpoints.value.selected
-		endpointSelect
+		endpointSelectEl
 		selectCurrent()
 	})
 
-	let imageSelectMode = $state(false)
+	let imageSelectMode = $derived(isSelectedImage(unifiedStorage.value.selectedContent))
 
 	function toggleImageSelectMode() {
-		imageSelectMode = !imageSelectMode
+		unifiedStorage.value.selectedContent = initContent(imageSelectMode ? 'text' : 'image')
+		imageSelectOnPage(false)
+	}
+
+	function imageSelectOnPage(imageSelectMode: boolean) {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
 				chrome.tabs.sendMessage(tabs[0].id, {
@@ -72,38 +80,68 @@
 				})
 			}
 		})
-		if (imageSelectMode) {
-			window.close()
-		}
 	}
 
-	onMount(() => {
-		const { selectedContent } = unifiedStorage.value
+	function selectImageOnPage(e: Event) {
+		imageSelectOnPage(true)
+		window.close()
+	}
 
-		if (!isSelectedText(selectedContent) && !isSelectedImage(selectedContent)) {
-			unifiedStorage.value.selectedContent = { text: '123' }
+	function initContent(state: 'text' | 'image' = 'text') {
+		let newContent: any = {}
+		if (state === 'text') {
+			newContent.text = ''
+		} else if (state === 'image') {
+			newContent.image = null
+		}
+		return newContent as SelectedContent
+	}
+
+	function onclick(e: Event) {
+		console.log(e)
+
+		e.stopPropagation()
+		// e.preventDefault()
+	}
+
+	$effect(() => {
+		if (!hasSelected) {
+			unifiedStorage.value.selectedContent = initContent()
 		}
 	})
 </script>
 
 <AccordionItem {open} on:click>
 	{#snippet summary()}
+		{@const content = unifiedStorage.value.selectedContent}
 		<label
 			for="selected-text"
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
 			<img src={comments} class="h-4 w-4" alt="Comments Icon" />
-			{@html selectedTokenLength()
-				? `<span>${L.markedText({ wordCount: selectedTokenLength() })}</span>`
-				: `<span class="text-red-500">${L.enterText()}</span>`}
+			{#if isSelectedImage(content)}
+				{#if content.image && content.image.length > 0}
+					<span>Image selected</span>
+				{:else}
+					<button class="btn">Select image</button>
+				{/if}
+			{:else if isSelectedText(content)}
+				{#if content.text.replaceAll(' ', '').length === 0}
+					<span>{L.enterText()}</span>
+				{:else}
+					<span>{L.markedText({ wordCount: selectedTokenLength() })}</span>
+				{/if}
+			{/if}
 		</label>
 	{/snippet}
 	{#snippet content()}
-		<div class="grid grid-cols-2 gap-4">
-			<button onclick={reset} class="variant-filled btn cursor-pointer">reset</button>
-			<button onclick={toggleImageSelectMode} class="variant-filled btn">
-				{imageSelectMode ? 'Cancel select' : 'Select image'}
-			</button>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="grid grid-cols-[1fr_auto_1fr_32px] items-center justify-center gap-4" {onclick}>
+			<span class="text-right">Text</span>
+			<SlideToggle name="slide" on:change={toggleImageSelectMode} checked={!!imageSelectMode} />
+			<span>Image</span>
+			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
 		</div>
 		{#if isSelectedText(unifiedStorage.value.selectedContent)}
 			<textarea
@@ -115,11 +153,17 @@
 				placeholder={L.selectedText()}
 			></textarea>
 		{:else if isSelectedImage(unifiedStorage.value.selectedContent)}
-			<img
-				src={unifiedStorage.value.selectedContent.image}
-				alt="selected"
-				class="w-max-full max-h-[300px]"
-			/>
+			{#if unifiedStorage.value.selectedContent.image}
+				<img
+					src={unifiedStorage.value.selectedContent.image}
+					alt="selected"
+					class="w-max-full max-h-[300px]"
+				/>
+			{:else}
+				<button class="btn cursor-pointer" onclick={selectImageOnPage}
+					>Please select an image.</button
+				>
+			{/if}
 		{/if}
 	{/snippet}
 </AccordionItem>

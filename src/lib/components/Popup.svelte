@@ -2,7 +2,7 @@
 <script lang="ts">
 	import popupState from '../../popupState.svelte'
 	import endpoints from '../state/endpoints.svelte'
-	import { PersistState } from '../util/unifiedState.svelte'
+	import { PersistState } from '../util/PersistState.svelte'
 	import Config from './Config.svelte'
 	import FactCheck from './FactCheck.svelte'
 	import Introduction from './Introduction.svelte'
