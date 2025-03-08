@@ -6,7 +6,7 @@ export type SelectedText = {
 	text: string
 }
 
-export type SelectedContent = SelectedImage | SelectedText
+export type SelectedContent = SelectedImage | SelectedText | undefined
 
 export function isSelectedImage(content: SelectedContent | null): content is SelectedImage {
 	if (!content) return false

@@ -25,6 +25,8 @@
 						unifiedStorage.value.selectedContent = response
 					},
 				)
+				imageSelectOnPage(false)
+				textSelectOnPage(false)
 			}
 		})
 	})
@@ -65,13 +67,6 @@
 		selectCurrent()
 	})
 
-	let imageSelectMode = $derived(isSelectedImage(unifiedStorage.value.selectedContent))
-
-	function setContentSelectMode(mode: 'text' | 'image') {
-		unifiedStorage.value.selectedContent = initContent(mode)
-		imageSelectOnPage(false)
-	}
-
 	function imageSelectOnPage(imageSelectMode: boolean) {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
 			if (tabs[0].id !== undefined) {
@@ -82,33 +77,32 @@
 		})
 	}
 
+	function textSelectOnPage(textSelectMode: boolean) {
+		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+			if (tabs[0].id !== undefined) {
+				chrome.tabs.sendMessage(tabs[0].id, {
+					action: textSelectMode ? 'enableTextSelect' : 'disableTextSelect',
+				})
+			}
+		})
+	}
+
 	function selectImageOnPage(e: Event) {
 		imageSelectOnPage(true)
 		window.close()
 	}
 
-	function initContent(state: 'text' | 'image' = 'text') {
-		let newContent: any = {}
-		if (state === 'text') {
-			newContent.text = ''
-		} else if (state === 'image') {
-			newContent.image = null
-		}
-		return newContent as SelectedContent
+	function selectTextOnPage(e: Event) {
+		imageSelectOnPage(false)
+		textSelectOnPage(true)
+		window.close()
 	}
 
-	function onclick(e: Event) {
-		console.log(e)
-
-		e.stopPropagation()
-		// e.preventDefault()
+	function createFromNewText(e: Event) {
+		const target = e.target as HTMLTextAreaElement
+		unifiedStorage.value.selectedContent = { text: target.value }
+		unifiedStorage.value.result = undefined
 	}
-
-	$effect(() => {
-		if (!hasSelected) {
-			unifiedStorage.value.selectedContent = initContent()
-		}
-	})
 </script>
 
 <AccordionItem {open} on:click>
@@ -135,9 +129,18 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		{#if isSelectedText(unifiedStorage.value.selectedContent)}
+		{#if !hasSelected}
+			<textarea
+				id="selected-text"
+				onchange={createFromNewText}
+				class="textarea"
+				rows="4"
+				placeholder={L.selectedText()}
+			></textarea>
+
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+		{:else if isSelectedText(unifiedStorage.value.selectedContent)}
 			<textarea
 				id="selected-text"
 				value={unifiedStorage.value.selectedContent.text}
@@ -151,7 +154,7 @@
 				<img
 					src={unifiedStorage.value.selectedContent.image}
 					alt="selected"
-					class="w-max-full max-h-[300px]"
+					class="w-max-full mx-auto max-h-[300px]"
 				/>
 			{:else}
 				<button class="btn cursor-pointer" onclick={selectImageOnPage}>
@@ -159,10 +162,14 @@
 				</button>
 			{/if}
 		{/if}
-		<button onclick={() => setContentSelectMode('text')} class="btn btn-sm cursor-pointer">
-			Select Text
-		</button>
-		<button onclick={selectImageOnPage} class="btn btn-sm cursor-pointer"> Select Image </button>
-		<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
+		<div class="grid grid-cols-3 gap-2">
+			<button onclick={selectTextOnPage} class="variant-filled btn btn-sm cursor-pointer">
+				Select Text
+			</button>
+			<button onclick={selectImageOnPage} class="variant-filled btn btn-sm cursor-pointer">
+				Select Image
+			</button>
+			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">Reset</button>
+		</div>
 	{/snippet}
 </AccordionItem>
