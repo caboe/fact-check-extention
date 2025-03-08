@@ -60,6 +60,7 @@ const de = {
 	imageSelected: 'Bild ausgewählt',
 	selectImage: 'Bild auswählen',
 	pleaseSelectImage: 'Bitte wählen Sie ein Bild aus.',
+	selectTextOrImage: 'Text oder Bild auswählen',
 } satisfies BaseTranslation
 
 export default de

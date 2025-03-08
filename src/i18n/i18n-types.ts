@@ -242,6 +242,10 @@ type RootTranslation = {
 	 * P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​a​n​ ​i​m​a​g​e​.
 	 */
 	pleaseSelectImage: string
+	/**
+	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​r​ ​i​m​a​g​e
+	 */
+	selectTextOrImage: string
 }
 
 export type TranslationFunctions = {
@@ -467,6 +471,10 @@ export type TranslationFunctions = {
 	 * Please select an image.
 	 */
 	pleaseSelectImage: () => LocalizedString
+	/**
+	 * Select text or image
+	 */
+	selectTextOrImage: () => LocalizedString
 }
 
 export type Formatters = {}

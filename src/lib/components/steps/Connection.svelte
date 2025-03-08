@@ -18,7 +18,7 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	if (!unifiedStorage.value.selectedContent && view.step === 0) {
+	if (unifiedStorage.value.selectedContent && view.step === 0) {
 		view.step = 1
 	}
 

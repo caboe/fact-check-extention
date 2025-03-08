@@ -59,6 +59,7 @@ const en = {
 	selectText: 'Select text',
 	resetSelection: 'Reset selection',
 	pleaseSelectImage: 'Please select an image.',
+	selectTextOrImage: 'Select text or image',
 } satisfies BaseTranslation
 
 export default en

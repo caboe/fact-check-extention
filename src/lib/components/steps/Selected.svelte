@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { AccordionItem, SlideToggle } from '@skeletonlabs/skeleton'
+	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import { onMount } from 'svelte'
 	import { isSelectedImage, isSelectedText, SelectedContent } from '../../../TSelectedContent'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
+	import view from '../../state/view.svelte'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import comments from '../svg/comments.svg'
 
@@ -103,6 +105,12 @@
 		unifiedStorage.value.selectedContent = { text: target.value }
 		unifiedStorage.value.result = undefined
 	}
+
+	onMount(() => {
+		if (hasSelected) {
+			view.step = 1
+		}
+	})
 </script>
 
 <AccordionItem {open} on:click>
@@ -113,6 +121,9 @@
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
 			<img src={comments} class="h-4 w-4" alt="Comments Icon" />
+			{#if !hasSelected}
+				<span>{L.selectTextOrImage()}</span>
+			{/if}
 			{#if isSelectedImage(content)}
 				{#if content.image && content.image.length > 0}
 					<span>{L.imageSelected()}</span>
