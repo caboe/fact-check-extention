@@ -55,6 +55,11 @@ const de = {
 	saveButton: 'Speichern',
 	fillAllFieldsAlert: 'Bitte füllen Sie alle Felder aus',
 	configureTone: 'Konfigurieren des Sprachstils',
+	selectText: 'Text auswählen',
+	resetSelection: 'Auswahl zurücksetzen',
+	imageSelected: 'Bild ausgewählt',
+	selectImage: 'Bild auswählen',
+	pleaseSelectImage: 'Bitte wählen Sie ein Bild aus.',
 } satisfies BaseTranslation
 
 export default de

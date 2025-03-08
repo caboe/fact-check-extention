@@ -54,6 +54,11 @@ const en = {
 	saveButton: 'Save',
 	fillAllFieldsAlert: 'Please fill in all fields',
 	configureTone: 'Configure tone of speech',
+	imageSelected: 'Image selected',
+	selectImage: 'Select image',
+	selectText: 'Select text',
+	resetSelection: 'Reset selection',
+	pleaseSelectImage: 'Please select an image.',
 } satisfies BaseTranslation
 
 export default en

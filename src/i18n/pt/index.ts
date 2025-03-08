@@ -55,6 +55,11 @@ const pt = {
 	saveButton: 'Salvar',
 	fillAllFieldsAlert: 'Por favor, preencha todos os campos',
 	configureTone: 'Configurar tom de voz',
+	selectText: 'Selecionar texto',
+	resetSelection: 'Reiniciar seleção',
+	imageSelected: 'Imagem selecionada',
+	selectImage: 'Selecionar imagem',
+	pleaseSelectImage: 'Por favor selecione uma imagem.',
 } satisfies BaseTranslation
 
 export default pt

@@ -115,9 +115,9 @@
 			<img src={comments} class="h-4 w-4" alt="Comments Icon" />
 			{#if isSelectedImage(content)}
 				{#if content.image && content.image.length > 0}
-					<span>Image selected</span>
+					<span>{L.imageSelected()}</span>
 				{:else}
-					<button class="btn">Select image</button>
+					<button class="btn">{L.selectImage()}</button>
 				{/if}
 			{:else if isSelectedText(content)}
 				{#if content.text.replaceAll(' ', '').length === 0}
@@ -158,18 +158,18 @@
 				/>
 			{:else}
 				<button class="btn cursor-pointer" onclick={selectImageOnPage}>
-					Please select an image.
+					{L.pleaseSelectImage()}
 				</button>
 			{/if}
 		{/if}
-		<div class="grid grid-cols-3 gap-2">
+		<div class="flex flex-wrap justify-around gap-2">
 			<button onclick={selectTextOnPage} class="variant-filled btn btn-sm cursor-pointer">
-				Select Text
+				{L.selectText()}
 			</button>
 			<button onclick={selectImageOnPage} class="variant-filled btn btn-sm cursor-pointer">
-				Select Image
+				{L.selectImage()}
 			</button>
-			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">Reset</button>
+			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
 		</div>
 	{/snippet}
 </AccordionItem>

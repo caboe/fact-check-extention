@@ -222,6 +222,26 @@ type RootTranslation = {
 	 * C​o​n​f​i​g​u​r​e​ ​t​o​n​e​ ​o​f​ ​s​p​e​e​c​h
 	 */
 	configureTone: string
+	/**
+	 * I​m​a​g​e​ ​s​e​l​e​c​t​e​d
+	 */
+	imageSelected: string
+	/**
+	 * S​e​l​e​c​t​ ​i​m​a​g​e
+	 */
+	selectImage: string
+	/**
+	 * S​e​l​e​c​t​ ​t​e​x​t
+	 */
+	selectText: string
+	/**
+	 * R​e​s​e​t​ ​s​e​l​e​c​t​i​o​n
+	 */
+	resetSelection: string
+	/**
+	 * P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​a​n​ ​i​m​a​g​e​.
+	 */
+	pleaseSelectImage: string
 }
 
 export type TranslationFunctions = {
@@ -427,6 +447,26 @@ export type TranslationFunctions = {
 	 * Configure tone of speech
 	 */
 	configureTone: () => LocalizedString
+	/**
+	 * Image selected
+	 */
+	imageSelected: () => LocalizedString
+	/**
+	 * Select image
+	 */
+	selectImage: () => LocalizedString
+	/**
+	 * Select text
+	 */
+	selectText: () => LocalizedString
+	/**
+	 * Reset selection
+	 */
+	resetSelection: () => LocalizedString
+	/**
+	 * Please select an image.
+	 */
+	pleaseSelectImage: () => LocalizedString
 }
 
 export type Formatters = {}

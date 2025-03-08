@@ -55,6 +55,11 @@ const es = {
 	saveButton: 'Guardar',
 	fillAllFieldsAlert: 'Por favor, completa todos los campos',
 	configureTone: 'Configurar tono de voz',
+	selectText: 'Seleccionar texto',
+	resetSelection: 'Reiniciar selección',
+	imageSelected: 'Imagen seleccionada',
+	selectImage: 'Seleccionar imagen',
+	pleaseSelectImage: 'Por favor seleccione una imagen.',
 } satisfies BaseTranslation
 
 export default es
