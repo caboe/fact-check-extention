@@ -10,6 +10,29 @@ const noop = (event: Event) => {
 	event.preventDefault()
 }
 
+function addImageSelectStyles() {
+	const style = document.createElement('style')
+	style.id = 'dynamic-img-hover' // Eindeutige ID für spätere Referenz
+	style.textContent = `
+	  img {
+	  	cursor: crosshair !important;
+	  }
+	  img:hover {
+	  	box-shadow: 0 0 1px 1px red !important;
+		z-index: 99999 !important; 
+		transition: all 0.3s; 
+	  }
+	`
+	document.head.appendChild(style)
+}
+
+function removeImageHoverStyles() {
+	const styleElement = document.getElementById('dynamic-img-hover')
+	if (styleElement) {
+		styleElement.remove()
+	}
+}
+
 const imageClickHandler = async (event: MouseEvent) => {
 	// Always prevent default behavior for any click during image selection mode
 	event.stopPropagation()
@@ -43,8 +66,7 @@ const imageClickHandler = async (event: MouseEvent) => {
 			}
 		}, 3000)
 
-		// Disable image select mode after selection
-		document.body.style.cursor = ''
+		removeImageHoverStyles()
 		if (imageClickHandler) {
 			document.removeEventListener('click', imageClickHandler)
 		}
@@ -57,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	console.log('content.js received message', request)
 
 	if (request.action === 'enableImageSelect') {
-		document.body.style.cursor = 'crosshair'
+		addImageSelectStyles()
 
 		suppessEvents.forEach((event) => {
 			document.addEventListener(event, noop)
@@ -65,7 +87,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		document.addEventListener('click', imageClickHandler)
 	}
 	if (request.action === 'disableImageSelect') {
-		document.body.style.cursor = ''
+		removeImageHoverStyles()
+
 		image = null
 		if (imageClickHandler) {
 			document.removeEventListener('click', imageClickHandler)
