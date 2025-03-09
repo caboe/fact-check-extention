@@ -45,19 +45,30 @@ export default async function checkFact() {
 
 	if (!content) throw new Error('No content selected')
 
+	let isModel = true
+	const modelOrAgent = !isModel
+		? {
+				agent_id: 'ag:ecf72e01:20250223:klima-fine-tune:3d4c2fa8',
+			}
+		: { model: endpoints.value.selected.model }
+
 	const requestBody = {
-		model: endpoints.value.selected.model,
+		...modelOrAgent,
+		// model: 'ft:open-mistral-7b:ecf72e01:20250223:9b3dc74b',
 		stream: true,
 		messages: [
-			{
-				role: 'system',
-				content: getSystemRole(tone, apiRequest.value.range),
-			},
 			{
 				role: 'user',
 				content,
 			},
 		],
+	}
+
+	if (isModel) {
+		requestBody.messages.push({
+			role: 'system',
+			content: getSystemRole(tone, apiRequest.value.range),
+		})
 	}
 
 	try {
