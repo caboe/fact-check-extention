@@ -32,7 +32,7 @@ const es = {
 	add: 'Añadir',
 	updateEndpoint: 'Actualizar punto final',
 	noConfiguredEndpoints: 'No se han añadido puntos finales hasta ahora',
-	selectedText: 'Selecciona texto en la página o pégalo aquí.',
+	selectedText: 'Introducir texto directamente o seleccionar en la página.',
 	notChecked: 'No verificado',
 	enterText: 'Ingrese el texto aquí.',
 	personLabel: 'Responder en el estilo de esta persona (opcional)',

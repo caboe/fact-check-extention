@@ -32,7 +32,7 @@ const de = {
 	add: 'Hinzufügen',
 	updateEndpoint: 'Endpunkt aktualisieren',
 	noConfiguredEndpoints: 'Noch keine Endpunkte hinzugefügt',
-	selectedText: 'Text auf der Seite auswählen oder hier einfügen.',
+	selectedText: 'Text direkt eingeben oder auf der Seite auswählen.',
 	notChecked: 'Nicht geprüft',
 	enterText: 'Text hier eingeben.',
 	personLabel: 'Im Stil dieser Person antworten (optional)',

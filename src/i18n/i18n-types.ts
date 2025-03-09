@@ -134,7 +134,7 @@ type RootTranslation = {
 	 */
 	noConfiguredEndpoints: string
 	/**
-	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​n​ ​t​h​e​ ​p​a​g​e​ ​o​r​ ​p​a​s​t​e​ ​i​t​ ​h​e​r​e​.
+	 * E​n​t​e​r​ ​t​e​x​t​ ​d​i​r​e​c​t​l​y​ ​o​r​ ​s​e​l​e​c​t​ ​o​n​ ​p​a​g​e​.
 	 */
 	selectedText: string
 	/**
@@ -364,7 +364,7 @@ export type TranslationFunctions = {
 	 */
 	noConfiguredEndpoints: () => LocalizedString
 	/**
-	 * Select text on the page or paste it here.
+	 * Enter text directly or select on page.
 	 */
 	selectedText: () => LocalizedString
 	/**
