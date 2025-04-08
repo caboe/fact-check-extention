@@ -7,6 +7,7 @@
 	import view from '../../state/view.svelte'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import comments from '../svg/comments.svg'
+	import apiRequest from '../../state/apiRequest.svelte'
 
 	interface Props {
 		open: boolean
@@ -61,6 +62,7 @@
 	function reset() {
 		unifiedStorage.value.selectedContent = { text: '' }
 		unifiedStorage.value.result = undefined
+		apiRequest.value.loading = false
 	}
 
 	$effect(() => {
