@@ -69,10 +69,10 @@
 			if (!apiKey && !confirm(L.saveAnyway())) return
 			const newEndpoint: Endpoint = { title, url, apiKey, model }
 			endpoints.add(newEndpoint)
+			view.showAddEndpointForm = false
 			title = ''
 			url = ''
 			apiKey = ''
-			view.showAddEndpointForm = false
 			model = ''
 		} else {
 			alert(L.fieldsMissing())
