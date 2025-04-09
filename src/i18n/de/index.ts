@@ -22,6 +22,7 @@ const de = {
 	copy: 'Kopieren',
 	configuredEndpoints: 'Konfigurierte Endpunkte',
 	newEndpoint: 'Neuer Endpunkt',
+	darkMode: 'Dunkelmodus',
 	title: 'Titel',
 	titelPlaceholder: 'Beispiel: Faktencheck-API',
 	url: 'URL',

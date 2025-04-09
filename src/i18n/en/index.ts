@@ -21,6 +21,7 @@ const en = {
 	copy: 'Copy',
 	configuredEndpoints: 'Configured Endpoints',
 	newEndpoint: 'New Endpoint',
+	darkMode: 'Dark Mode',
 	title: 'Titel',
 	titelPlaceholder: 'Example: Fact Check API',
 	url: 'URL',

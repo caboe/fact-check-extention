@@ -5,17 +5,31 @@
 	import AddEndpointForm from './AddEndpointForm.svelte'
 	import EndpointList from './EndpointList.svelte'
 	import CloseIcon from './icons/CloseIcon.svelte'
+	import { SlideToggle } from '@skeletonlabs/skeleton'
+	import { themeState } from '../state/theme.svelte'
 
 	function deleteEndpoint(title: string) {
 		endpoints.delete(title)
 		view.showAddEndpointForm = false
 	}
+
+	let isDarkMode = $derived(themeState.currentTheme === 'dark')
 </script>
 
 <div class="mx-1 p-3">
 	<div class="mb-4 flex items-center justify-between">
 		<div class="text-md font-bold">{L.apiEndpoint()}</div>
 		<CloseIcon />
+	</div>
+	<!-- Dark Mode Toggle -->
+	<div class="mb-4 flex items-center justify-between">
+		<label for="dark-mode-toggle" class="text-sm font-medium">{L.darkMode() ?? 'Dark Mode'}</label>
+		<SlideToggle
+			name="dark-mode-toggle"
+			id="dark-mode-toggle"
+			checked={isDarkMode}
+			on:change={themeState.toggleTheme}
+		/>
 	</div>
 	{#if view.showAddEndpointForm}
 		<AddEndpointForm />

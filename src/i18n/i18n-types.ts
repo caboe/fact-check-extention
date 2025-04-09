@@ -94,6 +94,10 @@ type RootTranslation = {
 	 */
 	newEndpoint: string
 	/**
+	 * D​a​r​k​ ​M​o​d​e
+	 */
+	darkMode: string
+	/**
 	 * T​i​t​e​l
 	 */
 	title: string
@@ -323,6 +327,10 @@ export type TranslationFunctions = {
 	 * New Endpoint
 	 */
 	newEndpoint: () => LocalizedString
+	/**
+	 * Dark Mode
+	 */
+	darkMode: () => LocalizedString
 	/**
 	 * Titel
 	 */

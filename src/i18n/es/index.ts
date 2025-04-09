@@ -22,6 +22,7 @@ const es = {
 	copy: 'Copiar',
 	configuredEndpoints: 'Puntos finales configurados',
 	newEndpoint: 'Nuevo punto final',
+	darkMode: 'Modo Oscuro',
 	title: 'Título',
 	titelPlaceholder: 'Ejemplo: API de verificación de hechos',
 	url: 'URL',

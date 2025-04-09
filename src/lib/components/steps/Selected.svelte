@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
-	import { isSelectedImage, isSelectedText, SelectedContent } from '../../../TSelectedContent'
+	import { isSelectedImage, isSelectedText, type SelectedContent } from '../../../TSelectedContent'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'

@@ -4,8 +4,6 @@ function isChromeStorage(storage: StorageBackend): storage is chrome.storage.Loc
 	return typeof (storage as chrome.storage.LocalStorageArea).get === 'function'
 }
 
-const APP_KEY = 'app'
-
 export class PersistState<T> {
 	#value: T | null = $state(null)
 	#key: string
