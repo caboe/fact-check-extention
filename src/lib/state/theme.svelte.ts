@@ -4,7 +4,10 @@ type Theme = 'light' | 'dark'
 
 const THEME_STORAGE_KEY = 'factCheckExtensionTheme'
 
-export const themeState = new PersistState<Theme>(THEME_STORAGE_KEY, 'light')
+export const themeState = new PersistState<Theme>(
+	THEME_STORAGE_KEY,
+	window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+)
 
 $effect.root(() => {
 	$effect(() => {
