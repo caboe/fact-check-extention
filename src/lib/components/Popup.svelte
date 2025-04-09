@@ -14,7 +14,6 @@
 		hasSeenIntroduction.value = true
 	}
 
-	// TODO
 	$effect(() => {
 		popupState.value = endpoints.value.list.length === 0 ? 'CONFIG' : 'DEFAULT'
 	})

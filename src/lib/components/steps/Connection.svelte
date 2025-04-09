@@ -6,8 +6,8 @@
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
-	import connection from '../svg/connection.svg'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
+	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -38,7 +38,7 @@
 <AccordionItem {open} on:click>
 	{#snippet summary()}
 		<label for="endpoints" class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold">
-			<img src={connection} class="h-4 w-4" alt="Response Icon" />
+			<ConnectionIcon />
 			<span>
 				{L.apiEndpoint()}
 			</span>

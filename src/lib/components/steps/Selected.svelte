@@ -2,12 +2,12 @@
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
 	import { isSelectedImage, isSelectedText, type SelectedContent } from '../../../TSelectedContent'
+	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
-	import comments from '../svg/comments.svg'
-	import apiRequest from '../../state/apiRequest.svelte'
+	import CommentsIcon from '../icons/CommentsIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -122,7 +122,7 @@
 			for="selected-text"
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
-			<img src={comments} class="h-4 w-4" alt="Comments Icon" />
+			<CommentsIcon />
 			{#if !hasSelected}
 				<span>{L.selectTextOrImage()}</span>
 			{/if}

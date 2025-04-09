@@ -3,8 +3,8 @@
 	import { fade } from 'svelte/transition'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import L from '../../state/L.svelte'
-	import response from '../svg/response.svg'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
+	import ResponseIcon from '../icons/ResponseIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -49,7 +49,7 @@
 			for="selected-text"
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
-			<img src={response} class="h-4 w-4" alt="Response Icon" />
+			<ResponseIcon />
 			<span>
 				{L.response()}
 			</span>
