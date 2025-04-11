@@ -17,19 +17,50 @@
 
 	let endpointSelectEl: HTMLSelectElement | null = $state(null)
 
+	function isRestrictedUrl(url: string | undefined): boolean {
+		if (!url) return true // Treat undefined URL as restricted
+		try {
+			const parsedUrl = new URL(url)
+			return (
+				parsedUrl.protocol === 'chrome:' ||
+				parsedUrl.protocol === 'chrome-extension:' ||
+				parsedUrl.hostname === 'chrome.google.com' // Web Store
+			)
+		} catch (e) {
+			// Invalid URL, treat as restricted
+			return true
+		}
+	}
+
 	$effect(() => {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-			if (tabs[0].id !== undefined) {
+			const tab = tabs[0]
+			if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
 				chrome.tabs.sendMessage(
-					tabs[0].id,
+					tab.id,
 					{ action: 'getSelectedContent' },
 					(response: SelectedContent) => {
+						// Check lastError *first*
+						if (chrome.runtime.lastError) {
+							// Still log if connection fails unexpectedly on a non-restricted page
+							console.warn(
+								`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+							)
+							return
+						}
+						// No error, proceed as normal
 						unifiedStorage.value.result = undefined
 						unifiedStorage.value.selectedContent = response
 					},
 				)
+				// Also check URL before sending these
 				imageSelectOnPage(false)
 				textSelectOnPage(false)
+			} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+				// Don't try to communicate with restricted pages
+				// console.log(`Fact Check: Not attempting to get content from restricted URL: ${tab.url}`);
+				// Optionally clear selection when opened on restricted page
+				// unifiedStorage.value.selectedContent = undefined;
 			}
 		})
 	})
@@ -73,20 +104,46 @@
 
 	function imageSelectOnPage(imageSelectMode: boolean) {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-			if (tabs[0].id !== undefined) {
-				chrome.tabs.sendMessage(tabs[0].id, {
-					action: imageSelectMode ? 'enableImageSelect' : 'disableImageSelect',
-				})
+			const tab = tabs[0]
+			if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+				chrome.tabs.sendMessage(
+					tab.id,
+					{
+						action: imageSelectMode ? 'enableImageSelect' : 'disableImageSelect',
+					},
+					() => {
+						if (chrome.runtime.lastError) {
+							console.warn(
+								`Fact Check: Could not toggle image select mode on tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+							)
+						}
+					},
+				)
+			} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+				// console.log(`Fact Check: Not attempting image select on restricted URL: ${tab.url}`);
 			}
 		})
 	}
 
 	function textSelectOnPage(textSelectMode: boolean) {
 		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-			if (tabs[0].id !== undefined) {
-				chrome.tabs.sendMessage(tabs[0].id, {
-					action: textSelectMode ? 'enableTextSelect' : 'disableTextSelect',
-				})
+			const tab = tabs[0]
+			if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+				chrome.tabs.sendMessage(
+					tab.id,
+					{
+						action: textSelectMode ? 'enableTextSelect' : 'disableTextSelect',
+					},
+					() => {
+						if (chrome.runtime.lastError) {
+							console.warn(
+								`Fact Check: Could not toggle text select mode on tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+							)
+						}
+					},
+				)
+			} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+				// console.log(`Fact Check: Not attempting text select on restricted URL: ${tab.url}`);
 			}
 		})
 	}
