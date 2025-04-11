@@ -22,7 +22,7 @@ const fr = {
 	copy: 'Copier',
 	configuredEndpoints: 'Points de terminaison configurés',
 	newEndpoint: 'Nouveau point de terminaison',
-	darkMode: 'Mode Sombre',
+	darkMode: 'Dark Mode',
 	title: 'Titre',
 	titelPlaceholder: 'Exemple : API de vérification des faits',
 	url: 'URL',
