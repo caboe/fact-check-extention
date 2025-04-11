@@ -21,7 +21,7 @@ const config = {
 	plugins: [
 		forms,
 		skeleton({
-			themes: { preset: ['crimson'] }, // Add vintage theme for dark mode
+			themes: { preset: ['rocket'] }, // Add vintage theme for dark mode
 		}),
 	],
 	safelist: [
