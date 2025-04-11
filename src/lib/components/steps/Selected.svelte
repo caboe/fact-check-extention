@@ -232,7 +232,7 @@
 				</button>
 			{/if}
 		{/if}
-		<div class="flex flex-wrap justify-around gap-2">
+		<div class="grid grid-cols-[1fr_1fr_32px] justify-around gap-2">
 			<button onclick={selectTextOnPage} class="variant-filled btn btn-sm cursor-pointer">
 				{L.selectText()}
 			</button>
