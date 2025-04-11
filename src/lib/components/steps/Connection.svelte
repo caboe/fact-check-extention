@@ -6,7 +6,8 @@
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
-	import connection from '../svg/connection.svg'
+	import unifiedStorage from '../../util/unifiedStorage.svelte'
+	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -17,18 +18,18 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	if (apiRequest.selectedText.trim().length > 1 && view.step === 0) {
+	if (unifiedStorage.value.selectedContent && view.step === 0) {
 		view.step = 1
 	}
 
 	function selectCurrent() {
-		const idx = endpoints.value.findIndex((ep) => ep.title === endpoints.selected?.title)
+		const idx = endpoints.value.list.findIndex((ep) => ep.title === endpoints.value.selected?.title)
 		const option = endpointSelect?.getElementsByTagName('option')[idx]
 		if (option) option.selected = true
 	}
 
 	$effect(() => {
-		endpoints.selected
+		endpoints.value.selected
 		endpointSelect
 		selectCurrent()
 	})
@@ -37,7 +38,7 @@
 <AccordionItem {open} on:click>
 	{#snippet summary()}
 		<label for="endpoints" class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold">
-			<img src={connection} class="h-4 w-4" alt="Response Icon" />
+			<ConnectionIcon />
 			<span>
 				{L.apiEndpoint()}
 			</span>
@@ -49,44 +50,44 @@
 				<div class="text-md">{L.configureApi()}</div>
 				<Settings />
 			</div>
-			{#if endpoints.value.length === 1}
-				<span class="text-center text-lg font-bold">{endpoints.value[0].title}</span>
+			{#if endpoints.value.list.length === 1}
+				<span class="text-center text-lg font-bold">{endpoints.value.list[0].title}</span>
 			{:else}
 				<select
 					bind:this={endpointSelect}
 					class="select"
 					id="endpoints"
-					bind:value={endpoints.selected}
+					bind:value={endpoints.value.selected}
 				>
-					{#each endpoints.value as endpoint}
+					{#each endpoints.value.list as endpoint}
 						<option value={endpoint}>{endpoint.title}</option>
 					{/each}
 				</select>
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				<button class="variant-filled-primary btn" onclick={() => (popupState.view = 'TONE')}>
+				<button class="variant-filled-primary btn" onclick={() => (popupState.value = 'TONE')}>
 					{L.configureTone()}
 				</button>
 			</div>
-			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">
+			<!-- 			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">
 				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"
 					type="text"
-					bind:value={apiRequest.person}
+					bind:value={unifiedStorage.value.person}
 					placeholder={L.personPlaceholder()}
 				/>
-			</label>
+			</label> -->
 			<div class="flex flex-col items-center justify-between gap-2">
-				<input type="range" min="3" max="500" bind:value={apiRequest.range} class="mt-2" />
-				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.range })}</div>
+				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
+				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}
-				disabled={apiRequest.loading || !apiRequest.selectedText}
+				disabled={apiRequest.value.loading || !unifiedStorage.value.selectedContent}
 			>
-				{#if apiRequest.loading}
+				{#if apiRequest.value.loading}
 					{L.checkingProgress()}
 				{:else}
 					{L.apiCta()}

@@ -22,6 +22,7 @@ const fr = {
 	copy: 'Copier',
 	configuredEndpoints: 'Points de terminaison configurés',
 	newEndpoint: 'Nouveau point de terminaison',
+	darkMode: 'Mode Sombre',
 	title: 'Titre',
 	titelPlaceholder: 'Exemple : API de vérification des faits',
 	url: 'URL',
@@ -32,7 +33,7 @@ const fr = {
 	add: 'Ajouter',
 	updateEndpoint: 'Mettre à jour le point de terminaison',
 	noConfiguredEndpoints: "Aucun point de terminaison ajouté jusqu'à présent",
-	selectedText: 'Sélectionnez du texte sur la page ou collez-le ici.',
+	selectedText: 'Entrez le texte directement ou sélectionnez sur la page.',
 	notChecked: 'Non vérifié',
 	enterText: 'Entrez le texte ici.',
 	personLabel: 'ERépondre dans le style de cette personne (facultatif)',
@@ -55,6 +56,12 @@ const fr = {
 	saveButton: 'Enregistrer',
 	fillAllFieldsAlert: 'Veuillez remplir tous les champs',
 	configureTone: 'Configurer le ton de la voix',
+	selectText: 'Sélectionner le texte',
+	resetSelection: 'Réinitialiser la sélection',
+	imageSelected: 'Image sélectionnée',
+	selectImage: 'Sélectionner une image',
+	pleaseSelectImage: 'Veuillez sélectionner une image.',
+	selectTextOrImage: 'Sélectionner du texte ou une image',
 } satisfies BaseTranslation
 
 export default fr

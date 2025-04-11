@@ -120,7 +120,7 @@ const toneTrump = [
 ]
 
 const tone: ITone = $state({
-	value: toneTrump,
+	value: tonePispers,
 })
 
 export default tone

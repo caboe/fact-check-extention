@@ -22,6 +22,7 @@ const pt = {
 	copy: 'Copiar',
 	configuredEndpoints: 'Endpoints configurados',
 	newEndpoint: 'Novo endpoint',
+	darkMode: 'Modo Escuro',
 	title: 'Título',
 	titelPlaceholder: 'Exemplo: API de verificação de fatos',
 	url: 'URL',
@@ -32,7 +33,7 @@ const pt = {
 	add: 'Adicionar',
 	updateEndpoint: 'Atualizar endpoint',
 	noConfiguredEndpoints: 'Nenhum endpoint configurado',
-	selectedText: 'Selecione o texto na página ou cole-o aqui.',
+	selectedText: 'Digite o texto diretamente ou selecione na página.',
 	notChecked: 'Não verificado',
 	enterText: 'Digite o texto aqui.',
 	personLabel: 'Responder no estilo desta pessoa (opcional)',
@@ -55,6 +56,12 @@ const pt = {
 	saveButton: 'Salvar',
 	fillAllFieldsAlert: 'Por favor, preencha todos os campos',
 	configureTone: 'Configurar tom de voz',
+	selectText: 'Selecionar texto',
+	resetSelection: 'Reiniciar seleção',
+	imageSelected: 'Imagem selecionada',
+	selectImage: 'Selecionar imagem',
+	pleaseSelectImage: 'Por favor selecione uma imagem.',
+	selectTextOrImage: 'Selecionar texto ou imagem',
 } satisfies BaseTranslation
 
 export default pt

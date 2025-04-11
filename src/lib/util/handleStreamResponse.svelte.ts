@@ -1,4 +1,5 @@
 import apiRequest from '../state/apiRequest.svelte'
+import unifiedStorage from './unifiedStorage.svelte'
 
 export default async function handleStreamResponse(response: Response) {
 	const reader = response.body!.getReader()
@@ -46,6 +47,7 @@ export default async function handleStreamResponse(response: Response) {
 				}
 			}
 		}
-		apiRequest.result = resultText
+		unifiedStorage.value.result = resultText
+		apiRequest.value.loading = false
 	}
 }

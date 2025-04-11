@@ -21,6 +21,7 @@ const en = {
 	copy: 'Copy',
 	configuredEndpoints: 'Configured Endpoints',
 	newEndpoint: 'New Endpoint',
+	darkMode: 'Dark Mode',
 	title: 'Titel',
 	titelPlaceholder: 'Example: Fact Check API',
 	url: 'URL',
@@ -31,7 +32,7 @@ const en = {
 	add: 'add',
 	updateEndpoint: 'Update Endpoint',
 	noConfiguredEndpoints: 'No endpoints added',
-	selectedText: 'Select text on the page or paste it here.',
+	selectedText: 'Enter text directly or select on page.',
 	notChecked: 'Not checked',
 	enterText: 'Enter text here.',
 	personLabel: 'Enter a person (optional)',
@@ -54,6 +55,12 @@ const en = {
 	saveButton: 'Save',
 	fillAllFieldsAlert: 'Please fill in all fields',
 	configureTone: 'Configure tone of speech',
+	imageSelected: 'Image selected',
+	selectImage: 'Select image',
+	selectText: 'Select text',
+	resetSelection: 'Reset selection',
+	pleaseSelectImage: 'Please select an image.',
+	selectTextOrImage: 'Select text or image',
 } satisfies BaseTranslation
 
 export default en

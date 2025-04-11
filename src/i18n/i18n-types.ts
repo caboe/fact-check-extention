@@ -94,6 +94,10 @@ type RootTranslation = {
 	 */
 	newEndpoint: string
 	/**
+	 * D​a​r​k​ ​M​o​d​e
+	 */
+	darkMode: string
+	/**
 	 * T​i​t​e​l
 	 */
 	title: string
@@ -134,7 +138,7 @@ type RootTranslation = {
 	 */
 	noConfiguredEndpoints: string
 	/**
-	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​n​ ​t​h​e​ ​p​a​g​e​ ​o​r​ ​p​a​s​t​e​ ​i​t​ ​h​e​r​e​.
+	 * E​n​t​e​r​ ​t​e​x​t​ ​d​i​r​e​c​t​l​y​ ​o​r​ ​s​e​l​e​c​t​ ​o​n​ ​p​a​g​e​.
 	 */
 	selectedText: string
 	/**
@@ -222,6 +226,30 @@ type RootTranslation = {
 	 * C​o​n​f​i​g​u​r​e​ ​t​o​n​e​ ​o​f​ ​s​p​e​e​c​h
 	 */
 	configureTone: string
+	/**
+	 * I​m​a​g​e​ ​s​e​l​e​c​t​e​d
+	 */
+	imageSelected: string
+	/**
+	 * S​e​l​e​c​t​ ​i​m​a​g​e
+	 */
+	selectImage: string
+	/**
+	 * S​e​l​e​c​t​ ​t​e​x​t
+	 */
+	selectText: string
+	/**
+	 * R​e​s​e​t​ ​s​e​l​e​c​t​i​o​n
+	 */
+	resetSelection: string
+	/**
+	 * P​l​e​a​s​e​ ​s​e​l​e​c​t​ ​a​n​ ​i​m​a​g​e​.
+	 */
+	pleaseSelectImage: string
+	/**
+	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​r​ ​i​m​a​g​e
+	 */
+	selectTextOrImage: string
 }
 
 export type TranslationFunctions = {
@@ -300,6 +328,10 @@ export type TranslationFunctions = {
 	 */
 	newEndpoint: () => LocalizedString
 	/**
+	 * Dark Mode
+	 */
+	darkMode: () => LocalizedString
+	/**
 	 * Titel
 	 */
 	title: () => LocalizedString
@@ -340,7 +372,7 @@ export type TranslationFunctions = {
 	 */
 	noConfiguredEndpoints: () => LocalizedString
 	/**
-	 * Select text on the page or paste it here.
+	 * Enter text directly or select on page.
 	 */
 	selectedText: () => LocalizedString
 	/**
@@ -427,6 +459,30 @@ export type TranslationFunctions = {
 	 * Configure tone of speech
 	 */
 	configureTone: () => LocalizedString
+	/**
+	 * Image selected
+	 */
+	imageSelected: () => LocalizedString
+	/**
+	 * Select image
+	 */
+	selectImage: () => LocalizedString
+	/**
+	 * Select text
+	 */
+	selectText: () => LocalizedString
+	/**
+	 * Reset selection
+	 */
+	resetSelection: () => LocalizedString
+	/**
+	 * Please select an image.
+	 */
+	pleaseSelectImage: () => LocalizedString
+	/**
+	 * Select text or image
+	 */
+	selectTextOrImage: () => LocalizedString
 }
 
 export type Formatters = {}

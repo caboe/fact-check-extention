@@ -31,16 +31,16 @@
 		<button onclick={closeEdit} class="variant-filled-error btn mt-2 w-full"> {L.cancel()} </button>
 	</div>
 {:else}
-	{#if endpoints.value.length === 0}
+	{#if endpoints.value.list.length === 0}
 		<p class="text-center text-base font-bold">{L.noConfiguredEndpoints()}</p>
 	{:else}
 		<p class="text-center text-base font-bold">
-			{L.configuredEndpoints()}: {endpoints.value.length}
+			{L.configuredEndpoints()}: {endpoints.value.list.length}
 		</p>
 	{/if}
 
 	<ul class="my-4 flex list-none flex-col gap-1 p-0">
-		{#each endpoints.value as endpoint}
+		{#each endpoints.value.list as endpoint}
 			<li class="endpoint-item align-center flex justify-between gap-2">
 				<span>{endpoint.title}</span>
 				<div class="flex gap-2">

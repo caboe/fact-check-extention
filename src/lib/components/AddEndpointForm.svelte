@@ -24,6 +24,11 @@
 			url: 'https://api.deepseek.com/chat/completions',
 			model: 'deepseek-chat',
 		},
+		mistral: {
+			title: 'Mistral AI',
+			url: 'https://api.mistral.ai/v1/chat/completions',
+			model: 'mistral-large-latest',
+		},
 		qwen: {
 			title: 'Qwen',
 			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
@@ -37,7 +42,12 @@
 		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
-			model: 'gpt-4o-mini',
+			model: 'o3-mini',
+		},
+		claude: {
+			title: 'Claude Sonnet 3.5',
+			url: 'https://api.anthropic.com/v1/messages',
+			model: 'claude-3-7-sonnet-20250219',
 		},
 	}
 
@@ -51,7 +61,7 @@
 	}
 
 	function add() {
-		if (endpoints.value.some((endpoint) => endpoint.title === title)) {
+		if (endpoints.value.list.some((endpoint) => endpoint.title === title)) {
 			alert(L.endpointExists())
 			return
 		}
@@ -59,10 +69,10 @@
 			if (!apiKey && !confirm(L.saveAnyway())) return
 			const newEndpoint: Endpoint = { title, url, apiKey, model }
 			endpoints.add(newEndpoint)
+			view.showAddEndpointForm = false
 			title = ''
 			url = ''
 			apiKey = ''
-			view.showAddEndpointForm = false
 			model = ''
 		} else {
 			alert(L.fieldsMissing())

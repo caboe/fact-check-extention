@@ -6,14 +6,9 @@
 <button
 	type="button"
 	class="variant-filled btn-icon btn-icon-sm"
-	onclick={() => (popupState.view = 'DEFAULT')}
+	onclick={() => (popupState.value = 'DEFAULT')}
 >
-	<svg
-		class="h-6 w-6 text-slate-50"
-		viewBox="0 0 24 24"
-		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
-	>
+	<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			fill-rule="evenodd"
 			clip-rule="evenodd"

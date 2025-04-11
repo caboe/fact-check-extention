@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import { fade } from 'svelte/transition'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import L from '../../state/L.svelte'
-	import response from '../svg/response.svg'
-	import { set } from '../../util/unifiedStorage.svelte'
-	import { fade } from 'svelte/transition'
+	import unifiedStorage from '../../util/unifiedStorage.svelte'
+	import ResponseIcon from '../icons/ResponseIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -16,21 +16,23 @@
 	let message: string = $state('')
 
 	function copyResult() {
+		if (!unifiedStorage.value.result) return
+
 		navigator.clipboard
-			.writeText(apiRequest.result)
+			.writeText(unifiedStorage.value.result)
 			.then(() => {
 				message = L.copied()
 				setTimeout(() => {
 					message = ''
 				}, 2000)
 			})
-			.catch((err) => {
+			.catch((err: Error) => {
 				alert(L.copyError({ error: err.message }))
 			})
 	}
 
 	$effect(() => {
-		apiRequest.result
+		unifiedStorage.value.result
 		autoGrow()
 	})
 
@@ -47,26 +49,26 @@
 			for="selected-text"
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
-			<img src={response} class="h-4 w-4" alt="Response Icon" />
+			<ResponseIcon />
 			<span>
 				{L.response()}
 			</span>
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if apiRequest.result}
+		{#if unifiedStorage.value.result !== undefined}
 			<textarea
 				id="selected-text"
 				bind:this={textareaEl}
 				oninput={autoGrow}
-				bind:value={apiRequest.result}
+				bind:value={unifiedStorage.value.result}
 				class="textarea max-h-64 min-h-8"
 				rows="1"
 			></textarea>
 			<button class="variant-filled-success btn w-full" onclick={copyResult}>
 				{L.copy()}
 			</button>
-		{:else if apiRequest.loading}
+		{:else if apiRequest.value.loading}
 			{L.checkingProgress()}
 		{:else}
 			{L.notChecked()}

@@ -5,7 +5,7 @@ import type { Config } from 'tailwindcss'
 import { skeleton } from '@skeletonlabs/tw-plugin'
 
 const config = {
-	darkMode: 'media',
+	darkMode: 'class', // Enable class-based dark mode
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
 		'./public/**/*.html',
@@ -21,7 +21,7 @@ const config = {
 	plugins: [
 		forms,
 		skeleton({
-			themes: { preset: ['crimson'] },
+			themes: { preset: ['rocket'] }, // Add vintage theme for dark mode
 		}),
 	],
 	safelist: [

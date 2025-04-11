@@ -1,37 +1,33 @@
 <!-- src/components/Popup.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import popupState from '../../popupState.svelte'
 	import endpoints from '../state/endpoints.svelte'
-	import { getHasSeenIntroduction, setHasSeenIntroduction } from '../util/unifiedStorage.svelte'
+	import { PersistState } from '../util/PersistState.svelte'
 	import Config from './Config.svelte'
 	import FactCheck from './FactCheck.svelte'
 	import Introduction from './Introduction.svelte'
 	import Tone from './Tone.svelte'
 
-	let showIntroduction = $state(false)
+	const hasSeenIntroduction = new PersistState<boolean>('hasSeenIntroduction', false)
 
 	function onclick() {
-		showIntroduction = false
-		setHasSeenIntroduction()
+		hasSeenIntroduction.value = true
 	}
 
-	onMount(async () => {
-		await endpoints.load()
-		if (!endpoints.value.length) popupState.view = 'CONFIG'
-		showIntroduction = !(await getHasSeenIntroduction())
+	$effect(() => {
+		popupState.value = endpoints.value.list.length === 0 ? 'CONFIG' : 'DEFAULT'
 	})
 </script>
 
-<span class:hidden={popupState.view !== 'CONFIG'}>
+<span class:hidden={popupState.value !== 'CONFIG'}>
 	<Config />
 </span>
-<span class:hidden={popupState.view !== 'DEFAULT'}>
+<span class:hidden={popupState.value !== 'DEFAULT'}>
 	<FactCheck />
 </span>
-<span class:hidden={popupState.view !== 'TONE'}>
+<span class:hidden={popupState.value !== 'TONE'}>
 	<Tone />
 </span>
-{#if showIntroduction}
+{#if !hasSeenIntroduction.value}
 	<Introduction {onclick} />
 {/if}

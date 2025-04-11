@@ -22,6 +22,7 @@ const de = {
 	copy: 'Kopieren',
 	configuredEndpoints: 'Konfigurierte Endpunkte',
 	newEndpoint: 'Neuer Endpunkt',
+	darkMode: 'Dunkelmodus',
 	title: 'Titel',
 	titelPlaceholder: 'Beispiel: Faktencheck-API',
 	url: 'URL',
@@ -32,7 +33,7 @@ const de = {
 	add: 'Hinzufügen',
 	updateEndpoint: 'Endpunkt aktualisieren',
 	noConfiguredEndpoints: 'Noch keine Endpunkte hinzugefügt',
-	selectedText: 'Text auf der Seite auswählen oder hier einfügen.',
+	selectedText: 'Text direkt eingeben oder auf der Seite auswählen.',
 	notChecked: 'Nicht geprüft',
 	enterText: 'Text hier eingeben.',
 	personLabel: 'Im Stil dieser Person antworten (optional)',
@@ -55,6 +56,12 @@ const de = {
 	saveButton: 'Speichern',
 	fillAllFieldsAlert: 'Bitte füllen Sie alle Felder aus',
 	configureTone: 'Konfigurieren des Sprachstils',
+	selectText: 'Text auswählen',
+	resetSelection: 'Auswahl zurücksetzen',
+	imageSelected: 'Bild ausgewählt',
+	selectImage: 'Bild auswählen',
+	pleaseSelectImage: 'Bitte wählen Sie ein Bild aus.',
+	selectTextOrImage: 'Text oder Bild auswählen',
 } satisfies BaseTranslation
 
 export default de
