@@ -9,8 +9,9 @@
 	let apiKeyInput: HTMLInputElement
 	let selectedValue: string | undefined = $state(undefined)
 	let model = $state('')
+	let canProcessImages = $state(false)
 
-	type EndpointTemplate = Omit<Endpoint, 'apiKey'>
+	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'>
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
@@ -67,7 +68,7 @@
 		}
 		if (title && url) {
 			if (!apiKey && !confirm(L.saveAnyway())) return
-			const newEndpoint: Endpoint = { title, url, apiKey, model }
+			const newEndpoint: Endpoint = { title, url, apiKey, model, canProcessImages }
 			endpoints.add(newEndpoint)
 			view.showAddEndpointForm = false
 			title = ''
@@ -113,6 +114,10 @@
 			type="password"
 			placeholder={L.apiKeyPlaceholder()}
 		/>
+	</label>
+	<label class="label mb-2 flex cursor-pointer items-center justify-between">
+		<span>{L.canProcessImages()}</span>
+		<input type="checkbox" class="checkbox" bind:checked={canProcessImages} />
 	</label>
 	<div class="mt-4 flex justify-between">
 		<button class="variant-filled-warning btn" onclick={() => (view.showAddEndpointForm = false)}

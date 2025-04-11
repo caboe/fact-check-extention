@@ -98,7 +98,8 @@ export default async function checkFact() {
 			unifiedStorage.value.result = undefined
 			try {
 				const errorResponse = await response.json()
-				const message = errorResponse[0]?.error?.message || errorResponse.error?.message
+				const message =
+					errorResponse[0]?.error?.message || errorResponse.error?.message || errorResponse.message
 				if (message) {
 					unifiedStorage.value.result = message
 					return

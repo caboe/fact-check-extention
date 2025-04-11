@@ -250,6 +250,18 @@ type RootTranslation = {
 	 * S​e​l​e​c​t​ ​t​e​x​t​ ​o​r​ ​i​m​a​g​e
 	 */
 	selectTextOrImage: string
+	/**
+	 * C​a​n​ ​p​r​o​c​e​s​s​ ​i​m​a​g​e​s​?
+	 */
+	canProcessImages: string
+	/**
+	 * N​o​ ​c​o​n​f​i​g​u​r​e​d​ ​e​n​d​p​o​i​n​t​ ​s​u​p​p​o​r​t​s​ ​i​m​a​g​e​ ​a​n​a​l​y​s​i​s​.
+	 */
+	noImageEndpoint: string
+	/**
+	 * C​o​n​f​i​g​u​r​e
+	 */
+	configureButton: string
 }
 
 export type TranslationFunctions = {
@@ -483,6 +495,18 @@ export type TranslationFunctions = {
 	 * Select text or image
 	 */
 	selectTextOrImage: () => LocalizedString
+	/**
+	 * Can process images?
+	 */
+	canProcessImages: () => LocalizedString
+	/**
+	 * No configured endpoint supports image analysis.
+	 */
+	noImageEndpoint: () => LocalizedString
+	/**
+	 * Configure
+	 */
+	configureButton: () => LocalizedString
 }
 
 export type Formatters = {}

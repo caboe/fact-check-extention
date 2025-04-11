@@ -2,6 +2,7 @@
 	import endpoints from '../state/endpoints.svelte'
 	import { type Endpoint } from '../state/endpoints.svelte'
 	import L from '../state/L.svelte'
+	import view from '../state/view.svelte'
 
 	const { endpoint } = $props<{
 		endpoint: Endpoint
@@ -11,6 +12,7 @@
 	let url = $state(endpoint.url)
 	let apiKey = $state(endpoint.apiKey)
 	let model = $state(endpoint.model)
+	let canProcessImages = $state(endpoint.canProcessImages ?? false)
 
 	function handleSubmit() {
 		const updatedEndpoint: Endpoint = {
@@ -18,8 +20,14 @@
 			url,
 			apiKey,
 			model,
+			canProcessImages,
 		}
 		endpoints.edit(endpoint.title, updatedEndpoint)
+		view.showAddEndpointForm = false
+		title = ''
+		url = ''
+		apiKey = ''
+		model = ''
 	}
 </script>
 
@@ -49,6 +57,11 @@
 		<label class="label" for="model">Model</label>
 		<input type="text" id="model" bind:value={model} class="input-bordered input" required />
 	</div>
+
+	<label class="label flex cursor-pointer items-center justify-between">
+		<span>{L.canProcessImages()}</span>
+		<input type="checkbox" class="checkbox" bind:checked={canProcessImages} />
+	</label>
 
 	<button type="submit" class="variant-filled-success btn w-full"> {L.updateEndpoint()} </button>
 </form>

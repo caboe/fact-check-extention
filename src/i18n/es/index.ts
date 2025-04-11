@@ -62,6 +62,9 @@ const es = {
 	selectImage: 'Seleccionar imagen',
 	pleaseSelectImage: 'Por favor seleccione una imagen.',
 	selectTextOrImage: 'Seleccionar texto o imagen',
+	canProcessImages: '¿Puede procesar imágenes?',
+	noImageEndpoint: 'Ningún endpoint configurado admite el análisis de imágenes.',
+	configureButton: 'Configurar',
 } satisfies BaseTranslation
 
 export default es

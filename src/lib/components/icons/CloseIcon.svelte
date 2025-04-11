@@ -1,13 +1,15 @@
 <script lang="ts">
 	import popupState from '../../../popupState.svelte'
+	import view from '../../state/view.svelte'
+
+	function close() {
+		popupState.value = 'DEFAULT'
+		view.showAddEndpointForm = false
+	}
 </script>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button
-	type="button"
-	class="variant-filled btn-icon btn-icon-sm"
-	onclick={() => (popupState.value = 'DEFAULT')}
->
+<button type="button" class="variant-filled btn-icon btn-icon-sm" onclick={close}>
 	<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path
 			fill-rule="evenodd"

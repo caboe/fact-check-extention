@@ -62,6 +62,9 @@ const fr = {
 	selectImage: 'Sélectionner une image',
 	pleaseSelectImage: 'Veuillez sélectionner une image.',
 	selectTextOrImage: 'Sélectionner du texte ou une image',
+	canProcessImages: 'Peut traiter les images ?',
+	noImageEndpoint: "Aucun point de terminaison configuré ne prend en charge l'analyse d'images.",
+	configureButton: 'Configurer',
 } satisfies BaseTranslation
 
 export default fr

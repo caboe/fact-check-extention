@@ -5,6 +5,7 @@ export interface Endpoint {
 	url: string
 	apiKey: string
 	model: string
+	canProcessImages: boolean
 }
 
 class Endpoints extends PersistState<{
@@ -32,11 +33,17 @@ class Endpoints extends PersistState<{
 	}
 
 	async delete(title: string) {
-		await localStorage.delete(title)
+		const others = this.value.list.filter((endpoint) => endpoint.title !== title)
+		this.value.list = others
 	}
 
 	async edit(originalTitle: string, updatedEndpoint: Endpoint) {
-		await localStorage.edit(originalTitle, updatedEndpoint)
+		this.value.list = this.value.list.map((endpoint) => {
+			if (endpoint.title === originalTitle) {
+				return updatedEndpoint
+			}
+			return endpoint
+		})
 
 		// Update selected endpoint if it was edited
 		if (this.value.selected?.title === originalTitle) {

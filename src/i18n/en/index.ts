@@ -61,6 +61,9 @@ const en = {
 	resetSelection: 'Reset selection',
 	pleaseSelectImage: 'Please select an image.',
 	selectTextOrImage: 'Select text or image',
+	canProcessImages: 'Can process images?',
+	noImageEndpoint: 'No configured endpoint supports image analysis.',
+	configureButton: 'Configure',
 } satisfies BaseTranslation
 
 export default en

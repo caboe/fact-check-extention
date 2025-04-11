@@ -21,19 +21,21 @@
 		<div class="text-md font-bold">{L.apiEndpoint()}</div>
 		<CloseIcon />
 	</div>
-	<!-- Dark Mode Toggle -->
-	<div class="mb-4 flex items-center justify-between">
-		<label for="dark-mode-toggle" class="text-sm font-medium">{L.darkMode() ?? 'Dark Mode'}</label>
-		<SlideToggle
-			name="dark-mode-toggle"
-			id="dark-mode-toggle"
-			checked={isDarkMode}
-			onchange={toggleTheme}
-		/>
-	</div>
+
 	{#if view.showAddEndpointForm}
 		<AddEndpointForm />
 	{:else}
+		<!-- Dark Mode Toggle -->
+		<div class="mb-4 flex items-center justify-between">
+			<label for="dark-mode-toggle" class="text-sm font-medium">{L.darkMode() ?? 'Dark Mode'}</label
+			>
+			<SlideToggle
+				name="dark-mode-toggle"
+				id="dark-mode-toggle"
+				checked={isDarkMode}
+				onchange={toggleTheme}
+			/>
+		</div>
 		<EndpointList on:delete={(event: CustomEvent<string>) => deleteEndpoint(event.detail)} />
 		<button
 			class="variant-filled-success btn w-full"
