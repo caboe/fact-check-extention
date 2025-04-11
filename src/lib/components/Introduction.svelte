@@ -8,7 +8,7 @@
 	let { onclick }: Props = $props()
 </script>
 
-<div class="absolute inset-0 overflow-scroll bg-white p-4">
+<div class="absolute inset-0 overflow-scroll p-4">
 	{@html L.introduction()}
 	<div class="pt-2 text-center">
 		<button class="variant-filled btn" {onclick}>

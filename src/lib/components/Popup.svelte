@@ -19,13 +19,13 @@
 	})
 </script>
 
-<span class:hidden={popupState.value !== 'CONFIG'}>
+<span class:hidden={popupState.value !== 'CONFIG' || !hasSeenIntroduction.value}>
 	<Config />
 </span>
-<span class:hidden={popupState.value !== 'DEFAULT'}>
+<span class:hidden={popupState.value !== 'DEFAULT' || hasSeenIntroduction.value}>
 	<FactCheck />
 </span>
-<span class:hidden={popupState.value !== 'TONE'}>
+<span class:hidden={popupState.value !== 'TONE' || hasSeenIntroduction.value}>
 	<Tone />
 </span>
 {#if !hasSeenIntroduction.value}
