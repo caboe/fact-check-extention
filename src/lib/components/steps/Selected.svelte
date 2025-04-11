@@ -8,7 +8,9 @@
 	import view from '../../state/view.svelte'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import CommentsIcon from '../icons/CommentsIcon.svelte'
-
+	import TextIcon from '../icons/TextIcon.svelte'
+	import ImageIcon from '../icons/ImageIcon.svelte'
+	import CloseIcon from '../icons/CloseIcon.svelte'
 	interface Props {
 		open: boolean
 	}
@@ -233,13 +235,22 @@
 			{/if}
 		{/if}
 		<div class="grid grid-cols-[1fr_1fr_32px] justify-around gap-2">
-			<button onclick={selectTextOnPage} class="variant-filled btn btn-sm cursor-pointer">
+			<button
+				onclick={selectTextOnPage}
+				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
+			>
+				<TextIcon />
 				{L.selectText()}
 			</button>
-			<button onclick={selectImageOnPage} class="variant-filled btn btn-sm cursor-pointer">
+			<button
+				onclick={selectImageOnPage}
+				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
+			>
+				<ImageIcon />
 				{L.selectImage()}
 			</button>
-			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer">X</button>
+			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer"><CloseIcon /></button
+			>
 		</div>
 	{/snippet}
 </AccordionItem>
