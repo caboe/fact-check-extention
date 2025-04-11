@@ -3,7 +3,6 @@ import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
 import view from '../state/view.svelte'
 import getSystemRole from './getSystemRole.svelte'
-import handleResponse from './handleResponse.svelte'
 import handleStreamResponse from './handleStreamResponse.svelte'
 import tone from './tone.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
@@ -48,15 +47,7 @@ export default async function checkFact() {
 
 	if (!content) throw new Error('No content selected')
 
-	let isModel = true
-	const modelOrAgent = !isModel
-		? {
-				agent_id: 'ag:ecf72e01:20250223:klima-fine-tune:3d4c2fa8',
-			}
-		: { model: endpoints.value.selected.model }
-
 	type RequestBody = {
-		agent_id?: string
 		model?: string
 		stream?: boolean
 		messages?: {
@@ -71,9 +62,8 @@ export default async function checkFact() {
 	async function fetchModel(): Promise<Response> {
 		if (!endpoints.value.selected) throw new Error('No endpoint selected')
 
-		let requestBody: RequestBody = {
-			...modelOrAgent,
-			// model: 'ft:open-mistral-7b:ecf72e01:20250223:9b3dc74b',
+		const requestBody: RequestBody = {
+			model: endpoints.value.selected.model,
 			stream: true,
 			messages: [
 				{
@@ -97,30 +87,8 @@ export default async function checkFact() {
 		})
 	}
 
-	async function fetchAgent(): Promise<Response> {
-		if (!endpoints.value.selected) throw new Error('No endpoint selected')
-
-		const requestBody = {
-			input: {
-				prompt: content as string,
-			},
-		}
-
-		return await fetch(
-			'https://dashscope-intl.aliyuncs.com/api/v1/apps/0cb0634341a04f408e30c14ae84aac61/completion',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer xxx`, // TODO !!!!!
-				},
-				body: JSON.stringify(requestBody),
-			},
-		)
-	}
-
 	try {
-		const response = isModel ? await fetchModel() : await fetchAgent()
+		const response = await fetchModel()
 		if (response.status === 403) {
 			unifiedStorage.value!.result =
 				'Forbidden! If you are using Ollame, try to start it with "OLLAMA_ORIGINS=chrome-extension://* ollama serve"'
@@ -141,11 +109,7 @@ export default async function checkFact() {
 			return
 		}
 
-		if (isModel) {
-			await handleStreamResponse(response)
-		} else {
-			await handleResponse(response)
-		}
+		await handleStreamResponse(response)
 	} catch (err: unknown) {
 		// TODO
 		unifiedStorage.value.result = 'Error during fact check: ' + (err as Error).message
