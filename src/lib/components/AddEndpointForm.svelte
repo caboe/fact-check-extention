@@ -38,7 +38,7 @@
 		gemini: {
 			title: 'Gemini',
 			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-			model: 'gemini-2.0-flash-exp',
+			model: 'gemini-2.5-pro-preview-03-25',
 		},
 		openAi: {
 			title: 'ChatGPT',
@@ -46,7 +46,7 @@
 			model: 'o3-mini',
 		},
 		claude: {
-			title: 'Claude Sonnet 3.5',
+			title: 'Antropic',
 			url: 'https://api.anthropic.com/v1/messages',
 			model: 'claude-3-7-sonnet-20250219',
 		},
