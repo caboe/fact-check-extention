@@ -1,0 +1,89 @@
+{
+    "name": "@ianvs/prettier-plugin-sort-imports",
+    "private": false,
+    "version": "4.3.1",
+    "description": "A prettier plugins to sort imports in provided RegEx order",
+    "main": "lib/src/index.js",
+    "types": "types/index.d.ts",
+    "repository": {
+        "url": "https://github.com/ianvs/prettier-plugin-sort-imports",
+        "type": "git"
+    },
+    "homepage": "https://github.com/ianvs/prettier-plugin-sort-imports#readme",
+    "files": [
+        "CHANGELOG.md",
+        "lib/**",
+        "!lib/**/__tests__/**",
+        "types"
+    ],
+    "scripts": {
+        "prepare": "yarn run compile",
+        "compile": "tsc",
+        "preexample": "yarn run compile",
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules vitest --run",
+        "test:watch": "vitest",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check",
+        "type-check": "tsc --noEmit",
+        "prepublishOnly": "npm run compile && npm run test"
+    },
+    "keywords": [
+        "prettier",
+        "plugin",
+        "sort",
+        "import",
+        "typescript",
+        "javascript"
+    ],
+    "contributors": [
+        {
+            "name": "Ayush Sharma",
+            "email": "ayush.sharma@trivago.com",
+            "url": "https://github.com/ayusharma"
+        },
+        {
+            "name": "Behrang Yarahmadi",
+            "url": "https://github.com/byara"
+        },
+        {
+            "name": "Andre Wachsmuth",
+            "email": "sensenmann5@gmail.com",
+            "url": "https://github.com/blutorange"
+        }
+    ],
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@babel/core": "^7.24.0",
+        "@babel/generator": "^7.23.6",
+        "@babel/parser": "^7.24.0",
+        "@babel/traverse": "^7.24.0",
+        "@babel/types": "^7.24.0",
+        "semver": "^7.5.2"
+    },
+    "devDependencies": {
+        "@types/babel__generator": "^7.6.8",
+        "@types/babel__traverse": "^7.20.5",
+        "@types/node": "^18.15.13",
+        "@types/prettier": "^3.0.0",
+        "@types/semver": "^7.5.3",
+        "@vue/compiler-sfc": "3.4.21",
+        "cross-env": "^7.0.3",
+        "prettier": "^3.0.3",
+        "prettier-plugin-astro": "^0.14.0",
+        "typescript": "5.2.2",
+        "vitest": "^0.34.5"
+    },
+    "resolutions": {
+        "vite": "^4.0.0"
+    },
+    "peerDependencies": {
+        "@vue/compiler-sfc": "2.7.x || 3.x",
+        "prettier": "2 || 3"
+    },
+    "peerDependenciesMeta": {
+        "@vue/compiler-sfc": {
+            "optional": true
+        }
+    },
+    "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}

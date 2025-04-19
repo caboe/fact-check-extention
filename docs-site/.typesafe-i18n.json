@@ -1,0 +1,16 @@
+{
+	"$schema": "https://unpkg.com/typesafe-i18n@5.26.2/schema/config.json",
+	"baseLocale": "en",
+	"locales": ["en", "de", "es", "fr", "pt"],
+	"outputPath": "./src/i18n",
+	"generator": {
+		"adapter": "svelte",
+		"adapterSvelte": {
+			"loadLocalesAsync": true,
+			"routes": {
+				"+layout": true,
+				"+page": true
+			}
+		}
+	}
+}

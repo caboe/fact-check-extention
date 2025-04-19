@@ -1,0 +1,29 @@
+{
+	"manifest_version": 3,
+	"name": "Fact Spreader",
+	"version": "2.0.0",
+	"description": "Fact Spreader is a Fact Checker GPT connector. Simply select the text and have it tested for correctness by your configured GPT.",
+	"permissions": ["storage", "activeTab", "clipboardWrite"],
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"16": "favicon.png",
+			"48": "favicon.png",
+			"128": "favicon.png"
+		}
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"]
+		}
+	],
+	"icons": {
+		"16": "favicon.png",
+		"48": "favicon.png",
+		"128": "favicon.png"
+	}
+}

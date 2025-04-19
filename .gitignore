@@ -1,34 +1,37 @@
-node_modules
+.idea/.gitignore
+.idea/fact-check-extension-2.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml
+.idea/inspectionProfiles/Project_Default.xml
+.vscode/settings.json
+.svelte-kit/
 
-# Output
-.output
-.vercel
-release*.zip
 
-/.svelte-kit
-/build
-/dist
+# Temporary files
+*.tmp
 
-# OS
+# Log files
+*.log
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Build artifacts
+dist/
+build/
+
+# macOS files
 .DS_Store
-Thumbs.db
 
-# Env
-.env
-.env.*
-!.env.example
-!.env.test
+# Image source files
+*.xcf
 
-# Vite
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-/.idea/codeStyles/codeStyleConfig.xml
-/.idea/codeStyles/Project.xml
-/.idea/inspectionProfiles/Project_Default.xml
-/.idea/.gitignore
-/.idea/fact-check-extension-2.iml
-/.idea/modules.xml
-/.idea/vcs.xml
+# Node modules
+node_modules/
 
-# VSCode
-.vscode
+# Node modules
+/docs-site/node_modules/
+/extension/node_modules/
