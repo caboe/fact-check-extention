@@ -1,14 +1,10 @@
 import role from './role.svelte'
-import { ITone } from './tone.svelte'
+export default function getSystemRole(person: string | null, range: number): string {
+	let systemRole = role.replace('{range}', String(range))
 
-export default function getSystemRole(tone: ITone, range: number): string {
-	const toneExamples = tone.value
-		.map(
-			(t) => `Thesis: ${t.thesis}
-Answer: ${t.answer}
-    `,
-		)
-		.join('\n')
+	if (person) {
+		systemRole += `\n\nRespond in the style of ${person}.`
+	}
 
-	return role.replace('{tone}', toneExamples).replace('{range}', String(range))
+	return systemRole
 }

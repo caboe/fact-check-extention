@@ -96,13 +96,9 @@
 				{/if}
 			{/if}
 			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				{#if !isImageSelected || availableEndpoints.length > 0}
-					<button class="variant-filled-primary btn" onclick={() => (popupState.value = 'TONE')}>
-						{L.configureTone()}
-					</button>
-				{/if}
+				Person edit. Replace Me.
 			</div>
-			<!-- 			<label class="grid max-h-0 grid-cols-1 grid-rows-2 gap-2 overflow-hidden transition-all">
+			<label class="grid grid-cols-1 grid-rows-2 gap-2">
 				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"
@@ -110,7 +106,7 @@
 					bind:value={unifiedStorage.value.person}
 					placeholder={L.personPlaceholder()}
 				/>
-			</label> -->
+			</label>
 			<div class="flex flex-col items-center justify-between gap-2">
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>

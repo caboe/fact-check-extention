@@ -4,7 +4,6 @@ import endpoints from '../state/endpoints.svelte'
 import view from '../state/view.svelte'
 import getSystemRole from './getSystemRole.svelte'
 import handleStreamResponse from './handleStreamResponse.svelte'
-import tone from './tone.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
 
 export default async function checkFact() {
@@ -68,7 +67,7 @@ export default async function checkFact() {
 			messages: [
 				{
 					role: 'system',
-					content: getSystemRole(tone, apiRequest.value.range),
+					content: getSystemRole(unifiedStorage.value.person, apiRequest.value.range),
 				},
 				{
 					role: 'user',

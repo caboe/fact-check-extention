@@ -1,9 +1,8 @@
 import { SelectedContent } from '../../TSelectedContent'
 import { PersistState } from './PersistState.svelte'
-import { ITone } from './tone.svelte'
 interface IUnifiedState {
 	lastUsed: string | null
-	tone: ITone | null
+	person: string | null
 	hasSeenIntroduction: boolean
 	selectedContent: SelectedContent | null
 	result: any | null
@@ -13,7 +12,7 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 	constructor() {
 		const initialValue: IUnifiedState = {
 			lastUsed: null,
-			tone: null,
+			person: null,
 			hasSeenIntroduction: false,
 			selectedContent: null,
 			result: null,
