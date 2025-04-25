@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import popupState from '../../../popupState.svelte'
+	import { isSelectedImage } from '../../../TSelectedContent'
 	import apiRequest from '../../state/apiRequest.svelte'
-	import endpoints, { type Endpoint } from '../../state/endpoints.svelte' // Import Endpoint type
+	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
-	import Settings from '../icons/SettingsIcon.svelte'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
-	import { isSelectedImage } from '../../../TSelectedContent' // Corrected import path
+	import Settings from '../icons/SettingsIcon.svelte'
 
 	interface Props {
 		open: boolean
@@ -35,6 +35,7 @@
 
 	// Removed erroneous $effect block
 	$effect(() => {
+		if (!endpointSelect) return
 		// Automatically select an endpoint when the available list changes
 		const currentSelected = endpoints.value.selected
 		const isCurrentSelectedAvailable =
@@ -48,10 +49,10 @@
 				// No endpoints available (e.g., image selected, none support it)
 				endpoints.value.selected = null
 			}
+		} else {
+			endpointSelect.value = currentSelected.title
 		}
-		// If the current one *is* available, bind:value on the select keeps it selected.
 	})
-	// --- End Image Endpoint Logic ---
 </script>
 
 <AccordionItem {open} on:click>
@@ -87,22 +88,29 @@
 						bind:this={endpointSelect}
 						class="select"
 						id="endpoints"
-						bind:value={endpoints.value.selected}
+						onchange={(event) => {
+							const selectedEndpoint = availableEndpoints.find(
+								(ep) => ep.title === (event.target as HTMLSelectElement).value,
+							)
+							if (selectedEndpoint) {
+								endpoints.value.selected = selectedEndpoint
+							}
+						}}
+						value={endpoints.value.selected?.title || ''}
 					>
 						{#each availableEndpoints as endpoint (endpoint.title)}
-							<option value={endpoint}>{endpoint.title}</option>
+							<option value={endpoint.title}>{endpoint.title}</option>
 						{/each}
 					</select>
 				{/if}
 			{/if}
-			<div class="grid grid-cols-1 items-center justify-between gap-2">
-				Person edit. Replace Me.
-			</div>
+
 			<label class="grid grid-cols-1 grid-rows-2 gap-2">
 				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"
 					type="text"
+					size="30"
 					bind:value={unifiedStorage.value.person}
 					placeholder={L.personPlaceholder()}
 				/>
