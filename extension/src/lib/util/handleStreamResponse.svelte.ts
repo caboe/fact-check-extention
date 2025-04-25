@@ -15,6 +15,10 @@ export default async function handleStreamResponse(response: Response) {
 		if (value) {
 			const chunk = decoder.decode(value, { stream: true })
 			buffer += chunk
+			// Set state to STREAMING when the first chunk is received
+			if (apiRequest.value.state === 'LOADING') {
+				apiRequest.value.state = 'STREAMING'
+			}
 
 			const lines = buffer.split('\n')
 			//last line might be incomplete
@@ -48,6 +52,9 @@ export default async function handleStreamResponse(response: Response) {
 			}
 		}
 		unifiedStorage.value.result = resultText
-		apiRequest.value.loading = false
+
+		if (done) {
+			apiRequest.value.state = 'FINISHED'
+		}
 	}
 }

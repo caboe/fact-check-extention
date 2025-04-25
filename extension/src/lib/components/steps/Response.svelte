@@ -56,7 +56,7 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if unifiedStorage.value.result !== undefined}
+		{#if apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING'}
 			<textarea
 				id="selected-text"
 				bind:this={textareaEl}
@@ -65,10 +65,12 @@
 				class="textarea max-h-64 min-h-8"
 				rows="1"
 			></textarea>
-			<button class="variant-filled-success btn w-full" onclick={copyResult}>
-				{L.copy()}
-			</button>
-		{:else if apiRequest.value.loading}
+			{#if apiRequest.value.state === 'FINISHED'}
+				<button class="variant-filled-success btn w-full" onclick={copyResult}>
+					{L.copy()}
+				</button>
+			{/if}
+		{:else if apiRequest.value.state === 'LOADING'}
 			{L.checkingProgress()}
 		{:else}
 			{L.notChecked()}

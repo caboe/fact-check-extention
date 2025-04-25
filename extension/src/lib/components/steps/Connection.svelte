@@ -122,11 +122,12 @@
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}
-				disabled={apiRequest.value.loading ||
+				disabled={apiRequest.value.state === 'LOADING' ||
+					apiRequest.value.state === 'STREAMING' ||
 					!unifiedStorage.value.selectedContent ||
 					!endpoints.value.selected}
 			>
-				{#if apiRequest.value.loading}
+				{#if apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'STREAMING'}
 					{L.checkingProgress()}
 				{:else}
 					{L.apiCta()}

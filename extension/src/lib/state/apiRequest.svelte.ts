@@ -1,15 +1,17 @@
 import { PersistState } from '../util/PersistState.svelte'
 
+type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'
+
 interface IApiRequest {
 	range: number
-	loading: boolean
+	state: ApiRequestState
 }
 
 class ApiRequest extends PersistState<IApiRequest> {
 	constructor() {
 		const initialValue: IApiRequest = {
 			range: 50,
-			loading: false,
+			state: 'EMPTY',
 		}
 		super('apiRequest', initialValue)
 	}

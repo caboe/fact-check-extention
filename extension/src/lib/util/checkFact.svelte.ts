@@ -14,7 +14,7 @@ export default async function checkFact() {
 	view.step = 2
 
 	unifiedStorage.value.lastUsed = endpoints.value.selected.title
-	apiRequest.value.loading = true
+	apiRequest.value.state = 'LOADING'
 	unifiedStorage.value.result = undefined
 
 	type Content =
@@ -113,7 +113,6 @@ export default async function checkFact() {
 	} catch (err: unknown) {
 		// TODO
 		unifiedStorage.value.result = 'Error during fact check: ' + (err as Error).message
-	} finally {
-		apiRequest.value.loading = false
+		apiRequest.value.state = 'ERROR'
 	}
 }

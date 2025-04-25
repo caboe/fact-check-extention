@@ -95,7 +95,7 @@
 	function reset() {
 		unifiedStorage.value.selectedContent = { text: '' }
 		unifiedStorage.value.result = undefined
-		apiRequest.value.loading = false
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	$effect(() => {
