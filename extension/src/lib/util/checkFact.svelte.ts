@@ -90,7 +90,7 @@ export default async function checkFact() {
 		const response = await fetchModel()
 		if (response.status === 403) {
 			unifiedStorage.value!.result =
-				'Forbidden! If you are using Ollame, try to start it with "OLLAMA_ORIGINS=chrome-extension://* && ollama serve"'
+				'Forbidden! If you are using Ollama, try to start it with "OLLAMA_ORIGINS=chrome-extension://* && ollama serve"'
 			return
 		}
 		if (!response.ok) {
