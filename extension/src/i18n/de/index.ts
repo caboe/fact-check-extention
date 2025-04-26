@@ -52,6 +52,8 @@ const de = {
 	noImageEndpoint: 'Kein konfigurierter Endpunkt unterstützt Bildanalyse.',
 	configureButton: 'Konfigurieren',
 	defaultPerson: 'Kritischer Wissenschaftler',
+	useShortRoleLabel:
+		'Kurze Systemrolle verwenden. Dies kann helfen, wenn der Kontext des Modells zu kurz ist, z.B. bei langen Texten, die an Ollama gesendet werden.',
 } satisfies BaseTranslation
 
 export default de

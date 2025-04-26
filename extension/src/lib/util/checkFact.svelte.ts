@@ -67,7 +67,11 @@ export default async function checkFact() {
 			messages: [
 				{
 					role: 'system',
-					content: getSystemRole(unifiedStorage.value.person, apiRequest.value.range),
+					content: getSystemRole(
+						unifiedStorage.value.person,
+						apiRequest.value.range,
+						apiRequest.value.roleSize,
+					),
 				},
 				{
 					role: 'user',

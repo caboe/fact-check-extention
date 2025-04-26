@@ -1,3 +1,4 @@
+import { RoleSize } from '../util/getSystemRole.svelte'
 import { PersistState } from '../util/PersistState.svelte'
 
 type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'
@@ -5,7 +6,7 @@ type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'
 interface IApiRequest {
 	range: number
 	state: ApiRequestState
-	roleSize: 'short' | 'full'
+	roleSize: RoleSize // Use the updated RoleSize type
 }
 
 class ApiRequest extends PersistState<IApiRequest> {

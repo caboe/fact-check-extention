@@ -1,7 +1,7 @@
 import L from '../state/L.svelte'
 import { short, full } from './role.svelte'
 
-type RoleSize = 'short' | 'full'
+export type RoleSize = 'short' | 'full'
 
 export default function getSystemRole(
 	person: string | null,

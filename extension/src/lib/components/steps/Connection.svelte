@@ -53,6 +53,11 @@
 			endpointSelect.value = currentSelected.title
 		}
 	})
+	let useShortRole = $derived(apiRequest.value.roleSize === 'short')
+
+	$effect(() => {
+		apiRequest.value.roleSize = useShortRole ? 'short' : 'full'
+	})
 </script>
 
 <AccordionItem {open} on:click>
@@ -119,6 +124,18 @@
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
+			<label class="flex items-center gap-2">
+				<input
+					type="checkbox"
+					checked={useShortRole}
+					onchange={() => {
+						apiRequest.value.roleSize = !useShortRole ? 'short' : 'full'
+					}}
+					class="checkbox"
+				/>
+				<span class="text-sm">{L.useShortRoleLabel()}</span>
+			</label>
+
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}

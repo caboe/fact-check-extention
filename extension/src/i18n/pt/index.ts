@@ -52,6 +52,8 @@ const pt = {
 	noImageEndpoint: 'Nenhum endpoint configurado suporta análise de imagem.',
 	configureButton: 'Configurar',
 	defaultPerson: 'Cientista crítico',
+	useShortRoleLabel:
+		'Usar papel de sistema curto. Isso pode ajudar se o contexto do modelo for muito curto, por exemplo, para textos longos enviados para Ollama',
 } satisfies BaseTranslation
 
 export default pt

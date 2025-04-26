@@ -52,6 +52,8 @@ const fr = {
 	noImageEndpoint: "Aucun point de terminaison configuré ne prend en charge l'analyse d'images.",
 	configureButton: 'Configurer',
 	defaultPerson: 'Scientifique critique',
+	useShortRoleLabel:
+		'Utiliser un rôle système court. Cela pourrait aider si le contexte du modèle est trop court, par exemple pour les textes longs envoyés à Ollama',
 } satisfies BaseTranslation
 
 export default fr

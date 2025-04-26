@@ -51,6 +51,8 @@ const en = {
 	noImageEndpoint: 'No configured endpoint supports image analysis.',
 	configureButton: 'Configure',
 	defaultPerson: 'Critical scientist',
+	useShortRoleLabel:
+		'Use short system role. This might help, if the context of the model is too short, for example for long texts send to Ollama',
 } satisfies BaseTranslation
 
 export default en

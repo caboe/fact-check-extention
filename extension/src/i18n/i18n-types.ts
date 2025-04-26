@@ -214,6 +214,10 @@ type RootTranslation = {
 	 * C​r​i​t​i​c​a​l​ ​s​c​i​e​n​t​i​s​t
 	 */
 	defaultPerson: string
+	/**
+	 * U​s​e​ ​s​h​o​r​t​ ​s​y​s​t​e​m​ ​r​o​l​e​.​ ​T​h​i​s​ ​m​i​g​h​t​ ​h​e​l​p​,​ ​i​f​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​t​h​e​ ​m​o​d​e​l​ ​i​s​ ​t​o​o​ ​s​h​o​r​t​,​ ​f​o​r​ ​e​x​a​m​p​l​e​ ​f​o​r​ ​l​o​n​g​ ​t​e​x​t​s​ ​s​e​n​d​ ​t​o​ ​O​l​l​a​m​a
+	 */
+	useShortRoleLabel: string
 }
 
 export type TranslationFunctions = {
@@ -411,6 +415,10 @@ export type TranslationFunctions = {
 	 * Critical scientist
 	 */
 	defaultPerson: () => LocalizedString
+	/**
+	 * Use short system role. This might help, if the context of the model is too short, for example for long texts send to Ollama
+	 */
+	useShortRoleLabel: () => LocalizedString
 }
 
 export type Formatters = {}
