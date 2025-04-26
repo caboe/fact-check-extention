@@ -85,6 +85,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			document.addEventListener(event, noop)
 		})
 		document.addEventListener('click', imageClickHandler)
+		sendResponse(true)
 	}
 	if (request.action === 'disableImageSelect') {
 		removeImageHoverStyles()
@@ -96,9 +97,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 				document.removeEventListener(event, noop)
 			})
 		}
+		sendResponse(true)
 	}
 	if (request.action === 'enableTextSelect') {
 		image = null
+		sendResponse(true)
 	}
 })
 

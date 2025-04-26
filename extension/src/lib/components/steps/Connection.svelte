@@ -105,7 +105,7 @@
 				{/if}
 			{/if}
 
-			<label class="grid grid-cols-1 grid-rows-2 gap-2">
+			<label class="flex flex-col gap-2">
 				<div class="text-sm">{L.personLabel()}</div>
 				<input
 					class="input"

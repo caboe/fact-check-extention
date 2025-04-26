@@ -1,10 +1,16 @@
-import role from './role.svelte'
-export default function getSystemRole(person: string | null, range: number): string {
-	let systemRole = role.replace('{range}', String(range))
+import L from '../state/L.svelte'
+import { short, full } from './role.svelte'
 
-	// Replace <person> tag with the provided person's name or an empty string
-	// TODO default  person
-	systemRole = systemRole.replace(/<person>/g, person || '')
+type RoleSize = 'short' | 'full'
 
-	return systemRole
+export default function getSystemRole(
+	person: string | null,
+	range: number,
+	size: RoleSize = 'full',
+): string {
+	const role = size === 'full' ? full : short
+
+	const systemRole = role.replace('{range}', String(range))
+
+	return systemRole.replace(/{person}/g, person || L.defaultPerson())
 }

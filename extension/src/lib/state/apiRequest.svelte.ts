@@ -5,6 +5,7 @@ type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'
 interface IApiRequest {
 	range: number
 	state: ApiRequestState
+	roleSize: 'short' | 'full'
 }
 
 class ApiRequest extends PersistState<IApiRequest> {
@@ -12,6 +13,7 @@ class ApiRequest extends PersistState<IApiRequest> {
 		const initialValue: IApiRequest = {
 			range: 50,
 			state: 'EMPTY',
+			roleSize: 'short',
 		}
 		super('apiRequest', initialValue)
 	}

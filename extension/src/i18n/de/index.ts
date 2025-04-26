@@ -51,6 +51,7 @@ const de = {
 	canProcessImages: 'Kann Bilder verarbeiten?',
 	noImageEndpoint: 'Kein konfigurierter Endpunkt unterstützt Bildanalyse.',
 	configureButton: 'Konfigurieren',
+	defaultPerson: 'Kritischer Wissenschaftler',
 } satisfies BaseTranslation
 
 export default de

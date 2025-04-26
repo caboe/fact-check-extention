@@ -50,6 +50,7 @@ const en = {
 	canProcessImages: 'Can process images?',
 	noImageEndpoint: 'No configured endpoint supports image analysis.',
 	configureButton: 'Configure',
+	defaultPerson: 'Critical scientist',
 } satisfies BaseTranslation
 
 export default en

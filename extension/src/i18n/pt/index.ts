@@ -51,6 +51,7 @@ const pt = {
 	canProcessImages: 'Pode processar imagens?',
 	noImageEndpoint: 'Nenhum endpoint configurado suporta análise de imagem.',
 	configureButton: 'Configurar',
+	defaultPerson: 'Cientista crítico',
 } satisfies BaseTranslation
 
 export default pt

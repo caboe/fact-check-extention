@@ -50,7 +50,7 @@
 
 	<div class="form-control">
 		<label class="label" for="apiKey">API Key</label>
-		<input type="password" id="apiKey" bind:value={apiKey} class="input-bordered input" required />
+		<input type="password" id="apiKey" bind:value={apiKey} class="input-bordered input" />
 	</div>
 
 	<div class="form-control">
