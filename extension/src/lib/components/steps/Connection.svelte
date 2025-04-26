@@ -139,10 +139,7 @@
 			<button
 				class="variant-filled-primary btn"
 				onclick={checkFact}
-				disabled={apiRequest.value.state === 'LOADING' ||
-					apiRequest.value.state === 'STREAMING' ||
-					!unifiedStorage.value.selectedContent ||
-					!endpoints.value.selected}
+				disabled={!unifiedStorage.value.selectedContent || !endpoints.value.selected}
 			>
 				{#if apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'STREAMING'}
 					{L.checkingProgress()}
