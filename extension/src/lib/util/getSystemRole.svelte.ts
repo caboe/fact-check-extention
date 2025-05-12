@@ -10,7 +10,7 @@ export default function getSystemRole(
 ): string {
 	const role = size === 'full' ? full : short
 
-	const systemRole = role.replace('{range}', String(range))
+	const systemRole = role.replace(/{word_count}/g, String(range))
 
 	return systemRole.replace(/{person}/g, person || L.defaultPerson())
 }
