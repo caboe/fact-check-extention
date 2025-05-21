@@ -72,6 +72,9 @@
 			{/if}
 		{:else if apiRequest.value.state === 'LOADING'}
 			{L.checkingProgress()}
+		{:else if apiRequest.value.state === 'ERROR'}
+			<div class="font-bold text-red-500">Error:</div>
+			{@html unifiedStorage.value.result}
 		{:else}
 			{L.notChecked()}
 		{/if}
