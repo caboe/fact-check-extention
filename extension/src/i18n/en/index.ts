@@ -53,6 +53,9 @@ const en = {
 	defaultPerson: 'Critical scientist',
 	useShortRoleLabel:
 		'Use short system role. This might help, if the context of the model is too short, for example for long texts send to Ollama',
+	rolePlacementLabel: 'Role Placement',
+	rolePlacementSystem: 'System Message',
+	rolePlacementInline: 'Inline in User Message',
 } satisfies BaseTranslation
 
 export default en

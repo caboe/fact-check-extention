@@ -218,6 +218,18 @@ type RootTranslation = {
 	 * U​s​e​ ​s​h​o​r​t​ ​s​y​s​t​e​m​ ​r​o​l​e​.​ ​T​h​i​s​ ​m​i​g​h​t​ ​h​e​l​p​,​ ​i​f​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​o​f​ ​t​h​e​ ​m​o​d​e​l​ ​i​s​ ​t​o​o​ ​s​h​o​r​t​,​ ​f​o​r​ ​e​x​a​m​p​l​e​ ​f​o​r​ ​l​o​n​g​ ​t​e​x​t​s​ ​s​e​n​d​ ​t​o​ ​O​l​l​a​m​a
 	 */
 	useShortRoleLabel: string
+	/**
+	 * R​o​l​e​ ​P​l​a​c​e​m​e​n​t
+	 */
+	rolePlacementLabel: string
+	/**
+	 * S​y​s​t​e​m​ ​M​e​s​s​a​g​e
+	 */
+	rolePlacementSystem: string
+	/**
+	 * I​n​l​i​n​e​ ​i​n​ ​U​s​e​r​ ​M​e​s​s​a​g​e
+	 */
+	rolePlacementInline: string
 }
 
 export type TranslationFunctions = {
@@ -419,6 +431,18 @@ export type TranslationFunctions = {
 	 * Use short system role. This might help, if the context of the model is too short, for example for long texts send to Ollama
 	 */
 	useShortRoleLabel: () => LocalizedString
+	/**
+	 * Role Placement
+	 */
+	rolePlacementLabel: () => LocalizedString
+	/**
+	 * System Message
+	 */
+	rolePlacementSystem: () => LocalizedString
+	/**
+	 * Inline in User Message
+	 */
+	rolePlacementInline: () => LocalizedString
 }
 
 export type Formatters = {}

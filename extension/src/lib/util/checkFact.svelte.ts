@@ -73,21 +73,29 @@ export default async function checkFact() {
 	async function fetchModel(signal: AbortSignal): Promise<Response> {
 		if (!endpoints.value.selected) throw new Error('No endpoint selected')
 
+		function getInlineContent(content: Content): string {
+			return `DEINE AUFGABE:\n
+			${getSystemRole(unifiedStorage.value.person, apiRequest.value.range)}\n
+			CHECKE DIE FOLGENDE AUSSAGE:\n
+			${content}`
+		}
+
 		const requestBody: RequestBody = {
 			model: endpoints.value.selected.model,
 			stream: true,
 			messages: [
+				...(apiRequest.value.rolePlacement === 'system'
+					? [
+							{
+								role: 'system' as const,
+								content: getSystemRole(unifiedStorage.value.person, apiRequest.value.range),
+							},
+						]
+					: []),
 				{
-					role: 'system',
-					content: getSystemRole(
-						unifiedStorage.value.person,
-						apiRequest.value.range,
-						apiRequest.value.roleSize,
-					),
-				},
-				{
-					role: 'user',
-					content,
+					role: 'user' as const,
+					content:
+						apiRequest.value.rolePlacement === 'inline' ? getInlineContent(content) : content,
 				},
 			],
 		}
@@ -116,7 +124,8 @@ export default async function checkFact() {
 
 		if (response.status === 403) {
 			unifiedStorage.value!.result =
-				'Forbidden! If you are using Ollama, try to start it with "OLLAMA_ORIGINS=chrome-extension://* && ollama serve"'
+				'Forbidden! If you are using Ollama, try to start it with in the console: <br><br><code>OLLAMA_ORIGINS=chrome-extension://* && ollama serve</code>'
+			apiRequest.value.state = 'ERROR'
 			return
 		}
 		if (!response.ok) {
@@ -127,6 +136,7 @@ export default async function checkFact() {
 					errorResponse[0]?.error?.message || errorResponse.error?.message || errorResponse.message
 				if (message) {
 					unifiedStorage.value.result = message
+					apiRequest.value.state = 'ERROR'
 					return
 				}
 			} catch (e) {
