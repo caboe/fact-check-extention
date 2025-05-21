@@ -56,7 +56,7 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING'}
+		{#if (apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING') && unifiedStorage.value.result}
 			<textarea
 				id="selected-text"
 				bind:this={textareaEl}
