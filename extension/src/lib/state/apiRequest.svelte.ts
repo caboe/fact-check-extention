@@ -1,4 +1,4 @@
-import { RoleSize } from '../util/getSystemRole.svelte'
+import type { RoleSize } from '../util/getSystemRole.svelte'
 import { PersistState } from '../util/PersistState.svelte'
 
 type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'

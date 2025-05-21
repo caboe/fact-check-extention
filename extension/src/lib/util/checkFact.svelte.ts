@@ -6,7 +6,19 @@ import getSystemRole from './getSystemRole.svelte'
 import handleStreamResponse from './handleStreamResponse.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
 
+let currentAbortController: AbortController | null = null
+
 export default async function checkFact() {
+	// Abort any ongoing request
+	if (currentAbortController) {
+		currentAbortController.abort()
+		console.log('Previous fact check request aborted.')
+	}
+
+	// Create a new AbortController for this request
+	currentAbortController = new AbortController()
+	const signal = currentAbortController.signal
+
 	if (!endpoints.value.selected) {
 		view.step = 1
 		return
@@ -58,7 +70,7 @@ export default async function checkFact() {
 		}
 	}
 
-	async function fetchModel(): Promise<Response> {
+	async function fetchModel(signal: AbortSignal): Promise<Response> {
 		if (!endpoints.value.selected) throw new Error('No endpoint selected')
 
 		const requestBody: RequestBody = {
@@ -87,11 +99,21 @@ export default async function checkFact() {
 				Authorization: `Bearer ${endpoints.value.selected.apiKey}`,
 			},
 			body: JSON.stringify(requestBody),
+			signal, // Pass the signal to fetch
 		})
 	}
 
 	try {
-		const response = await fetchModel()
+		// Pass the signal to fetchModel
+		const response = await fetchModel(signal)
+
+		// Check if the request was aborted before proceeding
+		if (signal.aborted) {
+			console.log('Fact check request aborted before handling response.')
+			apiRequest.value.state = 'EMPTY' // Reset state to EMPTY
+			return
+		}
+
 		if (response.status === 403) {
 			unifiedStorage.value!.result =
 				'Forbidden! If you are using Ollama, try to start it with "OLLAMA_ORIGINS=chrome-extension://* && ollama serve"'
@@ -113,10 +135,24 @@ export default async function checkFact() {
 			return
 		}
 
-		await handleStreamResponse(response)
+		// Pass the signal to handleStreamResponse
+		await handleStreamResponse(response, signal)
 	} catch (err: unknown) {
-		// TODO
-		unifiedStorage.value.result = 'Error during fact check: ' + (err as Error).message
-		apiRequest.value.state = 'ERROR'
+		if (err instanceof Error && err.name === 'AbortError') {
+			console.log('Fact check fetch aborted:', err.message)
+			// Reset state as the request was aborted.
+			// The 'FINISHED' check is removed as svelte-check flags it as redundant within this AbortError catch block.
+			apiRequest.value.state = 'EMPTY' // Reset state to EMPTY
+			unifiedStorage.value.result = undefined // Clear potentially partial results
+		} else {
+			console.error('Error during fact check:', err)
+			unifiedStorage.value.result = 'Error during fact check: ' + (err as Error).message
+			apiRequest.value.state = 'ERROR'
+		}
+	} finally {
+		// Clear the controller if this specific request instance finished or was aborted
+		if (currentAbortController?.signal === signal) {
+			currentAbortController = null
+		}
 	}
 }

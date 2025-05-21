@@ -1,11 +1,11 @@
-import { SelectedContent } from '../../TSelectedContent'
+import type { SelectedContent } from '../../TSelectedContent'
 import { PersistState } from './PersistState.svelte'
 interface IUnifiedState {
 	lastUsed: string | null
 	person: string | null
 	hasSeenIntroduction: boolean
 	selectedContent: SelectedContent | null
-	result: any | null
+	result: string | undefined // Use string | undefined instead of any | null
 }
 
 class UnifiedStorage extends PersistState<IUnifiedState> {
@@ -15,7 +15,7 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 			person: null,
 			hasSeenIntroduction: false,
 			selectedContent: null,
-			result: null,
+			result: undefined, // Initialize with undefined
 		}
 		super('unifiedState', initialValue)
 	}

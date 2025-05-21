@@ -1,6 +1,6 @@
 /// <reference types="chrome" />
 
-import { SelectedContent } from './TSelectedContent'
+import type { SelectedContent } from './TSelectedContent'
 
 let image: string | null = null
 

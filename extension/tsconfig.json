@@ -1,5 +1,6 @@
 // tsconfig.json
 {
+	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 		"target": "ESNext",
 		"useDefineForClassFields": true,
