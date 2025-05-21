@@ -19,21 +19,24 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
+	let isInlineRolePlacement = $state(apiRequest.value.rolePlacement === 'inline')
+
+	$effect(() => {
+		apiRequest.value.rolePlacement = isInlineRolePlacement ? 'inline' : 'system'
+	})
+
 	if (unifiedStorage.value.selectedContent && view.step === 0) {
 		view.step = 1
 	}
 
-	// --- Start Image Endpoint Logic ---
 	let isImageSelected = $derived(isSelectedImage(unifiedStorage.value.selectedContent))
 
-	// Corrected $derived syntax
 	let availableEndpoints = $derived(
 		isImageSelected
 			? endpoints.value.list.filter((ep) => ep.canProcessImages)
 			: endpoints.value.list,
 	)
 
-	// Removed erroneous $effect block
 	$effect(() => {
 		if (!endpointSelect) return
 		// Automatically select an endpoint when the available list changes
@@ -42,8 +45,8 @@
 			currentSelected && availableEndpoints.some((ep) => ep.title === currentSelected.title)
 
 		if (!isCurrentSelectedAvailable) {
-			if (availableEndpoints.length > 0) {
-				// Select the first available endpoint if the current one is not available or null
+			if (availableEndpoints.length) {
+				// Select the first available endpoint if the current one is not available
 				endpoints.value.selected = availableEndpoints[0]
 			} else {
 				// No endpoints available (e.g., image selected, none support it)
@@ -120,12 +123,9 @@
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
 
-			<label class="flex flex-col gap-2">
-				<div class="text-sm">{L.rolePlacementLabel()}</div>
-				<select class="select" bind:value={apiRequest.value.rolePlacement}>
-					<option value="system">{L.rolePlacementSystem()}</option>
-					<option value="inline">{L.rolePlacementInline()}</option>
-				</select>
+			<label class="flex items-center gap-2">
+				<input type="checkbox" bind:checked={isInlineRolePlacement} />
+				<span>Inline user message</span>
 			</label>
 
 			<button
