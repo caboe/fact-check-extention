@@ -54,6 +54,7 @@ const fr = {
 	defaultPerson: 'Scientifique critique',
 	useShortRoleLabel:
 		'Utiliser un rôle système court. Cela pourrait aider si le contexte du modèle est trop court, par exemple pour les textes longs envoyés à Ollama',
+	inlineUserMessage: 'System Prompt en ligne (recommandé pour Ollama)',
 } satisfies BaseTranslation
 
 export default fr

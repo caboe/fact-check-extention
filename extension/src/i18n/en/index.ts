@@ -56,6 +56,7 @@ const en = {
 	rolePlacementLabel: 'Role Placement',
 	rolePlacementSystem: 'System Message',
 	rolePlacementInline: 'Inline in User Message',
+	inlineUserMessage: 'Inline System Prompt (recommended for Ollama)',
 } satisfies BaseTranslation
 
 export default en

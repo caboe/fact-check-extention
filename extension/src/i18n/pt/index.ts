@@ -54,6 +54,7 @@ const pt = {
 	defaultPerson: 'Cientista crítico',
 	useShortRoleLabel:
 		'Usar papel de sistema curto. Isso pode ajudar se o contexto do modelo for muito curto, por exemplo, para textos longos enviados para Ollama',
+	inlineUserMessage: 'System Prompt em linha (recomendado para Ollama)',
 } satisfies BaseTranslation
 
 export default pt

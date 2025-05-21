@@ -124,8 +124,8 @@
 			</div>
 
 			<label class="flex items-center gap-2">
-				<input type="checkbox" bind:checked={isInlineRolePlacement} />
-				<span>Inline user message</span>
+				<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
+				<span class="text-sm">{L.inlineUserMessage()}</span>
 			</label>
 
 			<button

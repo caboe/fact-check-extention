@@ -230,6 +230,10 @@ type RootTranslation = {
 	 * I​n​l​i​n​e​ ​i​n​ ​U​s​e​r​ ​M​e​s​s​a​g​e
 	 */
 	rolePlacementInline: string
+	/**
+	 * I​n​l​i​n​e​ ​S​y​s​t​e​m​ ​P​r​o​m​p​t​ ​(​r​e​c​o​m​m​e​n​d​e​d​ ​f​o​r​ ​O​l​l​a​m​a​)
+	 */
+	inlineUserMessage: string
 }
 
 export type TranslationFunctions = {
@@ -443,6 +447,10 @@ export type TranslationFunctions = {
 	 * Inline in User Message
 	 */
 	rolePlacementInline: () => LocalizedString
+	/**
+	 * Inline System Prompt (recommended for Ollama)
+	 */
+	inlineUserMessage: () => LocalizedString
 }
 
 export type Formatters = {}

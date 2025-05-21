@@ -54,6 +54,7 @@ const de = {
 	defaultPerson: 'Kritischer Wissenschaftler',
 	useShortRoleLabel:
 		'Kurze Systemrolle verwenden. Dies kann helfen, wenn der Kontext des Modells zu kurz ist, z.B. bei langen Texten, die an Ollama gesendet werden.',
+	inlineUserMessage: 'Inline System Prompt (empfohlen für Ollama)',
 } satisfies BaseTranslation
 
 export default de
