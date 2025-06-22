@@ -3,7 +3,7 @@
 	import { CodeBlock } from '@skeletonlabs/skeleton';
 </script>
 
-<div class="prose max-w-none">
+<div class="max-w-none">
 	<h1 class="h1">{$L.configuration.title()}</h1>
 
 	<section class="mb-12">

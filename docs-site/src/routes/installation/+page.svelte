@@ -2,7 +2,7 @@
 	import { L } from '../../i18n/i18n-svelte';
 </script>
 
-<div class="prose max-w-none">
+<div class="max-w-none">
 	<h1 class="h1">{$L.installation.title()}</h1>
 
 	<section class="mb-12">
