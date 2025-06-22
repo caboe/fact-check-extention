@@ -1,5 +1,5 @@
 use bun instead of npm
-use Tailwind CSS 
+use Tailwind CSS v 4
 use Skeleton UI (https://www.skeleton.dev/)
 run check script at the end of a task and fix errors
 there is a live server running at http://127.0.0.1:5500/dist/popup.html
