@@ -38,7 +38,6 @@
 	)
 
 	$effect(() => {
-		if (!endpointSelect) return
 		// Automatically select an endpoint when the available list changes
 		const currentSelected = endpoints.value.selected
 		const isCurrentSelectedAvailable =
@@ -52,8 +51,6 @@
 				// No endpoints available (e.g., image selected, none support it)
 				endpoints.value.selected = null
 			}
-		} else {
-			endpointSelect.value = currentSelected.title
 		}
 	})
 </script>
@@ -84,9 +81,7 @@
 					</button>
 				</div>
 			{:else if availableEndpoints.length > 0}
-				{#if availableEndpoints.length === 1}
-					<span class="text-center text-lg font-bold">{availableEndpoints[0].title}</span>
-				{:else}
+
 					<select
 						bind:this={endpointSelect}
 						class="select"
@@ -95,9 +90,7 @@
 							const selectedEndpoint = availableEndpoints.find(
 								(ep) => ep.title === (event.target as HTMLSelectElement).value,
 							)
-							if (selectedEndpoint) {
-								endpoints.value.selected = selectedEndpoint
-							}
+							endpoints.value.selected = selectedEndpoint || null
 						}}
 						value={endpoints.value.selected?.title || ''}
 					>
@@ -105,7 +98,6 @@
 							<option value={endpoint.title}>{endpoint.title}</option>
 						{/each}
 					</select>
-				{/if}
 			{/if}
 
 			<label class="flex flex-col gap-2">
