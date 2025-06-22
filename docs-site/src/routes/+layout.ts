@@ -5,7 +5,7 @@ import { detectLocale } from '../i18n/i18n-util';
 
 export const load = (async (event) => {
 	// Detect the locale
-	const locale = detectLocale(() => [event.params.lang ?? '']);
+	const locale = detectLocale(() => [(event.params as { lang?: string }).lang ?? '']);
 	// Load it
 	await loadLocaleAsync(locale);
 	// Set it

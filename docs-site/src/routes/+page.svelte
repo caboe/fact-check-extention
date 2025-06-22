@@ -7,8 +7,8 @@
 	<title>{$L.general.title()}</title>
 </svelte:head>
 
-<section class="flex flex-col items-center py-16 text-center md:py-24">
-	<h1 class="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+<section class="flex flex-col items-center py-16 py-24 text-center">
+	<h1 class="mb-4 text-4xl text-5xl font-bold tracking-tight">
 		{$L.home.welcome({ name: 'Fact Check Extension' })}
 	</h1>
 	<p class="mb-10 max-w-2xl text-lg text-gray-500 dark:text-gray-400">
@@ -26,8 +26,8 @@
 	</div>
 </section>
 
-<section class="mt-16 md:mt-24">
-	<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+<section class="mt-16 mt-24">
+	<div class="grid grid-cols-1 grid-cols-3 gap-8">
 		<!-- Removed card class, using padding and border directly for minimalism -->
 		<div class="rounded-lg border border-gray-100 p-6 dark:border-gray-800">
 			<h3 class="mb-3 text-xl font-medium">{$L.nav.installation()}</h3>

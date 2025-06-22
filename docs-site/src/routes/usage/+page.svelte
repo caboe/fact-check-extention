@@ -9,7 +9,11 @@
 		<h2 class="h2">{$L.usage.select_text_heading()}</h2>
 		<p>{$L.usage.select_text_intro()}</p>
 		<div class="bg-base-200 mt-4 rounded-lg p-4">
-			<img src="/images/text-selection-demo.gif" alt="Text selection demo" class="rounded border" />
+			<img
+				src="/images/text-selection-demo.gif"
+				alt="Demonstration of selecting text for fact checking"
+				class="rounded border"
+			/>
 		</div>
 	</section>
 
@@ -19,7 +23,7 @@
 		<div class="bg-base-200 mt-4 rounded-lg p-4">
 			<img
 				src="/images/image-selection-demo.gif"
-				alt="Image selection demo"
+				alt="Demonstration of right-clicking an image to fact check it"
 				class="rounded border"
 			/>
 		</div>

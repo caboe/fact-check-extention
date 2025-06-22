@@ -5,7 +5,7 @@ const en: Translation = {
 		title: 'Fact Check Extension Documentation'
 	},
 	home: {
-		welcome: 'Welcome to the {name:string} Documentation',
+		welcome: 'Welcome to the {name} Documentation',
 		introduction:
 			'This website provides comprehensive documentation on how to install, configure, and use the Fact Check Chrome Extension.'
 	},
@@ -26,7 +26,7 @@ const en: Translation = {
 		developer_mode_steps: {
 			step1: "Navigate to the extension's root directory in your terminal.",
 			step2:
-				'Run the build command: `{command:string}`. This will generate a `{zipFile:string}` file in the `dist/` directory.',
+				'Run the build command: `{command}`. This will generate a `{zipFile}` file in the `dist/` directory.',
 			step3: 'Open Chrome and go to `chrome://extensions/`.',
 			step4: 'Enable "Developer mode" using the toggle in the top right corner.',
 			step5: 'Click the "Load unpacked" button.',
@@ -59,7 +59,7 @@ const en: Translation = {
 			step1: 'Install Ollama on your system by following the official documentation.',
 			step2: 'Once Ollama is running, add a new endpoint in the extension configuration.',
 			step3:
-				'For the URL, enter the local address of your Ollama instance, typically `{ollamaUrl:string}`.',
+				'For the URL, enter the local address of your Ollama instance, typically `{ollamaUrl}`.',
 			step4: 'Select the appropriate model if prompted.',
 			step5: 'Save the endpoint.'
 		}
