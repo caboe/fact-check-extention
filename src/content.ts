@@ -55,6 +55,8 @@ const imageClickHandler = async (event: MouseEvent) => {
 		notificationBox.style.zIndex = '10000'
 		notificationBox.style.fontSize = '18px'
 		notificationBox.style.fontWeight = 'bold'
+		notificationBox.style.fontFamily = 'Arial, sans-serif'
+		notificationBox.style.color = '#333'
 		notificationBox.textContent = 'image copied to extention'
 
 		document.body.appendChild(notificationBox)
