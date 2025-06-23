@@ -20,6 +20,11 @@
 			url: 'http://localhost:11434/api/chat',
 			model: 'llama3.2:latest',
 		},
+		miniMax: {
+			title: 'MiniMax',
+			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
+			model: 'MiniMax-Text-01',
+		},
 		deepSeek: {
 			title: 'DeepSeek',
 			url: 'https://api.deepseek.com/chat/completions',
