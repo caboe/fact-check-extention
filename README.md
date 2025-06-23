@@ -14,7 +14,7 @@ The easiest way to install the extension is directly from the Chrome Web Store.
 If you want to install a specific version or contribute to development, you can install the extension in Chrome's developer mode using a ZIP file.
 
 Steps:
-1. Navigate to the extension's root directory in your terminal.
+1. Clone repo: [https://github.com/caboe/fact-check-extention](https://github.com/caboe/fact-check-extention)
 2. Run the build command: `bun run build`. This will generate a `fact-check-extension.zip` file in the `dist/` directory.
 3. Open Chrome and go to `chrome://extensions/`.
 4. Enable "Developer mode" using the toggle in the top right corner.
@@ -48,7 +48,7 @@ Example endpoint configuration:
 You can also use a local Ollama instance as your fact-checking endpoint.
 
 Steps:
-1. Install Ollama on your system by following the official documentation.
+1. Install Ollama on your system by following the official documentation. Make sure, to allow the plugin to access your Ollama instance by running `OLLAMA_ORIGINS=chrome-extension://* && ollama serve`
 2. Once Ollama is running, add a new endpoint in the extension configuration.
 3. For the URL, enter the local address of your Ollama instance, typically `http://localhost:11434`.
 4. Select the appropriate model if prompted.
@@ -57,19 +57,13 @@ Steps:
 ## Usage
 
 ### Selecting Text
-To fact-check text, simply select the desired text on any webpage.
+To fact-check text, simply select the desired text on any webpage. Open the extention, the selected text will be automatically populated in the input field.
 
-![Demonstration of selecting text for fact checking](docs-site/static/images/text-selection-demo.gif)
 
 ### Selecting Images
-To fact-check an image, right-click on the image and select the extension's option (if available and supported by the configured endpoint).
+To fact-check an image,)open the extention first. Click on "select text" and then click on an image on the page. Re-open the extention.
 
-![Demonstration of right-clicking an image to fact check it](docs-site/static/images/image-selection-demo.gif)
 
 ### Using the Extension Popup
 Alternatively, you can open the extension popup and manually enter text or select an image via the provided interface.
 
-## Additional Resources
-- [Configuration Guide](#configuration)
-- [Installation Instructions](#installation)
-- [Usage Examples](#usage)
