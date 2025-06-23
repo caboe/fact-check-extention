@@ -80,7 +80,7 @@
 		{/if}
 		{#if message}
 			<div
-				class="absolute inset-0 flex h-full items-center justify-center bg-white/80 text-lg font-bold text-lime-700"
+				class="flex h-full items-center justify-center bg-white/80 text-lg font-bold text-lime-700"
 				transition:fade
 			>
 				<span>
