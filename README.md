@@ -22,27 +22,42 @@ Steps:
 6. Navigate to the `dist/` folder within the extension's directory and select it.
 7. The extension should now appear in your list of installed extensions.
 
-## Configuration
 
-### API Endpoints
-The extension requires an API endpoint to perform fact checks. You can configure this in the extension's popup.
+## Usage
 
-Steps:
-1. Open the extension popup by clicking its icon in the Chrome toolbar.
-2. Click on "API Endpoint".
-3. Click the "New Endpoint" button.
-4. Fill in the details for your API endpoint. You can choose a template for common services like Gemini, OpenAI, etc., or enter a custom URL.
-5. Enter your API Key if required by the service.
-6. Click "add" to save the endpoint.
+### Selecting Claims 
 
-Example endpoint configuration:
-```typescript
-{
-  "title": "Gemini API",
-  "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
-  "apiKey": "YOUR_API_KEY"
-}
-```
+#### Selecting Text
+To fact-check text, simply select the desired text on any webpage. Open the extention, the selected text will be automatically populated in the input field.
+
+
+#### Selecting Images
+To fact-check an image,)open the extention first. Click on "select text" and then click on an image on the page. Re-open the extention.
+
+
+#### Using the Extension Popup
+Alternatively, you can open the extension popup and manually enter text or select an image via the provided interface.
+
+### Configure Endpoints
+
+#### Get an API key
+
+Go to the AI model provider of your choice, log in and generate an API key. This is usually associated with (very low) costs. Or set up a local LLM, e.g. with Ollama.
+
+#### Add an Endpoint
+Add a new model in the settings. You can select a template to pre-select some data.
+Check which model from your provider suits you best. These differ, for example, in terms of cost, speed and whether they can process images.
+Save the endpoint.
+
+#### Fact Check the Claim
+In the "API Endpoint" section, you can select from the configured endpoints. Optionally you can enter any person, so the AI will respond as if it were that person (Chat GPT works best here).
+Local models do no work very well with longer sytem prompts. In that case you might select "Inline System Prompt"
+Click "Check"
+
+#### View Results
+The Response tab will open with the result of the fact checking.
+
+
 
 ### Using a Local Ollama Instance
 You can also use a local Ollama instance as your fact-checking endpoint.
@@ -53,17 +68,3 @@ Steps:
 3. For the URL, enter the local address of your Ollama instance, typically `http://localhost:11434`.
 4. Select the appropriate model if prompted.
 5. Save the endpoint.
-
-## Usage
-
-### Selecting Text
-To fact-check text, simply select the desired text on any webpage. Open the extention, the selected text will be automatically populated in the input field.
-
-
-### Selecting Images
-To fact-check an image,)open the extention first. Click on "select text" and then click on an image on the page. Re-open the extention.
-
-
-### Using the Extension Popup
-Alternatively, you can open the extension popup and manually enter text or select an image via the provided interface.
-
