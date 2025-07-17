@@ -55,7 +55,7 @@
 
 	<div class="form-control">
 		<label class="label" for="model">Model</label>
-		<input type="text" id="model" bind:value={model} class="input-bordered input" required />
+		<input type="text" id="model" bind:value={model} class="input-bordered input" />
 	</div>
 
 	<label class="label flex cursor-pointer items-center justify-between">
