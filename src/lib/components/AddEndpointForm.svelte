@@ -11,7 +11,7 @@
 	let model = $state('')
 	let canProcessImages = $state(false)
 
-	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'>
+	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'> & { apiKeyUrl?: string }
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
@@ -19,6 +19,7 @@
 			title: 'Kimi',
 			url: 'https://api.moonshot.ai/v1/chat/completions',
 			model: 'kimi-k2-turbo-preview',
+			apiKeyUrl: 'https://platform.moonshot.ai/console/api-keys',
 		},
 		lmstudio: {
 			title: 'LM Studio Local',
@@ -34,41 +35,49 @@
 			title: 'MiniMax',
 			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
 			model: 'MiniMax-M1',
+			apiKeyUrl: 'https://www.minimax.io/platform/document/',
 		},
 		deepSeek: {
 			title: 'DeepSeek',
 			url: 'https://api.deepseek.com/chat/completions',
 			model: 'deepseek-chat',
+			apiKeyUrl: 'https://platform.deepseek.com/api-keys',
 		},
 		mistral: {
 			title: 'Mistral AI',
 			url: 'https://api.mistral.ai/v1/chat/completions',
 			model: 'mistral-large-latest',
+			apiKeyUrl: 'https://console.mistral.ai/api-keys',
 		},
 		qwen: {
 			title: 'Qwen',
 			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
 			model: 'qwen-plus',
+			apiKeyUrl: 'https://bailian.console.aliyun.com/?tab=apiKey',
 		},
 		gemini: {
 			title: 'Gemini',
 			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
 			model: 'gemini-2.5-flash',
+			apiKeyUrl: 'https://aistudio.google.com/app/apikey',
 		},
 		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
 			model: 'gpt-5',
+			apiKeyUrl: 'https://platform.openai.com/api-keys',
 		},
 		claude: {
 			title: 'Antropic',
 			url: 'https://api.anthropic.com/v1/messages',
 			model: 'claude-3-7-sonnet-20250219',
+			apiKeyUrl: 'https://console.anthropic.com/settings/keys',
 		},
 		openRouter: {
 			title: 'OpenRouter',
 			url: 'https://openrouter.ai/api/v1/chat/completions',
 			model: 'moonshotai/kimi-k2',
+			apiKeyUrl: 'https://openrouter.ai/keys',
 		},
 	}
 
@@ -78,7 +87,7 @@
 			;({ title, url, model } = endpointTemplateMap[selectedValue])
 			apiKeyInput.focus()
 		}
-		selectedValue = undefined
+		// selectedValue = undefined
 	}
 
 	function add() {
@@ -87,7 +96,12 @@
 			return
 		}
 		if (title && url) {
-			if (!apiKey && !confirm(L.saveAnyway())) return
+			if (
+				(!selectedValue || endpointTemplateMap[selectedValue]?.apiKeyUrl) &&
+				!apiKey &&
+				!confirm(L.saveAnyway())
+			)
+				return
 			const newEndpoint: Endpoint = { title, url, apiKey, model, canProcessImages }
 			endpoints.add(newEndpoint)
 			view.showAddEndpointForm = false
@@ -125,7 +139,34 @@
 		<input class="input" id="model" bind:value={model} />
 	</label>
 	<label class="label mb-2" for="apiKey">
-		<span>{L.apiKey()}</span>
+		<span class="flex items-center">
+			{L.apiKey()}
+			{#if selectedValue && endpointTemplateMap[selectedValue]?.apiKeyUrl}
+				<!-- svelte-ignore a11y_consider_explicit_label -->
+				<a
+					href={endpointTemplateMap[selectedValue].apiKeyUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="ml-2 text-blue-500 hover:text-blue-700"
+					title="Get API Key"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-4 w-4"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+						/>
+					</svg>
+				</a>
+			{/if}
+		</span>
 		<input
 			class="input"
 			id="apiKey"
