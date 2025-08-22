@@ -15,15 +15,25 @@
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
+		kimi: {
+			title: 'Kimi',
+			url: 'https://api.moonshot.ai/v1/chat/completions',
+			model: 'kimi-k2-turbo-preview',
+		},
+		lmstudio: {
+			title: 'LM Studio Local',
+			url: 'http://localhost:1234/v1/chat/completions',
+			model: 'mimo-vl-7b-rl',
+		},
 		ollama: {
 			title: 'Ollama',
 			url: 'http://localhost:11434/api/chat',
-			model: 'llama3.2:latest',
+			model: 'mistral-small',
 		},
 		miniMax: {
 			title: 'MiniMax',
 			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
-			model: 'MiniMax-Text-01',
+			model: 'MiniMax-M1',
 		},
 		deepSeek: {
 			title: 'DeepSeek',
@@ -38,22 +48,27 @@
 		qwen: {
 			title: 'Qwen',
 			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
-			model: 'qwen-max',
+			model: 'qwen-plus',
 		},
 		gemini: {
 			title: 'Gemini',
 			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-			model: 'gemini-2.5-pro-preview-03-25',
+			model: 'gemini-2.5-flash',
 		},
 		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
-			model: 'o3-mini',
+			model: 'gpt-5',
 		},
 		claude: {
 			title: 'Antropic',
 			url: 'https://api.anthropic.com/v1/messages',
 			model: 'claude-3-7-sonnet-20250219',
+		},
+		openRouter: {
+			title: 'OpenRouter',
+			url: 'https://openrouter.ai/api/v1/chat/completions',
+			model: 'moonshotai/kimi-k2',
 		},
 	}
 
