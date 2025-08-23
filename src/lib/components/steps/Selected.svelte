@@ -96,6 +96,22 @@
 		unifiedStorage.value.selectedContent = { text: '' }
 		unifiedStorage.value.result = undefined
 		apiRequest.value.state = 'EMPTY'
+		unifiedStorage.value.contextEnabled = false
+		unifiedStorage.value.contextText = ''
+	}
+
+	function toggleContext() {
+		// unifiedStorage.value.contextEnabled = !unifiedStorage.value.contextEnabled
+		if (!unifiedStorage.value.contextEnabled) {
+			unifiedStorage.value.contextText = ''
+		}
+		unifiedStorage.value.result = undefined
+	}
+
+	function contextChange(event: Event) {
+		const target = event.target as HTMLTextAreaElement
+		unifiedStorage.value.contextText = target.value
+		unifiedStorage.value.result = undefined
 	}
 
 	$effect(() => {
@@ -179,7 +195,7 @@
 		{@const content = unifiedStorage.value.selectedContent}
 		<label
 			for="selected-text"
-			class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
+			class="text-md mb-4 grid grid-cols-[16px_1fr] items-center gap-2 font-bold"
 		>
 			<CommentsIcon />
 			{#if !hasSelected}
@@ -201,6 +217,29 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
+		<!-- Context Section -->
+		<div class="mb-4">
+			<label class="mb-2 flex items-center gap-2">
+				<input
+					type="checkbox"
+					class="checkbox"
+					bind:checked={unifiedStorage.value.contextEnabled}
+					onchange={toggleContext}
+				/>
+				<span class="text-sm font-medium">Add Context</span>
+			</label>
+			{#if unifiedStorage.value.contextEnabled}
+				<textarea
+					id="context-text"
+					value={unifiedStorage.value.contextText}
+					onchange={contextChange}
+					class="textarea"
+					rows="3"
+					placeholder={L.contextPlaceholder()}
+				></textarea>
+			{/if}
+		</div>
+
 		{#if !hasSelected}
 			<textarea
 				id="selected-text"

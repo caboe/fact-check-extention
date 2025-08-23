@@ -234,6 +234,10 @@ type RootTranslation = {
 	 * I​n​l​i​n​e​ ​S​y​s​t​e​m​ ​P​r​o​m​p​t​ ​(​r​e​c​o​m​m​e​n​d​e​d​ ​f​o​r​ ​O​l​l​a​m​a​)
 	 */
 	inlineUserMessage: string
+	/**
+	 * P​r​o​v​i​d​e​ ​a​d​d​i​t​i​o​n​a​l​ ​c​o​n​t​e​x​t​ ​t​o​ ​h​e​l​p​ ​w​i​t​h​ ​f​a​c​t​-​c​h​e​c​k​i​n​g​ ​(​e​.​g​.​,​ ​t​i​m​e​ ​p​e​r​i​o​d​,​ ​l​o​c​a​t​i​o​n​,​ ​s​p​e​c​i​f​i​c​ ​c​l​a​i​m​s​ ​t​o​ ​f​o​c​u​s​ ​o​n​)​.​.​.
+	 */
+	contextPlaceholder: string
 }
 
 export type TranslationFunctions = {
@@ -451,6 +455,10 @@ export type TranslationFunctions = {
 	 * Inline System Prompt (recommended for Ollama)
 	 */
 	inlineUserMessage: () => LocalizedString
+	/**
+	 * Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...
+	 */
+	contextPlaceholder: () => LocalizedString
 }
 
 export type Formatters = {}

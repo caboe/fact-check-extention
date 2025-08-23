@@ -54,7 +54,11 @@ const es = {
 	defaultPerson: 'Científico crítico',
 	useShortRoleLabel:
 		'Usar rol de sistema corto. Esto podría ayudar si el contexto del modelo es demasiado corto, por ejemplo, para textos largos enviados a Ollama',
+	rolePlacementLabel: 'Ubicación del rol',
+	rolePlacementSystem: 'Mensaje del sistema',
+	rolePlacementInline: 'En línea en mensaje de usuario',
 	inlineUserMessage: 'System Prompt en línea (recomendado para Ollama)',
+	contextPlaceholder: 'Proporcionar contexto adicional para ayudar con la verificación de hechos (ej. período de tiempo, ubicación, afirmaciones específicas en las que enfocarse)...',
 } satisfies BaseTranslation
 
 export default es

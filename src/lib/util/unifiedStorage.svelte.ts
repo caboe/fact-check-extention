@@ -6,6 +6,8 @@ interface IUnifiedState {
 	hasSeenIntroduction: boolean
 	selectedContent: SelectedContent | null
 	result: string | undefined // Use string | undefined instead of any | null
+	contextEnabled: boolean
+	contextText: string
 }
 
 class UnifiedStorage extends PersistState<IUnifiedState> {
@@ -16,6 +18,8 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 			hasSeenIntroduction: false,
 			selectedContent: null,
 			result: undefined, // Initialize with undefined
+			contextEnabled: false,
+			contextText: ''
 		}
 		super('unifiedState', initialValue)
 	}
