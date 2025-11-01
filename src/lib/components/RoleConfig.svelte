@@ -51,6 +51,12 @@
 		customRoles.addRole(copiedRole)
 	}
 
+	function createFromRole(role: Role) {
+		newRoleName = `${role.name} (Custom)`
+		newRoleContent = role.role
+		showAddForm = true
+	}
+
 	function closeConfig() {
 		view.showRoleConfig = false
 		editingRole = null
@@ -83,11 +89,22 @@
 				<div class="space-y-2">
 					{#each basicRoles as role (role.name)}
 						<div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-							<div class="flex items-center justify-between">
-								<h4 class="font-medium text-gray-900 dark:text-white">{role.name}</h4>
-								<span class="text-sm text-gray-500 dark:text-gray-400">Built-in</span>
+							<div class="flex items-start justify-between">
+								<div class="flex-1">
+									<h4 class="font-medium text-gray-900 dark:text-white">{role.name}</h4>
+									<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{role.role.substring(0, 100)}...</p>
+								</div>
+								<div class="flex items-center gap-2 ml-3">
+									<span class="text-sm text-gray-500 dark:text-gray-400">Built-in</span>
+									<button
+										onclick={() => createFromRole(role)}
+										class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+										title="Create custom role from this template"
+									>
+										Create from this
+									</button>
+								</div>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{role.role.substring(0, 100)}...</p>
 						</div>
 					{/each}
 				</div>
@@ -178,6 +195,13 @@
 										<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-3">{role.role.substring(0, 200)}...</p>
 									</div>
 									<div class="flex gap-1 ml-3">
+										<button
+											onclick={() => createFromRole(role)}
+											class="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+											title="Create new role from this template"
+										>
+											Create from this
+										</button>
 										<EditIcon onclick={() => editRole(role, index)} />
 										<button
 											onclick={() => copyRole(index)}
