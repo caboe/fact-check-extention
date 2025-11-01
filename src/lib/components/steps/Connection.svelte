@@ -9,6 +9,7 @@
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
+	import { roles } from '../../util/role.svelte'
 
 	interface Props {
 		open: boolean
@@ -81,34 +82,32 @@
 					</button>
 				</div>
 			{:else if availableEndpoints.length > 0}
-
-					<select
-						bind:this={endpointSelect}
-						class="select"
-						id="endpoints"
-						onchange={(event) => {
-							const selectedEndpoint = availableEndpoints.find(
-								(ep) => ep.title === (event.target as HTMLSelectElement).value,
-							)
-							endpoints.value.selected = selectedEndpoint || null
-						}}
-						value={endpoints.value.selected?.title || ''}
-					>
-						{#each availableEndpoints as endpoint (endpoint.title)}
-							<option value={endpoint.title}>{endpoint.title}</option>
-						{/each}
-					</select>
+				<select
+					bind:this={endpointSelect}
+					class="select"
+					id="endpoints"
+					onchange={(event) => {
+						const selectedEndpoint = availableEndpoints.find(
+							(ep) => ep.title === (event.target as HTMLSelectElement).value,
+						)
+						endpoints.value.selected = selectedEndpoint || null
+					}}
+					value={endpoints.value.selected?.title || ''}
+				>
+					{#each availableEndpoints as endpoint (endpoint.title)}
+						<option value={endpoint.title}>{endpoint.title}</option>
+					{/each}
+				</select>
 			{/if}
 
 			<label class="flex flex-col gap-2">
-				<div class="text-sm">{L.personLabel()}</div>
-				<input
-					class="input"
-					type="text"
-					size="30"
-					bind:value={unifiedStorage.value.person}
-					placeholder={L.personPlaceholder()}
-				/>
+				<div class="text-sm">Choose Role</div>
+				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
+					<option value="">Default</option>
+					{#each roles as role (role.name)}
+						<option value={role.name}>{role.name}</option>
+					{/each}
+				</select>
 			</label>
 			<div class="flex flex-col items-center justify-between gap-2">
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />

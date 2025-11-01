@@ -58,7 +58,8 @@ const pt = {
 	rolePlacementSystem: 'Mensagem do sistema',
 	rolePlacementInline: 'Em linha na mensagem do usuário',
 	inlineUserMessage: 'System Prompt em linha (recomendado para Ollama)',
-	contextPlaceholder: 'Fornecer contexto adicional para ajudar na verificação de fatos (ex. período de tempo, localização, alegações específicas para focar)...',
+	contextPlaceholder:
+		'Fornecer contexto adicional para ajudar na verificação de fatos (ex. período de tempo, localização, alegações específicas para focar)...',
 } satisfies BaseTranslation
 
 export default pt

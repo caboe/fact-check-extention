@@ -1,10 +1,14 @@
 import L from '../state/L.svelte'
-import { full } from './role.svelte'
+import { roleTemplate, roles } from './role.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
 
 export default function getSystemRole(person: string | null, range: number): string {
-	const systemRole = full.replace(/{word_count}/g, String(range))
-	let finalRole = systemRole.replace(/{person}/g, person || L.defaultPerson())
+	// Find the selected role or use empty string as default
+	const selectedRole = person ? roles.find(role => role.name === person) : null
+	
+	let finalRole = roleTemplate.replace(/{roleStyle}/g, selectedRole?.role || '')
+	finalRole = finalRole.replace(/{wordCount}/g, String(range))
+	finalRole = finalRole.replace(/{person}/g, person || L.defaultPerson())
 
 	// Add context information if enabled and contains content
 	if (unifiedStorage.value.contextEnabled && unifiedStorage.value.contextText.trim()) {

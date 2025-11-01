@@ -49,7 +49,7 @@ type RootTranslation = {
 	 */
 	response: string
 	/**
-	 * A​n​s​w​e​r​ ​l​e​n​g​t​h​ ​a​p​p​r​o​x​.​ ​{​r​e​s​p​o​n​s​e​L​e​n​g​t​h​}​ ​w​o​r​d​s
+	 * A​n​s​w​e​r​ ​l​e​n​g​t​h​ ​m​a​x​.​ ​{​r​e​s​p​o​n​s​e​L​e​n​g​t​h​}​ ​t​o​k​e​n​s
 	 * @param {number} responseLength
 	 */
 	responseLength: RequiredParams<'responseLength'>
@@ -272,7 +272,7 @@ export type TranslationFunctions = {
 	 */
 	response: () => LocalizedString
 	/**
-	 * Answer length approx. {responseLength} words
+	 * Answer length max. {responseLength} tokens
 	 */
 	responseLength: (arg: { responseLength: number }) => LocalizedString
 	/**

@@ -57,7 +57,8 @@ const en = {
 	rolePlacementSystem: 'System Message',
 	rolePlacementInline: 'Inline in User Message',
 	inlineUserMessage: 'Inline System Prompt (recommended for Ollama)',
-	contextPlaceholder: 'Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...',
+	contextPlaceholder:
+		'Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...',
 } satisfies BaseTranslation
 
 export default en
