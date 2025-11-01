@@ -1,10 +1,14 @@
 import L from '../state/L.svelte'
-import { roleTemplate, roles } from './role.svelte'
+import { roleTemplate, basicRoles } from './role.svelte'
+import customRoles from './customRoles.svelte'
 import unifiedStorage from './unifiedStorage.svelte'
 
 export default function getSystemRole(person: string | null, range: number): string {
+	// Combine basic and custom roles
+	const allRoles = [...basicRoles, ...customRoles.value.customRoles]
+	
 	// Find the selected role or use empty string as default
-	const selectedRole = person ? roles.find(role => role.name === person) : null
+	const selectedRole = person ? allRoles.find(role => role.name === person) : null
 	
 	let finalRole = roleTemplate.replace(/{roleStyle}/g, selectedRole?.role || '')
 	finalRole = finalRole.replace(/{wordCount}/g, String(range))

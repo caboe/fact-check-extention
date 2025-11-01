@@ -9,7 +9,8 @@
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
-	import { roles } from '../../util/role.svelte'
+	import { basicRoles } from '../../util/role.svelte'
+	import customRoles from '../../util/customRoles.svelte'
 
 	interface Props {
 		open: boolean
@@ -21,6 +22,9 @@
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	let isInlineRolePlacement = $state(apiRequest.value.rolePlacement === 'inline')
+	
+	// Combine basic and custom roles reactively
+	const allRoles = $derived([...basicRoles, ...customRoles.value.customRoles])
 
 	$effect(() => {
 		apiRequest.value.rolePlacement = isInlineRolePlacement ? 'inline' : 'system'
@@ -101,10 +105,19 @@
 			{/if}
 
 			<label class="flex flex-col gap-2">
-				<div class="text-sm">Choose Role</div>
+				<div class="flex items-center justify-between">
+					<span class="text-sm">Choose Role</span>
+					<button
+						onclick={() => (view.showRoleConfig = true)}
+						class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+						title="Configure Roles"
+					>
+						⚙️ Config
+					</button>
+				</div>
 				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
 					<option value="">Default</option>
-					{#each roles as role (role.name)}
+					{#each allRoles as role (role.name)}
 						<option value={role.name}>{role.name}</option>
 					{/each}
 				</select>

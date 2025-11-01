@@ -64,6 +64,8 @@ const satirist: Role = {
 `,
 }
 
+export const basicRoles: Role[] = [scientist, satirist]
+
 export const roles: Role[] = [scientist, satirist]
 
 export const roleTemplate = `---Role Definition---
