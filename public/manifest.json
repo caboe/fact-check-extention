@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Fact Spreader",
-	"version": "2.1.1",
+	"version": "2.5.0",
 	"description": "Fact Spreader is a Fact Checker GPT connector. Simply select the text and have it tested for correctness by your configured GPT.",
 	"permissions": [
 		"storage",
