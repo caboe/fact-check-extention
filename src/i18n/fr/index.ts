@@ -60,6 +60,23 @@ const fr = {
 	inlineUserMessage: 'System Prompt en ligne (recommandé pour Ollama)',
 	contextPlaceholder:
 		'Fournir un contexte supplémentaire pour aider à la vérification des faits (par ex. période, lieu, affirmations spécifiques à examiner)...',
+	// Role Configuration
+	roleConfiguration: 'Configuration des Rôles',
+	basicRoles: 'Rôles de Base (Lecture seule)',
+	customRoles: 'Rôles Personnalisés',
+	builtIn: 'Intégré',
+	createFromThis: 'Créer à partir de ceci',
+	addRole: 'Ajouter un Rôle',
+	addNewRole: 'Ajouter un Nouveau Rôle',
+	roleName: 'Nom du rôle',
+	roleDescription: 'Description du rôle et instructions...',
+	saveRole: 'Enregistrer',
+	cancelRole: 'Annuler',
+	copyRole: 'Copier',
+	noCustomRoles: 'Aucun rôle personnalisé créé pour le moment. Cliquez sur "Ajouter un Rôle" pour créer votre premier rôle personnalisé.',
+	deleteRoleConfirm: 'Êtes-vous sûr de vouloir supprimer ce rôle ?',
+	createFromTemplate: 'Créer un rôle personnalisé à partir de ce modèle',
+	createFromExisting: 'Créer un nouveau rôle à partir de ce modèle',
 } satisfies BaseTranslation
 
 export default fr

@@ -104,17 +104,11 @@
 				</select>
 			{/if}
 
+			<div class="flex items-center justify-between">
+				<div class="text-md">{L.rolePlacementLabel()}</div>
+				<Settings onclick={() => (view.showRoleConfig = true)} />
+			</div>
 			<label class="flex flex-col gap-2">
-				<div class="flex items-center justify-between">
-					<span class="text-sm">Choose Role</span>
-					<button
-						onclick={() => (view.showRoleConfig = true)}
-						class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
-						title="Configure Roles"
-					>
-						⚙️ Config
-					</button>
-				</div>
 				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
 					<option value="">Default</option>
 					{#each allRoles as role (role.name)}

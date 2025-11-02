@@ -49,7 +49,7 @@ type RootTranslation = {
 	 */
 	response: string
 	/**
-	 * A​n​s​w​e​r​ ​l​e​n​g​t​h​ ​m​a​x​.​ ​{​r​e​s​p​o​n​s​e​L​e​n​g​t​h​}​ ​t​o​k​e​n​s
+	 * A​n​s​w​e​r​ ​l​e​n​g​t​h​ ​a​p​p​r​o​x​.​ ​{​r​e​s​p​o​n​s​e​L​e​n​g​t​h​}​ ​w​o​r​d​s
 	 * @param {number} responseLength
 	 */
 	responseLength: RequiredParams<'responseLength'>
@@ -238,6 +238,70 @@ type RootTranslation = {
 	 * P​r​o​v​i​d​e​ ​a​d​d​i​t​i​o​n​a​l​ ​c​o​n​t​e​x​t​ ​t​o​ ​h​e​l​p​ ​w​i​t​h​ ​f​a​c​t​-​c​h​e​c​k​i​n​g​ ​(​e​.​g​.​,​ ​t​i​m​e​ ​p​e​r​i​o​d​,​ ​l​o​c​a​t​i​o​n​,​ ​s​p​e​c​i​f​i​c​ ​c​l​a​i​m​s​ ​t​o​ ​f​o​c​u​s​ ​o​n​)​.​.​.
 	 */
 	contextPlaceholder: string
+	/**
+	 * R​o​l​e​ ​C​o​n​f​i​g​u​r​a​t​i​o​n
+	 */
+	roleConfiguration: string
+	/**
+	 * B​a​s​i​c​ ​R​o​l​e​s​ ​(​R​e​a​d​-​o​n​l​y​)
+	 */
+	basicRoles: string
+	/**
+	 * C​u​s​t​o​m​ ​R​o​l​e​s
+	 */
+	customRoles: string
+	/**
+	 * B​u​i​l​t​-​i​n
+	 */
+	builtIn: string
+	/**
+	 * C​r​e​a​t​e​ ​f​r​o​m​ ​t​h​i​s
+	 */
+	createFromThis: string
+	/**
+	 * A​d​d​ ​R​o​l​e
+	 */
+	addRole: string
+	/**
+	 * A​d​d​ ​N​e​w​ ​R​o​l​e
+	 */
+	addNewRole: string
+	/**
+	 * R​o​l​e​ ​n​a​m​e
+	 */
+	roleName: string
+	/**
+	 * R​o​l​e​ ​d​e​s​c​r​i​p​t​i​o​n​ ​a​n​d​ ​i​n​s​t​r​u​c​t​i​o​n​s​.​.​.
+	 */
+	roleDescription: string
+	/**
+	 * S​a​v​e
+	 */
+	saveRole: string
+	/**
+	 * C​a​n​c​e​l
+	 */
+	cancelRole: string
+	/**
+	 * C​o​p​y
+	 */
+	copyRole: string
+	/**
+	 * N​o​ ​c​u​s​t​o​m​ ​r​o​l​e​s​ ​c​r​e​a​t​e​d​ ​y​e​t​.​ ​C​l​i​c​k​ ​"​A​d​d​ ​R​o​l​e​"​ ​t​o​ ​c​r​e​a​t​e​ ​y​o​u​r​ ​f​i​r​s​t​ ​c​u​s​t​o​m​ ​r​o​l​e​.
+	 */
+	noCustomRoles: string
+	/**
+	 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​i​s​ ​r​o​l​e​?
+	 */
+	deleteRoleConfirm: string
+	/**
+	 * C​r​e​a​t​e​ ​c​u​s​t​o​m​ ​r​o​l​e​ ​f​r​o​m​ ​t​h​i​s​ ​t​e​m​p​l​a​t​e
+	 */
+	createFromTemplate: string
+	/**
+	 * C​r​e​a​t​e​ ​n​e​w​ ​r​o​l​e​ ​f​r​o​m​ ​t​h​i​s​ ​t​e​m​p​l​a​t​e
+	 */
+	createFromExisting: string
 }
 
 export type TranslationFunctions = {
@@ -272,7 +336,7 @@ export type TranslationFunctions = {
 	 */
 	response: () => LocalizedString
 	/**
-	 * Answer length max. {responseLength} tokens
+	 * Answer length approx. {responseLength} words
 	 */
 	responseLength: (arg: { responseLength: number }) => LocalizedString
 	/**
@@ -459,6 +523,70 @@ export type TranslationFunctions = {
 	 * Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...
 	 */
 	contextPlaceholder: () => LocalizedString
+	/**
+	 * Role Configuration
+	 */
+	roleConfiguration: () => LocalizedString
+	/**
+	 * Basic Roles (Read-only)
+	 */
+	basicRoles: () => LocalizedString
+	/**
+	 * Custom Roles
+	 */
+	customRoles: () => LocalizedString
+	/**
+	 * Built-in
+	 */
+	builtIn: () => LocalizedString
+	/**
+	 * Create from this
+	 */
+	createFromThis: () => LocalizedString
+	/**
+	 * Add Role
+	 */
+	addRole: () => LocalizedString
+	/**
+	 * Add New Role
+	 */
+	addNewRole: () => LocalizedString
+	/**
+	 * Role name
+	 */
+	roleName: () => LocalizedString
+	/**
+	 * Role description and instructions...
+	 */
+	roleDescription: () => LocalizedString
+	/**
+	 * Save
+	 */
+	saveRole: () => LocalizedString
+	/**
+	 * Cancel
+	 */
+	cancelRole: () => LocalizedString
+	/**
+	 * Copy
+	 */
+	copyRole: () => LocalizedString
+	/**
+	 * No custom roles created yet. Click "Add Role" to create your first custom role.
+	 */
+	noCustomRoles: () => LocalizedString
+	/**
+	 * Are you sure you want to delete this role?
+	 */
+	deleteRoleConfirm: () => LocalizedString
+	/**
+	 * Create custom role from this template
+	 */
+	createFromTemplate: () => LocalizedString
+	/**
+	 * Create new role from this template
+	 */
+	createFromExisting: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -41,7 +41,7 @@
 	}
 
 	function deleteRole(index: number) {
-		if (confirm('Are you sure you want to delete this role?')) {
+		if (confirm(L.deleteRoleConfirm())) {
 			customRoles.deleteRole(index)
 		}
 	}
@@ -72,7 +72,7 @@
 	<div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
 		<!-- Header -->
 		<div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-			<h2 class="text-xl font-bold text-gray-900 dark:text-white">Role Configuration</h2>
+			<h2 class="text-xl font-bold text-gray-900 dark:text-white">{L.roleConfiguration()}</h2>
 			<button
 				onclick={closeConfig}
 				class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -85,7 +85,7 @@
 		<div class="p-4 overflow-y-auto max-h-[calc(90vh-120px)]">
 			<!-- Basic Roles Section -->
 			<div class="mb-6">
-				<h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Basic Roles (Read-only)</h3>
+				<h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{L.basicRoles()}</h3>
 				<div class="space-y-2">
 					{#each basicRoles as role (role.name)}
 						<div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -95,13 +95,13 @@
 									<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{role.role.substring(0, 100)}...</p>
 								</div>
 								<div class="flex items-center gap-2 ml-3">
-									<span class="text-sm text-gray-500 dark:text-gray-400">Built-in</span>
+									<span class="text-sm text-gray-500 dark:text-gray-400">{L.builtIn()}</span>
 									<button
 										onclick={() => createFromRole(role)}
 										class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-										title="Create custom role from this template"
+										title={L.createFromTemplate()}
 									>
-										Create from this
+										{L.createFromThis()}
 									</button>
 								</div>
 							</div>
@@ -113,27 +113,27 @@
 			<!-- Custom Roles Section -->
 			<div class="mb-6">
 				<div class="flex items-center justify-between mb-3">
-					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Custom Roles</h3>
+					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">{L.customRoles()}</h3>
 					<button
 						onclick={() => showAddForm = true}
 						class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
 					>
-						Add Role
+						{L.addRole()}
 					</button>
 				</div>
 
 				{#if showAddForm}
 					<div class="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-						<h4 class="font-medium mb-3 text-gray-900 dark:text-white">Add New Role</h4>
+						<h4 class="font-medium mb-3 text-gray-900 dark:text-white">{L.addNewRole()}</h4>
 						<div class="space-y-3">
 							<input
 								type="text"
-								placeholder="Role name"
+								placeholder={L.roleName()}
 								bind:value={newRoleName}
 								class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
 							/>
 							<textarea
-								placeholder="Role description and instructions..."
+								placeholder={L.roleDescription()}
 								bind:value={newRoleContent}
 								rows="6"
 								class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
@@ -143,13 +143,13 @@
 									onclick={addRole}
 									class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
 								>
-									Save
+									{L.saveRole()}
 								</button>
 								<button
 									onclick={() => { showAddForm = false; newRoleName = ''; newRoleContent = '' }}
 									class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
 								>
-									Cancel
+									{L.cancelRole()}
 								</button>
 							</div>
 						</div>
@@ -177,13 +177,13 @@
 											onclick={saveEditedRole}
 											class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm"
 										>
-											Save
+											{L.saveRole()}
 										</button>
 										<button
 											onclick={cancelEdit}
 											class="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors text-sm"
 										>
-											Cancel
+											{L.cancelRole()}
 										</button>
 									</div>
 								</div>
@@ -198,15 +198,15 @@
 										<button
 											onclick={() => createFromRole(role)}
 											class="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-											title="Create new role from this template"
+											title={L.createFromExisting()}
 										>
-											Create from this
+											{L.createFromThis()}
 										</button>
 										<EditIcon onclick={() => editRole(role, index)} />
 										<button
 											onclick={() => copyRole(index)}
 											class="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded transition-colors"
-											title="Copy"
+											title={L.copyRole()}
 										>
 											📋
 										</button>
@@ -216,7 +216,7 @@
 							{/if}
 						</div>
 					{:else}
-						<p class="text-gray-500 dark:text-gray-400 text-center py-8">No custom roles created yet. Click "Add Role" to create your first custom role.</p>
+						<p class="text-gray-500 dark:text-gray-400 text-center py-8">{L.noCustomRoles()}</p>
 					{/each}
 				</div>
 			</div>

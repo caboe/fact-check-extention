@@ -59,6 +59,23 @@ const en = {
 	inlineUserMessage: 'Inline System Prompt (recommended for Ollama)',
 	contextPlaceholder:
 		'Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...',
+	// Role Configuration
+	roleConfiguration: 'Role Configuration',
+	basicRoles: 'Basic Roles (Read-only)',
+	customRoles: 'Custom Roles',
+	builtIn: 'Built-in',
+	createFromThis: 'Create from this',
+	addRole: 'Add Role',
+	addNewRole: 'Add New Role',
+	roleName: 'Role name',
+	roleDescription: 'Role description and instructions...',
+	saveRole: 'Save',
+	cancelRole: 'Cancel',
+	copyRole: 'Copy',
+	noCustomRoles: 'No custom roles created yet. Click "Add Role" to create your first custom role.',
+	deleteRoleConfirm: 'Are you sure you want to delete this role?',
+	createFromTemplate: 'Create custom role from this template',
+	createFromExisting: 'Create new role from this template',
 } satisfies BaseTranslation
 
 export default en
