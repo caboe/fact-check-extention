@@ -9,6 +9,8 @@
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
 	import ConnectionIcon from '../icons/ConnectionIcon.svelte'
 	import Settings from '../icons/SettingsIcon.svelte'
+	import { basicRoles } from '../../util/role.svelte'
+	import customRoles from '../../util/customRoles.svelte'
 
 	interface Props {
 		open: boolean
@@ -20,6 +22,9 @@
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	let isInlineRolePlacement = $state(apiRequest.value.rolePlacement === 'inline')
+
+	// Combine basic and custom roles reactively
+	const allRoles = $derived([...basicRoles, ...customRoles.value.customRoles])
 
 	$effect(() => {
 		apiRequest.value.rolePlacement = isInlineRolePlacement ? 'inline' : 'system'
@@ -57,11 +62,12 @@
 
 <AccordionItem {open} on:click>
 	{#snippet summary()}
-		<label for="endpoints" class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold">
+		<label
+			for="endpoints"
+			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
+		>
 			<ConnectionIcon />
-			<span>
-				{L.apiEndpoint()}
-			</span>
+			{L.apiEndpoint()}
 		</label>
 	{/snippet}
 	{#snippet content()}
@@ -81,34 +87,34 @@
 					</button>
 				</div>
 			{:else if availableEndpoints.length > 0}
-
-					<select
-						bind:this={endpointSelect}
-						class="select"
-						id="endpoints"
-						onchange={(event) => {
-							const selectedEndpoint = availableEndpoints.find(
-								(ep) => ep.title === (event.target as HTMLSelectElement).value,
-							)
-							endpoints.value.selected = selectedEndpoint || null
-						}}
-						value={endpoints.value.selected?.title || ''}
-					>
-						{#each availableEndpoints as endpoint (endpoint.title)}
-							<option value={endpoint.title}>{endpoint.title}</option>
-						{/each}
-					</select>
+				<select
+					bind:this={endpointSelect}
+					class="select"
+					id="endpoints"
+					onchange={(event) => {
+						const selectedEndpoint = availableEndpoints.find(
+							(ep) => ep.title === (event.target as HTMLSelectElement).value,
+						)
+						endpoints.value.selected = selectedEndpoint || null
+					}}
+					value={endpoints.value.selected?.title || ''}
+				>
+					{#each availableEndpoints as endpoint (endpoint.title)}
+						<option value={endpoint.title}>{endpoint.title}</option>
+					{/each}
+				</select>
 			{/if}
 
+			<div class="flex items-center justify-between">
+				<div class="text-md">{L.rolePlacementLabel()}</div>
+				<Settings onclick={() => (view.showRoleConfig = true)} />
+			</div>
 			<label class="flex flex-col gap-2">
-				<div class="text-sm">{L.personLabel()}</div>
-				<input
-					class="input"
-					type="text"
-					size="30"
-					bind:value={unifiedStorage.value.person}
-					placeholder={L.personPlaceholder()}
-				/>
+				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
+					{#each allRoles as role (role.name)}
+						<option value={role.name}>{role.name}</option>
+					{/each}
+				</select>
 			</label>
 			<div class="flex flex-col items-center justify-between gap-2">
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />

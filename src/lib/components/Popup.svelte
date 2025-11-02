@@ -6,6 +6,8 @@
 	import Config from './Config.svelte'
 	import FactCheck from './FactCheck.svelte'
 	import Introduction from './Introduction.svelte'
+	import RoleConfig from './RoleConfig.svelte'
+	import view from '../state/view.svelte'
 
 	const hasSeenIntroduction = new PersistState<boolean>('hasSeenIntroduction', false)
 
@@ -26,4 +28,9 @@
 </span>
 {#if !hasSeenIntroduction.value}
 	<Introduction {onclick} />
+{/if}
+
+<!-- Role Config Modal - can appear over any view -->
+{#if view.showRoleConfig}
+	<RoleConfig />
 {/if}

@@ -34,7 +34,7 @@
 		miniMax: {
 			title: 'MiniMax',
 			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
-			model: 'MiniMax-M1',
+			model: 'MiniMax-M2',
 			apiKeyUrl: 'https://www.minimax.io/platform/document/',
 		},
 		deepSeek: {
@@ -46,7 +46,7 @@
 		mistral: {
 			title: 'Mistral AI',
 			url: 'https://api.mistral.ai/v1/chat/completions',
-			model: 'mistral-large-latest',
+			model: 'magistral-medium-2509',
 			apiKeyUrl: 'https://console.mistral.ai/api-keys',
 		},
 		qwen: {
@@ -67,16 +67,10 @@
 			model: 'gpt-5',
 			apiKeyUrl: 'https://platform.openai.com/api-keys',
 		},
-		claude: {
-			title: 'Antropic',
-			url: 'https://api.anthropic.com/v1/messages',
-			model: 'claude-3-7-sonnet-20250219',
-			apiKeyUrl: 'https://console.anthropic.com/settings/keys',
-		},
 		openRouter: {
 			title: 'OpenRouter',
 			url: 'https://openrouter.ai/api/v1/chat/completions',
-			model: 'moonshotai/kimi-k2',
+			model: 'anthropic/claude-haiku-4.5',
 			apiKeyUrl: 'https://openrouter.ai/keys',
 		},
 	}

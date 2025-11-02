@@ -61,6 +61,7 @@ export default async function checkFact() {
 	type RequestBody = {
 		model?: string
 		stream?: boolean
+		max_tokens?: number
 		messages?: {
 			role: 'user' | 'system'
 			content: Content
@@ -75,7 +76,7 @@ export default async function checkFact() {
 
 		function getInlineContent(content: Content): string {
 			return `DEINE AUFGABE:\n
-			${getSystemRole(unifiedStorage.value.person, apiRequest.value.range)}\n
+			${getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range)}\n
 			CHECKE DIE FOLGENDE AUSSAGE:\n
 			${content}`
 		}
@@ -88,7 +89,10 @@ export default async function checkFact() {
 					? [
 							{
 								role: 'system' as const,
-								content: getSystemRole(unifiedStorage.value.person, apiRequest.value.range),
+								content: getSystemRole(
+									unifiedStorage.value.selectedRole || '',
+									apiRequest.value.range,
+								),
 							},
 						]
 					: []),

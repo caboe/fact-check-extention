@@ -54,7 +54,29 @@ const es = {
 	defaultPerson: 'Científico crítico',
 	useShortRoleLabel:
 		'Usar rol de sistema corto. Esto podría ayudar si el contexto del modelo es demasiado corto, por ejemplo, para textos largos enviados a Ollama',
+	rolePlacementLabel: 'Ubicación del rol',
+	rolePlacementSystem: 'Mensaje del sistema',
+	rolePlacementInline: 'En línea en mensaje de usuario',
 	inlineUserMessage: 'System Prompt en línea (recomendado para Ollama)',
+	contextPlaceholder:
+		'Proporcionar contexto adicional para ayudar con la verificación de hechos (ej. período de tiempo, ubicación, afirmaciones específicas en las que enfocarse)...',
+	// Role Configuration
+	roleConfiguration: 'Configuración de Roles',
+	basicRoles: 'Roles Básicos (Solo lectura)',
+	customRoles: 'Roles Personalizados',
+	builtIn: 'Integrado',
+	createFromThis: 'Crear desde esto',
+	addRole: 'Agregar Rol',
+	addNewRole: 'Agregar Nuevo Rol',
+	roleName: 'Nombre del rol',
+	roleDescription: 'Descripción del rol e instrucciones...',
+	saveRole: 'Guardar',
+	cancelRole: 'Cancelar',
+	copyRole: 'Copiar',
+	noCustomRoles: 'Aún no se han creado roles personalizados. Haga clic en "Agregar Rol" para crear su primer rol personalizado.',
+	deleteRoleConfirm: '¿Está seguro de que desea eliminar este rol?',
+	createFromTemplate: 'Crear rol personalizado desde esta plantilla',
+	createFromExisting: 'Crear nuevo rol desde esta plantilla',
 } satisfies BaseTranslation
 
 export default es

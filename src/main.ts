@@ -4,7 +4,7 @@ import Popup from './lib/components/Popup.svelte'
 import './app.css'
 
 const app = mount(Popup, {
-	target: document.body,
+	target: document.getElementById('app') || document.body,
 })
 
 export default app

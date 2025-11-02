@@ -54,7 +54,29 @@ const pt = {
 	defaultPerson: 'Cientista crítico',
 	useShortRoleLabel:
 		'Usar papel de sistema curto. Isso pode ajudar se o contexto do modelo for muito curto, por exemplo, para textos longos enviados para Ollama',
+	rolePlacementLabel: 'Posicionamento do papel',
+	rolePlacementSystem: 'Mensagem do sistema',
+	rolePlacementInline: 'Em linha na mensagem do usuário',
 	inlineUserMessage: 'System Prompt em linha (recomendado para Ollama)',
+	contextPlaceholder:
+		'Fornecer contexto adicional para ajudar na verificação de fatos (ex. período de tempo, localização, alegações específicas para focar)...',
+	// Role Configuration
+	roleConfiguration: 'Configuração de Papéis',
+	basicRoles: 'Papéis Básicos (Somente leitura)',
+	customRoles: 'Papéis Personalizados',
+	builtIn: 'Integrado',
+	createFromThis: 'Criar a partir disto',
+	addRole: 'Adicionar Papel',
+	addNewRole: 'Adicionar Novo Papel',
+	roleName: 'Nome do papel',
+	roleDescription: 'Descrição do papel e instruções...',
+	saveRole: 'Salvar',
+	cancelRole: 'Cancelar',
+	copyRole: 'Copiar',
+	noCustomRoles: 'Nenhum papel personalizado criado ainda. Clique em "Adicionar Papel" para criar seu primeiro papel personalizado.',
+	deleteRoleConfirm: 'Tem certeza de que deseja excluir este papel?',
+	createFromTemplate: 'Criar papel personalizado a partir deste modelo',
+	createFromExisting: 'Criar novo papel a partir deste modelo',
 } satisfies BaseTranslation
 
 export default pt
