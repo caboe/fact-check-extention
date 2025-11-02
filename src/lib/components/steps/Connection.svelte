@@ -22,7 +22,7 @@
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
 	let isInlineRolePlacement = $state(apiRequest.value.rolePlacement === 'inline')
-	
+
 	// Combine basic and custom roles reactively
 	const allRoles = $derived([...basicRoles, ...customRoles.value.customRoles])
 
@@ -62,11 +62,12 @@
 
 <AccordionItem {open} on:click>
 	{#snippet summary()}
-		<label for="endpoints" class="text-md grid grid-cols-[16px_1fr] items-center gap-2 font-bold">
+		<label
+			for="endpoints"
+			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
+		>
 			<ConnectionIcon />
-			<span>
-				{L.apiEndpoint()}
-			</span>
+			{L.apiEndpoint()}
 		</label>
 	{/snippet}
 	{#snippet content()}
