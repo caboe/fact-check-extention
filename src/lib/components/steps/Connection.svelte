@@ -111,7 +111,6 @@
 			</div>
 			<label class="flex flex-col gap-2">
 				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
-					<option value="">Default</option>
 					{#each allRoles as role (role.name)}
 						<option value={role.name}>{role.name}</option>
 					{/each}
