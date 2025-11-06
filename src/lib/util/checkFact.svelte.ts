@@ -8,6 +8,10 @@ import unifiedStorage from './unifiedStorage.svelte'
 
 let currentAbortController: AbortController | null = null
 
+// Local model cache and pipeline
+let localModelCache = new Map<string, any>()
+let localModelsLoading = new Set<string>()
+
 export default async function checkFact() {
 	// Abort any ongoing request
 	if (currentAbortController) {
@@ -57,6 +61,114 @@ export default async function checkFact() {
 	}
 
 	if (!content) throw new Error('No content selected')
+
+	// Check if we're using a local model
+	const isLocalModel = endpoints.value.selected?.isLocal
+
+	if (isLocalModel) {
+		await handleLocalModelRequest(content, signal)
+	} else {
+		await handleRemoteModelRequest(content, signal)
+	}
+}
+
+async function handleLocalModelRequest(content: any, signal: AbortSignal) {
+	try {
+		if (!endpoints.value.selected?.localModelId) {
+			throw new Error('No local model ID specified')
+		}
+
+		const modelId = endpoints.value.selected.localModelId
+
+		// Load transformer.js pipeline if not already loaded
+		if (!localModelCache.has(modelId) && !localModelsLoading.has(modelId)) {
+			localModelsLoading.add(modelId)
+			console.log(`Loading local model: ${modelId}`)
+
+			try {
+				const { pipeline } = await import('@xenova/transformers')
+				const model = await pipeline('text-generation', modelId, {
+					// Use IndexedDB for better caching in browsers
+					progress_callback: (progress: any) => {
+						console.log('Model loading progress:', progress)
+						apiRequest.value.state = progress.status === 'initiate' ? 'LOADING' : 'STREAMING'
+					},
+				})
+
+				localModelCache.set(modelId, model)
+				console.log(`Local model ${modelId} loaded successfully`)
+			} catch (err) {
+				localModelsLoading.delete(modelId)
+				throw new Error(
+					`Failed to load local model: ${err instanceof Error ? err.message : 'Unknown error'}`,
+				)
+			} finally {
+				localModelsLoading.delete(modelId)
+			}
+		}
+
+		// Get the model from cache
+		const model = localModelCache.get(modelId)
+		if (!model) {
+			throw new Error(`Model ${modelId} not available in cache`)
+		}
+
+		// Prepare the prompt
+		const prompt = buildPrompt(content)
+
+		// Generate text using the local model
+		apiRequest.value.state = 'STREAMING'
+
+		// For now, we'll generate the full response at once
+		// In a more advanced implementation, you could stream token by token
+		const result = await model(prompt, {
+			max_new_tokens: Math.min(apiRequest.value.range * 10, 1000), // Rough estimate
+			temperature: 0.7,
+			do_sample: true,
+			pad_token_id: 50256, // Common padding token for many models
+		})
+
+		// Extract the generated text
+		let generatedText = ''
+		if (result && result.length > 0) {
+			if (typeof result[0] === 'string') {
+				generatedText = result[0]
+			} else if (result[0].generated_text) {
+				generatedText = result[0].generated_text
+			} else {
+				generatedText = JSON.stringify(result[0])
+			}
+		}
+
+		if (generatedText) {
+			// Store the result
+			unifiedStorage.value.result = generatedText
+			apiRequest.value.state = 'FINISHED'
+		} else {
+			throw new Error('No text generated from local model')
+		}
+	} catch (err: unknown) {
+		console.error('Error with local model:', err)
+		unifiedStorage.value.result = 'Error with local model: ' + (err as Error).message
+		apiRequest.value.state = 'ERROR'
+	} finally {
+		// Clear the controller if this specific request instance finished or was aborted
+		if (currentAbortController?.signal === signal) {
+			currentAbortController = null
+		}
+	}
+}
+
+async function handleRemoteModelRequest(content: any, signal: AbortSignal) {
+	type Content =
+		| string
+		| {
+				type: string
+				image_url: {
+					url: string
+				}
+		  }[]
+		| null
 
 	type RequestBody = {
 		model?: string
@@ -169,4 +281,14 @@ export default async function checkFact() {
 			currentAbortController = null
 		}
 	}
+}
+
+function buildPrompt(content: any): string {
+	if (typeof content === 'string') {
+		return `DEINE AUFGABE:\n${getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range)}\nCHECKE DIE FOLGENDE AUSSAGE:\n${content}`
+	} else if (Array.isArray(content)) {
+		// Handle multimodal content if needed in the future
+		return `Please analyze the provided content.`
+	}
+	return 'Please analyze the provided content.'
 }

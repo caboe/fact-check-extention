@@ -6,15 +6,62 @@ export interface Endpoint {
 	apiKey: string
 	model: string
 	canProcessImages: boolean
+	isLocal?: boolean // New field to identify local models
+	localModelId?: string // For storing the actual transformer.js model ID
+}
+
+export interface LocalModel {
+	id: string
+	name: string
+	description: string
+	size: string
+	downloadUrl?: string
+	downloaded: boolean
+	downloadProgress?: number
 }
 
 class Endpoints extends PersistState<{
 	selected: Endpoint | null
 	list: Endpoint[]
 	lastUsed: string | undefined
+	localModels: LocalModel[]
 }> {
 	constructor() {
-		super('endpoints', { selected: null, list: [], lastUsed: undefined })
+		super('endpoints', {
+			selected: null,
+			list: [],
+			lastUsed: undefined,
+			localModels: [
+				{
+					id: 'Xenova/phi-2',
+					name: 'Phi-2 (Small)',
+					description: 'Microsoft Phi-2 model - Good for text analysis',
+					size: '1.7GB',
+					downloaded: false,
+				},
+				{
+					id: 'Xenova/phi-1_5',
+					name: 'Phi-1.5 (Tiny)',
+					description: 'Microsoft Phi-1.5 model - Smaller version',
+					size: '800MB',
+					downloaded: false,
+				},
+				{
+					id: 'Xenova/gemma-2b',
+					name: 'Gemma 2B',
+					description: 'Google Gemma 2B model',
+					size: '1.9GB',
+					downloaded: false,
+				},
+				{
+					id: 'Xenova/llama-2-7b',
+					name: 'Llama 2 7B',
+					description: 'Meta Llama 2 7B model',
+					size: '3.8GB',
+					downloaded: false,
+				},
+			],
+		})
 
 		this.load()
 	}
@@ -49,6 +96,40 @@ class Endpoints extends PersistState<{
 		if (this.value.selected?.title === originalTitle) {
 			this.value.selected = updatedEndpoint
 		}
+	}
+
+	// Local model management methods
+	async addLocalEndpoint(localModel: LocalModel) {
+		const endpoint: Endpoint = {
+			title: `${localModel.name} (Local)`,
+			url: 'local://transformer.js', // Special URL for local models
+			apiKey: '', // No API key needed for local models
+			model: localModel.id,
+			canProcessImages: false, // Local models don't support images yet
+			isLocal: true,
+			localModelId: localModel.id,
+		}
+		await this.add(endpoint)
+	}
+
+	async updateLocalModelProgress(modelId: string, progress: number, downloaded: boolean = false) {
+		this.value.localModels = this.value.localModels.map((model) =>
+			model.id === modelId ? { ...model, downloadProgress: progress, downloaded } : model,
+		)
+	}
+
+	async markLocalModelDownloaded(modelId: string) {
+		this.value.localModels = this.value.localModels.map((model) =>
+			model.id === modelId ? { ...model, downloaded: true, downloadProgress: 100 } : model,
+		)
+	}
+
+	getDownloadedModels() {
+		return this.value.localModels.filter((model) => model.downloaded)
+	}
+
+	getAvailableModels() {
+		return this.value.localModels.filter((model) => !model.downloaded)
 	}
 }
 

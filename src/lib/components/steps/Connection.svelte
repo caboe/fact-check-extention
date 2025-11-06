@@ -100,7 +100,10 @@
 					value={endpoints.value.selected?.title || ''}
 				>
 					{#each availableEndpoints as endpoint (endpoint.title)}
-						<option value={endpoint.title}>{endpoint.title}</option>
+						<option value={endpoint.title}>
+							{endpoint.title}
+							{endpoint.isLocal ? ' (Local)' : ''}
+						</option>
 					{/each}
 				</select>
 			{/if}
