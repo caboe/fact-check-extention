@@ -3,9 +3,10 @@
 	import L from '../state/L.svelte'
 	import { ProgressBar } from '@skeletonlabs/skeleton'
 	import { initTransformers } from '../util/transformersInit'
+	import type { pipeline } from '@huggingface/transformers'
 
 	// Import transformer.js dynamically
-	let transformer: any = null
+	let transformer: { pipeline: typeof pipeline } | null = null
 	let isLoading = $state(false)
 	let error = $state('')
 
