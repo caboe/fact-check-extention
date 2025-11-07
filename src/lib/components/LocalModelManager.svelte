@@ -11,12 +11,26 @@
 	async function loadTransformer() {
 		if (!transformer) {
 			try {
-				const { pipeline } = await import('@xenova/transformers')
-				transformer = { pipeline }
-				console.log('Transformer.js loaded successfully')
+				// Dynamically import transformers (onnxruntime-web is a dependency)
+				const transformersModule = await import('@xenova/transformers')
+
+				// Configure environment to use Hugging Face CDN directly
+				transformersModule.env.allowRemoteModels = true
+				transformersModule.env.allowLocalModels = false
+				transformersModule.env.useBrowserCache = true
+
+				// Use a custom cache name to avoid conflicts
+				transformersModule.env.cacheDir = '.transformers-cache'
+
+				// Configure WASM paths - use local node_modules instead of CDN
+				transformersModule.env.backends.onnx.wasm.wasmPaths = '/node_modules/onnxruntime-web/dist/'
+
+				// Store the pipeline function
+				transformer = { pipeline: transformersModule.pipeline }
+				console.log('Transformer.js loaded successfully', transformersModule.env)
 			} catch (err) {
 				console.error('Failed to load transformer.js:', err)
-				error = 'Failed to load transformer.js'
+				error = `Failed to load transformer.js: ${err instanceof Error ? err.message : 'Unknown error'}`
 			}
 		}
 	}
@@ -67,9 +81,6 @@
 			error = 'Failed to create local endpoint'
 		}
 	}
-
-	// Load transformer.js on component mount
-	loadTransformer()
 </script>
 
 <div class="space-y-4">
@@ -83,8 +94,7 @@
 			<span>{error}</span>
 		</div>
 	{/if}
-	123{endpoints.value.localModels}
-	{#each endpoints.value.localModels as model (model.id)}1
+	{#each endpoints.value.localModels as model (model.id)}
 		<div class="card variant-soft-surface space-y-3 p-4">
 			<div class="flex items-start justify-between">
 				<div class="flex-1">

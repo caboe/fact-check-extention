@@ -26,38 +26,50 @@ class Endpoints extends PersistState<{
 	lastUsed: string | undefined
 	localModels: LocalModel[]
 }> {
+	selected: Endpoint | null = $state(null)
+	list: Endpoint[] = $state([])
+	lastUsed: string | undefined = $state(undefined)
+	localModels: LocalModel[] = $state([])
+
 	constructor() {
-		super('endpoints', {
+		super('local', {
 			selected: null,
 			list: [],
 			lastUsed: undefined,
 			localModels: [
 				{
-					id: 'Xenova/phi-2',
-					name: 'Phi-2 (Small)',
-					description: 'Microsoft Phi-2 model - Good for text analysis',
-					size: '1.7GB',
+					id: 'Xenova/gpt2',
+					name: 'GPT-2',
+					description: 'OpenAI GPT-2 model for text generation',
+					size: '500MB',
 					downloaded: false,
 				},
 				{
-					id: 'Xenova/phi-1_5',
-					name: 'Phi-1.5 (Tiny)',
-					description: 'Microsoft Phi-1.5 model - Smaller version',
-					size: '800MB',
+					id: 'Xenova/distilbert-base-uncased',
+					name: 'DistilBERT',
+					description: 'DistilBERT for text classification and analysis',
+					size: '250MB',
 					downloaded: false,
 				},
 				{
-					id: 'Xenova/gemma-2b',
-					name: 'Gemma 2B',
-					description: 'Google Gemma 2B model',
-					size: '1.9GB',
+					id: 'Xenova/bert-base-uncased',
+					name: 'BERT Base',
+					description: 'BERT base model for text understanding',
+					size: '440MB',
 					downloaded: false,
 				},
 				{
-					id: 'Xenova/llama-2-7b',
-					name: 'Llama 2 7B',
-					description: 'Meta Llama 2 7B model',
-					size: '3.8GB',
+					id: 'Xenova/distilgpt2',
+					name: 'DistilGPT-2',
+					description: 'Smaller GPT-2 model for text generation',
+					size: '320MB',
+					downloaded: false,
+				},
+				{
+					id: 'Xenova/t5-small',
+					name: 'T5 Small',
+					description: 'T5 model for text-to-text tasks',
+					size: '240MB',
 					downloaded: false,
 				},
 			],
