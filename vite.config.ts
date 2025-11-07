@@ -61,7 +61,7 @@ export default defineConfig({
 		},
 	},
 	optimizeDeps: {
-		exclude: ['@xenova/transformers'],
+		exclude: ['@huggingface/transformers'],
 		include: ['onnxruntime-web'],
 		esbuildOptions: {
 			target: 'esnext',

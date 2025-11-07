@@ -86,7 +86,11 @@ async function handleLocalModelRequest(content: any, signal: AbortSignal) {
 			console.log(`Loading local model: ${modelId}`)
 
 			try {
-				const { pipeline } = await import('@xenova/transformers')
+				// Initialize shared transformers configuration
+				const { initTransformers } = await import('./transformersInit')
+				await initTransformers()
+
+				const { pipeline } = await import('@huggingface/transformers')
 				const model = await pipeline('text-generation', modelId, {
 					// Use IndexedDB for better caching in browsers
 					progress_callback: (progress: any) => {

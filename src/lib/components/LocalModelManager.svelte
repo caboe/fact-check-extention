@@ -2,6 +2,7 @@
 	import endpoints from '../state/endpoints.svelte'
 	import L from '../state/L.svelte'
 	import { ProgressBar } from '@skeletonlabs/skeleton'
+	import { initTransformers } from '../util/transformersInit'
 
 	// Import transformer.js dynamically
 	let transformer: any = null
@@ -11,23 +12,15 @@
 	async function loadTransformer() {
 		if (!transformer) {
 			try {
-				// Dynamically import transformers (onnxruntime-web is a dependency)
-				const transformersModule = await import('@xenova/transformers')
+				// Initialize shared transformers configuration
+				await initTransformers()
 
-				// Configure environment to use Hugging Face CDN directly
-				transformersModule.env.allowRemoteModels = true
-				transformersModule.env.allowLocalModels = false
-				transformersModule.env.useBrowserCache = true
-
-				// Use a custom cache name to avoid conflicts
-				transformersModule.env.cacheDir = '.transformers-cache'
-
-				// Configure WASM paths - use local node_modules instead of CDN
-				transformersModule.env.backends.onnx.wasm.wasmPaths = '/node_modules/onnxruntime-web/dist/'
+				// Dynamically import transformers
+				const transformersModule = await import('@huggingface/transformers')
 
 				// Store the pipeline function
 				transformer = { pipeline: transformersModule.pipeline }
-				console.log('Transformer.js loaded successfully', transformersModule.env)
+				console.log('Transformer.js loaded successfully')
 			} catch (err) {
 				console.error('Failed to load transformer.js:', err)
 				error = `Failed to load transformer.js: ${err instanceof Error ? err.message : 'Unknown error'}`

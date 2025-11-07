@@ -43,7 +43,7 @@
     "vite": "^5.4.4"
   },
   "dependencies": {
-    "@xenova/transformers": "^2.17.2",
+    "@huggingface/transformers": "^3.7.6",
     "caniuse-lite": "^1.0.30001713",
     "onnxruntime-web": "^1.23.2"
   }
