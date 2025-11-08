@@ -144,6 +144,7 @@ async function handleLocalModelRequest(content: any, signal: AbortSignal) {
 
 		// Prepare the prompt
 		const prompt = buildPrompt(content)
+		console.log({ content, prompt })
 
 		// Generate text using the local model
 		apiRequest.value.state = 'STREAMING'
@@ -151,7 +152,7 @@ async function handleLocalModelRequest(content: any, signal: AbortSignal) {
 		// For now, we'll generate the full response at once
 		// In a more advanced implementation, you could stream token by token
 		const result = await model(prompt, {
-			max_new_tokens: Math.min(apiRequest.value.range * 10, 1000), // Rough estimate
+			max_new_tokens: 100, // TODO
 			temperature: 0.7,
 			do_sample: true,
 			pad_token_id: 50256, // Common padding token for many models
@@ -313,11 +314,11 @@ async function handleRemoteModelRequest(content: any, signal: AbortSignal) {
 }
 
 function buildPrompt(content: any): string {
-	if (typeof content === 'string') {
-		return `DEINE AUFGABE:\n${getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range)}\nCHECKE DIE FOLGENDE AUSSAGE:\n${content}`
-	} else if (Array.isArray(content)) {
-		// Handle multimodal content if needed in the future
-		return `Please analyze the provided content.`
-	}
-	return 'Please analyze the provided content.'
+	// if (typeof content === 'string') {
+	// 	return `DEINE AUFGABE:\n${getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range)}\nCHECKE DIE FOLGENDE AUSSAGE:\n${content}`
+	// } else if (Array.isArray(content)) {
+	// 	// Handle multimodal content if needed in the future
+	// 	return `Please analyze the provided content.`
+	// }
+	return 'Please do the fact check on the following content:\n\n' + content
 }
