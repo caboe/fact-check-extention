@@ -1,0 +1,32 @@
+{
+    "projectDefaults": {
+        "packageManager": "bun",
+        "framework": {
+            "name": "svelte",
+            "version": "5"
+        },
+        "css": {
+            "framework": "tailwindcss",
+            "version": "latest"
+        },
+        "ui": {
+            "library": "skeleton-ui",
+            "version": "latest"
+        }
+    },
+    "recommended": {
+        "buildTool": "vite",
+        "typescript": true,
+        "linting": {
+            "eslint": true,
+            "prettier": true
+        }
+    },
+    "installCommands": {
+        "create": "bun create svelte@latest",
+        "install": "bun install",
+        "dev": "bun run dev",
+        "build": "bun run build",
+        "preview": "bun run preview"
+    }
+}
