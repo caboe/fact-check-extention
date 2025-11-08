@@ -1,40 +1,12 @@
 <script lang="ts">
-	import endpoints from '../state/endpoints.svelte'
-	import L from '../state/L.svelte'
 	import { ProgressBar } from '@skeletonlabs/skeleton'
-	import { initTransformers } from '../util/transformersInit'
-	import type { pipeline } from '@huggingface/transformers'
+	import endpoints from '../state/endpoints.svelte'
+	import { initTransformers, getTransformersModule } from '../util/transformersInit'
 
-	// Import transformer.js dynamically
-	let transformer: { pipeline: typeof pipeline } | null = null
 	let isLoading = $state(false)
 	let error = $state('')
 
-	async function loadTransformer() {
-		if (!transformer) {
-			try {
-				// Initialize shared transformers configuration
-				await initTransformers()
-
-				// Dynamically import transformers
-				const transformersModule = await import('@huggingface/transformers')
-
-				// Store the pipeline function
-				transformer = { pipeline: transformersModule.pipeline }
-				console.log('Transformer.js loaded successfully')
-			} catch (err) {
-				console.error('Failed to load transformer.js:', err)
-				error = `Failed to load transformer.js: ${err instanceof Error ? err.message : 'Unknown error'}`
-			}
-		}
-	}
-
 	async function downloadModel(modelId: string) {
-		if (!transformer) {
-			await loadTransformer()
-			if (!transformer) return
-		}
-
 		try {
 			isLoading = true
 			error = ''
@@ -42,12 +14,28 @@
 			// Update progress
 			await endpoints.updateLocalModelProgress(modelId, 0)
 
+			// Get the dtype for this model
+			const localModel = endpoints.value.localModels.find((m) => m.id === modelId)
+			const dtype = localModel?.dtype
+
+			// Check for ONNX models and provide better error handling
+			if (modelId.includes('onnx-community')) {
+				error = 'ONNX models may have compatibility issues in this browser. Try a different model.'
+				await endpoints.updateLocalModelProgress(modelId, 0, false)
+				return
+			}
+
+			// Initialize shared transformers configuration
+			const transformersModule = await initTransformers()
+
 			// Start download - this will download and cache the model
-			const model = await transformer.pipeline('text-generation', modelId, {
+			// Use the same cache directory and configuration as the chat requests
+			const model = await transformersModule.pipeline('text-generation', modelId, {
+				dtype: dtype,
 				progress_callback: (progress: any) => {
 					console.log('Download progress:', progress)
 					if (progress.progress !== undefined) {
-						const percentage = Math.round(progress.progress * 100)
+						const percentage = Math.round(progress.progress)
 						endpoints.updateLocalModelProgress(modelId, percentage)
 					}
 				},
@@ -58,7 +46,24 @@
 			console.log(`Model ${modelId} downloaded and ready to use`)
 		} catch (err) {
 			console.error(`Failed to download model ${modelId}:`, err)
-			error = `Failed to download model: ${err instanceof Error ? err.message : 'Unknown error'}`
+
+			// Provide specific error messages for common issues
+			let errorMessage = 'Unknown error'
+			if (err instanceof Error) {
+				if (err.message.includes('QuotaExceededError') || err.message.includes('quota')) {
+					errorMessage =
+						'Browser storage quota exceeded. Try clearing browser storage or using a smaller model.'
+				} else if (err.message.includes('Aborted') || err.message.includes('memory')) {
+					errorMessage =
+						'Memory/performance issue. Try using a smaller model or closing other tabs.'
+				} else if (err.message.includes('ONNX') || err.message.includes('onnxruntime')) {
+					errorMessage = 'ONNX compatibility issue. Try using a non-ONNX model instead.'
+				} else {
+					errorMessage = err.message
+				}
+			}
+
+			error = `Failed to download model: ${errorMessage}`
 			// Reset progress on error
 			await endpoints.updateLocalModelProgress(modelId, 0, false)
 		} finally {

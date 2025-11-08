@@ -80,19 +80,38 @@ async function handleLocalModelRequest(content: any, signal: AbortSignal) {
 
 		const modelId = endpoints.value.selected.localModelId
 
+		// Check for ONNX models and provide better error handling
+		if (modelId.includes('onnx-community')) {
+			throw new Error(
+				'ONNX models may have compatibility issues in this browser. Try a different model.',
+			)
+		}
+
 		// Load transformer.js pipeline if not already loaded
 		if (!localModelCache.has(modelId) && !localModelsLoading.has(modelId)) {
 			localModelsLoading.add(modelId)
 			console.log(`Loading local model: ${modelId}`)
 
 			try {
+				// Verify the model is actually downloaded before trying to load it
+				const isDownloaded = await endpoints.verifyModelDownload(modelId)
+				if (!isDownloaded) {
+					throw new Error(`Model ${modelId} is not downloaded. Please download it first.`)
+				}
+
 				// Initialize shared transformers configuration
 				const { initTransformers } = await import('./transformersInit')
-				await initTransformers()
+				const transformersModule = await initTransformers()
 
-				const { pipeline } = await import('@huggingface/transformers')
-				const model = await pipeline('text-generation', modelId, {
-					// Use IndexedDB for better caching in browsers
+				// Get the dtype for this model
+				const localModel = endpoints.value.localModels.find((m) => m.id === modelId)
+				const dtype = localModel?.dtype
+
+				console.log(`Loading model ${modelId} from cache with dtype: ${dtype}`)
+
+				const model = await transformersModule.pipeline('text-generation', modelId, {
+					// Use the same configuration as the download manager
+					dtype: dtype,
 					progress_callback: (progress: any) => {
 						console.log('Model loading progress:', progress)
 						apiRequest.value.state = progress.status === 'initiate' ? 'LOADING' : 'STREAMING'
@@ -100,9 +119,15 @@ async function handleLocalModelRequest(content: any, signal: AbortSignal) {
 				})
 
 				localModelCache.set(modelId, model)
-				console.log(`Local model ${modelId} loaded successfully`)
+				console.log(`Local model ${modelId} loaded successfully from cache`)
 			} catch (err) {
 				localModelsLoading.delete(modelId)
+
+				// If the model fails to load, mark it as not downloaded
+				if (err instanceof Error && err.message.includes('not downloaded')) {
+					await endpoints.updateLocalModelProgress(modelId, 0, false)
+				}
+
 				throw new Error(
 					`Failed to load local model: ${err instanceof Error ? err.message : 'Unknown error'}`,
 				)

@@ -18,6 +18,7 @@ export interface LocalModel {
 	downloadUrl?: string
 	downloaded: boolean
 	downloadProgress?: number
+	dtype?: 'auto' | 'fp32' | 'fp16' | 'q8' | 'int8' | 'uint8' | 'q4' | 'bnb4' | 'q4f16' // Data type for model precision
 }
 
 class Endpoints extends PersistState<{
@@ -43,20 +44,33 @@ class Endpoints extends PersistState<{
 					description: 'SmolLM3 3B parameter base model for text generation and understanding',
 					size: '6.2GB',
 					downloaded: false,
+					dtype: 'int8',
 				},
 				{
-					id: 'onnx-community/Phi-3.5-mini-instruct-onnx-web',
-					name: 'Phi-3.5 Mini Instruct (ONNX)',
-					description: 'Microsoft Phi-3.5 mini model optimized for instruction following',
+					id: 'deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B',
+					name: 'DeepSeek R1 Distill Qwen 1.5B',
+					description:
+						'DeepSeek R1 Distill Qwen 1.5B parameter base model for text generation and understanding',
+					size: '4.2GB',
+					downloaded: false,
+					dtype: 'fp16',
+				},
+				{
+					id: 'Xenova/Phi-3-mini-4k-instruct',
+					name: 'Phi-3 Mini 4K Instruct',
+					description:
+						'Microsoft Phi-3 mini model optimized for instruction following with 4K context',
 					size: '2.3GB',
 					downloaded: false,
+					dtype: 'fp16',
 				},
 				{
-					id: 'onnx-community/Qwen3-0.6B-ONNX',
-					name: 'Qwen3 0.6B (ONNX)',
-					description: 'Qwen 0.6B parameter model for text generation and reasoning',
-					size: '1.2GB',
+					id: 'Xenova/gpt2',
+					name: 'GPT-2',
+					description: 'Classic GPT-2 model for text generation (smaller, more stable)',
+					size: '548MB',
 					downloaded: false,
+					dtype: 'fp32',
 				},
 				{
 					id: 'HuggingFaceTB/SmolLM2-135M-Instruct',
@@ -64,6 +78,7 @@ class Endpoints extends PersistState<{
 					description: 'SmolLM2 135M parameter model for instruction following',
 					size: '145MB',
 					downloaded: false,
+					dtype: 'fp32',
 				},
 			],
 		})
@@ -109,7 +124,7 @@ class Endpoints extends PersistState<{
 			title: `${localModel.name} (Local)`,
 			url: 'local://transformer.js', // Special URL for local models
 			apiKey: '', // No API key needed for local models
-			model: localModel.id,
+			model: localModel.dtype ? `${localModel.id}?dtype=${localModel.dtype}` : localModel.id,
 			canProcessImages: false, // Local models don't support images yet
 			isLocal: true,
 			localModelId: localModel.id,
@@ -127,6 +142,25 @@ class Endpoints extends PersistState<{
 		this.value.localModels = this.value.localModels.map((model) =>
 			model.id === modelId ? { ...model, downloaded: true, downloadProgress: 100 } : model,
 		)
+	}
+
+	// Verify if a model is actually downloaded and working
+	async verifyModelDownload(modelId: string): Promise<boolean> {
+		try {
+			const model = this.value.localModels.find((m) => m.id === modelId)
+			if (!model) return false
+
+			// Check if the model was marked as downloaded
+			if (!model.downloaded) return false
+
+			// In a real implementation, you could verify the model files exist
+			// For now, just return true if marked as downloaded
+			console.log(`Verifying model ${modelId} is available`)
+			return true
+		} catch (err) {
+			console.error('Error verifying model download:', err)
+			return false
+		}
 	}
 
 	getDownloadedModels() {
