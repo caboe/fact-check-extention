@@ -62,7 +62,7 @@ class Endpoints extends PersistState<{
 						'Microsoft Phi-3 mini model optimized for instruction following with 4K context',
 					size: '2.3GB',
 					downloaded: false,
-					dtype: 'fp16',
+					dtype: 'auto',
 				},
 				{
 					id: 'Xenova/gpt2',
