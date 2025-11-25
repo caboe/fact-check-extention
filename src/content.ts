@@ -88,6 +88,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		})
 		document.addEventListener('click', imageClickHandler)
 		sendResponse(true)
+		return true // Keep the message channel open for async response
 	}
 	if (request.action === 'disableImageSelect') {
 		removeImageHoverStyles()
@@ -100,16 +101,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			})
 		}
 		sendResponse(true)
+		return true // Keep the message channel open for async response
 	}
 	if (request.action === 'enableTextSelect') {
 		image = null
 		sendResponse(true)
+		return true // Keep the message channel open for async response
 	}
-})
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	console.log('content.js received message', request)
-
 	if (request.action === 'getSelectedContent') {
 		let selectedContent: SelectedContent = undefined
 		const text = window.getSelection()?.toString()
@@ -120,6 +118,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 
 		sendResponse(selectedContent)
+		return true // Keep the message channel open for async response
 	}
 })
 
