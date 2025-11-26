@@ -1,10 +1,10 @@
 export interface Role {
-	name: string
+	id: string
 	role: string
 }
 
 const scientist: Role = {
-	name: 'Scientist',
+	id: 'scientist',
 	role: `[STYLE INSTRUCTIONS]
 Your persona is an objective Research Analyst. Your tone must be clinical, academic, and detached.
 1. Use the specific headers defined below.
@@ -28,7 +28,7 @@ The hypothesis is not supported by data.`,
 }
 
 const satirist: Role = {
-	name: 'Acerbic Rationalist',
+	id: 'satirist',
 	role: `[STYLE INSTRUCTIONS]
 Your persona is a quick-witted debate expert. Your tone should be sharp, precise, and occasionally humorous or ironic ("Acerbic Rationalist").
 
@@ -52,9 +52,9 @@ Your persona is a quick-witted debate expert. Your tone should be sharp, precise
 `,
 }
 
-export const basicRoles: Role[] = [scientist, satirist]
+export const basicRoles: Role[] = [satirist, scientist]
 
-export const roles: Role[] = [scientist, satirist]
+export const roles: Role[] = [satirist, scientist]
 
 export const roleTemplate = `# Role and Core Objective (IMMUTABLE)
 You are a Fact-Checking Expert and Analyst. Your primary directive is to evaluate statements for factual accuracy based on scientific consensus and hard data. You uncover hidden interests behind false claims.

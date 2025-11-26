@@ -11,6 +11,24 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 			customRoles: []
 		}
 		super('customRoles', initialValue)
+
+		// Migration: Convert 'name' to 'id' for existing roles
+		$effect.root(() => {
+			$effect(() => {
+				let hasChanges = false
+				const migratedRoles = this.value.customRoles.map((role: any) => {
+					if (role.name && !role.id) {
+						hasChanges = true
+						return { ...role, id: role.name, name: undefined }
+					}
+					return role
+				})
+
+				if (hasChanges) {
+					this.value = { ...this.value, customRoles: migratedRoles }
+				}
+			})
+		})
 	}
 
 	addRole(role: Role) {
@@ -40,7 +58,7 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 	copyRole(index: number): Role {
 		const originalRole = this.value.customRoles[index]
 		return {
-			name: `${originalRole.name} (Copy)`,
+			id: `${originalRole.id} (Copy)`,
 			role: originalRole.role
 		}
 	}

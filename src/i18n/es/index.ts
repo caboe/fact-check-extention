@@ -54,7 +54,7 @@ const es = {
 	defaultPerson: 'Científico crítico',
 	useShortRoleLabel:
 		'Usar rol de sistema corto. Esto podría ayudar si el contexto del modelo es demasiado corto, por ejemplo, para textos largos enviados a Ollama',
-	rolePlacementLabel: 'Ubicación del rol',
+	rolePlacementLabel: 'Rol',
 	rolePlacementSystem: 'Mensaje del sistema',
 	rolePlacementInline: 'En línea en mensaje de usuario',
 	inlineUserMessage: 'System Prompt en línea (recomendado para Ollama)',
@@ -69,7 +69,13 @@ const es = {
 	addRole: 'Agregar Rol',
 	addNewRole: 'Agregar Nuevo Rol',
 	roleName: 'Nombre del rol',
-	roleDescription: 'Descripción del rol e instrucciones...',
+	roleDescription: `Descripción del rol e instrucciones.
+Ejemplo:
+
+Tu persona es el filósofo Immanuel Kant.
+1. Tono: Riguroso, complejo y moralmente severo. Usa estructuras de oraciones densas del siglo XVIII.
+2. Método: No solo verifiques hechos; analiza si la afirmación del usuario sigue el "Imperativo Categórico" (Ley Universal).
+3. Enfoque: Rechaza las falsedades no solo como incorrectas, sino como una violación de la Razón ("Vernunft").`,
 	saveRole: 'Guardar',
 	cancelRole: 'Cancelar',
 	copyRole: 'Copiar',
@@ -77,6 +83,8 @@ const es = {
 	deleteRoleConfirm: '¿Está seguro de que desea eliminar este rol?',
 	createFromTemplate: 'Crear rol personalizado desde esta plantilla',
 	createFromExisting: 'Crear nuevo rol desde esta plantilla',
+	scientistName: 'Científico',
+	satiristName: 'Racionalista Acerbo',
 } satisfies BaseTranslation
 
 export default es

@@ -54,7 +54,7 @@ const de = {
 	defaultPerson: 'Kritischer Wissenschaftler',
 	useShortRoleLabel:
 		'Kurze Systemrolle verwenden. Dies kann helfen, wenn der Kontext des Modells zu kurz ist, z.B. bei langen Texten, die an Ollama gesendet werden.',
-	rolePlacementLabel: 'Rollenplatzierung',
+	rolePlacementLabel: 'Rolle',
 	rolePlacementSystem: 'Systemnachricht',
 	rolePlacementInline: 'Inline in Benutzernachricht',
 	inlineUserMessage: 'Inline System Prompt (empfohlen für Ollama)',
@@ -69,7 +69,13 @@ const de = {
 	addRole: 'Rolle hinzufügen',
 	addNewRole: 'Neue Rolle hinzufügen',
 	roleName: 'Rollenname',
-	roleDescription: 'Rollenbeschreibung und Anweisungen...',
+	roleDescription: `Rollenbeschreibung und Anweisungen.
+Beispiel:
+
+Deine Persona ist der Philosoph Immanuel Kant.
+1. Ton: Streng, komplex und moralisch ernst. Verwende dichte Satzstrukturen des 18. Jahrhunderts.
+2. Methode: Überprüfe nicht nur Fakten; analysiere, ob die Behauptung des Nutzers dem "Kategorischen Imperativ" (Universelles Gesetz) folgt.
+3. Fokus: Weise Unwahrheiten nicht nur als inkorrekt zurück, sondern als Verletzung der Vernunft.`,
 	saveRole: 'Speichern',
 	cancelRole: 'Abbrechen',
 	copyRole: 'Kopieren',
@@ -77,6 +83,8 @@ const de = {
 	deleteRoleConfirm: 'Sind Sie sicher, dass Sie diese Rolle löschen möchten?',
 	createFromTemplate: 'Benutzerdefinierte Rolle aus dieser Vorlage erstellen',
 	createFromExisting: 'Neue Rolle aus dieser Vorlage erstellen',
+	scientistName: 'Wissenschaftler',
+	satiristName: 'Scharfsinniger Rationalist',
 } satisfies BaseTranslation
 
 export default de

@@ -111,8 +111,14 @@
 			</div>
 			<label class="flex flex-col gap-2">
 				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
-					{#each allRoles as role (role.name)}
-						<option value={role.name}>{role.name}</option>
+					{#each allRoles as role (role.id)}
+						<option value={role.id}>
+							{role.id === 'scientist'
+								? L.scientistName()
+								: role.id === 'satirist'
+									? L.satiristName()
+									: role.id}
+						</option>
 					{/each}
 				</select>
 			</label>

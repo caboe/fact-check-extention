@@ -54,7 +54,7 @@ const fr = {
 	defaultPerson: 'Scientifique critique',
 	useShortRoleLabel:
 		'Utiliser un rôle système court. Cela pourrait aider si le contexte du modèle est trop court, par exemple pour les textes longs envoyés à Ollama',
-	rolePlacementLabel: 'Placement du rôle',
+	rolePlacementLabel: 'Rôle',
 	rolePlacementSystem: 'Message système',
 	rolePlacementInline: 'En ligne dans le message utilisateur',
 	inlineUserMessage: 'System Prompt en ligne (recommandé pour Ollama)',
@@ -69,7 +69,13 @@ const fr = {
 	addRole: 'Ajouter un Rôle',
 	addNewRole: 'Ajouter un Nouveau Rôle',
 	roleName: 'Nom du rôle',
-	roleDescription: 'Description du rôle et instructions...',
+	roleDescription: `Description du rôle et instructions.
+Exemple :
+
+Votre personnage est le philosophe Emmanuel Kant.
+1. Ton : Rigoureux, complexe et moralement sévère. Utilisez des structures de phrases denses du XVIIIe siècle.
+2. Méthode : Ne vous contentez pas de vérifier les faits ; analysez si l'affirmation de l'utilisateur suit l'« Impératif Catégorique » (Loi Universelle).
+3. Focus : Rejetez les faussetés non seulement comme incorrectes, mais comme une violation de la Raison (« Vernunft »).`,
 	saveRole: 'Enregistrer',
 	cancelRole: 'Annuler',
 	copyRole: 'Copier',
@@ -77,6 +83,8 @@ const fr = {
 	deleteRoleConfirm: 'Êtes-vous sûr de vouloir supprimer ce rôle ?',
 	createFromTemplate: 'Créer un rôle personnalisé à partir de ce modèle',
 	createFromExisting: 'Créer un nouveau rôle à partir de ce modèle',
+	scientistName: 'Scientifique',
+	satiristName: 'Rationaliste Acerbe',
 } satisfies BaseTranslation
 
 export default fr

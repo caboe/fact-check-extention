@@ -8,7 +8,7 @@ export default function getSystemRole(person: string | null, range: number): str
 	const allRoles = [...basicRoles, ...customRoles.value.customRoles]
 
 	// Find the selected role or use empty string as default
-	const selectedRole = person ? allRoles.find((role) => role.name === person) : basicRoles[0]
+	const selectedRole = person ? allRoles.find((role) => role.id === person) : basicRoles[0]
 
 	let finalRole = roleTemplate.replace(/{roleStyle}/g, selectedRole?.role || '')
 	finalRole = finalRole.replace(/{wordCount}/g, String(range))

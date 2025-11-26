@@ -15,7 +15,7 @@
 	function addRole() {
 		if (newRoleName.trim() && newRoleContent.trim()) {
 			const newRole: Role = {
-				name: newRoleName.trim(),
+				id: newRoleName.trim(),
 				role: newRoleContent.trim()
 			}
 			customRoles.addRole(newRole)
@@ -30,7 +30,7 @@
 	}
 
 	function saveEditedRole() {
-		if (editingRole && editingRole.role.name.trim() && editingRole.role.role.trim()) {
+		if (editingRole && editingRole.role.id.trim() && editingRole.role.role.trim()) {
 			customRoles.updateRole(editingRole.index, editingRole.role)
 			editingRole = null
 		}
@@ -52,7 +52,7 @@
 	}
 
 	function createFromRole(role: Role) {
-		newRoleName = `${role.name} (Custom)`
+		newRoleName = `${getRoleName(role)} (Custom)`
 		newRoleContent = role.role
 		showAddForm = true
 	}
@@ -63,8 +63,14 @@
 		showAddForm = false
 	}
 
-	function isBasicRole(roleName: string): boolean {
-		return basicRoles.some(role => role.name === roleName)
+	function isBasicRole(roleId: string): boolean {
+		return basicRoles.some(role => role.id === roleId)
+	}
+
+	function getRoleName(role: Role): string {
+		if (role.id === 'scientist') return L.scientistName()
+		if (role.id === 'satirist') return L.satiristName()
+		return role.id
 	}
 </script>
 
@@ -87,11 +93,11 @@
 			<div class="mb-6">
 				<h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{L.basicRoles()}</h3>
 				<div class="space-y-2">
-					{#each basicRoles as role (role.name)}
+					{#each basicRoles as role (role.id)}
 						<div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
 							<div class="flex items-start justify-between">
 								<div class="flex-1">
-									<h4 class="font-medium text-gray-900 dark:text-white">{role.name}</h4>
+									<h4 class="font-medium text-gray-900 dark:text-white">{getRoleName(role)}</h4>
 									<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">{role.role.substring(0, 100)}...</p>
 								</div>
 								<div class="flex items-center gap-2 ml-3">
@@ -157,14 +163,14 @@
 				{/if}
 
 				<div class="space-y-2">
-					{#each customRoles.value.customRoles as role, index (role.name + index)}
+					{#each customRoles.value.customRoles as role, index (role.id + index)}
 						<div class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
 							{#if editingRole && editingRole.index === index}
 								<!-- Edit Mode -->
 								<div class="space-y-3">
 									<input
 										type="text"
-										bind:value={editingRole.role.name}
+										bind:value={editingRole.role.id}
 										class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
 									/>
 									<textarea
@@ -191,7 +197,7 @@
 								<!-- View Mode -->
 								<div class="flex items-start justify-between">
 									<div class="flex-1">
-										<h4 class="font-medium text-gray-900 dark:text-white">{role.name}</h4>
+										<h4 class="font-medium text-gray-900 dark:text-white">{role.id}</h4>
 										<p class="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-3">{role.role.substring(0, 200)}...</p>
 									</div>
 									<div class="flex gap-1 ml-3">

@@ -53,7 +53,7 @@ const en = {
 	defaultPerson: 'Critical scientist',
 	useShortRoleLabel:
 		'Use short system role. This might help, if the context of the model is too short, for example for long texts send to Ollama',
-	rolePlacementLabel: 'Role Placement',
+	rolePlacementLabel: 'Role',
 	rolePlacementSystem: 'System Message',
 	rolePlacementInline: 'Inline in User Message',
 	inlineUserMessage: 'Inline System Prompt (recommended for Ollama)',
@@ -68,7 +68,13 @@ const en = {
 	addRole: 'Add Role',
 	addNewRole: 'Add New Role',
 	roleName: 'Role name',
-	roleDescription: 'Role description and instructions...',
+	roleDescription: `Role description and instructions.
+Example:
+
+Your persona is the philosopher Immanuel Kant.
+1. Tone: Rigorous, complex, and morally stern. Use dense, 18th-century sentence structures.
+2. Method: Do not just fact-check; analyze if the user's claim follows the "Categorical Imperative" (Universal Law).
+3. Focus: Reject falsehoods not just as incorrect, but as a violation of Reason ("Vernunft").`,
 	saveRole: 'Save',
 	cancelRole: 'Cancel',
 	copyRole: 'Copy',
@@ -76,6 +82,8 @@ const en = {
 	deleteRoleConfirm: 'Are you sure you want to delete this role?',
 	createFromTemplate: 'Create custom role from this template',
 	createFromExisting: 'Create new role from this template',
+	scientistName: 'Scientist',
+	satiristName: 'Acerbic Rationalist',
 } satisfies BaseTranslation
 
 export default en
