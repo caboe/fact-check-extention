@@ -63,7 +63,7 @@
 <AccordionItem {open} on:click>
 	{#snippet summary()}
 		<label
-			for="endpoints"
+			for={availableEndpoints.length > 0 ? 'endpoints' : null}
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
 		>
 			<ConnectionIcon />
