@@ -61,6 +61,8 @@ export default async function handleStreamResponse(response: Response, signal: A
 
 			for (const rawLine of lines) {
 				if (rawLine.trim() === '') continue
+				// Ignore SSE comments
+				if (rawLine.startsWith(':')) continue
 				// TODO: For unknown resaons, ChatGPT needs thsi
 				const line = rawLine.replace('data: ', '')
 
