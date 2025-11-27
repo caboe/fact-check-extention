@@ -32,11 +32,11 @@ Steps:
 
 #### Selecting Text
 
-To fact-check text, simply select the desired text on any webpage. Open the extention, the selected text will be automatically populated in the input field.
+To fact-check text, simply select the desired text on any webpage. Open the extension, the selected text will be automatically populated in the input field.
 
 #### Selecting Images
 
-To fact-check an image,)open the extention first. Click on "select text" and then click on an image on the page. Re-open the extention.
+To fact-check an image, open the extension first. Click on "select text" and then click on an image on the page. Re-open the extension.
 
 #### Using the Extension Popup
 
@@ -54,10 +54,29 @@ Add a new model in the settings. You can select a template to pre-select some da
 Check which model from your provider suits you best. These differ, for example, in terms of cost, speed and whether they can process images.
 Save the endpoint.
 
+### Configure Roles
+
+You can define the persona and style of the fact-checker by selecting a Role.
+
+#### Select a Role
+
+In the "API Endpoint" section, use the dropdown menu labeled "Role" to select the desired persona (e.g., "Scientist" or "Acerbic Rationalist").
+
+#### Manage Roles
+
+To create or edit roles:
+1. Click the settings icon (gear) next to the "Role" label.
+2. The **Role Configuration** window will open.
+3. **Built-in Roles**: You can view the default roles but cannot edit them directly.
+4. **Create Custom Role**:
+   - Click "Add Role" to create a new role from scratch.
+   - Or click "Create from this" on an existing role to use it as a template.
+5. **Edit/Delete**: You can edit or delete any custom roles you have created.
+
 #### Fact Check the Claim
 
 In the "API Endpoint" section, you can select from the configured endpoints. You can also provide additional context to help the AI make more precise and relevant fact-checks. When enabled, this context information will be included in the system prompt to guide the AI's analysis based on your specific requirements or background information.
-(Local models (Ollama/LM Studio) do no work very well with longer sytem prompts. In that case you might select "Inline System Prompt")
+(Local models (Ollama/LM Studio) do not work very well with longer system prompts. In that case you might select "Inline System Prompt")
 Click "Check"
 
 #### View Results
