@@ -8,6 +8,7 @@ export default async function handleStreamResponse(response: Response, signal: A
 	const reader = response.body.getReader()
 	const decoder = new TextDecoder('utf-8')
 	let resultText = ''
+	let reasoningText = ''
 	let done = false
 	let buffer = ''
 
@@ -51,7 +52,7 @@ export default async function handleStreamResponse(response: Response, signal: A
 			const chunk = decoder.decode(value, { stream: true })
 			buffer += chunk
 			// Set state to STREAMING when the first chunk is received
-			if (apiRequest.value.state === 'LOADING') {
+			if (apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'EMPTY') {
 				apiRequest.value.state = 'STREAMING'
 			}
 
@@ -82,6 +83,11 @@ export default async function handleStreamResponse(response: Response, signal: A
 					} else if (parsed.message?.content) {
 						resultText += parsed.message.content
 					}
+					
+					// Handle reasoning (OpenRouter/Gemini thinking models)
+					if (parsed.choices?.[0]?.delta?.reasoning) {
+						reasoningText += parsed.choices[0].delta.reasoning
+					}
 				} catch (e) {
 					console.error('Parsing error:', e)
 					continue
@@ -89,6 +95,7 @@ export default async function handleStreamResponse(response: Response, signal: A
 			}
 		}
 		unifiedStorage.value.result = resultText
+		unifiedStorage.value.reasoning = reasoningText
 
 		if (done) {
 			apiRequest.value.state = 'FINISHED'

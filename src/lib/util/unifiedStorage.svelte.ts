@@ -8,6 +8,7 @@ interface IUnifiedState {
 	hasSeenIntroduction: boolean
 	selectedContent: SelectedContent | null
 	result: string | undefined // Use string | undefined instead of any | null
+	reasoning: string | undefined
 	contextEnabled: boolean
 	contextText: string
 }
@@ -16,10 +17,11 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 	constructor() {
 		const initialValue: IUnifiedState = {
 			lastUsed: null,
-			selectedRole: basicRoles[0].name,
+			selectedRole: basicRoles[0].id,
 			hasSeenIntroduction: false,
 			selectedContent: null,
 			result: undefined, // Initialize with undefined
+			reasoning: undefined,
 			contextEnabled: false,
 			contextText: '',
 		}

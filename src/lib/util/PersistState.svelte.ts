@@ -20,6 +20,8 @@ export class PersistState<T> {
 		this.#value = value
 	}
 
+	public ready: Promise<void>
+
 	constructor(key: string, initialValue: T) {
 		if (initialValue === null) {
 			throw new Error('Initial value cannot be null')
@@ -31,7 +33,7 @@ export class PersistState<T> {
 			this.#storage = window.localStorage
 		}
 		this.#value = initialValue
-		this.#init(initialValue)
+		this.ready = this.#init(initialValue)
 	}
 
 	async #init(initialValue: T) {

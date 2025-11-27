@@ -219,7 +219,7 @@ type RootTranslation = {
 	 */
 	useShortRoleLabel: string
 	/**
-	 * R​o​l​e​ ​P​l​a​c​e​m​e​n​t
+	 * R​o​l​e
 	 */
 	rolePlacementLabel: string
 	/**
@@ -271,7 +271,13 @@ type RootTranslation = {
 	 */
 	roleName: string
 	/**
-	 * R​o​l​e​ ​d​e​s​c​r​i​p​t​i​o​n​ ​a​n​d​ ​i​n​s​t​r​u​c​t​i​o​n​s​.​.​.
+	 * R​o​l​e​ ​d​e​s​c​r​i​p​t​i​o​n​ ​a​n​d​ ​i​n​s​t​r​u​c​t​i​o​n​s​.​
+​E​x​a​m​p​l​e​:​
+​
+​Y​o​u​r​ ​p​e​r​s​o​n​a​ ​i​s​ ​t​h​e​ ​p​h​i​l​o​s​o​p​h​e​r​ ​I​m​m​a​n​u​e​l​ ​K​a​n​t​.​
+​1​.​ ​T​o​n​e​:​ ​R​i​g​o​r​o​u​s​,​ ​c​o​m​p​l​e​x​,​ ​a​n​d​ ​m​o​r​a​l​l​y​ ​s​t​e​r​n​.​ ​U​s​e​ ​d​e​n​s​e​,​ ​1​8​t​h​-​c​e​n​t​u​r​y​ ​s​e​n​t​e​n​c​e​ ​s​t​r​u​c​t​u​r​e​s​.​
+​2​.​ ​M​e​t​h​o​d​:​ ​D​o​ ​n​o​t​ ​j​u​s​t​ ​f​a​c​t​-​c​h​e​c​k​;​ ​a​n​a​l​y​z​e​ ​i​f​ ​t​h​e​ ​u​s​e​r​'​s​ ​c​l​a​i​m​ ​f​o​l​l​o​w​s​ ​t​h​e​ ​"​C​a​t​e​g​o​r​i​c​a​l​ ​I​m​p​e​r​a​t​i​v​e​"​ ​(​U​n​i​v​e​r​s​a​l​ ​L​a​w​)​.​
+​3​.​ ​F​o​c​u​s​:​ ​R​e​j​e​c​t​ ​f​a​l​s​e​h​o​o​d​s​ ​n​o​t​ ​j​u​s​t​ ​a​s​ ​i​n​c​o​r​r​e​c​t​,​ ​b​u​t​ ​a​s​ ​a​ ​v​i​o​l​a​t​i​o​n​ ​o​f​ ​R​e​a​s​o​n​ ​(​"​V​e​r​n​u​n​f​t​"​)​.
 	 */
 	roleDescription: string
 	/**
@@ -302,6 +308,14 @@ type RootTranslation = {
 	 * C​r​e​a​t​e​ ​n​e​w​ ​r​o​l​e​ ​f​r​o​m​ ​t​h​i​s​ ​t​e​m​p​l​a​t​e
 	 */
 	createFromExisting: string
+	/**
+	 * S​c​i​e​n​t​i​s​t
+	 */
+	scientistName: string
+	/**
+	 * A​c​e​r​b​i​c​ ​R​a​t​i​o​n​a​l​i​s​t
+	 */
+	satiristName: string
 }
 
 export type TranslationFunctions = {
@@ -504,7 +518,7 @@ export type TranslationFunctions = {
 	 */
 	useShortRoleLabel: () => LocalizedString
 	/**
-	 * Role Placement
+	 * Role
 	 */
 	rolePlacementLabel: () => LocalizedString
 	/**
@@ -556,7 +570,13 @@ export type TranslationFunctions = {
 	 */
 	roleName: () => LocalizedString
 	/**
-	 * Role description and instructions...
+	 * Role description and instructions.
+Example:
+
+Your persona is the philosopher Immanuel Kant.
+1. Tone: Rigorous, complex, and morally stern. Use dense, 18th-century sentence structures.
+2. Method: Do not just fact-check; analyze if the user's claim follows the "Categorical Imperative" (Universal Law).
+3. Focus: Reject falsehoods not just as incorrect, but as a violation of Reason ("Vernunft").
 	 */
 	roleDescription: () => LocalizedString
 	/**
@@ -587,6 +607,14 @@ export type TranslationFunctions = {
 	 * Create new role from this template
 	 */
 	createFromExisting: () => LocalizedString
+	/**
+	 * Scientist
+	 */
+	scientistName: () => LocalizedString
+	/**
+	 * Acerbic Rationalist
+	 */
+	satiristName: () => LocalizedString
 }
 
 export type Formatters = {}

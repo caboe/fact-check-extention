@@ -56,21 +56,28 @@
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if (apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING') && unifiedStorage.value.result}
-			<textarea
-				id="selected-text"
-				bind:this={textareaEl}
-				oninput={autoGrow}
-				bind:value={unifiedStorage.value.result}
-				class="textarea max-h-64 min-h-8"
-				rows="1"
-			></textarea>
+		{#if (apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING') && (unifiedStorage.value.result || unifiedStorage.value.reasoning)}
+			{#if apiRequest.value.state === 'STREAMING' && unifiedStorage.value.reasoning}
+				<div class="mb-2 text-sm italic text-gray-500 dark:text-gray-400">
+					{unifiedStorage.value.reasoning}
+				</div>
+			{/if}
+			{#if unifiedStorage.value.result}
+				<textarea
+					id="selected-text"
+					bind:this={textareaEl}
+					oninput={autoGrow}
+					bind:value={unifiedStorage.value.result}
+					class="textarea max-h-64 min-h-8"
+					rows="1"
+				></textarea>
+			{/if}
 			{#if apiRequest.value.state === 'FINISHED'}
 				<button class="variant-filled-success btn w-full" onclick={copyResult}>
 					{L.copy()}
 				</button>
 			{/if}
-		{:else if apiRequest.value.state === 'LOADING'}
+		{:else if apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'STREAMING'}
 			{L.checkingProgress()}
 		{:else if apiRequest.value.state === 'ERROR'}
 			<div class="font-bold text-red-500">Error:</div>
