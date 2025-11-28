@@ -40,6 +40,13 @@
 			: endpoints.value.list,
 	)
 
+	let selectedRoleName = $derived.by(() => {
+		const roleId = unifiedStorage.value.selectedRole
+		if (roleId === 'scientist') return L.scientistName()
+		if (roleId === 'satirist') return L.satiristName()
+		return roleId
+	})
+
 	$effect(() => {
 		// Automatically select an endpoint when the available list changes
 		const currentSelected = endpoints.value.selected
@@ -65,7 +72,7 @@
 			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
 		>
 			<ConnectionIcon />
-			{L.apiEndpoint()}
+			{L.rolePlacementLabel()}: {selectedRoleName}
 		</label>
 	{/snippet}
 	{#snippet content()}
@@ -124,18 +131,6 @@
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
-
-			<button
-				class="variant-filled-primary btn"
-				onclick={checkFact}
-				disabled={!unifiedStorage.value.selectedContent || !endpoints.value.selected}
-			>
-				{#if apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'STREAMING'}
-					{L.checkingProgress()}
-				{:else}
-					{L.apiCta()}
-				{/if}
-			</button>
 		</div>
 	{/snippet}
 </AccordionItem>

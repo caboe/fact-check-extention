@@ -51,13 +51,22 @@
 		>
 			<ResponseIcon />
 			<span>
-				{L.response()}
+				{L.response()}:
+				{#if apiRequest.value.state === 'LOADING'}
+					{L.checkingProgress()}
+				{:else if apiRequest.value.state === 'THINKING'}
+					{L.thinking()}
+				{:else if apiRequest.value.state === 'FINISHED'}
+					{L.finished()}
+				{:else if apiRequest.value.state === 'EMPTY'}
+					{L.notChecked()}
+				{/if}
 			</span>
 		</label>
 	{/snippet}
 	{#snippet content()}
-		{#if (apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING') && (unifiedStorage.value.result || unifiedStorage.value.reasoning)}
-			{#if apiRequest.value.state === 'STREAMING' && unifiedStorage.value.reasoning}
+		{#if (apiRequest.value.state === 'FINISHED' || apiRequest.value.state === 'STREAMING' || apiRequest.value.state === 'THINKING') && (unifiedStorage.value.result || unifiedStorage.value.reasoning)}
+			{#if (apiRequest.value.state === 'STREAMING' || apiRequest.value.state === 'THINKING') && unifiedStorage.value.reasoning}
 				<div class="mb-2 text-sm italic text-gray-500 dark:text-gray-400">
 					{unifiedStorage.value.reasoning}
 				</div>
@@ -77,8 +86,10 @@
 					{L.copy()}
 				</button>
 			{/if}
-		{:else if apiRequest.value.state === 'LOADING' || apiRequest.value.state === 'STREAMING'}
+		{:else if apiRequest.value.state === 'LOADING'}
 			{L.checkingProgress()}
+		{:else if apiRequest.value.state === 'THINKING'}
+			{L.thinking()}
 		{:else if apiRequest.value.state === 'ERROR'}
 			<div class="font-bold text-red-500">Error:</div>
 			{@html unifiedStorage.value.result}

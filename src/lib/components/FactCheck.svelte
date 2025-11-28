@@ -6,6 +6,10 @@
 	import Connection from './steps/Connection.svelte'
 	import Response from './steps/Response.svelte'
 	import Selected from './steps/Selected.svelte'
+	import unifiedStorage from '../util/unifiedStorage.svelte'
+	import endpoints from '../state/endpoints.svelte'
+	import apiRequest from '../state/apiRequest.svelte'
+	import L from '../state/L.svelte'
 </script>
 
 <div class="p-1">
@@ -14,4 +18,24 @@
 		<Connection open={view.step === 1} on:click={() => (view.step = 1)} {checkFact} />
 		<Response open={view.step === 2} on:click={() => (view.step = 2)} />
 	</Accordion>
+
+	{#if view.step !== 2}
+		<div class="mt-4 px-4">
+			<button
+				class="variant-filled-primary btn w-full"
+				onclick={checkFact}
+				disabled={!unifiedStorage.value.selectedContent || !endpoints.value.selected}
+			>
+				{#if apiRequest.value.state === 'LOADING'}
+					{L.checkingProgress()}
+				{:else if apiRequest.value.state === 'THINKING'}
+					{L.thinking()}
+				{:else if apiRequest.value.state === 'STREAMING'}
+					{L.checkingProgress()}
+				{:else}
+					{L.apiCta()}
+				{/if}
+			</button>
+		</div>
+	{/if}
 </div>

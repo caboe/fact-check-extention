@@ -1,6 +1,6 @@
 import { PersistState } from '../util/PersistState.svelte'
 
-type ApiRequestState = 'EMPTY' | 'LOADING' | 'STREAMING' | 'FINISHED' | 'ERROR'
+type ApiRequestState = 'EMPTY' | 'LOADING' | 'THINKING' | 'STREAMING' | 'FINISHED' | 'ERROR'
 
 interface IApiRequest {
 	range: number
