@@ -21,13 +21,11 @@
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
 
-	let isInlineRolePlacement = $state(apiRequest.value.rolePlacement === 'inline')
-
 	// Combine basic and custom roles reactively
 	const allRoles = $derived([...basicRoles, ...customRoles.value.customRoles])
 
 	$effect(() => {
-		apiRequest.value.rolePlacement = isInlineRolePlacement ? 'inline' : 'system'
+		apiRequest.value.rolePlacement = endpoints.value.selected?.rolePlacement ?? 'system'
 	})
 
 	if (unifiedStorage.value.selectedContent && view.step === 0) {
@@ -126,11 +124,6 @@
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
-
-			<label class="flex items-center gap-2">
-				<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
-				<span class="text-sm">{L.inlineUserMessage()}</span>
-			</label>
 
 			<button
 				class="variant-filled-primary btn"

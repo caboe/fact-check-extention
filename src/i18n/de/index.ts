@@ -57,7 +57,7 @@ const de = {
 	rolePlacementLabel: 'Rolle',
 	rolePlacementSystem: 'Systemnachricht',
 	rolePlacementInline: 'Inline in Benutzernachricht',
-	inlineUserMessage: 'Inline System Prompt (empfohlen für Ollama)',
+	inlineUserMessage: 'Inline System Prompt (empfohlen für lokale LLMs auf Ollama oder LM Studio)',
 	contextPlaceholder:
 		'Zusätzlichen Kontext zur Unterstützung der Faktenprüfung bereitstellen (z.B. Zeitraum, Ort, spezifische Behauptungen, auf die sich konzentriert werden soll)...',
 	// Role Configuration

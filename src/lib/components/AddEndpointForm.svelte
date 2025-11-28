@@ -10,6 +10,7 @@
 	let selectedValue: string | undefined = $state(undefined)
 	let model = $state('')
 	let canProcessImages = $state(false)
+	let isInlineRolePlacement = $state(false)
 
 	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'> & { apiKeyUrl?: string }
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
@@ -79,7 +80,14 @@
 		if (!selectedValue) return
 		if (selectedValue in endpointTemplateMap) {
 			;({ title, url, model } = endpointTemplateMap[selectedValue])
+			;({ title, url, model } = endpointTemplateMap[selectedValue])
 			apiKeyInput.focus()
+
+			if (selectedValue === 'ollama' || selectedValue === 'lmstudio') {
+				isInlineRolePlacement = true
+			} else {
+				isInlineRolePlacement = false
+			}
 		}
 		// selectedValue = undefined
 	}
@@ -96,7 +104,14 @@
 				!confirm(L.saveAnyway())
 			)
 				return
-			const newEndpoint: Endpoint = { title, url, apiKey, model, canProcessImages }
+			const newEndpoint: Endpoint = {
+				title,
+				url,
+				apiKey,
+				model,
+				canProcessImages,
+				rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
+			}
 			endpoints.add(newEndpoint)
 			view.showAddEndpointForm = false
 			title = ''
@@ -173,6 +188,10 @@
 	<label class="label mb-2 flex cursor-pointer items-center justify-between">
 		<span>{L.canProcessImages()}</span>
 		<input type="checkbox" class="checkbox" bind:checked={canProcessImages} />
+	</label>
+	<label class="label mb-2 flex cursor-pointer items-center justify-between">
+		<span>{L.inlineUserMessage()}</span>
+		<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
 	</label>
 	<div class="mt-4 flex justify-between">
 		<button class="variant-filled-warning btn" onclick={() => (view.showAddEndpointForm = false)}

@@ -13,6 +13,7 @@
 	let apiKey = $state(endpoint.apiKey)
 	let model = $state(endpoint.model)
 	let canProcessImages = $state(endpoint.canProcessImages ?? false)
+	let isInlineRolePlacement = $state(endpoint.rolePlacement === 'inline')
 
 	function handleSubmit() {
 		const updatedEndpoint: Endpoint = {
@@ -21,6 +22,7 @@
 			apiKey,
 			model,
 			canProcessImages,
+			rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
 		}
 		endpoints.edit(endpoint.title, updatedEndpoint)
 		view.showAddEndpointForm = false
@@ -61,6 +63,11 @@
 	<label class="label flex cursor-pointer items-center justify-between">
 		<span>{L.canProcessImages()}</span>
 		<input type="checkbox" class="checkbox" bind:checked={canProcessImages} />
+	</label>
+
+	<label class="label flex cursor-pointer items-center justify-between">
+		<span>{L.inlineUserMessage()}</span>
+		<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
 	</label>
 
 	<button type="submit" class="variant-filled-success btn w-full"> {L.updateEndpoint()} </button>

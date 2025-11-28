@@ -6,6 +6,7 @@ export interface Endpoint {
 	apiKey: string
 	model: string
 	canProcessImages: boolean
+	rolePlacement?: 'system' | 'inline'
 }
 
 class Endpoints extends PersistState<{
