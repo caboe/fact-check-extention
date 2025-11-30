@@ -112,10 +112,14 @@
 
 			<div class="flex items-center justify-between">
 				<div class="text-md">{L.rolePlacementLabel()}</div>
-				<Settings onclick={() => (view.showRoleConfig = true)} />
+				<Settings onclick={() => (view.showRoleConfig = true)} data-testid="role-config-btn" />
 			</div>
 			<label class="flex flex-col gap-2">
-				<select class="select" bind:value={unifiedStorage.value.selectedRole}>
+				<select
+					class="select"
+					bind:value={unifiedStorage.value.selectedRole}
+					data-testid="role-selector"
+				>
 					{#each allRoles as role (role.id)}
 						<option value={role.id}>
 							{role.id === 'scientist'

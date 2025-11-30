@@ -86,6 +86,7 @@
 			<button
 				onclick={closeConfig}
 				class="rounded-lg p-2 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+				data-testid="role-config-close-btn"
 			>
 				<CloseIcon />
 			</button>
@@ -128,7 +129,11 @@
 			<div class="mb-6">
 				<div class="mb-3 flex items-center justify-between">
 					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">{L.customRoles()}</h3>
-					<button onclick={() => (showAddForm = true)} class="variant-filled-success btn px-2 py-1">
+					<button
+						onclick={() => (showAddForm = true)}
+						class="variant-filled-success btn px-2 py-1"
+						data-testid="role-add-btn"
+					>
 						{L.addRole()}
 					</button>
 				</div>
@@ -144,17 +149,20 @@
 								placeholder={L.roleName()}
 								bind:value={newRoleName}
 								class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+								data-testid="role-name-input"
 							/>
 							<textarea
 								placeholder={L.roleDescription()}
 								bind:value={newRoleContent}
 								rows="6"
 								class="w-full resize-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+								data-testid="role-description-input"
 							></textarea>
 							<div class="flex gap-2">
 								<button
 									onclick={addRole}
 									class="rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
+									data-testid="role-save-btn"
 								>
 									{L.saveRole()}
 								</button>
@@ -165,6 +173,7 @@
 										newRoleContent = ''
 									}}
 									class="rounded-lg bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
+									data-testid="role-cancel-btn"
 								>
 									{L.cancelRole()}
 								</button>
