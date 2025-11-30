@@ -82,7 +82,11 @@
 				></textarea>
 			{/if}
 			{#if apiRequest.value.state === 'FINISHED'}
-				<button class="variant-filled-success btn w-full" onclick={copyResult}>
+				<button
+					class="variant-filled-success btn w-full"
+					onclick={copyResult}
+					data-testid="response-copy-btn"
+				>
 					{L.copy()}
 				</button>
 			{/if}

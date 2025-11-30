@@ -64,3 +64,4 @@ node_modules/
 
 # Node modules
 /node_modules/
+tests/config.ts

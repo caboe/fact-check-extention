@@ -40,6 +40,7 @@
 		<button
 			class="variant-filled-success btn w-full"
 			onclick={() => (view.showAddEndpointForm = true)}
+			data-testid="config-new-endpoint-btn"
 		>
 			{L.newEndpoint()}
 		</button>

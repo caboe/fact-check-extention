@@ -25,6 +25,7 @@
 				class="variant-filled-primary btn w-full"
 				onclick={checkFact}
 				disabled={!unifiedStorage.value.selectedContent || !endpoints.value.selected}
+				data-testid="fact-check-btn"
 			>
 				{#if apiRequest.value.state === 'LOADING'}
 					{L.checkingProgress()}

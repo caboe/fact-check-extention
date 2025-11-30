@@ -92,7 +92,7 @@
 		// selectedValue = undefined
 	}
 
-	function add() {
+	async function add() {
 		if (endpoints.value.list.some((endpoint) => endpoint.title === title)) {
 			alert(L.endpointExists())
 			return
@@ -112,7 +112,7 @@
 				canProcessImages,
 				rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
 			}
-			endpoints.add(newEndpoint)
+			await endpoints.add(newEndpoint)
 			view.showAddEndpointForm = false
 			title = ''
 			url = ''
@@ -137,15 +137,27 @@
 	</label>
 	<label class="label mb-2" for="title">
 		<span>{L.title()}</span>
-		<input class="input" id="title" bind:value={title} placeholder={L.titelPlaceholder()} />
+		<input
+			class="input"
+			id="title"
+			bind:value={title}
+			placeholder={L.titelPlaceholder()}
+			data-testid="endpoint-title-input"
+		/>
 	</label>
 	<label class="label mb-2" for="url">
 		<span>{L.url()}</span>
-		<input class="input" id="url" bind:value={url} placeholder={L.urlPlaceholder()} />
+		<input
+			class="input"
+			id="url"
+			bind:value={url}
+			placeholder={L.urlPlaceholder()}
+			data-testid="endpoint-url-input"
+		/>
 	</label>
 	<label class="label mb-2" for="model">
 		<span>Model</span>
-		<input class="input" id="model" bind:value={model} />
+		<input class="input" id="model" bind:value={model} data-testid="endpoint-model-input" />
 	</label>
 	<label class="label mb-2" for="apiKey">
 		<span class="flex items-center">
@@ -183,6 +195,7 @@
 			bind:this={apiKeyInput}
 			type="password"
 			placeholder={L.apiKeyPlaceholder()}
+			data-testid="endpoint-apikey-input"
 		/>
 	</label>
 	<label class="label mb-2 flex cursor-pointer items-center justify-between">
@@ -197,6 +210,8 @@
 		<button class="variant-filled-warning btn" onclick={() => (view.showAddEndpointForm = false)}
 			>{L.cancel()}</button
 		>
-		<button class="variant-filled-success btn" onclick={add}>{L.add()}</button>
+		<button class="variant-filled-success btn" onclick={add} data-testid="endpoint-add-btn"
+			>{L.add()}</button
+		>
 	</div>
 </div>

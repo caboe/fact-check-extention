@@ -11,7 +11,7 @@
 <div class="overflow-scroll p-4">
 	{@html L.introduction()}
 	<div class="pt-2 text-center">
-		<button class="variant-filled btn" {onclick}>
+		<button class="variant-filled btn" {onclick} data-testid="intro-lets-go-btn">
 			{L.letsGo()}
 		</button>
 	</div>

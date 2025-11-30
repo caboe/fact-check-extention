@@ -66,6 +66,14 @@ type RootTranslation = {
 	 */
 	checkingProgress: string
 	/**
+	 * T​h​i​n​k​i​n​g​.​.​.
+	 */
+	thinking: string
+	/**
+	 * F​i​n​i​s​h​e​d
+	 */
+	finished: string
+	/**
 	 * C​o​p​y
 	 */
 	copy: string
@@ -365,6 +373,14 @@ export type TranslationFunctions = {
 	 * Checking...
 	 */
 	checkingProgress: () => LocalizedString
+	/**
+	 * Thinking...
+	 */
+	thinking: () => LocalizedString
+	/**
+	 * Finished
+	 */
+	finished: () => LocalizedString
 	/**
 	 * Copy
 	 */
