@@ -81,7 +81,8 @@ Tu persona es el filósofo Immanuel Kant.
 	saveRole: 'Guardar',
 	cancelRole: 'Cancelar',
 	copyRole: 'Copiar',
-	noCustomRoles: 'Aún no se han creado roles personalizados. Haga clic en "Agregar Rol" para crear su primer rol personalizado.',
+	noCustomRoles:
+		'Aún no se han creado roles personalizados. Haga clic en "Agregar Rol" para crear su primer rol personalizado.',
 	deleteRoleConfirm: '¿Está seguro de que desea eliminar este rol?',
 	createFromTemplate: 'Crear rol personalizado desde esta plantilla',
 	createFromExisting: 'Crear nuevo rol desde esta plantilla',

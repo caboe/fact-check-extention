@@ -65,6 +65,7 @@ In the "API Endpoint" section, use the dropdown menu labeled "Role" to select th
 #### Manage Roles
 
 To create or edit roles:
+
 1. Click the settings icon (gear) next to the "Role" label.
 2. The **Role Configuration** window will open.
 3. **Built-in Roles**: You can view the default roles but cannot edit them directly.

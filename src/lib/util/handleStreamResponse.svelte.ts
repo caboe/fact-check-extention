@@ -79,7 +79,7 @@ export default async function handleStreamResponse(response: Response, signal: A
 					} else if (parsed.message?.content) {
 						resultText += parsed.message.content
 					}
-					
+
 					// Handle reasoning (OpenRouter/Gemini thinking models)
 					if (parsed.choices?.[0]?.delta?.reasoning) {
 						reasoningText += parsed.choices[0].delta.reasoning

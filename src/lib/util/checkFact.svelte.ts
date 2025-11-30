@@ -24,7 +24,7 @@ export default async function checkFact() {
 		return
 	}
 	view.step = 2
-	
+
 	// Wait for storage to be ready to avoid overwriting state
 	await apiRequest.ready
 	await unifiedStorage.ready

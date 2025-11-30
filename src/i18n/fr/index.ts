@@ -59,7 +59,8 @@ const fr = {
 	rolePlacementLabel: 'Rôle',
 	rolePlacementSystem: 'Message système',
 	rolePlacementInline: 'En ligne dans le message utilisateur',
-	inlineUserMessage: 'System Prompt en ligne (recommandé pour les LLM locaux sur Ollama ou LM Studio)',
+	inlineUserMessage:
+		'System Prompt en ligne (recommandé pour les LLM locaux sur Ollama ou LM Studio)',
 	contextPlaceholder:
 		'Fournir un contexte supplémentaire pour aider à la vérification des faits (par ex. période, lieu, affirmations spécifiques à examiner)...',
 	// Role Configuration
@@ -81,7 +82,8 @@ Votre personnage est le philosophe Emmanuel Kant.
 	saveRole: 'Enregistrer',
 	cancelRole: 'Annuler',
 	copyRole: 'Copier',
-	noCustomRoles: 'Aucun rôle personnalisé créé pour le moment. Cliquez sur "Ajouter un Rôle" pour créer votre premier rôle personnalisé.',
+	noCustomRoles:
+		'Aucun rôle personnalisé créé pour le moment. Cliquez sur "Ajouter un Rôle" pour créer votre premier rôle personnalisé.',
 	deleteRoleConfirm: 'Êtes-vous sûr de vouloir supprimer ce rôle ?',
 	createFromTemplate: 'Créer un rôle personnalisé à partir de ce modèle',
 	createFromExisting: 'Créer un nouveau rôle à partir de ce modèle',

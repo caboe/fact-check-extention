@@ -8,7 +8,7 @@ interface ICustomRolesState {
 class CustomRolesStorage extends PersistState<ICustomRolesState> {
 	constructor() {
 		const initialValue: ICustomRolesState = {
-			customRoles: []
+			customRoles: [],
 		}
 		super('customRoles', initialValue)
 
@@ -34,7 +34,7 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 	addRole(role: Role) {
 		this.value = {
 			...this.value,
-			customRoles: [...this.value.customRoles, role]
+			customRoles: [...this.value.customRoles, role],
 		}
 	}
 
@@ -43,7 +43,7 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 		newCustomRoles[index] = role
 		this.value = {
 			...this.value,
-			customRoles: newCustomRoles
+			customRoles: newCustomRoles,
 		}
 	}
 
@@ -51,7 +51,7 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 		const newCustomRoles = this.value.customRoles.filter((_, i) => i !== index)
 		this.value = {
 			...this.value,
-			customRoles: newCustomRoles
+			customRoles: newCustomRoles,
 		}
 	}
 
@@ -59,7 +59,7 @@ class CustomRolesStorage extends PersistState<ICustomRolesState> {
 		const originalRole = this.value.customRoles[index]
 		return {
 			id: `${originalRole.id} (Copy)`,
-			role: originalRole.role
+			role: originalRole.role,
 		}
 	}
 

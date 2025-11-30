@@ -81,7 +81,8 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	saveRole: 'Speichern',
 	cancelRole: 'Abbrechen',
 	copyRole: 'Kopieren',
-	noCustomRoles: 'Noch keine benutzerdefinierten Rollen erstellt. Klicken Sie auf "Rolle hinzufügen", um Ihre erste benutzerdefinierte Rolle zu erstellen.',
+	noCustomRoles:
+		'Noch keine benutzerdefinierten Rollen erstellt. Klicken Sie auf "Rolle hinzufügen", um Ihre erste benutzerdefinierte Rolle zu erstellen.',
 	deleteRoleConfirm: 'Sind Sie sicher, dass Sie diese Rolle löschen möchten?',
 	createFromTemplate: 'Benutzerdefinierte Rolle aus dieser Vorlage erstellen',
 	createFromExisting: 'Neue Rolle aus dieser Vorlage erstellen',

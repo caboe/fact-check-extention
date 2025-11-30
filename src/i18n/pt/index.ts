@@ -81,7 +81,8 @@ Sua persona é o filósofo Immanuel Kant.
 	saveRole: 'Salvar',
 	cancelRole: 'Cancelar',
 	copyRole: 'Copiar',
-	noCustomRoles: 'Nenhum papel personalizado criado ainda. Clique em "Adicionar Papel" para criar seu primeiro papel personalizado.',
+	noCustomRoles:
+		'Nenhum papel personalizado criado ainda. Clique em "Adicionar Papel" para criar seu primeiro papel personalizado.',
 	deleteRoleConfirm: 'Tem certeza de que deseja excluir este papel?',
 	createFromTemplate: 'Criar papel personalizado a partir deste modelo',
 	createFromExisting: 'Criar novo papel a partir deste modelo',
