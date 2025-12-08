@@ -62,6 +62,15 @@ const de = {
 	inlineUserMessage: 'Inline System Prompt (empfohlen für lokale LLMs auf Ollama oder LM Studio)',
 	contextPlaceholder:
 		'Zusätzlichen Kontext zur Unterstützung der Faktenprüfung bereitstellen (z.B. Zeitraum, Ort, spezifische Behauptungen, auf die sich konzentriert werden soll)...',
+	// Speech
+	speechInput: 'Spracheingabe',
+	startRecording: 'Sprechen',
+	stopRecording: 'Stopp',
+	loadingModels: 'Modelle laden',
+	transcribing: 'Transkribiere…',
+	transcriptUpdate: 'Transkript-Aktualisierung',
+	append: 'Anhängen',
+	replace: 'Ersetzen',
 	// Role Configuration
 	roleConfiguration: 'Rollenkonfiguration',
 	basicRoles: 'Grundrollen (Nur-Lesen)',

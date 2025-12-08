@@ -11,6 +11,8 @@ interface IUnifiedState {
 	reasoning: string | undefined
 	contextEnabled: boolean
 	contextText: string
+	speechEnabled: boolean
+	speechAppend: 'append' | 'replace'
 }
 
 class UnifiedStorage extends PersistState<IUnifiedState> {
@@ -24,6 +26,8 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 			reasoning: undefined,
 			contextEnabled: false,
 			contextText: '',
+			speechEnabled: false,
+			speechAppend: 'append',
 		}
 		super('unifiedState', initialValue)
 	}

@@ -9,13 +9,14 @@ export default defineConfig({
 	build: {
 		outDir: 'dist',
 		cssCodeSplit: true, // Aktivieren des CSS-Code-Splitting
-		rollupOptions: {
-			input: {
-				popup: path.resolve(__dirname, 'src/main.ts'), // Einstiegspunkt für Popup
-				background: path.resolve(__dirname, 'src/background.ts'), // Hintergrund-Skript
-				content: path.resolve(__dirname, 'src/content.ts'), // Content-Skript
-				// Entfernen Sie 'manifest.json' aus den Eingängen
-			},
+      rollupOptions: {
+        input: {
+          popup: path.resolve(__dirname, 'src/main.ts'), // Einstiegspunkt für Popup
+          background: path.resolve(__dirname, 'src/background.ts'), // Hintergrund-Skript
+          content: path.resolve(__dirname, 'src/content.ts'), // Content-Skript
+          sandbox: path.resolve(__dirname, 'src/sandbox.ts'), // Sandbox-Seite für ASR
+          // Entfernen Sie 'manifest.json' aus den Eingängen
+        },
 			output: {
 				entryFileNames: '[name].js',
 				chunkFileNames: '[name].js',

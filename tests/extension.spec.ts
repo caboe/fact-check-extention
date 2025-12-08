@@ -318,6 +318,57 @@ test.describe('Extension Tests', () => {
 		}
 	})
 
+	test('Speech Input with ASR stub', async () => {
+		page = await browserContext.newPage()
+		await page.addInitScript(() => {
+			// @ts-ignore
+			window.__ASR_STUB__ = {
+				pipeline: async () => {
+					return async () => {
+						await new Promise((r) => setTimeout(r, 50))
+						return { text: 'stub transcript' }
+					}
+				},
+			}
+		})
+		await initializeExtension(page)
+		await page.goto(`chrome-extension://${extensionId}/popup.html`)
+		await page.waitForLoadState('domcontentloaded')
+		await page.evaluate(async () => {
+			const key = 'unifiedState'
+			await new Promise<void>((resolve) => {
+				chrome.storage.local.get(key, (items: Record<string, string>) => {
+					const raw = items[key]
+					let state = raw ? JSON.parse(raw) : undefined
+					if (!state) state = {}
+					state.speechEnabled = true
+					state.speechAppend = 'replace'
+					chrome.storage.local.set({ [key]: JSON.stringify(state) }, () => resolve())
+				})
+			})
+		})
+		await page.reload()
+		const inputArea = page.getByTestId('selected-text-input').first()
+		await expect(inputArea).toBeVisible()
+		const startBtn = page.getByTestId('selected-speech-start-btn')
+		await expect(startBtn).toBeVisible()
+		await startBtn.click()
+		const stopBtn = page.getByTestId('selected-speech-stop-btn')
+		await expect(stopBtn).toBeVisible()
+		await stopBtn.click()
+		await expect(inputArea).toHaveValue(/stub transcript/)
+		const addContext = page.locator('label').filter({ hasText: /Add Context/i }).first()
+		if (await addContext.isVisible().catch(() => false)) {
+			await addContext.click()
+			const ctxStart = page.getByTestId('context-speech-start-btn')
+			await ctxStart.click()
+			const ctxStop = page.getByTestId('context-speech-stop-btn')
+			await ctxStop.click()
+			const ctxArea = page.locator('#context-text')
+			await expect(ctxArea).toHaveValue(/stub transcript/)
+		}
+	})
+
 	test('Persistence - Endpoint Survives Page Reload', async () => {
 		page = await browserContext.newPage()
 		await initializeExtension(page)

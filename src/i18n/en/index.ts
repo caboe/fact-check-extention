@@ -61,6 +61,15 @@ const en = {
 	inlineUserMessage: 'Inline System Prompt (recommended for local LLMs on Ollama or LM Studio)',
 	contextPlaceholder:
 		'Provide additional context to help with fact-checking (e.g., time period, location, specific claims to focus on)...',
+	// Speech
+	speechInput: 'Speech Input',
+	startRecording: 'Speak',
+	stopRecording: 'Stop',
+	loadingModels: 'Loading models',
+	transcribing: 'Transcribing…',
+	transcriptUpdate: 'Transcript Update',
+	append: 'Append',
+	replace: 'Replace',
 	// Role Configuration
 	roleConfiguration: 'Role Configuration',
 	basicRoles: 'Basic Roles (Read-only)',

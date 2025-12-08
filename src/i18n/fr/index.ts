@@ -63,6 +63,15 @@ const fr = {
 		'System Prompt en ligne (recommandé pour les LLM locaux sur Ollama ou LM Studio)',
 	contextPlaceholder:
 		'Fournir un contexte supplémentaire pour aider à la vérification des faits (par ex. période, lieu, affirmations spécifiques à examiner)...',
+	// Speech
+	speechInput: "Entrée vocale",
+	startRecording: 'Parler',
+	stopRecording: 'Arrêter',
+	loadingModels: 'Chargement des modèles',
+	transcribing: 'Transcription…',
+	transcriptUpdate: 'Mise à jour du transcript',
+	append: 'Ajouter',
+	replace: 'Remplacer',
 	// Role Configuration
 	roleConfiguration: 'Configuration des Rôles',
 	basicRoles: 'Rôles de Base (Lecture seule)',

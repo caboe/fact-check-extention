@@ -62,6 +62,15 @@ const pt = {
 	inlineUserMessage: 'System Prompt em linha (recomendado para LLMs locais no Ollama ou LM Studio)',
 	contextPlaceholder:
 		'Fornecer contexto adicional para ajudar na verificação de fatos (ex. período de tempo, localização, alegações específicas para focar)...',
+	// Speech
+	speechInput: 'Entrada de voz',
+	startRecording: 'Falar',
+	stopRecording: 'Parar',
+	loadingModels: 'Carregando modelos',
+	transcribing: 'Transcrevendo…',
+	transcriptUpdate: 'Atualização do transcrito',
+	append: 'Anexar',
+	replace: 'Substituir',
 	// Role Configuration
 	roleConfiguration: 'Configuração de Papéis',
 	basicRoles: 'Papéis Básicos (Somente leitura)',
