@@ -183,25 +183,6 @@
 		unifiedStorage.value.result = undefined
 	}
 
-	function copyResult() {
-		if (unifiedStorage.value.result) {
-			navigator.clipboard
-				.writeText(unifiedStorage.value.result)
-				.then(() => {
-					// Optional: Show a toast or feedback
-					// For now, we rely on the button text change or similar if implemented,
-					// but the original code didn't seem to have specific feedback state for this button
-					// other than the 'copied' translation key which might be used elsewhere.
-					// Let's just log for now or assume the UI handles it if there's a state.
-					// Actually, looking at the translations, there is 'copied' and 'copyError'.
-					// But without a toast system in this file, we'll just copy.
-				})
-				.catch((err) => {
-					console.error('Failed to copy: ', err)
-				})
-		}
-	}
-
 	onMount(() => {
 		if (hasSelected) {
 			view.step = 1
@@ -295,15 +276,7 @@
 				</button>
 			{/if}
 		{/if}
-		{#if apiRequest.value.state === 'FINISHED'}
-			<button
-				class="variant-filled-success btn w-full"
-				onclick={copyResult}
-				data-testid="response-copy-btn"
-			>
-				{L.copy()}
-			</button>
-		{/if}
+
 		<div class="grid grid-cols-[1fr_1fr_32px] justify-around gap-2">
 			<button
 				onclick={selectTextOnPage}
