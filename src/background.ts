@@ -12,6 +12,11 @@ chrome.runtime.onInstalled.addListener(() => {
 		title: 'Fact Check marked text',
 		contexts: ['selection'],
 	})
+	chrome.contextMenus.create({
+		id: 'fact-check-text-context',
+		title: 'Add as Context',
+		contexts: ['selection'],
+	})
 })
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
@@ -53,6 +58,15 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 			await chrome.storage.session.remove('pendingContextMenuText')
             // Optionally notify user via content script?
             // For now just warn as text is usually easier to re-select
+		}
+	} else if (info.menuItemId === 'fact-check-text-context') {
+		await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
+		try {
+			// @ts-ignore
+			await chrome.action.openPopup()
+		} catch (err) {
+			console.warn('Failed to open popup', err)
+			await chrome.storage.session.remove('pendingContextMenuContext')
 		}
 	}
 })

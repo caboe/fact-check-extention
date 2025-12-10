@@ -38,10 +38,20 @@
 	$effect(() => {
 		// First check if there is a pending image or text from context menu
 		chrome.storage?.session?.get(
-			['pendingContextMenuImage', 'pendingContextMenuText'],
+			['pendingContextMenuImage', 'pendingContextMenuText', 'pendingContextMenuContext'],
 			async (items) => {
 				const pendingImage = items?.pendingContextMenuImage
 				const pendingText = items?.pendingContextMenuText
+				const pendingContext = items?.pendingContextMenuContext
+
+				if (pendingContext) {
+					await chrome.storage.session.remove('pendingContextMenuContext')
+					unifiedStorage.value.contextEnabled = true
+					unifiedStorage.value.contextText = pendingContext
+					unifiedStorage.value.result = undefined
+					// Skip querying tab (preserve existing main content)
+					return
+				}
 
 				if (pendingImage) {
 					// We have a pending image, use it!
