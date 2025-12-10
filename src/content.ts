@@ -33,6 +33,33 @@ function removeImageHoverStyles() {
 	}
 }
 
+function showNotification(message: string) {
+	const notificationBox = document.createElement('div')
+	notificationBox.style.position = 'fixed'
+	notificationBox.style.top = '20px'
+	notificationBox.style.right = '20px'
+	notificationBox.style.padding = '8px 16px'
+	notificationBox.style.backgroundColor = '#f8f9fa'
+	notificationBox.style.border = '2px solid #333'
+	notificationBox.style.borderRadius = '9999px'
+	notificationBox.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)'
+	notificationBox.style.zIndex = '10000'
+	notificationBox.style.fontSize = '18px'
+	notificationBox.style.fontWeight = 'bold'
+	notificationBox.style.fontFamily = 'Arial, sans-serif'
+	notificationBox.style.color = '#333'
+	notificationBox.textContent = message
+
+	document.body.appendChild(notificationBox)
+
+	// Auto-remove after 3 seconds
+	setTimeout(() => {
+		if (document.body.contains(notificationBox)) {
+			document.body.removeChild(notificationBox)
+		}
+	}, 3000)
+}
+
 const imageClickHandler = async (event: MouseEvent) => {
 	// Always prevent default behavior for any click during image selection mode
 	event.stopPropagation()
@@ -42,31 +69,7 @@ const imageClickHandler = async (event: MouseEvent) => {
 	if (target.tagName === 'IMG') {
 		image = await processImage((target as HTMLImageElement).src)
 
-		// Create and show notification box
-		const notificationBox = document.createElement('div')
-		notificationBox.style.position = 'fixed'
-		notificationBox.style.top = '20px'
-		notificationBox.style.right = '20px'
-		notificationBox.style.padding = '8px 16px'
-		notificationBox.style.backgroundColor = '#f8f9fa'
-		notificationBox.style.border = '2px solid #333'
-		notificationBox.style.borderRadius = '9999px'
-		notificationBox.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)'
-		notificationBox.style.zIndex = '10000'
-		notificationBox.style.fontSize = '18px'
-		notificationBox.style.fontWeight = 'bold'
-		notificationBox.style.fontFamily = 'Arial, sans-serif'
-		notificationBox.style.color = '#333'
-		notificationBox.textContent = 'image copied to extention'
-
-		document.body.appendChild(notificationBox)
-
-		// Auto-remove after 3 seconds
-		setTimeout(() => {
-			if (document.body.contains(notificationBox)) {
-				document.body.removeChild(notificationBox)
-			}
-		}, 3000)
+		showNotification('image copied to extension')
 
 		removeImageHoverStyles()
 		if (imageClickHandler) {
@@ -119,6 +122,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 		sendResponse(selectedContent)
 		return true // Keep the message channel open for async response
+	}
+
+	if (request.action === 'contextMenuImageSelected') {
+		processImage(request.src)
+			.then((base64) => {
+				image = base64
+				showNotification('image copied to extension')
+				sendResponse(true)
+			})
+			.catch((err) => {
+				console.error('Fact Check: Failed to process context menu image', err)
+				sendResponse(false)
+			})
+		return true
 	}
 })
 
