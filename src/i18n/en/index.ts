@@ -86,6 +86,9 @@ Your persona is the philosopher Immanuel Kant.
 	createFromExisting: 'Create new role from this template',
 	scientistName: 'Scientist',
 	satiristName: 'Acerbic Rationalist',
+	contextMenuImage: 'Fact Check this image',
+	contextMenuText: 'Fact Check marked text',
+	contextMenuContext: 'Add as Context',
 } satisfies BaseTranslation
 
 export default en

@@ -1,20 +1,35 @@
 /// <reference types="chrome" />
 
+import en from './i18n/en'
+import de from './i18n/de'
+
+type Locale = 'en' | 'de'
+
+function getTranslations() {
+	const uiLang = chrome.i18n.getUILanguage()
+	if (uiLang.startsWith('de')) {
+		return de
+	}
+	return en
+}
+
 chrome.runtime.onInstalled.addListener(() => {
 	console.log('Fact Check Extension installiert.')
+	const L = getTranslations()
+
 	chrome.contextMenus.create({
 		id: 'fact-check-image',
-		title: 'Fact Check this image',
+		title: L.contextMenuImage,
 		contexts: ['image'],
 	})
 	chrome.contextMenus.create({
 		id: 'fact-check-text',
-		title: 'Fact Check marked text',
+		title: L.contextMenuText,
 		contexts: ['selection'],
 	})
 	chrome.contextMenus.create({
 		id: 'fact-check-text-context',
-		title: 'Add as Context',
+		title: L.contextMenuContext,
 		contexts: ['selection'],
 	})
 })

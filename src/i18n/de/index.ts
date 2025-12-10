@@ -88,6 +88,9 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	createFromExisting: 'Neue Rolle aus dieser Vorlage erstellen',
 	scientistName: 'Wissenschaftler',
 	satiristName: 'Scharfsinniger Rationalist',
+	contextMenuImage: 'Dieses Bild prüfen',
+	contextMenuText: 'Markierten Text prüfen',
+	contextMenuContext: 'Als Kontext hinzufügen',
 } satisfies BaseTranslation
 
 export default de
