@@ -1,6 +1,7 @@
 /// <reference types="chrome" />
 
 import type { SelectedContent } from './TSelectedContent'
+import { processImage } from './lib/util/imageProcessing'
 
 let image: string | null = null
 
@@ -139,50 +140,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	}
 })
 
-function processImage(src: string): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const img = new Image()
-		img.crossOrigin = 'anonymous'
 
-		img.onload = () => {
-			// Calculate new dimensions while maintaining aspect ratio
-			let width = img.width
-			let height = img.height
-			const maxSize = 512
-
-			if (width > maxSize || height > maxSize) {
-				if (width > height) {
-					height = Math.round(height * (maxSize / width))
-					width = maxSize
-				} else {
-					width = Math.round(width * (maxSize / height))
-					height = maxSize
-				}
-			}
-
-			// Create canvas and resize image
-			const canvas = document.createElement('canvas')
-			canvas.width = width
-			canvas.height = height
-			const ctx = canvas.getContext('2d')
-
-			if (!ctx) {
-				reject(new Error('Could not get canvas context'))
-				return
-			}
-
-			ctx.drawImage(img, 0, 0, width, height)
-
-			// Convert to base64
-			const base64Data = canvas.toDataURL('image/jpeg')
-
-			resolve(base64Data)
-		}
-
-		img.onerror = () => {
-			reject(new Error('Failed to load image'))
-		}
-
-		img.src = src
-	})
-}

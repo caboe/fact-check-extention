@@ -2,6 +2,7 @@
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
 	import { isSelectedImage, isSelectedText, type SelectedContent } from '../../../TSelectedContent'
+	import { processImage } from '../../util/imageProcessing'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
@@ -35,35 +36,47 @@
 	}
 
 	$effect(() => {
-		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-			const tab = tabs[0]
-			if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
-				chrome.tabs.sendMessage(
-					tab.id,
-					{ action: 'getSelectedContent' },
-					(response: SelectedContent) => {
-						// Check lastError *first*
-						if (chrome.runtime.lastError) {
-							// Still log if connection fails unexpectedly on a non-restricted page
-							console.warn(
-								`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
-							)
-							return
-						}
-						// No error, proceed as normal
-						unifiedStorage.value.result = undefined
-						unifiedStorage.value.selectedContent = response
-					},
-				)
-				// Also check URL before sending these
-				imageSelectOnPage(false)
-				textSelectOnPage(false)
-			} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
-				// Don't try to communicate with restricted pages
-				// console.log(`Fact Check: Not attempting to get content from restricted URL: ${tab.url}`);
-				// Optionally clear selection when opened on restricted page
-				// unifiedStorage.value.selectedContent = undefined;
+		// First check if there is a pending image from context menu
+		chrome.storage?.session?.get('pendingContextMenuImage', async (items) => {
+			const pendingImage = items?.pendingContextMenuImage
+			if (pendingImage) {
+				// We have a pending image, use it!
+				await chrome.storage.session.remove('pendingContextMenuImage')
+				try {
+					const processed = await processImage(pendingImage)
+					unifiedStorage.value.selectedContent = { image: processed }
+					unifiedStorage.value.result = undefined
+				} catch (err) {
+					console.error('Failed to process pending context menu image', err)
+				}
+				// Skip querying tab
+				return
 			}
+
+			// If no pending image, proceed with normal selection logic
+			chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+				const tab = tabs[0]
+				if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+					chrome.tabs.sendMessage(
+						tab.id,
+						{ action: 'getSelectedContent' },
+						(response: SelectedContent) => {
+							if (chrome.runtime.lastError) {
+								console.warn(
+									`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+								)
+								return
+							}
+							unifiedStorage.value.result = undefined
+							unifiedStorage.value.selectedContent = response
+						},
+					)
+					imageSelectOnPage(false)
+					textSelectOnPage(false)
+				} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+					// Don't try to communicate with restricted pages
+				}
+			})
 		})
 	})
 
