@@ -131,10 +131,6 @@
 					{/each}
 				</select>
 			</label>
-			<div class="flex flex-col items-center justify-between gap-2">
-				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
-				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
-			</div>
 		</div>
 	{/snippet}
 </AccordionItem>
