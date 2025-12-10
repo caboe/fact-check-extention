@@ -19,6 +19,7 @@
 	let { open }: Props = $props()
 
 	let endpointSelectEl: HTMLSelectElement | null = $state(null)
+	let showHelp = $state(false)
 
 	function isRestrictedUrl(url: string | undefined): boolean {
 		if (!url) return true // Treat undefined URL as restricted
@@ -312,23 +313,34 @@
 			{/if}
 		{/if}
 
-		<div class="grid grid-cols-[1fr_1fr_32px] justify-around gap-2">
+		<div class="flex items-center justify-between gap-2">
 			<button
-				onclick={selectTextOnPage}
-				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
+				onclick={() => (showHelp = true)}
+				class="cursor-pointer text-sm text-primary-500 underline hover:text-primary-700"
 			>
-				<TextIcon />
-				{L.selectText()}
-			</button>
-			<button
-				onclick={selectImageOnPage}
-				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
-			>
-				<ImageIcon />
-				{L.selectImage()}
+				{L.howToSelect()}
 			</button>
 			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer"><CloseIcon /></button
 			>
 		</div>
+
+		{#if showHelp}
+			<div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4">
+				<div class="card bg-surface-100-800-token w-full max-w-md space-y-4 p-4 shadow-xl">
+					<h3 class="h3">{L.selectionHelpTitle()}</h3>
+					<p>{L.selectionHelpText()}</p>
+					<ul class="list-disc space-y-2 pl-4">
+						<li>{L.selectionHelpStep1()}</li>
+						<li>{L.selectionHelpStep2()}</li>
+						<li>{L.selectionHelpStep3()}</li>
+					</ul>
+					<div class="flex justify-end">
+						<button class="variant-filled-primary btn" onclick={() => (showHelp = false)}>
+							{L.closeHelp()}
+						</button>
+					</div>
+				</div>
+			</div>
+		{/if}
 	{/snippet}
 </AccordionItem>

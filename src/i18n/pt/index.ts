@@ -88,6 +88,16 @@ Sua persona é o filósofo Immanuel Kant.
 	createFromExisting: 'Criar novo papel a partir deste modelo',
 	scientistName: 'Cientista',
 	satiristName: 'Racionalista Acerbo',
+	contextMenuImage: 'Verificar esta imagem',
+	contextMenuText: 'Verificar texto marcado',
+	contextMenuContext: 'Adicionar como contexto',
+	howToSelect: 'Como selecionar conteúdo?',
+	selectionHelpTitle: 'Como selecionar conteúdo',
+	selectionHelpText: 'Você pode selecionar conteúdo facilmente em qualquer página da web usando o menu de contexto:',
+	selectionHelpStep1: '1. Clique com o botão direito em uma imagem ou selecione texto e clique com o botão direito nele.',
+	selectionHelpStep2: '2. Escolha "Verificar texto marcado" ou "Verificar esta imagem" no menu.',
+	selectionHelpStep3: '3. O conteúdo será carregado automaticamente na extensão.',
+	closeHelp: 'Fechar',
 } satisfies BaseTranslation
 
 export default pt

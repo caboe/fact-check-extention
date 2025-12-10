@@ -336,6 +336,34 @@ type RootTranslation = {
 	 * A​d​d​ ​a​s​ ​C​o​n​t​e​x​t
 	 */
 	contextMenuContext: string
+	/**
+	 * H​o​w​ ​t​o​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t​?
+	 */
+	howToSelect: string
+	/**
+	 * H​o​w​ ​t​o​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t
+	 */
+	selectionHelpTitle: string
+	/**
+	 * Y​o​u​ ​c​a​n​ ​e​a​s​i​l​y​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t​ ​d​i​r​e​c​t​l​y​ ​o​n​ ​a​n​y​ ​w​e​b​p​a​g​e​ ​u​s​i​n​g​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​m​e​n​u​:
+	 */
+	selectionHelpText: string
+	/**
+	 * 1​.​ ​R​i​g​h​t​-​c​l​i​c​k​ ​o​n​ ​a​n​ ​i​m​a​g​e​ ​o​r​ ​s​e​l​e​c​t​ ​t​e​x​t​ ​a​n​d​ ​r​i​g​h​t​-​c​l​i​c​k​ ​i​t​.
+	 */
+	selectionHelpStep1: string
+	/**
+	 * 2​.​ ​C​h​o​o​s​e​ ​"​F​a​c​t​ ​C​h​e​c​k​ ​m​a​r​k​e​d​ ​t​e​x​t​"​ ​o​r​ ​"​F​a​c​t​ ​C​h​e​c​k​ ​t​h​i​s​ ​i​m​a​g​e​"​ ​f​r​o​m​ ​t​h​e​ ​m​e​n​u​.
+	 */
+	selectionHelpStep2: string
+	/**
+	 * 3​.​ ​T​h​e​ ​c​o​n​t​e​n​t​ ​w​i​l​l​ ​b​e​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​l​o​a​d​e​d​ ​i​n​t​o​ ​t​h​e​ ​e​x​t​e​n​s​i​o​n​.
+	 */
+	selectionHelpStep3: string
+	/**
+	 * C​l​o​s​e
+	 */
+	closeHelp: string
 }
 
 export type TranslationFunctions = {
@@ -655,6 +683,34 @@ Your persona is the philosopher Immanuel Kant.
 	 * Add as Context
 	 */
 	contextMenuContext: () => LocalizedString
+	/**
+	 * How to select content?
+	 */
+	howToSelect: () => LocalizedString
+	/**
+	 * How to select content
+	 */
+	selectionHelpTitle: () => LocalizedString
+	/**
+	 * You can easily select content directly on any webpage using the context menu:
+	 */
+	selectionHelpText: () => LocalizedString
+	/**
+	 * 1. Right-click on an image or select text and right-click it.
+	 */
+	selectionHelpStep1: () => LocalizedString
+	/**
+	 * 2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.
+	 */
+	selectionHelpStep2: () => LocalizedString
+	/**
+	 * 3. The content will be automatically loaded into the extension.
+	 */
+	selectionHelpStep3: () => LocalizedString
+	/**
+	 * Close
+	 */
+	closeHelp: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -88,6 +88,16 @@ Tu persona es el filósofo Immanuel Kant.
 	createFromExisting: 'Crear nuevo rol desde esta plantilla',
 	scientistName: 'Científico',
 	satiristName: 'Racionalista Acerbo',
+	contextMenuImage: 'Verificar esta imagen',
+	contextMenuText: 'Verificar texto marcado',
+	contextMenuContext: 'Añadir como contexto',
+	howToSelect: '¿Cómo seleccionar contenido?',
+	selectionHelpTitle: 'Cómo seleccionar contenido',
+	selectionHelpText: 'Puedes seleccionar contenido fácilmente directamente en cualquier página web usando el menú contextual:',
+	selectionHelpStep1: '1. Haz clic derecho en una imagen o selecciona texto y haz clic derecho en él.',
+	selectionHelpStep2: '2. Elige "Verificar texto marcado" o "Verificar esta imagen" del menú.',
+	selectionHelpStep3: '3. El contenido se cargará automáticamente en la extensión.',
+	closeHelp: 'Cerrar',
 } satisfies BaseTranslation
 
 export default es
