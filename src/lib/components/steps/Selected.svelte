@@ -269,7 +269,7 @@
 					id="context-text"
 					value={unifiedStorage.value.contextText}
 					onchange={contextChange}
-					class="textarea max-h-64 min-h-8"
+					class="textarea max-h-64 min-h-24"
 					rows="1"
 					data-testid="response-result-textarea"
 					placeholder={L.contextPlaceholder()}
@@ -281,7 +281,7 @@
 			<textarea
 				id="selected-text"
 				oninput={createFromNewText}
-				class="textarea"
+				class="textarea min-h-24"
 				rows="4"
 				placeholder={L.selectedText()}
 				data-testid="selected-text-input"
