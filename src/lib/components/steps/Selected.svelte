@@ -320,8 +320,7 @@
 			>
 				{L.howToSelect()}
 			</button>
-			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer"><CloseIcon /></button
-			>
+			<button onclick={reset} class="btn btn-sm p-0"><CloseIcon /></button>
 		</div>
 
 		{#if showHelp}
