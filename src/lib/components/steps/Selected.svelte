@@ -50,6 +50,7 @@
 					unifiedStorage.value.contextEnabled = true
 					unifiedStorage.value.contextText = pendingContext
 					unifiedStorage.value.result = undefined
+					apiRequest.value.state = 'EMPTY'
 					// Skip querying tab (preserve existing main content)
 					return
 				}
@@ -61,6 +62,7 @@
 						const processed = await processImage(pendingImage)
 						unifiedStorage.value.selectedContent = { image: processed }
 						unifiedStorage.value.result = undefined
+						apiRequest.value.state = 'EMPTY'
 					} catch (err) {
 						console.error('Failed to process pending context menu image', err)
 					}
@@ -71,6 +73,7 @@
 					await chrome.storage.session.remove('pendingContextMenuText')
 					unifiedStorage.value.selectedContent = { text: pendingText }
 					unifiedStorage.value.result = undefined
+					apiRequest.value.state = 'EMPTY'
 					// Skip querying tab
 					return
 				}
@@ -90,6 +93,7 @@
 									return
 								}
 								unifiedStorage.value.result = undefined
+								apiRequest.value.state = 'EMPTY'
 								unifiedStorage.value.selectedContent = response
 							},
 						)
@@ -126,6 +130,7 @@
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.selectedContent = { text: target.value }
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	function reset() {
@@ -142,12 +147,14 @@
 			unifiedStorage.value.contextText = ''
 		}
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	function contextChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.contextText = target.value
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	$effect(() => {
@@ -217,6 +224,7 @@
 		const target = e.target as HTMLTextAreaElement
 		unifiedStorage.value.selectedContent = { text: target.value }
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	onMount(() => {
