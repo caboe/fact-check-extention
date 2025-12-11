@@ -325,15 +325,15 @@ type RootTranslation = {
 	 */
 	satiristName: string
 	/**
-	 * F​a​c​t​ ​C​h​e​c​k​ ​t​h​i​s​ ​i​m​a​g​e
+	 * �​�​️​ ​F​a​c​t​ ​C​h​e​c​k​ ​t​h​i​s​ ​i​m​a​g​e
 	 */
 	contextMenuImage: string
 	/**
-	 * F​a​c​t​ ​C​h​e​c​k​ ​m​a​r​k​e​d​ ​t​e​x​t
+	 * �​�​ ​F​a​c​t​ ​C​h​e​c​k​ ​m​a​r​k​e​d​ ​t​e​x​t
 	 */
 	contextMenuText: string
 	/**
-	 * A​d​d​ ​a​s​ ​C​o​n​t​e​x​t
+	 * �​�​ ​A​d​d​ ​a​s​ ​C​o​n​t​e​x​t
 	 */
 	contextMenuContext: string
 	/**
@@ -672,15 +672,15 @@ Your persona is the philosopher Immanuel Kant.
 	 */
 	satiristName: () => LocalizedString
 	/**
-	 * Fact Check this image
+	 * 🖼️ Fact Check this image
 	 */
 	contextMenuImage: () => LocalizedString
 	/**
-	 * Fact Check marked text
+	 * 🔍 Fact Check marked text
 	 */
 	contextMenuText: () => LocalizedString
 	/**
-	 * Add as Context
+	 * 📌 Add as Context
 	 */
 	contextMenuContext: () => LocalizedString
 	/**

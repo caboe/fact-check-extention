@@ -2,14 +2,18 @@
 
 import en from './i18n/en'
 import de from './i18n/de'
+import es from './i18n/es'
+import fr from './i18n/fr'
+import pt from './i18n/pt'
 
-type Locale = 'en' | 'de'
+type Locale = 'en' | 'de' | 'es' | 'fr' | 'pt'
 
 function getTranslations() {
 	const uiLang = chrome.i18n.getUILanguage()
-	if (uiLang.startsWith('de')) {
-		return de
-	}
+	if (uiLang.startsWith('de')) return de
+	if (uiLang.startsWith('es')) return es
+	if (uiLang.startsWith('fr')) return fr
+	if (uiLang.startsWith('pt')) return pt
 	return en
 }
 
