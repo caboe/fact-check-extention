@@ -4,8 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
-		"build:watch": "vite build --watch",
+		"build": "vite build && vite build -c vite.content.config.ts",
+		"build:watch": "vite build --watch & vite build -c vite.content.config.ts --watch",
 		"release": "bun run check && bun run build && zip -r release-$(date +%Y-%m-%d).zip dist",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
