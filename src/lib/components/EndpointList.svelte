@@ -2,9 +2,13 @@
 	import endpoints, { type Endpoint } from '../state/endpoints.svelte'
 	import RemoveIcon from './icons/RemoveIcon.svelte'
 	import EditIcon from './icons/EditIcon.svelte'
+	import CopyIcon from './icons/CopyIcon.svelte'
 	import L from '../state/L.svelte'
 	import EditEndpointForm from './EditEndpointForm.svelte'
 	import view from '../state/view.svelte'
+	import { createEventDispatcher } from 'svelte'
+
+	const dispatch = createEventDispatcher<{ copy: Endpoint }>()
 
 	let editingEndpoint = $state<Endpoint | null>(null)
 
@@ -43,7 +47,12 @@
 		{#each endpoints.value.list as endpoint}
 			<li class="endpoint-item align-center flex justify-between gap-2">
 				<span>{endpoint.title}</span>
-				<div class="flex gap-2">
+				<div class="flex items-center gap-2">
+					<CopyIcon
+						onclick={() => {
+							dispatch('copy', endpoint)
+						}}
+					/>
 					<EditIcon
 						onclick={() => {
 							startEdit(endpoint)

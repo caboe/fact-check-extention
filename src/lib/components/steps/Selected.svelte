@@ -239,7 +239,7 @@
 		{@const content = unifiedStorage.value.selectedContent}
 		<label
 			for="selected-text"
-			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
+			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
 		>
 			<CommentsIcon />
 			{#if !hasSelected}
