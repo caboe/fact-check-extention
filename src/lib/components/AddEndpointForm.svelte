@@ -46,12 +46,6 @@
 			model: 'deepseek-chat',
 			apiKeyUrl: 'https://platform.deepseek.com/api-keys',
 		},
-		mistral: {
-			title: 'Mistral AI',
-			url: 'https://api.mistral.ai/v1/chat/completions',
-			model: 'magistral-medium-2509',
-			apiKeyUrl: 'https://console.mistral.ai/api-keys',
-		},
 		qwen: {
 			title: 'Qwen',
 			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
