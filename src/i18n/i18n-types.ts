@@ -364,6 +364,10 @@ type RootTranslation = {
 	 * C​l​o​s​e
 	 */
 	closeHelp: string
+	/**
+	 * o​n
+	 */
+	on: string
 }
 
 export type TranslationFunctions = {
@@ -711,6 +715,10 @@ Your persona is the philosopher Immanuel Kant.
 	 * Close
 	 */
 	closeHelp: () => LocalizedString
+	/**
+	 * on
+	 */
+	on: () => LocalizedString
 }
 
 export type Formatters = {}

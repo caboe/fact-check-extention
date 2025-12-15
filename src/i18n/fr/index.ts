@@ -99,6 +99,7 @@ Votre personnage est le philosophe Emmanuel Kant.
 	selectionHelpStep2: '2. Choisissez « Vérifier le texte marqué » ou « Vérifier cette image » dans le menu.',
 	selectionHelpStep3: '3. Le contenu sera automatiquement chargé dans l’extension.',
 	closeHelp: 'Fermer',
+	on: 'sur',
 } satisfies BaseTranslation
 
 export default fr

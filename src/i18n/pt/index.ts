@@ -98,6 +98,7 @@ Sua persona é o filósofo Immanuel Kant.
 	selectionHelpStep2: '2. Escolha "Verificar texto marcado" ou "Verificar esta imagem" no menu.',
 	selectionHelpStep3: '3. O conteúdo será carregado automaticamente na extensão.',
 	closeHelp: 'Fechar',
+	on: 'em',
 } satisfies BaseTranslation
 
 export default pt

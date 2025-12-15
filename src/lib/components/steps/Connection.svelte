@@ -72,7 +72,13 @@
 			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
 		>
 			<ConnectionIcon />
-			{L.rolePlacementLabel()}: {selectedRoleName}
+			<div class="flex min-w-0 items-center gap-1 overflow-hidden">
+				<span class="shrink-0 whitespace-nowrap">{selectedRoleName}</span>
+				{#if endpoints.value.selected}
+					<span class="shrink-0 whitespace-nowrap font-normal">{L.on()}</span>
+					<span class="truncate">{endpoints.value.selected.title}</span>
+				{/if}
+			</div>
 		</label>
 	{/snippet}
 	{#snippet content()}

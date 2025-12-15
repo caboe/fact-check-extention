@@ -98,6 +98,7 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	selectionHelpStep2: '2. Wähle "Markierten Text prüfen" oder "Dieses Bild prüfen" aus dem Menü.',
 	selectionHelpStep3: '3. Der Inhalt wird automatisch in die Erweiterung geladen.',
 	closeHelp: 'Schließen',
+	on: 'auf',
 } satisfies BaseTranslation
 
 export default de

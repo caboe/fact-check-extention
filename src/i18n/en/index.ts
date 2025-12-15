@@ -96,6 +96,7 @@ Your persona is the philosopher Immanuel Kant.
 	selectionHelpStep2: '2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.',
 	selectionHelpStep3: '3. The content will be automatically loaded into the extension.',
 	closeHelp: 'Close',
+	on: 'on',
 } satisfies BaseTranslation
 
 export default en

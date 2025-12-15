@@ -98,6 +98,7 @@ Tu persona es el filósofo Immanuel Kant.
 	selectionHelpStep2: '2. Elige "Verificar texto marcado" o "Verificar esta imagen" del menú.',
 	selectionHelpStep3: '3. El contenido se cargará automáticamente en la extensión.',
 	closeHelp: 'Cerrar',
+	on: 'en',
 } satisfies BaseTranslation
 
 export default es
