@@ -24,6 +24,11 @@ In some cases, the AI Model needs additional support to provide accurate judgmen
 - **Local Storage**: This extension does not store any data outside of your computer. All configurations and settings are stored locally in your browser.
 - **Model Providers**: Please note that Model Providers may store your requests. If you want to avoid this, you can run models locally (e.g., using Nemotron or MiMo via LM Studio or Ollama), though they may not always provide the same quality of answers as larger cloud-based models.
 
+### How big is the impact on the environment?
+
+AI consumes large amounts of electricity overall. However, this browser extension has a relatively low consumption per check.
+AI operators rarely provide precise information about consumption, but according to OpenAI, an average query consumes about 3 Wh. That is equivalent to driving about 20 meters in an electric car or boiling 30 ml of water.
+
 ## Installation
 
 ### Install from Chrome Web Store
