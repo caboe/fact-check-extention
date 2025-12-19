@@ -97,6 +97,7 @@ Your persona is the philosopher Immanuel Kant.
 	selectionHelpStep3: '3. The content will be automatically loaded into the extension.',
 	closeHelp: 'Close',
 	on: 'on',
+	extensionInstalled: 'Fact Check Extension installed.',
 } satisfies BaseTranslation
 
 export default en

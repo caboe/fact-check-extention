@@ -17,26 +17,34 @@ function getTranslations() {
 	return en
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-	console.log('Fact Check Extension installiert.')
-	const L = getTranslations()
+const L = getTranslations()
 
-	chrome.contextMenus.create({
-		id: 'fact-check-image',
-		title: L.contextMenuImage,
-		contexts: ['image'],
+function updateContextMenus() {
+	chrome.contextMenus.removeAll(() => {
+		chrome.contextMenus.create({
+			id: 'fact-check-image',
+			title: L.contextMenuImage,
+			contexts: ['image'],
+		})
+		chrome.contextMenus.create({
+			id: 'fact-check-text',
+			title: L.contextMenuText,
+			contexts: ['selection'],
+		})
+		chrome.contextMenus.create({
+			id: 'fact-check-text-context',
+			title: L.contextMenuContext,
+			contexts: ['selection'],
+		})
 	})
-	chrome.contextMenus.create({
-		id: 'fact-check-text',
-		title: L.contextMenuText,
-		contexts: ['selection'],
-	})
-	chrome.contextMenus.create({
-		id: 'fact-check-text-context',
-		title: L.contextMenuContext,
-		contexts: ['selection'],
-	})
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+	console.log(L.extensionInstalled)
+	updateContextMenus()
 })
+
+updateContextMenus()
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 	if (info.menuItemId === 'fact-check-image') {

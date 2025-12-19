@@ -100,6 +100,7 @@ Votre personnage est le philosophe Emmanuel Kant.
 	selectionHelpStep3: '3. Le contenu sera automatiquement chargé dans l’extension.',
 	closeHelp: 'Fermer',
 	on: 'sur',
+	extensionInstalled: 'Extension Fact Check installée.',
 } satisfies BaseTranslation
 
 export default fr

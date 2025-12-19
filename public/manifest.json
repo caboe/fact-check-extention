@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Fact Spreader",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"description": "Highlight text and send it to LLMs (ChatGPT, Ollama) for instant fact-checking insights. Your personal verification workflow.",
 	"permissions": [
 		"storage",

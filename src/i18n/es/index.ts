@@ -99,6 +99,7 @@ Tu persona es el filósofo Immanuel Kant.
 	selectionHelpStep3: '3. El contenido se cargará automáticamente en la extensión.',
 	closeHelp: 'Cerrar',
 	on: 'en',
+	extensionInstalled: 'Extensión Fact Check instalada.',
 } satisfies BaseTranslation
 
 export default es
