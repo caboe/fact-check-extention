@@ -51,6 +51,16 @@ Steps:
 6. Navigate to the `dist/` folder within the extension's directory and select it.
 7. The extension should now appear in your list of installed extensions.
 
+### Install in Firefox (Developer Edition / Temporary)
+
+To run the extension in Firefox:
+
+1. Run the build command: `bun run build:firefox`. This will build the extension in the `dist/` directory using the Firefox-compatible manifest.
+2. Open Firefox and go to `about:debugging#/runtime/this-firefox`.
+3. Click "Load Temporary Add-on...".
+4. Navigate to the `dist/` folder and select `manifest.json`.
+5. The extension is now temporarily installed and ready to use.
+
 ## Usage
 
 ### Basic User Flow

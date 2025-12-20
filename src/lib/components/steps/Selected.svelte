@@ -37,74 +37,98 @@
 	}
 
 	$effect(() => {
+		const checkPendingContent = async (items: Record<string, any>) => {
+			const pendingImage = items?.pendingContextMenuImage
+			const pendingText = items?.pendingContextMenuText
+			const pendingContext = items?.pendingContextMenuContext
+
+			if (pendingContext) {
+				await chrome.storage.session.remove('pendingContextMenuContext')
+				unifiedStorage.value.contextEnabled = true
+				unifiedStorage.value.contextText = pendingContext
+				unifiedStorage.value.result = undefined
+				apiRequest.value.state = 'EMPTY'
+				// Skip querying tab (preserve existing main content)
+				return
+			}
+
+			if (pendingImage) {
+				// We have a pending image, use it!
+				await chrome.storage.session.remove('pendingContextMenuImage')
+				try {
+					const processed = await processImage(pendingImage)
+					unifiedStorage.value.selectedContent = { image: processed }
+					unifiedStorage.value.result = undefined
+					apiRequest.value.state = 'EMPTY'
+				} catch (err) {
+					console.error('Failed to process pending context menu image', err)
+				}
+				// Skip querying tab
+				return
+			} else if (pendingText) {
+				// We have pending text, use it!
+				await chrome.storage.session.remove('pendingContextMenuText')
+				unifiedStorage.value.selectedContent = { text: pendingText }
+				unifiedStorage.value.result = undefined
+				apiRequest.value.state = 'EMPTY'
+				// Skip querying tab
+				return
+			}
+		}
+
 		// First check if there is a pending image or text from context menu
 		chrome.storage?.session?.get(
 			['pendingContextMenuImage', 'pendingContextMenuText', 'pendingContextMenuContext'],
 			async (items) => {
-				const pendingImage = items?.pendingContextMenuImage
-				const pendingText = items?.pendingContextMenuText
-				const pendingContext = items?.pendingContextMenuContext
-
-				if (pendingContext) {
-					await chrome.storage.session.remove('pendingContextMenuContext')
-					unifiedStorage.value.contextEnabled = true
-					unifiedStorage.value.contextText = pendingContext
-					unifiedStorage.value.result = undefined
-					apiRequest.value.state = 'EMPTY'
-					// Skip querying tab (preserve existing main content)
-					return
-				}
-
-				if (pendingImage) {
-					// We have a pending image, use it!
-					await chrome.storage.session.remove('pendingContextMenuImage')
-					try {
-						const processed = await processImage(pendingImage)
-						unifiedStorage.value.selectedContent = { image: processed }
-						unifiedStorage.value.result = undefined
-						apiRequest.value.state = 'EMPTY'
-					} catch (err) {
-						console.error('Failed to process pending context menu image', err)
-					}
-					// Skip querying tab
-					return
-				} else if (pendingText) {
-					// We have pending text, use it!
-					await chrome.storage.session.remove('pendingContextMenuText')
-					unifiedStorage.value.selectedContent = { text: pendingText }
-					unifiedStorage.value.result = undefined
-					apiRequest.value.state = 'EMPTY'
-					// Skip querying tab
-					return
-				}
-
+				await checkPendingContent(items)
 				// If no pending content, proceed with normal selection logic
-				chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-					const tab = tabs[0]
-					if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
-						chrome.tabs.sendMessage(
-							tab.id,
-							{ action: 'getSelectedContent' },
-							(response: SelectedContent) => {
-								if (chrome.runtime.lastError) {
-									console.warn(
-										`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
-									)
-									return
-								}
-								unifiedStorage.value.result = undefined
-								apiRequest.value.state = 'EMPTY'
-								unifiedStorage.value.selectedContent = response
-							},
-						)
-						imageSelectOnPage(false)
-						textSelectOnPage(false)
-					} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
-						// Don't try to communicate with restricted pages
-					}
-				})
+				if (!items?.pendingContextMenuImage && !items?.pendingContextMenuText && !items?.pendingContextMenuContext) {
+					chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+						const tab = tabs[0]
+						if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+							chrome.tabs.sendMessage(
+								tab.id,
+								{ action: 'getSelectedContent' },
+								(response: SelectedContent) => {
+									if (chrome.runtime.lastError) {
+										console.warn(
+											`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+										)
+										return
+									}
+									unifiedStorage.value.result = undefined
+									apiRequest.value.state = 'EMPTY'
+									unifiedStorage.value.selectedContent = response
+								},
+							)
+							imageSelectOnPage(false)
+							textSelectOnPage(false)
+						} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+							// Don't try to communicate with restricted pages
+						}
+					})
+				}
 			},
 		)
+
+		// Listen for changes in session storage to handle race condition where popup opens before storage is set
+		const listener = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
+			if (areaName === 'session') {
+				const items: Record<string, any> = {}
+				if (changes.pendingContextMenuImage?.newValue) items.pendingContextMenuImage = changes.pendingContextMenuImage.newValue
+				if (changes.pendingContextMenuText?.newValue) items.pendingContextMenuText = changes.pendingContextMenuText.newValue
+				if (changes.pendingContextMenuContext?.newValue) items.pendingContextMenuContext = changes.pendingContextMenuContext.newValue
+				
+				if (Object.keys(items).length > 0) {
+					checkPendingContent(items)
+				}
+			}
+		}
+		chrome.storage?.onChanged.addListener(listener)
+
+		return () => {
+			chrome.storage?.onChanged.removeListener(listener)
+		}
 	})
 
 	let hasSelected = $derived(
