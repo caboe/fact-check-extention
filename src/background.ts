@@ -48,18 +48,12 @@ updateContextMenus()
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 	if (info.menuItemId === 'fact-check-image') {
-		// Save pending image to session storage
-		await chrome.storage.session.set({ pendingContextMenuImage: info.srcUrl })
-		
 		try {
 			// @ts-ignore - openPopup might not be in type definitions yet
 			await chrome.action.openPopup()
 		} catch (err) {
 			// Fallback if openPopup is not supported or fails
 			console.warn('Failed to open popup, falling back to content script notification', err)
-			
-			// Clean up storage since we failed to open popup
-			await chrome.storage.session.remove('pendingContextMenuImage')
 
 			if (tab?.id) {
 				chrome.tabs.sendMessage(tab.id, {
@@ -72,28 +66,24 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 		        })
 			}
 		}
+		// Save pending image to session storage
+		await chrome.storage.session.set({ pendingContextMenuImage: info.srcUrl })
 	} else if (info.menuItemId === 'fact-check-text') {
-		// Save pending text to session storage
-		await chrome.storage.session.set({ pendingContextMenuText: info.selectionText })
-
 		try {
 			// @ts-ignore - openPopup might not be in type definitions yet
 			await chrome.action.openPopup()
 		} catch (err) {
 			console.warn('Failed to open popup', err)
-			// Clean up storage since we failed to open popup
-			await chrome.storage.session.remove('pendingContextMenuText')
-            // Optionally notify user via content script?
-            // For now just warn as text is usually easier to re-select
 		}
+		// Save pending text to session storage
+		await chrome.storage.session.set({ pendingContextMenuText: info.selectionText })
 	} else if (info.menuItemId === 'fact-check-text-context') {
-		await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
 		try {
 			// @ts-ignore
 			await chrome.action.openPopup()
 		} catch (err) {
 			console.warn('Failed to open popup', err)
-			await chrome.storage.session.remove('pendingContextMenuContext')
 		}
+		await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
 	}
 })
