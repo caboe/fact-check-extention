@@ -5,6 +5,7 @@
 	function close() {
 		popupState.value = 'DEFAULT'
 		view.showAddEndpointForm = false
+		view.showEditEndpointForm = false
 	}
 </script>
 

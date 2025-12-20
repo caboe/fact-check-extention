@@ -86,6 +86,18 @@ Your persona is the philosopher Immanuel Kant.
 	createFromExisting: 'Create new role from this template',
 	scientistName: 'Scientist',
 	satiristName: 'Acerbic Rationalist',
+	contextMenuImage: '🖼️ Fact Check this image',
+	contextMenuText: '🔍 Fact Check marked text',
+	contextMenuContext: '📌 Add as Context',
+	howToSelect: 'How to select content?',
+	selectionHelpTitle: 'How to select content',
+	selectionHelpText: 'You can easily select content directly on any webpage using the context menu:',
+	selectionHelpStep1: '1. Right-click on an image or select text and right-click it.',
+	selectionHelpStep2: '2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.',
+	selectionHelpStep3: '3. The content will be automatically loaded into the extension.',
+	closeHelp: 'Close',
+	on: 'on',
+	extensionInstalled: 'Fact Check Extension installed.',
 } satisfies BaseTranslation
 
 export default en

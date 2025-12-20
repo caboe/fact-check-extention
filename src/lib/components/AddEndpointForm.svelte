@@ -3,14 +3,16 @@
 	import L from '../state/L.svelte'
 	import view from '../state/view.svelte'
 
+	let { initialEndpoint } = $props<{ initialEndpoint?: Endpoint }>()
+
 	let title: string = $state('')
-	let url: string = $state('')
-	let apiKey: string = $state('')
+	let url: string = $state(initialEndpoint?.url ?? '')
+	let apiKey: string = $state(initialEndpoint?.apiKey ?? '')
 	let apiKeyInput: HTMLInputElement
 	let selectedValue: string | undefined = $state(undefined)
-	let model = $state('')
-	let canProcessImages = $state(false)
-	let isInlineRolePlacement = $state(false)
+	let model = $state(initialEndpoint?.model ?? '')
+	let canProcessImages = $state(initialEndpoint?.canProcessImages ?? false)
+	let isInlineRolePlacement = $state(initialEndpoint?.rolePlacement === 'inline')
 
 	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'> & { apiKeyUrl?: string }
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
@@ -43,12 +45,6 @@
 			url: 'https://api.deepseek.com/chat/completions',
 			model: 'deepseek-chat',
 			apiKeyUrl: 'https://platform.deepseek.com/api-keys',
-		},
-		mistral: {
-			title: 'Mistral AI',
-			url: 'https://api.mistral.ai/v1/chat/completions',
-			model: 'magistral-medium-2509',
-			apiKeyUrl: 'https://console.mistral.ai/api-keys',
 		},
 		qwen: {
 			title: 'Qwen',

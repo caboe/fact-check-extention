@@ -36,7 +36,7 @@ type RootTranslation = {
 	 */
 	apiEndpoint: string
 	/**
-	 * C​o​n​f​i​g​u​r​e
+	 * M​o​d​e​l
 	 */
 	configureApi: string
 	/**
@@ -61,7 +61,7 @@ type RootTranslation = {
 	 */
 	result: string
 	/**
-	 * C​h​e​c​k​i​n​g​.​.​.
+	 * L​o​a​d​i​n​g​.​.​.
 	 */
 	checkingProgress: string
 	/**
@@ -214,7 +214,7 @@ type RootTranslation = {
 	 */
 	noImageEndpoint: string
 	/**
-	 * C​o​n​f​i​g​u​r​e
+	 * M​o​d​e​l
 	 */
 	configureButton: string
 	/**
@@ -238,7 +238,7 @@ type RootTranslation = {
 	 */
 	rolePlacementInline: string
 	/**
-	 * I​n​l​i​n​e​ ​S​y​s​t​e​m​ ​P​r​o​m​p​t​ ​(​r​e​c​o​m​m​e​n​d​e​d​ ​f​o​r​ ​O​l​l​a​m​a​)
+	 * I​n​l​i​n​e​ ​S​y​s​t​e​m​ ​P​r​o​m​p​t​ ​(​r​e​c​o​m​m​e​n​d​e​d​ ​f​o​r​ ​l​o​c​a​l​ ​L​L​M​s​ ​o​n​ ​O​l​l​a​m​a​ ​o​r​ ​L​M​ ​S​t​u​d​i​o​)
 	 */
 	inlineUserMessage: string
 	/**
@@ -323,6 +323,54 @@ type RootTranslation = {
 	 * A​c​e​r​b​i​c​ ​R​a​t​i​o​n​a​l​i​s​t
 	 */
 	satiristName: string
+	/**
+	 * �​�​️​ ​F​a​c​t​ ​C​h​e​c​k​ ​t​h​i​s​ ​i​m​a​g​e
+	 */
+	contextMenuImage: string
+	/**
+	 * �​�​ ​F​a​c​t​ ​C​h​e​c​k​ ​m​a​r​k​e​d​ ​t​e​x​t
+	 */
+	contextMenuText: string
+	/**
+	 * �​�​ ​A​d​d​ ​a​s​ ​C​o​n​t​e​x​t
+	 */
+	contextMenuContext: string
+	/**
+	 * H​o​w​ ​t​o​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t​?
+	 */
+	howToSelect: string
+	/**
+	 * H​o​w​ ​t​o​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t
+	 */
+	selectionHelpTitle: string
+	/**
+	 * Y​o​u​ ​c​a​n​ ​e​a​s​i​l​y​ ​s​e​l​e​c​t​ ​c​o​n​t​e​n​t​ ​d​i​r​e​c​t​l​y​ ​o​n​ ​a​n​y​ ​w​e​b​p​a​g​e​ ​u​s​i​n​g​ ​t​h​e​ ​c​o​n​t​e​x​t​ ​m​e​n​u​:
+	 */
+	selectionHelpText: string
+	/**
+	 * 1​.​ ​R​i​g​h​t​-​c​l​i​c​k​ ​o​n​ ​a​n​ ​i​m​a​g​e​ ​o​r​ ​s​e​l​e​c​t​ ​t​e​x​t​ ​a​n​d​ ​r​i​g​h​t​-​c​l​i​c​k​ ​i​t​.
+	 */
+	selectionHelpStep1: string
+	/**
+	 * 2​.​ ​C​h​o​o​s​e​ ​"​F​a​c​t​ ​C​h​e​c​k​ ​m​a​r​k​e​d​ ​t​e​x​t​"​ ​o​r​ ​"​F​a​c​t​ ​C​h​e​c​k​ ​t​h​i​s​ ​i​m​a​g​e​"​ ​f​r​o​m​ ​t​h​e​ ​m​e​n​u​.
+	 */
+	selectionHelpStep2: string
+	/**
+	 * 3​.​ ​T​h​e​ ​c​o​n​t​e​n​t​ ​w​i​l​l​ ​b​e​ ​a​u​t​o​m​a​t​i​c​a​l​l​y​ ​l​o​a​d​e​d​ ​i​n​t​o​ ​t​h​e​ ​e​x​t​e​n​s​i​o​n​.
+	 */
+	selectionHelpStep3: string
+	/**
+	 * C​l​o​s​e
+	 */
+	closeHelp: string
+	/**
+	 * o​n
+	 */
+	on: string
+	/**
+	 * F​a​c​t​ ​C​h​e​c​k​ ​E​x​t​e​n​s​i​o​n​ ​i​n​s​t​a​l​l​e​d​.
+	 */
+	extensionInstalled: string
 }
 
 export type TranslationFunctions = {
@@ -345,7 +393,7 @@ export type TranslationFunctions = {
 	 */
 	apiEndpoint: () => LocalizedString
 	/**
-	 * Configure
+	 * Model
 	 */
 	configureApi: () => LocalizedString
 	/**
@@ -369,7 +417,7 @@ export type TranslationFunctions = {
 	 */
 	result: () => LocalizedString
 	/**
-	 * Checking...
+	 * Loading...
 	 */
 	checkingProgress: () => LocalizedString
 	/**
@@ -521,7 +569,7 @@ export type TranslationFunctions = {
 	 */
 	noImageEndpoint: () => LocalizedString
 	/**
-	 * Configure
+	 * Model
 	 */
 	configureButton: () => LocalizedString
 	/**
@@ -545,7 +593,7 @@ export type TranslationFunctions = {
 	 */
 	rolePlacementInline: () => LocalizedString
 	/**
-	 * Inline System Prompt (recommended for Ollama)
+	 * Inline System Prompt (recommended for local LLMs on Ollama or LM Studio)
 	 */
 	inlineUserMessage: () => LocalizedString
 	/**
@@ -630,6 +678,54 @@ Your persona is the philosopher Immanuel Kant.
 	 * Acerbic Rationalist
 	 */
 	satiristName: () => LocalizedString
+	/**
+	 * 🖼️ Fact Check this image
+	 */
+	contextMenuImage: () => LocalizedString
+	/**
+	 * 🔍 Fact Check marked text
+	 */
+	contextMenuText: () => LocalizedString
+	/**
+	 * 📌 Add as Context
+	 */
+	contextMenuContext: () => LocalizedString
+	/**
+	 * How to select content?
+	 */
+	howToSelect: () => LocalizedString
+	/**
+	 * How to select content
+	 */
+	selectionHelpTitle: () => LocalizedString
+	/**
+	 * You can easily select content directly on any webpage using the context menu:
+	 */
+	selectionHelpText: () => LocalizedString
+	/**
+	 * 1. Right-click on an image or select text and right-click it.
+	 */
+	selectionHelpStep1: () => LocalizedString
+	/**
+	 * 2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.
+	 */
+	selectionHelpStep2: () => LocalizedString
+	/**
+	 * 3. The content will be automatically loaded into the extension.
+	 */
+	selectionHelpStep3: () => LocalizedString
+	/**
+	 * Close
+	 */
+	closeHelp: () => LocalizedString
+	/**
+	 * on
+	 */
+	on: () => LocalizedString
+	/**
+	 * F​a​c​t​ ​C​h​e​c​k​ ​E​x​t​e​n​s​i​o​n​ ​i​n​s​t​a​l​l​e​d​.
+	 */
+	extensionInstalled: () => LocalizedString
 }
 
 export type Formatters = {}

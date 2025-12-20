@@ -2,6 +2,7 @@
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
 	import { isSelectedImage, isSelectedText, type SelectedContent } from '../../../TSelectedContent'
+	import { processImage } from '../../util/imageProcessing'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
@@ -18,6 +19,7 @@
 	let { open }: Props = $props()
 
 	let endpointSelectEl: HTMLSelectElement | null = $state(null)
+	let showHelp = $state(false)
 
 	function isRestrictedUrl(url: string | undefined): boolean {
 		if (!url) return true // Treat undefined URL as restricted
@@ -35,36 +37,74 @@
 	}
 
 	$effect(() => {
-		chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-			const tab = tabs[0]
-			if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
-				chrome.tabs.sendMessage(
-					tab.id,
-					{ action: 'getSelectedContent' },
-					(response: SelectedContent) => {
-						// Check lastError *first*
-						if (chrome.runtime.lastError) {
-							// Still log if connection fails unexpectedly on a non-restricted page
-							console.warn(
-								`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
-							)
-							return
-						}
-						// No error, proceed as normal
+		// First check if there is a pending image or text from context menu
+		chrome.storage?.session?.get(
+			['pendingContextMenuImage', 'pendingContextMenuText', 'pendingContextMenuContext'],
+			async (items) => {
+				const pendingImage = items?.pendingContextMenuImage
+				const pendingText = items?.pendingContextMenuText
+				const pendingContext = items?.pendingContextMenuContext
+
+				if (pendingContext) {
+					await chrome.storage.session.remove('pendingContextMenuContext')
+					unifiedStorage.value.contextEnabled = true
+					unifiedStorage.value.contextText = pendingContext
+					unifiedStorage.value.result = undefined
+					apiRequest.value.state = 'EMPTY'
+					// Skip querying tab (preserve existing main content)
+					return
+				}
+
+				if (pendingImage) {
+					// We have a pending image, use it!
+					await chrome.storage.session.remove('pendingContextMenuImage')
+					try {
+						const processed = await processImage(pendingImage)
+						unifiedStorage.value.selectedContent = { image: processed }
 						unifiedStorage.value.result = undefined
-						unifiedStorage.value.selectedContent = response
-					},
-				)
-				// Also check URL before sending these
-				imageSelectOnPage(false)
-				textSelectOnPage(false)
-			} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
-				// Don't try to communicate with restricted pages
-				// console.log(`Fact Check: Not attempting to get content from restricted URL: ${tab.url}`);
-				// Optionally clear selection when opened on restricted page
-				// unifiedStorage.value.selectedContent = undefined;
-			}
-		})
+						apiRequest.value.state = 'EMPTY'
+					} catch (err) {
+						console.error('Failed to process pending context menu image', err)
+					}
+					// Skip querying tab
+					return
+				} else if (pendingText) {
+					// We have pending text, use it!
+					await chrome.storage.session.remove('pendingContextMenuText')
+					unifiedStorage.value.selectedContent = { text: pendingText }
+					unifiedStorage.value.result = undefined
+					apiRequest.value.state = 'EMPTY'
+					// Skip querying tab
+					return
+				}
+
+				// If no pending content, proceed with normal selection logic
+				chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+					const tab = tabs[0]
+					if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+						chrome.tabs.sendMessage(
+							tab.id,
+							{ action: 'getSelectedContent' },
+							(response: SelectedContent) => {
+								if (chrome.runtime.lastError) {
+									console.warn(
+										`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+									)
+									return
+								}
+								unifiedStorage.value.result = undefined
+								apiRequest.value.state = 'EMPTY'
+								unifiedStorage.value.selectedContent = response
+							},
+						)
+						imageSelectOnPage(false)
+						textSelectOnPage(false)
+					} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+						// Don't try to communicate with restricted pages
+					}
+				})
+			},
+		)
 	})
 
 	let hasSelected = $derived(
@@ -90,6 +130,7 @@
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.selectedContent = { text: target.value }
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	function reset() {
@@ -106,12 +147,14 @@
 			unifiedStorage.value.contextText = ''
 		}
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	function contextChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.contextText = target.value
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	$effect(() => {
@@ -181,6 +224,7 @@
 		const target = e.target as HTMLTextAreaElement
 		unifiedStorage.value.selectedContent = { text: target.value }
 		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
 	}
 
 	onMount(() => {
@@ -195,7 +239,7 @@
 		{@const content = unifiedStorage.value.selectedContent}
 		<label
 			for="selected-text"
-			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
+			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
 		>
 			<CommentsIcon />
 			{#if !hasSelected}
@@ -233,7 +277,7 @@
 					id="context-text"
 					value={unifiedStorage.value.contextText}
 					onchange={contextChange}
-					class="textarea max-h-64 min-h-8"
+					class="textarea max-h-64 min-h-24"
 					rows="1"
 					data-testid="response-result-textarea"
 					placeholder={L.contextPlaceholder()}
@@ -245,7 +289,7 @@
 			<textarea
 				id="selected-text"
 				oninput={createFromNewText}
-				class="textarea"
+				class="textarea min-h-24"
 				rows="4"
 				placeholder={L.selectedText()}
 				data-testid="selected-text-input"
@@ -277,23 +321,33 @@
 			{/if}
 		{/if}
 
-		<div class="grid grid-cols-[1fr_1fr_32px] justify-around gap-2">
+		<div class="flex items-center justify-between gap-2">
 			<button
-				onclick={selectTextOnPage}
-				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
+				onclick={() => (showHelp = true)}
+				class="cursor-pointer text-sm text-primary-500 underline hover:text-primary-700"
 			>
-				<TextIcon />
-				{L.selectText()}
+				{L.howToSelect()}
 			</button>
-			<button
-				onclick={selectImageOnPage}
-				class="variant-filled btn btn-sm flex cursor-pointer items-center gap-1"
-			>
-				<ImageIcon />
-				{L.selectImage()}
-			</button>
-			<button onclick={reset} class="variant-filled btn btn-sm cursor-pointer"><CloseIcon /></button
-			>
+			<button onclick={reset} class="btn btn-sm p-0"><CloseIcon /></button>
 		</div>
+
+		{#if showHelp}
+			<div class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4">
+				<div class="card bg-surface-100-800-token w-full max-w-md space-y-4 p-4 shadow-xl">
+					<h3 class="h3">{L.selectionHelpTitle()}</h3>
+					<p>{L.selectionHelpText()}</p>
+					<ul class="list-disc space-y-2 pl-4">
+						<li>{L.selectionHelpStep1()}</li>
+						<li>{L.selectionHelpStep2()}</li>
+						<li>{L.selectionHelpStep3()}</li>
+					</ul>
+					<div class="flex justify-end">
+						<button class="variant-filled-primary btn" onclick={() => (showHelp = false)}>
+							{L.closeHelp()}
+						</button>
+					</div>
+				</div>
+			</div>
+		{/if}
 	{/snippet}
 </AccordionItem>

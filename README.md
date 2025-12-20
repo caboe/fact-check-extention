@@ -4,6 +4,31 @@
 
 Welcome to the Fact Check Extension Documentation. This website provides comprehensive documentation on how to install, configure, and use the Fact Check Chrome Extension.
 
+### How does this extension work?
+
+The extension streamlines the process of verifying information found on the web.
+
+- **Selection**: The user selects text or an image on a webpage that they want to check.
+- **Processing**: The extension sends the selected content, along with a fact-checking command and any optional context provided by the user, to a Large Language Model (LLM).
+- **Result**: The LLM analyzes the content and performs a fact check. The result is sent back to the extension, which displays it to the user.
+
+### Context for better result
+
+In some cases, the AI Model needs additional support to provide accurate judgments:
+
+- **Recent Events**: If the events are too new, they might not be part of the model's training data.
+- **Detailed Facts**: Sometimes, more detailed background facts are needed to correctly judge specific claims.
+
+### Are my requests stored?
+
+- **Local Storage**: This extension does not store any data outside of your computer. All configurations and settings are stored locally in your browser.
+- **Model Providers**: Please note that Model Providers may store your requests. If you want to avoid this, you can run models locally (e.g., using Nemotron or MiMo via LM Studio or Ollama), though they may not always provide the same quality of answers as larger cloud-based models.
+
+### How big is the impact on the environment?
+
+AI consumes large amounts of electricity overall. However, this browser extension has a relatively low consumption per check.
+AI operators rarely provide precise information about consumption, but according to OpenAI, an average query consumes about 3 Wh. That is equivalent to driving about 20 meters in an electric car or boiling 30 ml of water.
+
 ## Installation
 
 ### Install from Chrome Web Store
@@ -28,31 +53,52 @@ Steps:
 
 ## Usage
 
-### Selecting Claims
+### Basic User Flow
 
-#### Selecting Text
+Follow these steps to configure and use the extension:
 
-To fact-check text, simply select the desired text on any webpage. Open the extension, the selected text will be automatically populated in the input field.
+1.  **First Run**: After installing the extension, open it for the first time. You will see a welcome message.
 
-#### Selecting Images
+    ![Welcome Message](doc/img/start.png)
 
-To fact-check an image, open the extension first. Click on "select text" and then click on an image on the page. Re-open the extension.
+2.  **Configuration**: Confirm the message to proceed. You will be taken to the configuration screen to set up an endpoint.
 
-#### Using the Extension Popup
+    ![Endpoint Overview](doc/img/endpoint-overview.png)
 
-Alternatively, you can open the extension popup and manually enter text or select an image via the provided interface.
+3.  **Add Endpoint**: Click on "New Endpoint". This opens the dialog to add a new endpoint.
 
-### Configure Endpoints
+    - In this example, we choose the **"openRouter"** template, as it provides many different models.
+    - Change the model to `google/gemini-3-pro-preview` for better results.
+    - Enter your API key.
+    - If the model supports image as input, select the checkbox.
+    - Click "Save" to add the endpoint to your list of available endpoints.
 
-#### Get an API key
+    ![New Endpoint Filled](doc/img/new-endpoint-filled.png)
 
-Go to the AI model provider of your choice, log in and generate an API key. This is usually associated with (very low) costs. Or set up a local LLM, e.g. with Ollama.
+4.  **Select Text**: Once the endpoint is saved, the extension is ready to use.
 
-#### Add an Endpoint
+    - Go to a website.
+    - Mark the text you want to check.
+    - Right-click and select **Fact Check marked text**.
 
-Add a new model in the settings. You can select a template to pre-select some data.
-Check which model from your provider suits you best. These differ, for example, in terms of cost, speed and whether they can process images.
-Save the endpoint.
+    ![Select Text](doc/img/select-text.png)
+
+5.  **Check**: The extension popup will open. Click on **"Check"**.
+
+    ![Ready for Checking](doc/img/ready-for-checking.png)
+
+6.  **Result**: After a few seconds, the result will be shown.
+
+    ![Result](doc/img/result.png)
+
+### Fact Checking Images
+
+You can also fact check images found on websites.
+
+1.  **Select Image**: Right-click on an image you want to check.
+2.  **Context Menu**: Select **🖼️ Fact Check this image** from the context menu.
+3.  **Check**: The extension popup will open with the image selected. Click on **"Check"** to proceed as usual.
+    _(Note: Ensure the selected model supports image input, like `google/gemini-3-pro-preview` or GPT-4o)_
 
 ### Configure Roles
 
@@ -74,15 +120,22 @@ To create or edit roles:
    - Or click "Create from this" on an existing role to use it as a template.
 5. **Edit/Delete**: You can edit or delete any custom roles you have created.
 
-#### Fact Check the Claim
+![Result](doc/img/new-role.png)
 
-In the "API Endpoint" section, you can select from the configured endpoints. You can also provide additional context to help the AI make more precise and relevant fact-checks. When enabled, this context information will be included in the system prompt to guide the AI's analysis based on your specific requirements or background information.
-(Local models (Ollama/LM Studio) do not work very well with longer system prompts. In that case you might select "Inline System Prompt")
-Click "Check"
+## Using a local LLM
 
-#### View Results
+### Using LM Studio
 
-The Response tab will open with the result of the fact checking.
+You can also use a local LM Studio instance as your fact-checking endpoint.
+
+Steps:
+
+1. Install LM Studio on your system by following the official documentation.
+2. Start the server in LM Studio.
+3. Once the server is running, add a new endpoint in the extension configuration.
+4. For the URL, enter the local address of your LM Studio instance, typically `http://localhost:1234/v1/chat/completions`.
+5. Select the appropriate model if prompted.
+6. Save the endpoint.
 
 ### Using a Local Ollama Instance
 
@@ -92,6 +145,6 @@ Steps:
 
 1. Install Ollama on your system by following the official documentation. Make sure, to allow the plugin to access your Ollama instance by running `OLLAMA_ORIGINS=chrome-extension://* && ollama serve`
 2. Once Ollama is running, add a new endpoint in the extension configuration.
-3. For the URL, enter the local address of your Ollama instance, typically `http://localhost:11434`.
+3. For the URL, enter the local address of your Ollama instance, typically `http://localhost:11434/api/chat`.
 4. Select the appropriate model if prompted.
 5. Save the endpoint.

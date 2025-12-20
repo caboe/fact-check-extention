@@ -89,6 +89,18 @@ Votre personnage est le philosophe Emmanuel Kant.
 	createFromExisting: 'Créer un nouveau rôle à partir de ce modèle',
 	scientistName: 'Scientifique',
 	satiristName: 'Rationaliste Acerbe',
+	contextMenuImage: '🖼️ Vérifier cette image',
+	contextMenuText: '🔍 Vérifier le texte marqué',
+	contextMenuContext: '📌 Ajouter comme contexte',
+	howToSelect: 'Comment sélectionner du contenu ?',
+	selectionHelpTitle: 'Comment sélectionner du contenu',
+	selectionHelpText: 'Vous pouvez facilement sélectionner du contenu directement sur n’importe quelle page web en utilisant le menu contextuel :',
+	selectionHelpStep1: '1. Faites un clic droit sur une image ou sélectionnez du texte et faites un clic droit dessus.',
+	selectionHelpStep2: '2. Choisissez « Vérifier le texte marqué » ou « Vérifier cette image » dans le menu.',
+	selectionHelpStep3: '3. Le contenu sera automatiquement chargé dans l’extension.',
+	closeHelp: 'Fermer',
+	on: 'sur',
+	extensionInstalled: 'Extension Fact Check installée.',
 } satisfies BaseTranslation
 
 export default fr

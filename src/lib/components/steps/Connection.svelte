@@ -69,10 +69,16 @@
 	{#snippet summary()}
 		<label
 			for={availableEndpoints.length > 0 ? 'endpoints' : null}
-			class="text-md grid grid-cols-[16px_1fr] items-center gap-4 text-left font-bold"
+			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
 		>
 			<ConnectionIcon />
-			{L.rolePlacementLabel()}: {selectedRoleName}
+			<div class="flex min-w-0 items-center gap-1 overflow-hidden">
+				<span class="shrink-0 whitespace-nowrap">{selectedRoleName}</span>
+				{#if endpoints.value.selected}
+					<span class="shrink-0 whitespace-nowrap font-normal">{L.on()}</span>
+					<span class="truncate">{endpoints.value.selected.title}</span>
+				{/if}
+			</div>
 		</label>
 	{/snippet}
 	{#snippet content()}
@@ -131,10 +137,6 @@
 					{/each}
 				</select>
 			</label>
-			<div class="flex flex-col items-center justify-between gap-2">
-				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="mt-2" />
-				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
-			</div>
 		</div>
 	{/snippet}
 </AccordionItem>

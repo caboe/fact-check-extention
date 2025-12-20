@@ -88,6 +88,18 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	createFromExisting: 'Neue Rolle aus dieser Vorlage erstellen',
 	scientistName: 'Wissenschaftler',
 	satiristName: 'Scharfsinniger Rationalist',
+	contextMenuImage: '🖼️ Dieses Bild prüfen',
+	contextMenuText: '� Markierten Text prüfen',
+	contextMenuContext: '📌 Als Kontext hinzufügen',
+	howToSelect: 'Wie wähle ich Inhalte aus?',
+	selectionHelpTitle: 'Inhalte auswählen',
+	selectionHelpText: 'Du kannst Inhalte ganz einfach direkt auf jeder Webseite über das Kontextmenü auswählen:',
+	selectionHelpStep1: '1. Rechtsklicke auf ein Bild oder markiere Text und rechtsklicke darauf.',
+	selectionHelpStep2: '2. Wähle "Markierten Text prüfen" oder "Dieses Bild prüfen" aus dem Menü.',
+	selectionHelpStep3: '3. Der Inhalt wird automatisch in die Erweiterung geladen.',
+	closeHelp: 'Schließen',
+	on: 'auf',
+	extensionInstalled: 'Fact Check Extension installiert.',
 } satisfies BaseTranslation
 
 export default de

@@ -21,6 +21,10 @@
 
 	{#if view.step !== 2}
 		<div class="mt-4 px-4">
+			<div class="mb-4 flex flex-col items-center justify-between gap-2">
+				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="w-full" />
+				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
+			</div>
 			<button
 				class="variant-filled-primary btn w-full"
 				onclick={checkFact}

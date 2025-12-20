@@ -1,5 +1,5 @@
 <script lang="ts">
-	import endpoints from '../state/endpoints.svelte'
+	import endpoints, { type Endpoint } from '../state/endpoints.svelte'
 	import L from '../state/L.svelte'
 	import view from '../state/view.svelte'
 	import AddEndpointForm from './AddEndpointForm.svelte'
@@ -14,6 +14,17 @@
 	}
 
 	let isDarkMode = $derived(themeState.value === 'dark')
+	let endpointToCopy = $state<Endpoint | undefined>(undefined)
+
+	function handleCopy(event: CustomEvent<Endpoint>) {
+		endpointToCopy = event.detail
+		view.showAddEndpointForm = true
+	}
+
+	function startAdd() {
+		endpointToCopy = undefined
+		view.showAddEndpointForm = true
+	}
 </script>
 
 <div class="mx-1 p-3">
@@ -23,7 +34,7 @@
 	</div>
 
 	{#if view.showAddEndpointForm}
-		<AddEndpointForm />
+		<AddEndpointForm initialEndpoint={endpointToCopy} />
 	{:else}
 		<!-- Dark Mode Toggle -->
 		<div class="mb-4 flex items-center justify-between">
@@ -36,10 +47,13 @@
 				onchange={toggleTheme}
 			/>
 		</div>
-		<EndpointList on:delete={(event: CustomEvent<string>) => deleteEndpoint(event.detail)} />
+		<EndpointList
+			on:delete={(event: CustomEvent<string>) => deleteEndpoint(event.detail)}
+			on:copy={handleCopy}
+		/>
 		<button
 			class="variant-filled-success btn w-full"
-			onclick={() => (view.showAddEndpointForm = true)}
+			onclick={startAdd}
 			data-testid="config-new-endpoint-btn"
 		>
 			{L.newEndpoint()}
