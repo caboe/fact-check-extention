@@ -15,9 +15,9 @@
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
-			"16": "favicon.png",
-			"48": "favicon.png",
-			"128": "favicon.png"
+			"16": "favicon-16.png",
+			"48": "favicon-48.png",
+			"128": "favicon-128.png"
 		}
 	},
 	"background": {
@@ -37,14 +37,20 @@
 		}
 	],
 	"icons": {
-		"16": "favicon.png",
-		"48": "favicon.png",
-		"128": "favicon.png"
+		"16": "favicon-16.png",
+		"48": "favicon-48.png",
+		"128": "favicon-128.png"
 	},
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "fact-check-extension@example.com",
-			"strict_min_version": "109.0"
+			"strict_min_version": "142.0",
+			"data_collection_permissions": {
+				"required": [
+					"websiteContent"
+				],
+				"optional": []
+			}
 		}
 	}
 }

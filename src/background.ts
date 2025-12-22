@@ -56,18 +56,26 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 			console.warn('Failed to open popup, falling back to content script notification', err)
 
 			if (tab?.id) {
-				chrome.tabs.sendMessage(tab.id, {
-					action: 'contextMenuImageSelected',
-					src: info.srcUrl,
-				}, (response) => {
-		            if (chrome.runtime.lastError) {
-		                console.warn('Could not send message to tab:', chrome.runtime.lastError.message);
-		            }
-		        })
+				chrome.tabs.sendMessage(
+					tab.id,
+					{
+						action: 'contextMenuImageSelected',
+						src: info.srcUrl,
+					},
+					(response) => {
+						if (chrome.runtime.lastError) {
+							console.warn('Could not send message to tab:', chrome.runtime.lastError.message)
+						}
+					},
+				)
 			}
 		}
 		// Save pending image to session storage
-		await chrome.storage.session.set({ pendingContextMenuImage: info.srcUrl })
+		if (chrome.storage.session) {
+			await chrome.storage.session.set({ pendingContextMenuImage: info.srcUrl })
+		} else {
+			await chrome.storage.local.set({ pendingContextMenuImage: info.srcUrl })
+		}
 	} else if (info.menuItemId === 'fact-check-text') {
 		try {
 			// @ts-ignore - openPopup might not be in type definitions yet
@@ -76,7 +84,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 			console.warn('Failed to open popup', err)
 		}
 		// Save pending text to session storage
-		await chrome.storage.session.set({ pendingContextMenuText: info.selectionText })
+		if (chrome.storage.session) {
+			await chrome.storage.session.set({ pendingContextMenuText: info.selectionText })
+		} else {
+			await chrome.storage.local.set({ pendingContextMenuText: info.selectionText })
+		}
 	} else if (info.menuItemId === 'fact-check-text-context') {
 		try {
 			// @ts-ignore
@@ -84,6 +96,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 		} catch (err) {
 			console.warn('Failed to open popup', err)
 		}
-		await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
+		if (chrome.storage.session) {
+			await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
+		} else {
+			await chrome.storage.local.set({ pendingContextMenuContext: info.selectionText })
+		}
 	}
 })
