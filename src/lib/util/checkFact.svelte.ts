@@ -133,7 +133,7 @@ export default async function checkFact() {
 
 		if (response.status === 403) {
 			unifiedStorage.value!.result =
-				'Forbidden! If you are using Ollama, try to start it with in the console: <br><br><code>OLLAMA_ORIGINS=chrome-extension://* && ollama serve</code>'
+				'Forbidden! If you are using Ollama, try to start it with in the console: <code>OLLAMA_ORIGINS=chrome-extension://* && ollama serve</code>'
 			apiRequest.value.state = 'ERROR'
 			return
 		}
