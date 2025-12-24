@@ -1,16 +1,23 @@
 <script lang="ts">
+	import { SlideToggle } from '@skeletonlabs/skeleton'
 	import endpoints, { type Endpoint } from '../state/endpoints.svelte'
 	import L from '../state/L.svelte'
+	import { themeState, toggleTheme } from '../state/theme.svelte'
 	import view from '../state/view.svelte'
+	import popupState from '../../popupState.svelte'
 	import AddEndpointForm from './AddEndpointForm.svelte'
 	import EndpointList from './EndpointList.svelte'
 	import CloseIcon from './icons/CloseIcon.svelte'
-	import { SlideToggle } from '@skeletonlabs/skeleton'
-	import { themeState, toggleTheme } from '../state/theme.svelte'
 
 	function deleteEndpoint(title: string) {
 		endpoints.delete(title)
 		view.showAddEndpointForm = false
+	}
+
+	function close() {
+		popupState.value = 'DEFAULT'
+		view.showAddEndpointForm = false
+		view.showEditEndpointForm = false
 	}
 
 	let isDarkMode = $derived(themeState.value === 'dark')
@@ -30,7 +37,7 @@
 <div class="mx-1 p-3">
 	<div class="mb-4 flex items-center justify-between">
 		<div class="text-md font-bold">{L.apiEndpoint()}</div>
-		<CloseIcon />
+		<CloseIcon onclick={close} />
 	</div>
 
 	{#if view.showAddEndpointForm}

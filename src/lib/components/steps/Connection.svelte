@@ -70,6 +70,7 @@
 		<label
 			for={availableEndpoints.length > 0 ? 'endpoints' : null}
 			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
+			data-testid="connection-accordion-toggle"
 		>
 			<ConnectionIcon />
 			<div class="flex min-w-0 items-center gap-1 overflow-hidden">
@@ -118,7 +119,10 @@
 
 			<div class="flex items-center justify-between">
 				<div class="text-md">{L.rolePlacementLabel()}</div>
-				<Settings onclick={() => (view.showRoleConfig = true)} data-testid="role-config-btn" />
+				<Settings
+					onclick={() => (popupState.value = 'ROLE_CONFIG')}
+					data-testid="role-config-btn"
+				/>
 			</div>
 			<label class="flex flex-col gap-2">
 				<select

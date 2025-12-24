@@ -26,11 +26,9 @@
 <span class:hidden={popupState.value !== 'DEFAULT' || !hasSeenIntroduction.value}>
 	<FactCheck />
 </span>
+<span class:hidden={popupState.value !== 'ROLE_CONFIG' || !hasSeenIntroduction.value}>
+	<RoleConfig />
+</span>
 {#if !hasSeenIntroduction.value}
 	<Introduction {onclick} />
-{/if}
-
-<!-- Role Config Modal - can appear over any view -->
-{#if view.showRoleConfig}
-	<RoleConfig />
 {/if}

@@ -372,7 +372,7 @@
 			>
 				{L.howToSelect()}
 			</button>
-			<button onclick={reset} class="btn btn-sm p-0"><CloseIcon /></button>
+			<CloseIcon onclick={reset} class="btn btn-sm p-0" />
 		</div>
 
 		{#if showHelp}
