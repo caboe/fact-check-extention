@@ -67,7 +67,7 @@
 		openRouter: {
 			title: 'OpenRouter',
 			url: 'https://openrouter.ai/api/v1/chat/completions',
-			model: 'anthropic/claude-haiku-4.5',
+			model: 'z-ai/glm-4.7',
 			apiKeyUrl: 'https://openrouter.ai/keys',
 		},
 	}
