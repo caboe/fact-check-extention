@@ -1,151 +1,257 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fact Check Extension Documentation</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Fact Check Extension Documentation</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<h1>Fact Check Extension Documentation</h1>
 
-    <h1>Fact Check Extension Documentation</h1>
+		<h2>Introduction</h2>
+		<p>
+			Welcome to the Fact Check Extension Documentation. This website provides comprehensive
+			documentation on how to install, configure, and use the Fact Check Chrome Extension.
+		</p>
 
-    <h2>Introduction</h2>
-    <p>Welcome to the Fact Check Extension Documentation. This website provides comprehensive documentation on how to install, configure, and use the Fact Check Chrome Extension.</p>
+		<h3>How does this extension work?</h3>
+		<p>The extension streamlines the process of verifying information found on the web.</p>
+		<ul>
+			<li>
+				<strong>Selection</strong>: The user selects text or an image on a webpage that they want to
+				check.
+			</li>
+			<li>
+				<strong>Processing</strong>: The extension sends the selected content, along with a
+				fact-checking command and any optional context provided by the user, to a Large Language
+				Model (LLM).
+			</li>
+			<li>
+				<strong>Result</strong>: The LLM analyzes the content and performs a fact check. The result
+				is sent back to the extension, which displays it to the user.
+			</li>
+		</ul>
 
-    <h3>How does this extension work?</h3>
-    <p>The extension streamlines the process of verifying information found on the web.</p>
-    <ul>
-        <li><strong>Selection</strong>: The user selects text or an image on a webpage that they want to check.</li>
-        <li><strong>Processing</strong>: The extension sends the selected content, along with a fact-checking command and any optional context provided by the user, to a Large Language Model (LLM).</li>
-        <li><strong>Result</strong>: The LLM analyzes the content and performs a fact check. The result is sent back to the extension, which displays it to the user.</li>
-    </ul>
+		<h3>Context for better result</h3>
+		<p>In some cases, the AI Model needs additional support to provide accurate judgments:</p>
+		<ul>
+			<li>
+				<strong>Recent Events</strong>: If the events are too new, they might not be part of the
+				model's training data.
+			</li>
+			<li>
+				<strong>Detailed Facts</strong>: Sometimes, more detailed background facts are needed to
+				correctly judge specific claims.
+			</li>
+		</ul>
 
-    <h3>Context for better result</h3>
-    <p>In some cases, the AI Model needs additional support to provide accurate judgments:</p>
-    <ul>
-        <li><strong>Recent Events</strong>: If the events are too new, they might not be part of the model's training data.</li>
-        <li><strong>Detailed Facts</strong>: Sometimes, more detailed background facts are needed to correctly judge specific claims.</li>
-    </ul>
+		<h3>Are my requests stored?</h3>
+		<ul>
+			<li>
+				<strong>Local Storage</strong>: This extension does not store any data outside of your
+				computer. All configurations and settings are stored locally in your browser.
+			</li>
+			<li>
+				<strong>Model Providers</strong>: Please note that Model Providers may store your requests.
+				If you want to avoid this, you can run models locally (e.g., using Nemotron or MiMo via LM
+				Studio or Ollama), though they may not always provide the same quality of answers as larger
+				cloud-based models.
+			</li>
+		</ul>
 
-    <h3>Are my requests stored?</h3>
-    <ul>
-        <li><strong>Local Storage</strong>: This extension does not store any data outside of your computer. All configurations and settings are stored locally in your browser.</li>
-        <li><strong>Model Providers</strong>: Please note that Model Providers may store your requests. If you want to avoid this, you can run models locally (e.g., using Nemotron or MiMo via LM Studio or Ollama), though they may not always provide the same quality of answers as larger cloud-based models.</li>
-    </ul>
+		<h3>How big is the impact on the environment?</h3>
+		<p>
+			AI consumes large amounts of electricity overall. However, this browser extension has a
+			relatively low consumption per check.
+		</p>
+		<p>
+			AI operators rarely provide precise information about consumption, but according to OpenAI, an
+			average query consumes about 3 Wh. That is equivalent to driving about 20 meters in an
+			electric car or boiling 30 ml of water.
+		</p>
 
-    <h3>How big is the impact on the environment?</h3>
-    <p>AI consumes large amounts of electricity overall. However, this browser extension has a relatively low consumption per check.</p>
-    <p>AI operators rarely provide precise information about consumption, but according to OpenAI, an average query consumes about 3 Wh. That is equivalent to driving about 20 meters in an electric car or boiling 30 ml of water.</p>
+		<h2>Installation</h2>
 
-    <h2>Installation</h2>
+		<h3>Install from Chrome Web Store</h3>
+		<p>The easiest way to install the extension is directly from the Chrome Web Store.</p>
+		<p>
+			<a
+				href="https://chromewebstore.google.com/detail/fact-checker-gpt-connecto/jikiecjhdofccpaejidggiiiejogemni"
+				>Fact Checker GPT Connector on Chrome Web Store</a
+			>
+		</p>
 
-    <h3>Install from Chrome Web Store</h3>
-    <p>The easiest way to install the extension is directly from the Chrome Web Store.</p>
-    <p><a href="https://chromewebstore.google.com/detail/fact-checker-gpt-connecto/jikiecjhdofccpaejidggiiiejogemni">Fact Checker GPT Connector on Chrome Web Store</a></p>
+		<h3>Install in Developer Mode (from ZIP)</h3>
+		<p>
+			If you want to install a specific version or contribute to development, you can install the
+			extension in Chrome's developer mode using a ZIP file.
+		</p>
+		<p>Steps:</p>
+		<ol>
+			<li>
+				Clone repo:
+				<a href="https://github.com/caboe/fact-check-extention"
+					>https://github.com/caboe/fact-check-extention</a
+				>
+			</li>
+			<li>
+				Run the build command: <code>bun run build</code>. This will generate a
+				<code>fact-check-extension.zip</code> file in the <code>dist/</code> directory.
+			</li>
+			<li>Open Chrome and go to <code>chrome://extensions/</code>.</li>
+			<li>Enable "Developer mode" using the toggle in the top right corner.</li>
+			<li>Click the "Load unpacked" button.</li>
+			<li>
+				Navigate to the <code>dist/</code> folder within the extension's directory and select it.
+			</li>
+			<li>The extension should now appear in your list of installed extensions.</li>
+		</ol>
 
-    <h3>Install in Developer Mode (from ZIP)</h3>
-    <p>If you want to install a specific version or contribute to development, you can install the extension in Chrome's developer mode using a ZIP file.</p>
-    <p>Steps:</p>
-    <ol>
-        <li>Clone repo: <a href="https://github.com/caboe/fact-check-extention">https://github.com/caboe/fact-check-extention</a></li>
-        <li>Run the build command: <code>bun run build</code>. This will generate a <code>fact-check-extension.zip</code> file in the <code>dist/</code> directory.</li>
-        <li>Open Chrome and go to <code>chrome://extensions/</code>.</li>
-        <li>Enable "Developer mode" using the toggle in the top right corner.</li>
-        <li>Click the "Load unpacked" button.</li>
-        <li>Navigate to the <code>dist/</code> folder within the extension's directory and select it.</li>
-        <li>The extension should now appear in your list of installed extensions.</li>
-    </ol>
+		<h2>Usage</h2>
 
-    <h2>Usage</h2>
+		<h3>Basic User Flow</h3>
+		<p>Follow these steps to configure and use the extension:</p>
 
-    <h3>Basic User Flow</h3>
-    <p>Follow these steps to configure and use the extension:</p>
+		<p>
+			<span class="step-number">1.</span> <strong>First Run</strong>: After installing the
+			extension, open it for the first time. You will see a welcome message.
+		</p>
+		<img src="doc/img/start.png" alt="Welcome Message" />
 
-    <p><span class="step-number">1.</span> <strong>First Run</strong>: After installing the extension, open it for the first time. You will see a welcome message.</p>
-    <img src="doc/img/start.png" alt="Welcome Message">
+		<p>
+			<span class="step-number">2.</span> <strong>Configuration</strong>: Confirm the message to
+			proceed. You will be taken to the configuration screen to set up an endpoint.
+		</p>
+		<img src="doc/img/endpoint-overview.png" alt="Endpoint Overview" />
 
-    <p><span class="step-number">2.</span> <strong>Configuration</strong>: Confirm the message to proceed. You will be taken to the configuration screen to set up an endpoint.</p>
-    <img src="doc/img/endpoint-overview.png" alt="Endpoint Overview">
+		<p>
+			<span class="step-number">3.</span> <strong>Add Endpoint</strong>: Click on "New Endpoint".
+			This opens the dialog to add a new endpoint.
+		</p>
+		<ul>
+			<li>
+				In this example, we choose the <strong>"openRouter"</strong> template, as it provides many
+				different models.
+			</li>
+			<li>
+				(Optional) Change the model to <code>google/gemini-3-pro-preview</code> for better results.
+			</li>
+			<li>
+				(Optional) <strong>Web Search</strong>: To let the model search the web for current
+				information, append <code>:online</code> to the model name (e.g.,
+				<code>google/gemini-2.0-flash-exp:online</code>).
+			</li>
+			<li>Enter your API key.</li>
+			<li>If the model supports image as input, select the checkbox.</li>
+			<li>Click "Save" to add the endpoint to your list of available endpoints.</li>
+		</ul>
+		<img src="doc/img/new-endpoint-filled.png" alt="New Endpoint Filled" />
 
-    <p><span class="step-number">3.</span> <strong>Add Endpoint</strong>: Click on "New Endpoint". This opens the dialog to add a new endpoint.</p>
-    <ul>
-        <li>In this example, we choose the <strong>"openRouter"</strong> template, as it provides many different models.</li>
-        <li>Change the model to <code>google/gemini-3-pro-preview</code> for better results.</li>
-        <li>Enter your API key.</li>
-        <li>If the model supports image as input, select the checkbox.</li>
-        <li>Click "Save" to add the endpoint to your list of available endpoints.</li>
-    </ul>
-    <img src="doc/img/new-endpoint-filled.png" alt="New Endpoint Filled">
+		<p>
+			<span class="step-number">4.</span> <strong>Select Text</strong>: Once the endpoint is saved,
+			the extension is ready to use.
+		</p>
+		<ul>
+			<li>Go to a website.</li>
+			<li>Mark the text you want to check.</li>
+			<li>Right-click and select <strong>Fact Check marked text</strong>.</li>
+		</ul>
+		<img src="doc/img/select-text.png" alt="Select Text" />
 
-    <p><span class="step-number">4.</span> <strong>Select Text</strong>: Once the endpoint is saved, the extension is ready to use.</p>
-    <ul>
-        <li>Go to a website.</li>
-        <li>Mark the text you want to check.</li>
-        <li>Right-click and select <strong>Fact Check marked text</strong>.</li>
-    </ul>
-    <img src="doc/img/select-text.png" alt="Select Text">
+		<p>
+			<span class="step-number">5.</span> <strong>Check</strong>: The extension popup will open.
+			Click on <strong>"Check"</strong>.
+		</p>
+		<img src="doc/img/ready-for-checking.png" alt="Ready for Checking" />
 
-    <p><span class="step-number">5.</span> <strong>Check</strong>: The extension popup will open. Click on <strong>"Check"</strong>.</p>
-    <img src="doc/img/ready-for-checking.png" alt="Ready for Checking">
+		<p>
+			<span class="step-number">6.</span> <strong>Result</strong>: After a few seconds, the result
+			will be shown.
+		</p>
+		<img src="doc/img/result.png" alt="Result" />
 
-    <p><span class="step-number">6.</span> <strong>Result</strong>: After a few seconds, the result will be shown.</p>
-    <img src="doc/img/result.png" alt="Result">
+		<h3>Fact Checking Images</h3>
+		<p>You can also fact check images found on websites.</p>
+		<ol>
+			<li><strong>Select Image</strong>: Right-click on an image you want to check.</li>
+			<li>
+				<strong>Context Menu</strong>: Select <strong>🖼️ Fact Check this image</strong> from the
+				context menu.
+			</li>
+			<li>
+				<strong>Check</strong>: The extension popup will open with the image selected. Click on
+				<strong>"Check"</strong> to proceed as usual. <br /><em
+					>(Note: Ensure the selected model supports image input, like
+					<code>google/gemini-3-pro-preview</code> or GPT-4o)</em
+				>
+			</li>
+		</ol>
 
-    <h3>Fact Checking Images</h3>
-    <p>You can also fact check images found on websites.</p>
-    <ol>
-        <li><strong>Select Image</strong>: Right-click on an image you want to check.</li>
-        <li><strong>Context Menu</strong>: Select <strong>🖼️ Fact Check this image</strong> from the context menu.</li>
-        <li><strong>Check</strong>: The extension popup will open with the image selected. Click on <strong>"Check"</strong> to proceed as usual. <br><em>(Note: Ensure the selected model supports image input, like <code>google/gemini-3-pro-preview</code> or GPT-4o)</em></li>
-    </ol>
+		<h3>Configure Roles</h3>
+		<p>You can define the persona and style of the fact-checker by selecting a Role.</p>
 
-    <h3>Configure Roles</h3>
-    <p>You can define the persona and style of the fact-checker by selecting a Role.</p>
+		<h4>Select a Role</h4>
+		<p>
+			In the "API Endpoint" section, use the dropdown menu labeled "Role" to select the desired
+			persona (e.g., "Scientist" or "Acerbic Rationalist").
+		</p>
 
-    <h4>Select a Role</h4>
-    <p>In the "API Endpoint" section, use the dropdown menu labeled "Role" to select the desired persona (e.g., "Scientist" or "Acerbic Rationalist").</p>
+		<h4>Manage Roles</h4>
+		<p>To create or edit roles:</p>
+		<ol>
+			<li>Click the settings icon (gear) next to the "Role" label.</li>
+			<li>The <strong>Role Configuration</strong> window will open.</li>
+			<li>
+				<strong>Built-in Roles</strong>: You can view the default roles but cannot edit them
+				directly.
+			</li>
+			<li>
+				<strong>Create Custom Role</strong>:
+				<ul>
+					<li>Click "Add Role" to create a new role from scratch.</li>
+					<li>Or click "Create from this" on an existing role to use it as a template.</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Edit/Delete</strong>: You can edit or delete any custom roles you have created.
+			</li>
+		</ol>
+		<img src="doc/img/new-role.png" alt="Result" />
 
-    <h4>Manage Roles</h4>
-    <p>To create or edit roles:</p>
-    <ol>
-        <li>Click the settings icon (gear) next to the "Role" label.</li>
-        <li>The <strong>Role Configuration</strong> window will open.</li>
-        <li><strong>Built-in Roles</strong>: You can view the default roles but cannot edit them directly.</li>
-        <li><strong>Create Custom Role</strong>:
-            <ul>
-                <li>Click "Add Role" to create a new role from scratch.</li>
-                <li>Or click "Create from this" on an existing role to use it as a template.</li>
-            </ul>
-        </li>
-        <li><strong>Edit/Delete</strong>: You can edit or delete any custom roles you have created.</li>
-    </ol>
-    <img src="doc/img/new-role.png" alt="Result">
+		<h2>Using a local LLM</h2>
 
-    <h2>Using a local LLM</h2>
+		<h3>Using LM Studio</h3>
+		<p>You can also use a local LM Studio instance as your fact-checking endpoint.</p>
+		<p>Steps:</p>
+		<ol>
+			<li>Install LM Studio on your system by following the official documentation.</li>
+			<li>Start the server in LM Studio.</li>
+			<li>Once the server is running, add a new endpoint in the extension configuration.</li>
+			<li>
+				For the URL, enter the local address of your LM Studio instance, typically
+				<code>http://localhost:1234/v1/chat/completions</code>.
+			</li>
+			<li>Select the appropriate model if prompted.</li>
+			<li>Save the endpoint.</li>
+		</ol>
 
-    <h3>Using LM Studio</h3>
-    <p>You can also use a local LM Studio instance as your fact-checking endpoint.</p>
-    <p>Steps:</p>
-    <ol>
-        <li>Install LM Studio on your system by following the official documentation.</li>
-        <li>Start the server in LM Studio.</li>
-        <li>Once the server is running, add a new endpoint in the extension configuration.</li>
-        <li>For the URL, enter the local address of your LM Studio instance, typically <code>http://localhost:1234/v1/chat/completions</code>.</li>
-        <li>Select the appropriate model if prompted.</li>
-        <li>Save the endpoint.</li>
-    </ol>
-
-    <h3>Using a Local Ollama Instance</h3>
-    <p>You can also use a local Ollama instance as your fact-checking endpoint.</p>
-    <p>Steps:</p>
-    <ol>
-        <li>Install Ollama on your system by following the official documentation. Make sure, to allow the plugin to access your Ollama instance by running <code>OLLAMA_ORIGINS=chrome-extension://* && ollama serve</code></li>
-        <li>Once Ollama is running, add a new endpoint in the extension configuration.</li>
-        <li>For the URL, enter the local address of your Ollama instance, typically <code>http://localhost:11434/api/chat</code>.</li>
-        <li>Select the appropriate model if prompted.</li>
-        <li>Save the endpoint.</li>
-    </ol>
-
-</body>
+		<h3>Using a Local Ollama Instance</h3>
+		<p>You can also use a local Ollama instance as your fact-checking endpoint.</p>
+		<p>Steps:</p>
+		<ol>
+			<li>
+				Install Ollama on your system by following the official documentation. Make sure, to allow
+				the plugin to access your Ollama instance by running
+				<code>OLLAMA_ORIGINS=chrome-extension://* && ollama serve</code>
+			</li>
+			<li>Once Ollama is running, add a new endpoint in the extension configuration.</li>
+			<li>
+				For the URL, enter the local address of your Ollama instance, typically
+				<code>http://localhost:11434/api/chat</code>.
+			</li>
+			<li>Select the appropriate model if prompted.</li>
+			<li>Save the endpoint.</li>
+		</ol>
+	</body>
 </html>
