@@ -6,6 +6,8 @@
 	import CloseIcon from './icons/CloseIcon.svelte'
 	import EditIcon from './icons/EditIcon.svelte'
 	import RemoveIcon from './icons/RemoveIcon.svelte'
+	import CopyIcon from './icons/CopyIcon.svelte'
+	import PlusIcon from './icons/PlusIcon.svelte'
 
 	let editingRole = $state<{ role: Role; index: number } | null>(null)
 	let showAddForm = $state(false)
@@ -91,13 +93,7 @@
 						</div>
 						<div class="ml-3 flex items-center gap-2">
 							<span class="text-sm text-gray-500 dark:text-gray-400">{L.builtIn()}</span>
-							<button
-								onclick={() => createFromRole(role)}
-								class="variant-filled-success btn btn-sm"
-								title={L.createFromTemplate()}
-							>
-								{L.createFromThis()}
-							</button>
+							<CopyIcon onclick={() => createFromRole(role)} />
 						</div>
 					</div>
 				</div>
@@ -109,13 +105,7 @@
 	<div class="mb-6">
 		<div class="mb-3 flex items-center justify-between">
 			<h3 class="text-lg font-semibold text-gray-900 dark:text-white">{L.customRoles()}</h3>
-			<button
-				onclick={() => (showAddForm = true)}
-				class="variant-filled-success btn px-2 py-1"
-				data-testid="role-add-btn"
-			>
-				{L.addRole()}
-			</button>
+			<PlusIcon onclick={() => (showAddForm = true)} data-testid="role-add-btn" />
 		</div>
 
 		{#if showAddForm}
@@ -205,13 +195,7 @@
 								</p>
 							</div>
 							<div class="ml-3 flex gap-1">
-								<button
-									onclick={() => createFromRole(role)}
-									class="variant-filled-success btn btn-sm"
-									title={L.createFromExisting()}
-								>
-									{L.createFromThis()}
-								</button>
+								<CopyIcon onclick={() => createFromRole(role)} />
 								<EditIcon onclick={() => editRole(role, index)} />
 
 								<RemoveIcon onclick={() => deleteRole(index)} />

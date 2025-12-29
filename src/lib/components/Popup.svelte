@@ -7,6 +7,7 @@
 	import FactCheck from './FactCheck.svelte'
 	import Introduction from './Introduction.svelte'
 	import RoleConfig from './RoleConfig.svelte'
+	import RagConfig from './RagConfig.svelte'
 	import view from '../state/view.svelte'
 
 	const hasSeenIntroduction = new PersistState<boolean>('hasSeenIntroduction', false)
@@ -28,6 +29,9 @@
 </span>
 <span class:hidden={popupState.value !== 'ROLE_CONFIG' || !hasSeenIntroduction.value}>
 	<RoleConfig />
+</span>
+<span class:hidden={popupState.value !== 'RAG_CONFIG' || !hasSeenIntroduction.value}>
+	<RagConfig />
 </span>
 {#if !hasSeenIntroduction.value}
 	<Introduction {onclick} />

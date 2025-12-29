@@ -92,6 +92,8 @@
 			{/if}
 		{:else if apiRequest.value.state === 'LOADING'}
 			{L.checkingProgress()}
+		{:else if apiRequest.value.state === 'FETCHING_RAG'}
+			{L.fetchRagData()}
 		{:else if apiRequest.value.state === 'THINKING'}
 			{L.thinking()}
 		{:else if apiRequest.value.state === 'ERROR'}

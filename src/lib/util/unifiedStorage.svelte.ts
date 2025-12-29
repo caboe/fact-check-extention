@@ -11,6 +11,7 @@ interface IUnifiedState {
 	reasoning: string | undefined
 	contextEnabled: boolean
 	contextText: string
+	selectedRagEndpoints: string[]
 }
 
 class UnifiedStorage extends PersistState<IUnifiedState> {
@@ -24,6 +25,7 @@ class UnifiedStorage extends PersistState<IUnifiedState> {
 			reasoning: undefined,
 			contextEnabled: false,
 			contextText: '',
+			selectedRagEndpoints: [],
 		}
 		super('unifiedState', initialValue)
 	}

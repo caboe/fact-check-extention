@@ -11,6 +11,7 @@
 	import Settings from '../icons/SettingsIcon.svelte'
 	import { basicRoles } from '../../util/role.svelte'
 	import customRoles from '../../util/customRoles.svelte'
+	import ragEndpoints from '../../state/ragEndpoints.svelte'
 
 	interface Props {
 		open: boolean
@@ -141,6 +142,26 @@
 					{/each}
 				</select>
 			</label>
+
+			<div class="mt-2 flex items-center justify-between">
+				<div class="text-md">{L.ragEndpoints()}</div>
+				<Settings onclick={() => (popupState.value = 'RAG_CONFIG')} data-testid="rag-config-btn" />
+			</div>
+			{#if ragEndpoints.value.list.length > 0}
+				<label class="flex flex-col gap-2">
+					<select
+						multiple
+						class="select h-24"
+						bind:value={unifiedStorage.value.selectedRagEndpoints}
+					>
+						{#each ragEndpoints.value.list as endpoint (endpoint.title)}
+							<option value={endpoint.title}>{endpoint.title}</option>
+						{/each}
+					</select>
+				</label>
+			{:else}
+				<div class="text-sm text-gray-500">{L.noRagEndpoints()}</div>
+			{/if}
 		</div>
 	{/snippet}
 </AccordionItem>

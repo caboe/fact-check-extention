@@ -98,6 +98,20 @@ Your persona is the philosopher Immanuel Kant.
 	closeHelp: 'Close',
 	on: 'on',
 	extensionInstalled: 'Fact Check Extension installed.',
+	// RAG Configuration
+	ragConfiguration: 'RAG Configuration',
+	ragEndpoints: 'RAG Endpoints',
+	noRagEndpoints: 'No RAG endpoints configured.',
+	fetchRagData: 'Fetching RAG Data...',
+	ragMode: 'Mode',
+	topK: 'Top K',
+	ragModeLocal: 'Local',
+	ragModeGlobal: 'Global',
+	ragModeHybrid: 'Hybrid',
+	ragModeNaive: 'Naive',
+	ragModeMix: 'Mix',
+	addRagEndpoint: 'Add RAG Endpoint',
+	updateRagEndpoint: 'Update RAG Endpoint',
 } satisfies BaseTranslation
 
 export default en
