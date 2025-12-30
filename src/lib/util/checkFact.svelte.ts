@@ -141,6 +141,7 @@ export default async function checkFact() {
 		let ragContext = ''
 		// Fetch RAG Data if configured
 		if (
+			unifiedStorage.value.useRag &&
 			unifiedStorage.value.selectedRagEndpoints &&
 			unifiedStorage.value.selectedRagEndpoints.length > 0
 		) {

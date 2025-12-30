@@ -373,6 +373,15 @@ type RootTranslation = {
 	 */
 	extensionInstalled: string
 	/**
+	 * U​s​e​ ​R​A​G​s​ ​(​{​c​o​u​n​t​}​)
+	 * @param {number} count
+	 */
+	useRags: RequiredParams<'count'>
+	/**
+	 * A​c​t​i​v​a​t​e​ ​R​A​G​s
+	 */
+	activateRags: string
+	/**
 	 * R​A​G​ ​C​o​n​f​i​g​u​r​a​t​i​o​n
 	 */
 	ragConfiguration: string
@@ -779,6 +788,14 @@ Your persona is the philosopher Immanuel Kant.
 	 * Fact Check Extension installed.
 	 */
 	extensionInstalled: () => LocalizedString
+	/**
+	 * Use RAGs ({count})
+	 */
+	useRags: (arg: { count: number }) => LocalizedString
+	/**
+	 * Activate RAGs
+	 */
+	activateRags: () => LocalizedString
 	/**
 	 * RAG Configuration
 	 */

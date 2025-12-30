@@ -25,6 +25,22 @@
 				<input type="range" min="3" max="500" bind:value={apiRequest.value.range} class="w-full" />
 				<div class="text-sm">{L.responseLength({ responseLength: apiRequest.value.range })}</div>
 			</div>
+
+			<div class="mb-4 flex items-center justify-center">
+				{#if unifiedStorage.value.selectedRagEndpoints.length > 0}
+					<label class="flex items-center gap-2">
+						<span class="text-sm font-medium"
+							>{L.useRags({ count: unifiedStorage.value.selectedRagEndpoints.length })}</span
+						>
+						<input type="checkbox" class="checkbox" bind:checked={unifiedStorage.value.useRag} />
+					</label>
+				{:else}
+					<button class="text-sm text-primary-500 underline" onclick={() => (view.step = 1)}>
+						{L.activateRags()}
+					</button>
+				{/if}
+			</div>
+
 			<button
 				class="variant-filled-primary btn w-full"
 				onclick={checkFact}

@@ -91,13 +91,17 @@ Your persona is the philosopher Immanuel Kant.
 	contextMenuContext: '📌 Add as Context',
 	howToSelect: 'How to select content?',
 	selectionHelpTitle: 'How to select content',
-	selectionHelpText: 'You can easily select content directly on any webpage using the context menu:',
+	selectionHelpText:
+		'You can easily select content directly on any webpage using the context menu:',
 	selectionHelpStep1: '1. Right-click on an image or select text and right-click it.',
-	selectionHelpStep2: '2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.',
+	selectionHelpStep2:
+		'2. Choose "Fact Check marked text" or "Fact Check this image" from the menu.',
 	selectionHelpStep3: '3. The content will be automatically loaded into the extension.',
 	closeHelp: 'Close',
 	on: 'on',
 	extensionInstalled: 'Fact Check Extension installed.',
+	useRags: 'Use {count:number} RAG{{s}}',
+	activateRags: 'Activate RAGs',
 	// RAG Configuration
 	ragConfiguration: 'RAG Configuration',
 	ragEndpoints: 'RAG Endpoints',

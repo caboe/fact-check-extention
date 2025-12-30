@@ -100,6 +100,22 @@ Sua persona é o filósofo Immanuel Kant.
 	closeHelp: 'Fechar',
 	on: 'em',
 	extensionInstalled: 'Extensão Fact Check instalada.',
+	useRags: 'Usar {count:number} RAG{{s}}',
+	activateRags: 'Ativar RAGs',
+	// RAG Configuration
+	ragConfiguration: 'Configuração RAG',
+	ragEndpoints: 'Endpoints RAG',
+	noRagEndpoints: 'Nenhum endpoint RAG configurado.',
+	fetchRagData: 'Buscando dados RAG...',
+	ragMode: 'Modo',
+	topK: 'Top K',
+	ragModeLocal: 'Local',
+	ragModeGlobal: 'Global',
+	ragModeHybrid: 'Híbrido',
+	ragModeNaive: 'Ingênuo',
+	ragModeMix: 'Misto',
+	addRagEndpoint: 'Adicionar Endpoint RAG',
+	updateRagEndpoint: 'Atualizar Endpoint RAG',
 } satisfies BaseTranslation
 
 export default pt

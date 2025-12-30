@@ -148,17 +148,19 @@
 				<Settings onclick={() => (popupState.value = 'RAG_CONFIG')} data-testid="rag-config-btn" />
 			</div>
 			{#if ragEndpoints.value.list.length > 0}
-				<label class="flex flex-col gap-2">
-					<select
-						multiple
-						class="select h-24"
-						bind:value={unifiedStorage.value.selectedRagEndpoints}
-					>
-						{#each ragEndpoints.value.list as endpoint (endpoint.title)}
-							<option value={endpoint.title}>{endpoint.title}</option>
-						{/each}
-					</select>
-				</label>
+				<div class="flex flex-col gap-2">
+					{#each ragEndpoints.value.list as endpoint (endpoint.title)}
+						<label class="flex items-center space-x-2">
+							<input
+								class="checkbox"
+								type="checkbox"
+								bind:group={unifiedStorage.value.selectedRagEndpoints}
+								value={endpoint.title}
+							/>
+							<p>{endpoint.title}</p>
+						</label>
+					{/each}
+				</div>
 			{:else}
 				<div class="text-sm text-gray-500">{L.noRagEndpoints()}</div>
 			{/if}
