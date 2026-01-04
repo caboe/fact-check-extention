@@ -35,6 +35,10 @@ class RagEndpoints extends PersistState<{
 			return endpoint
 		})
 	}
+
+	exists(title: string) {
+		return this.value.list.some((endpoint) => endpoint.title === title)
+	}
 }
 
 const ragEndpoints = new RagEndpoints()

@@ -71,7 +71,11 @@
 		{/each}
 	</ul>
 
-	<button class="variant-filled-primary btn w-full" onclick={() => (showAddForm = true)}>
+	<button
+		class="variant-filled-primary btn w-full"
+		onclick={() => (showAddForm = true)}
+		data-testid="rag-endpoint-add-btn"
+	>
 		{L.addRagEndpoint()}
 	</button>
 {/if}

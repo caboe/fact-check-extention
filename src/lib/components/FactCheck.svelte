@@ -1,15 +1,15 @@
 <!-- src/components/FactCheck.svelte -->
 <script lang="ts">
 	import { Accordion } from '@skeletonlabs/skeleton'
+	import apiRequest from '../state/apiRequest.svelte'
+	import endpoints from '../state/endpoints.svelte'
+	import L from '../state/L.svelte'
 	import view from '../state/view.svelte'
 	import checkFact from '../util/checkFact.svelte'
+	import unifiedStorage from '../util/unifiedStorage.svelte'
 	import Connection from './steps/Connection.svelte'
 	import Response from './steps/Response.svelte'
 	import Selected from './steps/Selected.svelte'
-	import unifiedStorage from '../util/unifiedStorage.svelte'
-	import endpoints from '../state/endpoints.svelte'
-	import apiRequest from '../state/apiRequest.svelte'
-	import L from '../state/L.svelte'
 </script>
 
 <div class="p-1">
