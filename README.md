@@ -78,7 +78,8 @@ Follow these steps to configure and use the extension:
 3.  **Add Endpoint**: Click on "New Endpoint". This opens the dialog to add a new endpoint.
 
     - In this example, we choose the **"openRouter"** template, as it provides many different models.
-    - Change the model to `google/gemini-3-pro-preview` for better results.
+    - (Optional) Change the model to `google/gemini-3-pro-preview` for better results.
+    - (Optional) **Web Search**: To let the model search the web for current information, append `:online` to the model name (e.g., `google/gemini-2.0-flash-exp:online`).
     - Enter your API key.
     - If the model supports image as input, select the checkbox.
     - Click "Save" to add the endpoint to your list of available endpoints.

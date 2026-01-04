@@ -136,14 +136,17 @@ test.describe('Extension Tests', () => {
 
 		test.setTimeout(90000)
 
-		// First, we need to open the Connection/Role accordion to see the role config button
-		const connectionAccordion = page.locator('label').filter({ hasText: /role/i }).first()
-		if (await connectionAccordion.isVisible({ timeout: 5000 }).catch(() => false)) {
+		// First, check if role config button is already visible (accordion open)
+		const roleConfigBtn = page.getByTestId('role-config-btn')
+
+		if (!(await roleConfigBtn.isVisible({ timeout: 1000 }).catch(() => false))) {
+			// If not visible, try to open the accordion
+			const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+			await expect(connectionAccordion).toBeVisible()
 			await connectionAccordion.click()
 		}
 
-		// Open role configuration
-		const roleConfigBtn = page.getByTestId('role-config-btn')
+		// Now it should be visible
 		await expect(roleConfigBtn).toBeVisible({ timeout: 5000 })
 		await roleConfigBtn.click()
 
@@ -169,8 +172,18 @@ test.describe('Extension Tests', () => {
 		const closeBtn = page.getByTestId('role-config-close-btn')
 		await closeBtn.click()
 
+		// Wait for RoleConfig to disappear
+		await expect(closeBtn).toBeHidden()
+
 		// Now select the custom role (should still be in the Connection accordion)
+		// Ensure accordion is open
 		const roleSelect = page.getByTestId('role-selector')
+		if (!(await roleSelect.isVisible())) {
+			const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+			await expect(connectionAccordion).toBeVisible()
+			await connectionAccordion.click()
+		}
+
 		await expect(roleSelect).toBeVisible()
 		await roleSelect.selectOption('Test Skeptic')
 
@@ -270,6 +283,18 @@ test.describe('Extension Tests', () => {
 	test('Check Empty Input Handling', async () => {
 		page = await browserContext.newPage()
 		await initializeExtension(page)
+
+		// Clear selected content to ensure we test empty input
+		await page.evaluate(async () => {
+			const { unifiedState } = await chrome.storage.local.get('unifiedState')
+			if (unifiedState) {
+				const state = JSON.parse(unifiedState)
+				state.selectedContent = null
+				await chrome.storage.local.set({ unifiedState: JSON.stringify(state) })
+			}
+		})
+		await page.reload()
+		await expect(page.locator('body')).toBeVisible()
 
 		// Try to check without entering text
 		const checkBtn = page.getByTestId('fact-check-btn')

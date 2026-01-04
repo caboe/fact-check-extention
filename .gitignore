@@ -66,3 +66,8 @@ node_modules/
 /node_modules/
 tests/config.ts
 test-results/.last-run.json
+.DS_Store
+
+.kilocode
+.trae
+conductor/

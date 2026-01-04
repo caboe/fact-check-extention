@@ -101,6 +101,22 @@ Votre personnage est le philosophe Emmanuel Kant.
 	closeHelp: 'Fermer',
 	on: 'sur',
 	extensionInstalled: 'Extension Fact Check installée.',
+	useRags: 'Utiliser {count:number} RAG{{s}}',
+	activateRags: 'Activer les RAGs',
+	// RAG Configuration
+	ragConfiguration: 'Configuration RAG',
+	ragEndpoints: 'Points de terminaison RAG',
+	noRagEndpoints: 'Aucun point de terminaison RAG configuré.',
+	fetchRagData: 'Récupération des données RAG...',
+	ragMode: 'Mode',
+	topK: 'Top K',
+	ragModeLocal: 'Local',
+	ragModeGlobal: 'Global',
+	ragModeHybrid: 'Hybride',
+	ragModeNaive: 'Naïf',
+	ragModeMix: 'Mixte',
+	addRagEndpoint: 'Ajouter un point de terminaison RAG',
+	updateRagEndpoint: 'Mettre à jour le point de terminaison RAG',
 } satisfies BaseTranslation
 
 export default fr

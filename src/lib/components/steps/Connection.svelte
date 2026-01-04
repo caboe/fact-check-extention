@@ -11,6 +11,7 @@
 	import Settings from '../icons/SettingsIcon.svelte'
 	import { basicRoles } from '../../util/role.svelte'
 	import customRoles from '../../util/customRoles.svelte'
+	import ragEndpoints from '../../state/ragEndpoints.svelte'
 
 	interface Props {
 		open: boolean
@@ -70,6 +71,7 @@
 		<label
 			for={availableEndpoints.length > 0 ? 'endpoints' : null}
 			class="text-md grid grid-cols-[auto_1fr] items-center gap-4 text-left font-bold"
+			data-testid="connection-accordion-toggle"
 		>
 			<ConnectionIcon />
 			<div class="flex min-w-0 items-center gap-1 overflow-hidden">
@@ -118,7 +120,10 @@
 
 			<div class="flex items-center justify-between">
 				<div class="text-md">{L.rolePlacementLabel()}</div>
-				<Settings onclick={() => (view.showRoleConfig = true)} data-testid="role-config-btn" />
+				<Settings
+					onclick={() => (popupState.value = 'ROLE_CONFIG')}
+					data-testid="role-config-btn"
+				/>
 			</div>
 			<label class="flex flex-col gap-2">
 				<select
@@ -137,6 +142,28 @@
 					{/each}
 				</select>
 			</label>
+
+			<div class="mt-2 flex items-center justify-between">
+				<div class="text-md">{L.ragEndpoints()}</div>
+				<Settings onclick={() => (popupState.value = 'RAG_CONFIG')} data-testid="rag-config-btn" />
+			</div>
+			{#if ragEndpoints.value.list.length > 0}
+				<div class="flex flex-col gap-2">
+					{#each ragEndpoints.value.list as endpoint (endpoint.title)}
+						<label class="flex items-center space-x-2">
+							<input
+								class="checkbox"
+								type="checkbox"
+								bind:group={unifiedStorage.value.selectedRagEndpoints}
+								value={endpoint.title}
+							/>
+							<p>{endpoint.title}</p>
+						</label>
+					{/each}
+				</div>
+			{:else}
+				<div class="text-sm text-gray-500">{L.noRagEndpoints()}</div>
+			{/if}
 		</div>
 	{/snippet}
 </AccordionItem>

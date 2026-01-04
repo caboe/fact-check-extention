@@ -77,48 +77,68 @@
 		}
 
 		// First check if there is a pending image or text from context menu
-		chrome.storage?.session?.get(
-			['pendingContextMenuImage', 'pendingContextMenuText', 'pendingContextMenuContext'],
-			async (items) => {
-				await checkPendingContent(items)
-				// If no pending content, proceed with normal selection logic
-				if (!items?.pendingContextMenuImage && !items?.pendingContextMenuText && !items?.pendingContextMenuContext) {
-					chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-						const tab = tabs[0]
-						if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
-							chrome.tabs.sendMessage(
-								tab.id,
-								{ action: 'getSelectedContent' },
-								(response: SelectedContent) => {
-									if (chrome.runtime.lastError) {
-										console.warn(
-											`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
-										)
-										return
-									}
-									unifiedStorage.value.result = undefined
-									apiRequest.value.state = 'EMPTY'
-									unifiedStorage.value.selectedContent = response
-								},
-							)
-							imageSelectOnPage(false)
-							textSelectOnPage(false)
-						} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
-							// Don't try to communicate with restricted pages
-						}
-					})
-				}
-			},
-		)
+		const getPendingContent = async () => {
+			let items: Record<string, any> = {}
+			if (chrome.storage.session) {
+				items = await chrome.storage.session.get([
+					'pendingContextMenuImage',
+					'pendingContextMenuText',
+					'pendingContextMenuContext',
+				])
+			} else {
+				items = await chrome.storage.local.get([
+					'pendingContextMenuImage',
+					'pendingContextMenuText',
+					'pendingContextMenuContext',
+				])
+			}
+
+			await checkPendingContent(items)
+			// If no pending content, proceed with normal selection logic
+			if (
+				!items?.pendingContextMenuImage &&
+				!items?.pendingContextMenuText &&
+				!items?.pendingContextMenuContext
+			) {
+				chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
+					const tab = tabs[0]
+					if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
+						chrome.tabs.sendMessage(
+							tab.id,
+							{ action: 'getSelectedContent' },
+							(response: SelectedContent) => {
+								if (chrome.runtime.lastError) {
+									console.warn(
+										`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
+									)
+									return
+								}
+								unifiedStorage.value.result = undefined
+								apiRequest.value.state = 'EMPTY'
+								unifiedStorage.value.selectedContent = response
+							},
+						)
+						imageSelectOnPage(false)
+						textSelectOnPage(false)
+					} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
+						// Don't try to communicate with restricted pages
+					}
+				})
+			}
+		}
+		getPendingContent()
 
 		// Listen for changes in session storage to handle race condition where popup opens before storage is set
 		const listener = (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-			if (areaName === 'session') {
+			if (areaName === 'session' || areaName === 'local') {
 				const items: Record<string, any> = {}
-				if (changes.pendingContextMenuImage?.newValue) items.pendingContextMenuImage = changes.pendingContextMenuImage.newValue
-				if (changes.pendingContextMenuText?.newValue) items.pendingContextMenuText = changes.pendingContextMenuText.newValue
-				if (changes.pendingContextMenuContext?.newValue) items.pendingContextMenuContext = changes.pendingContextMenuContext.newValue
-				
+				if (changes.pendingContextMenuImage?.newValue)
+					items.pendingContextMenuImage = changes.pendingContextMenuImage.newValue
+				if (changes.pendingContextMenuText?.newValue)
+					items.pendingContextMenuText = changes.pendingContextMenuText.newValue
+				if (changes.pendingContextMenuContext?.newValue)
+					items.pendingContextMenuContext = changes.pendingContextMenuContext.newValue
+
 				if (Object.keys(items).length > 0) {
 					checkPendingContent(items)
 				}
@@ -352,7 +372,7 @@
 			>
 				{L.howToSelect()}
 			</button>
-			<button onclick={reset} class="btn btn-sm p-0"><CloseIcon /></button>
+			<CloseIcon onclick={reset} class="btn btn-sm p-0" />
 		</div>
 
 		{#if showHelp}
