@@ -68,6 +68,5 @@ tests/config.ts
 test-results/.last-run.json
 .DS_Store
 
-.kilokode
 .kilocode
 .trae
