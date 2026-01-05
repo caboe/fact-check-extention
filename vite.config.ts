@@ -13,6 +13,7 @@ export default defineConfig({
 			input: {
 				popup: path.resolve(__dirname, 'src/main.ts'), // Einstiegspunkt für Popup
 				background: path.resolve(__dirname, 'src/background.ts'), // Hintergrund-Skript
+				offscreen: path.resolve(__dirname, 'src/offscreen.ts'), // Offscreen document
 				// content script is now built separately via vite.content.config.ts
 				// Entfernen Sie 'manifest.json' aus den Eingängen
 			},

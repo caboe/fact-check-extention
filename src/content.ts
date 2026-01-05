@@ -112,6 +112,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		sendResponse(true)
 		return true // Keep the message channel open for async response
 	}
+	if (request.action === 'disableTextSelect') {
+		// Cleanup if needed
+		sendResponse(true)
+		return true
+	}
 	if (request.action === 'getSelectedContent') {
 		let selectedContent: SelectedContent = undefined
 		const text = window.getSelection()?.toString()
@@ -139,5 +144,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		return true
 	}
 })
-
-

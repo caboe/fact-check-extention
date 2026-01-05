@@ -373,7 +373,7 @@ type RootTranslation = {
 	 */
 	extensionInstalled: string
 	/**
-	 * U​s​e​ ​R​A​G​s​ ​(​{​c​o​u​n​t​}​)
+	 * U​s​e​ ​{​c​o​u​n​t​}​ ​R​A​G​{​{​s​}​}
 	 * @param {number} count
 	 */
 	useRags: RequiredParams<'count'>
@@ -433,6 +433,14 @@ type RootTranslation = {
 	 * U​p​d​a​t​e​ ​R​A​G​ ​E​n​d​p​o​i​n​t
 	 */
 	updateRagEndpoint: string
+	/**
+	 * C​l​e​a​r​ ​B​r​o​w​s​e​r​ ​M​o​d​e​l​ ​C​a​c​h​e
+	 */
+	clearCache: string
+	/**
+	 * C​a​c​h​e​ ​c​l​e​a​r​e​d​!
+	 */
+	cacheCleared: string
 }
 
 export type TranslationFunctions = {
@@ -789,7 +797,7 @@ Your persona is the philosopher Immanuel Kant.
 	 */
 	extensionInstalled: () => LocalizedString
 	/**
-	 * Use RAGs ({count})
+	 * Use {count} RAG{{s}}
 	 */
 	useRags: (arg: { count: number }) => LocalizedString
 	/**
@@ -848,6 +856,14 @@ Your persona is the philosopher Immanuel Kant.
 	 * Update RAG Endpoint
 	 */
 	updateRagEndpoint: () => LocalizedString
+	/**
+	 * Clear Browser Model Cache
+	 */
+	clearCache: () => LocalizedString
+	/**
+	 * Cache cleared!
+	 */
+	cacheCleared: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -21,6 +21,11 @@
 	let endpointSelectEl: HTMLSelectElement | null = $state(null)
 	let showHelp = $state(false)
 
+	// Audio Recording State
+	let loadingModel = $state(false)
+	let loadingProgress = $state(0)
+	let isRecording = $state(false)
+
 	function isRestrictedUrl(url: string | undefined): boolean {
 		if (!url) return true // Treat undefined URL as restricted
 		try {
@@ -275,6 +280,51 @@
 		if (hasSelected) {
 			view.step = 1
 		}
+
+		// Listen for recording/transcription updates
+		const messageListener = (message: any) => {
+			if (message.type === 'TRANSCRIPTION_STATUS') {
+				if (message.status === 'loading') {
+					loadingModel = true
+					loadingProgress = message.progress
+				} else if (message.status === 'ready') {
+					loadingModel = false
+				} else if (message.status === 'recording') {
+					isRecording = true
+					loadingModel = false
+				} else if (message.status === 'stopped') {
+					isRecording = false
+				}
+			} else if (message.type === 'TRANSCRIPTION_RESULT') {
+				// Append text
+				if (
+					!unifiedStorage.value.selectedContent ||
+					isSelectedText(unifiedStorage.value.selectedContent)
+				) {
+					// @ts-ignore
+					const currentText = unifiedStorage.value.selectedContent?.text || ''
+					const separator = currentText.length > 0 && currentText.trim().length > 0 ? ' ' : ''
+					unifiedStorage.value.selectedContent = { text: currentText + separator + message.text }
+				} else {
+					// If image selected, maybe replace or warn?
+					// For now, if image, we don't append. Or switch to text?
+					// Let's force text mode if transcription comes in.
+					unifiedStorage.value.selectedContent = { text: message.text }
+				}
+			}
+		}
+		chrome.runtime.onMessage.addListener(messageListener)
+
+		// Check initial state
+		chrome.storage.local.get(['isRecording'], (result) => {
+			if (result.isRecording) {
+				isRecording = true
+			}
+		})
+
+		return () => {
+			chrome.runtime.onMessage.removeListener(messageListener)
+		}
 	})
 </script>
 
@@ -328,6 +378,25 @@
 				></textarea>
 			{/if}
 		</div>
+
+		<!-- Recording Status -->
+		{#if loadingModel}
+			<div class="rounded-container-token variant-soft-surface mb-4 p-2">
+				<div class="mb-1 flex justify-between text-sm">
+					<span>Downloading AI Model...</span>
+					<span>{loadingProgress}%</span>
+				</div>
+				<div class="bg-surface-300 h-2 w-full rounded-full">
+					<div class="bg-primary-500 h-2 rounded-full" style="width: {loadingProgress}%"></div>
+				</div>
+			</div>
+		{/if}
+		{#if isRecording}
+			<div class="text-error-500 mb-4 flex animate-pulse items-center gap-2 font-bold">
+				<div class="bg-error-500 h-3 w-3 rounded-full"></div>
+				<span>Recording in progress...</span>
+			</div>
+		{/if}
 
 		{#if !hasSelected}
 			<textarea
