@@ -18,6 +18,12 @@
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
 
 	const endpointTemplateMap: EndpointTemplateMap = {
+		openRouter: {
+			title: 'OpenRouter',
+			url: 'https://openrouter.ai/api/v1/chat/completions',
+			model: 'google/gemini-3-flash-preview',
+			apiKeyUrl: 'https://openrouter.ai/keys',
+		},
 		kimi: {
 			title: 'Kimi',
 			url: 'https://api.moonshot.ai/v1/chat/completions',
@@ -25,20 +31,14 @@
 			apiKeyUrl: 'https://platform.moonshot.ai/console/api-keys',
 		},
 		lmstudio: {
-			title: 'LM Studio Local',
+			title: 'LM Studio (Local)',
 			url: 'http://localhost:1234/v1/chat/completions',
 			model: 'mimo-vl-7b-rl',
 		},
 		ollama: {
-			title: 'Ollama',
+			title: 'Ollama (Local)',
 			url: 'http://localhost:11434/api/chat',
 			model: 'mistral-small',
-		},
-		miniMax: {
-			title: 'MiniMax',
-			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
-			model: 'MiniMax-M2',
-			apiKeyUrl: 'https://www.minimax.io/platform/document/',
 		},
 		deepSeek: {
 			title: 'DeepSeek',
@@ -46,29 +46,29 @@
 			model: 'deepseek-chat',
 			apiKeyUrl: 'https://platform.deepseek.com/api-keys',
 		},
-		qwen: {
-			title: 'Qwen',
-			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
-			model: 'qwen-plus',
-			apiKeyUrl: 'https://bailian.console.aliyun.com/?tab=apiKey',
-		},
 		gemini: {
 			title: 'Gemini',
 			url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
 			model: 'gemini-2.5-flash',
 			apiKeyUrl: 'https://aistudio.google.com/app/apikey',
 		},
+		miniMax: {
+			title: 'MiniMax',
+			url: 'https://api.minimax.io/v1/text/chatcompletion_v2',
+			model: 'MiniMax-M2',
+			apiKeyUrl: 'https://www.minimax.io/platform/document/',
+		},
+		qwen: {
+			title: 'Qwen',
+			url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',
+			model: 'qwen-plus',
+			apiKeyUrl: 'https://bailian.console.aliyun.com/?tab=apiKey',
+		},
 		openAi: {
 			title: 'ChatGPT',
 			url: 'https://api.openai.com/v1/chat/completions',
 			model: 'gpt-5',
 			apiKeyUrl: 'https://platform.openai.com/api-keys',
-		},
-		openRouter: {
-			title: 'OpenRouter',
-			url: 'https://openrouter.ai/api/v1/chat/completions',
-			model: 'z-ai/glm-4.7',
-			apiKeyUrl: 'https://openrouter.ai/keys',
 		},
 	}
 

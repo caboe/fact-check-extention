@@ -51,10 +51,14 @@ export default async function handleStreamResponse(response: Response, signal: A
 		if (value) {
 			const chunk = decoder.decode(value, { stream: true })
 			buffer += chunk
+		}
 
+		if (value || done) {
 			const lines = buffer.split('\n')
 			//last line might be incomplete
-			buffer = lines.pop()!
+			if (!done) {
+				buffer = lines.pop()!
+			}
 
 			for (const rawLine of lines) {
 				if (rawLine.trim() === '') continue
@@ -68,6 +72,14 @@ export default async function handleStreamResponse(response: Response, signal: A
 
 				try {
 					const parsed = JSON.parse(line)
+
+					// Handle error response (e.g. from local LM)
+					if (parsed.error) {
+						const errorMessage = parsed.error.message || JSON.stringify(parsed.error)
+						apiRequest.value.state = 'ERROR'
+						unifiedStorage.value.result = errorMessage
+						return // Stop processing and exit
+					}
 
 					// Handle Gemini response format
 					if (parsed.candidates?.[0]?.content?.parts?.[0]?.text) {
