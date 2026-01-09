@@ -125,7 +125,7 @@ async function processBuffer() {
 	// Transcribe
 	try {
 		const result = await transcriber(fullBuffer, {
-			language: 'english', // Auto-detect is default but specific language is faster? User said multilingual.
+			language: 'german', // Changed from english to german
 			// task: 'transcribe',
 			chunk_length_s: 30,
 			stride_length_s: 5,
