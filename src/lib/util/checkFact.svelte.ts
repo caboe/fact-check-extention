@@ -95,10 +95,10 @@ export default async function checkFact() {
 				contentStr = content.map((c) => (c.type === 'text' ? c.text : '[Image]')).join('\n')
 			}
 
-			return `DEINE AUFGABE:\n
+			return `YOUR TASK:\n
 			${getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range)}\n
             ${ragContext ? `\n${ragContext}\n` : ''}
-			CHECKE DIE FOLGENDE AUSSAGE:\n
+			CHECK THE FOLLOWING STATEMENT:\n
 			${contentStr}`
 		}
 

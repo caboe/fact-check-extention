@@ -3,15 +3,8 @@
 	"name": "Fact Spreader",
 	"version": "3.0.1",
 	"description": "Highlight text and send it to LLMs (ChatGPT, Ollama) for instant fact-checking insights. Your personal verification workflow.",
-	"permissions": [
-		"storage",
-		"activeTab",
-		"clipboardWrite",
-		"contextMenus"
-	],
-	"host_permissions": [
-		"<all_urls>"
-	],
+	"permissions": ["storage", "activeTab", "clipboardWrite", "contextMenus"],
+	"host_permissions": ["<all_urls>"],
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
@@ -21,19 +14,13 @@
 		}
 	},
 	"background": {
-		"scripts": [
-			"background.js"
-		],
+		"scripts": ["background.js"],
 		"type": "module"
 	},
 	"content_scripts": [
 		{
-			"matches": [
-				"<all_urls>"
-			],
-			"js": [
-				"content.js"
-			]
+			"matches": ["<all_urls>"],
+			"js": ["content.js"]
 		}
 	],
 	"icons": {
@@ -46,9 +33,7 @@
 			"id": "fact-check-extension@example.com",
 			"strict_min_version": "142.0",
 			"data_collection_permissions": {
-				"required": [
-					"websiteContent"
-				],
+				"required": ["websiteContent"],
 				"optional": []
 			}
 		}

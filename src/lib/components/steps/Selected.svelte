@@ -23,8 +23,9 @@
 
 	// Audio Recording State
 	let loadingModel = $state(false)
-	let loadingProgress = $state(0)
+	let fileProgress = $state<Record<string, number>>({})
 	let isRecording = $state(false)
+	let errorMessage = $state<string | null>(null)
 
 	function isRestrictedUrl(url: string | undefined): boolean {
 		if (!url) return true // Treat undefined URL as restricted
@@ -276,6 +277,10 @@
 		apiRequest.value.state = 'EMPTY'
 	}
 
+	function stopRecording() {
+		chrome.runtime.sendMessage({ type: 'STOP_RECORDING' })
+	}
+
 	onMount(() => {
 		if (hasSelected) {
 			view.step = 1
@@ -286,15 +291,27 @@
 			if (message.type === 'TRANSCRIPTION_STATUS') {
 				if (message.status === 'loading') {
 					loadingModel = true
-					loadingProgress = message.progress
+					if (message.file) {
+						fileProgress[message.file] = message.progress
+					} else {
+						fileProgress['model'] = message.progress
+					}
 				} else if (message.status === 'ready') {
 					loadingModel = false
+					fileProgress = {}
 				} else if (message.status === 'recording') {
 					isRecording = true
 					loadingModel = false
 				} else if (message.status === 'stopped') {
 					isRecording = false
 				}
+			} else if (message.type === 'TRANSCRIPTION_ERROR') {
+				loadingModel = false
+				isRecording = false
+				errorMessage = message.error
+				setTimeout(() => {
+					errorMessage = null
+				}, 5000)
 			} else if (message.type === 'TRANSCRIPTION_RESULT') {
 				// Append text
 				if (
@@ -380,20 +397,31 @@
 		</div>
 
 		<!-- Recording Status -->
+		{#if errorMessage}
+			<div class="variant-soft-error mb-4 p-2 text-sm rounded-container-token">
+				<span class="font-bold">Error:</span>
+				{errorMessage}
+			</div>
+		{/if}
 		{#if loadingModel}
-			<div class="rounded-container-token variant-soft-surface mb-4 p-2">
-				<div class="mb-1 flex justify-between text-sm">
-					<span>Downloading AI Model...</span>
-					<span>{loadingProgress}%</span>
-				</div>
-				<div class="bg-surface-300 h-2 w-full rounded-full">
-					<div class="bg-primary-500 h-2 rounded-full" style="width: {loadingProgress}%"></div>
-				</div>
+			<div class="variant-soft-surface mb-4 p-2 rounded-container-token">
+				<div class="mb-2 text-sm font-bold">Downloading AI Model...</div>
+				{#each Object.entries(fileProgress) as [fileName, progress]}
+					<div class="mb-2 last:mb-0">
+						<div class="mb-1 flex justify-between text-xs">
+							<span class="truncate pr-2 opacity-70">{fileName}</span>
+							<span>{progress}%</span>
+						</div>
+						<div class="h-1.5 w-full rounded-full bg-surface-300">
+							<div class="h-1.5 rounded-full bg-primary-500" style="width: {progress}%"></div>
+						</div>
+					</div>
+				{/each}
 			</div>
 		{/if}
 		{#if isRecording}
-			<div class="text-error-500 mb-4 flex animate-pulse items-center gap-2 font-bold">
-				<div class="bg-error-500 h-3 w-3 rounded-full"></div>
+			<div class="mb-4 flex animate-pulse items-center gap-2 font-bold text-error-500">
+				<div class="h-3 w-3 rounded-full bg-error-500"></div>
 				<span>Recording in progress...</span>
 			</div>
 		{/if}

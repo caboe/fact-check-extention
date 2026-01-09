@@ -53,8 +53,8 @@ export function processImage(src: string): Promise<string> {
 				img.crossOrigin = 'anonymous'
 				img.onload = () => {
 					// ... same resizing logic ...
-					// For brevity, let's just use the fetch path primarily. 
-                    // If fetch fails in extension with permissions, direct load likely fails too due to CORS.
+					// For brevity, let's just use the fetch path primarily.
+					// If fetch fails in extension with permissions, direct load likely fails too due to CORS.
 					reject(err)
 				}
 				img.onerror = () => reject(err)

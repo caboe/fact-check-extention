@@ -3,6 +3,7 @@
 	import customRoles from '../util/customRoles.svelte'
 	import popupState from '../../popupState.svelte'
 	import { basicRoles, type Role } from '../util/role.svelte'
+	import transcriptionLanguage from '../state/transcriptionLanguage.svelte'
 	import CloseIcon from './icons/CloseIcon.svelte'
 	import EditIcon from './icons/EditIcon.svelte'
 	import RemoveIcon from './icons/RemoveIcon.svelte'
@@ -74,6 +75,21 @@
 	<div class="mb-4 flex items-center justify-between">
 		<div class="text-md font-bold">{L.roleConfiguration()}</div>
 		<CloseIcon onclick={() => (popupState.value = 'DEFAULT')} data-testid="role-config-close-btn" />
+	</div>
+
+	<!-- Language Selection -->
+	<div class="mb-6">
+		<h3 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white">Transcription Language</h3>
+		<select
+			bind:value={transcriptionLanguage.value}
+			class="w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+		>
+			<option value="en">English</option>
+			<option value="de">German</option>
+			<option value="fr">French</option>
+			<option value="es">Spanish</option>
+			<option value="pt">Portuguese</option>
+		</select>
 	</div>
 
 	<!-- Basic Roles Section -->

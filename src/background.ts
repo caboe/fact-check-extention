@@ -189,14 +189,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 						return
 					}
 
-					// Send the stream ID to the offscreen document
-					setTimeout(() => {
-						chrome.runtime.sendMessage({
-							type: 'START_RECORDING',
-							targetTabId: tab.id,
-							streamId: streamId,
-						})
-					}, 500)
+					// Get the preferred language
+					chrome.storage.local.get(['transcriptionLanguage'], (result) => {
+						const language = result.transcriptionLanguage
+							? JSON.parse(result.transcriptionLanguage)
+							: 'en'
+
+						// Send the stream ID to the offscreen document
+						setTimeout(() => {
+							chrome.runtime.sendMessage({
+								type: 'START_RECORDING',
+								targetTabId: tab.id,
+								streamId: streamId,
+								language: language,
+							})
+						}, 500)
+					})
 				})
 			} else {
 				console.warn('Offscreen API not available')
