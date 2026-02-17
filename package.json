@@ -4,9 +4,9 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && vite build -c vite.content.config.ts",
-		"build:firefox": "vite build && vite build -c vite.content.config.ts && cp public/manifest.firefox.json dist/manifest.json && echo 'Firefox build complete'",
-		"build:watch": "vite build --watch & vite build -c vite.content.config.ts --watch",
+		"build": "vite build",
+		"build:firefox": "vite build && cp public/manifest.firefox.json dist/manifest.json && echo 'Firefox build complete'",
+		"build:watch": "vite build --watch",
 		"release": "bun run check && bun run build && cd dist && find . -name \".DS_Store\" -delete && zip -r ../release-$(date +%Y-%m-%d).zip . -x \"**/.DS_Store\" && cd ..",
 		"release:firefox": "bun run check && bun run build:firefox && cd dist && find . -name \".DS_Store\" -delete && zip -r ../release-firefox-$(date +%Y-%m-%d).zip . -x \"**/.DS_Store\" && cd ..",
 		"preview": "vite preview",

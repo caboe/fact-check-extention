@@ -66,7 +66,7 @@
 				// Skip querying tab
 				return
 			} else if (pendingText) {
-				// We have pending text, use it!
+				// We have pending text from context menu, use it!
 				await chrome.storage.session.remove('pendingContextMenuText')
 				unifiedStorage.value.selectedContent = { text: pendingText }
 				unifiedStorage.value.result = undefined
@@ -94,37 +94,7 @@
 			}
 
 			await checkPendingContent(items)
-			// If no pending content, proceed with normal selection logic
-			if (
-				!items?.pendingContextMenuImage &&
-				!items?.pendingContextMenuText &&
-				!items?.pendingContextMenuContext
-			) {
-				chrome.tabs?.query({ active: true, currentWindow: true }, (tabs) => {
-					const tab = tabs[0]
-					if (tab?.id !== undefined && !isRestrictedUrl(tab.url)) {
-						chrome.tabs.sendMessage(
-							tab.id,
-							{ action: 'getSelectedContent' },
-							(response: SelectedContent) => {
-								if (chrome.runtime.lastError) {
-									console.warn(
-										`Fact Check: Could not get selected content from tab ${tab.id} (${tab.url}): ${chrome.runtime.lastError.message}`,
-									)
-									return
-								}
-								unifiedStorage.value.result = undefined
-								apiRequest.value.state = 'EMPTY'
-								unifiedStorage.value.selectedContent = response
-							},
-						)
-						imageSelectOnPage(false)
-						textSelectOnPage(false)
-					} else if (tab?.id !== undefined && isRestrictedUrl(tab.url)) {
-						// Don't try to communicate with restricted pages
-					}
-				})
-			}
+			// Note: Automatic text selection from page is disabled - user must manually enter text
 		}
 		getPendingContent()
 

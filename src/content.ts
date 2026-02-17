@@ -12,6 +12,7 @@ const noop = (event: Event) => {
 }
 
 function addImageSelectStyles() {
+	if (document.getElementById('dynamic-img-hover')) return
 	const style = document.createElement('style')
 	style.id = 'dynamic-img-hover' // Eindeutige ID für spätere Referenz
 	style.textContent = `
@@ -82,10 +83,14 @@ const imageClickHandler = async (event: MouseEvent) => {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-	console.log('content.js received message', request)
-
 	if (request.action === 'enableImageSelect') {
 		addImageSelectStyles()
+
+		// Remove potential existing listeners to avoid duplicates
+		suppessEvents.forEach((event) => {
+			document.removeEventListener(event, noop)
+		})
+		document.removeEventListener('click', imageClickHandler)
 
 		suppessEvents.forEach((event) => {
 			document.addEventListener(event, noop)
@@ -139,5 +144,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		return true
 	}
 })
-
-

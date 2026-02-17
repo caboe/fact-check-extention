@@ -40,7 +40,6 @@ function updateContextMenus() {
 }
 
 chrome.runtime.onInstalled.addListener(() => {
-	console.log(L.extensionInstalled)
 	updateContextMenus()
 })
 
