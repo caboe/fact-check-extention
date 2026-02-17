@@ -17,10 +17,10 @@
 
 	function handleSubmit() {
 		const updatedEndpoint: Endpoint = {
-			title,
-			url,
-			apiKey,
-			model,
+			title: title.trim(),
+			url: url.trim(),
+			apiKey: apiKey.trim(),
+			model: model.trim(),
 			canProcessImages,
 			rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
 		}
