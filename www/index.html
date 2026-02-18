@@ -96,16 +96,34 @@
 				>
 			</li>
 			<li>
-				Run the build command: <code>bun run build</code>. This will generate a
-				<code>fact-check-extension.zip</code> file in the <code>dist/</code> directory.
+				Run the build command: <code>bun run build</code>. This will build the extension in the
+				<code>dist-chrome/</code> directory.
 			</li>
 			<li>Open Chrome and go to <code>chrome://extensions/</code>.</li>
 			<li>Enable "Developer mode" using the toggle in the top right corner.</li>
 			<li>Click the "Load unpacked" button.</li>
 			<li>
-				Navigate to the <code>dist/</code> folder within the extension's directory and select it.
+				Navigate to the <code>dist-chrome/</code> folder within the extension's directory and select
+				it.
 			</li>
 			<li>The extension should now appear in your list of installed extensions.</li>
+		</ol>
+
+		<h3>Install in Firefox (Developer Edition / Temporary)</h3>
+
+		<p>To run the extension in Firefox:</p>
+
+		<ol>
+			<li>
+				Run the build command: <code>bun run build:firefox</code>. This will build the extension in
+				the <code>dist-firefox/</code> directory using the Firefox-compatible manifest.
+			</li>
+			<li>Open Firefox and go to <code>about:debugging#/runtime/this-firefox</code>.</li>
+			<li>Click "Load Temporary Add-on...".</li>
+			<li>
+				Navigate to the <code>dist-firefox/</code> folder and select <code>manifest.json</code>.
+			</li>
+			<li>The extension is now temporarily installed and ready to use.</li>
 		</ol>
 
 		<h2>Usage</h2>
