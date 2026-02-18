@@ -148,11 +148,18 @@
 	}
 
 	function reset() {
-		unifiedStorage.value.selectedContent = { text: '' }
-		unifiedStorage.value.result = undefined
-		apiRequest.value.state = 'EMPTY'
-		unifiedStorage.value.contextEnabled = false
-		unifiedStorage.value.contextText = ''
+		// Assign a new object through the setter (not just nested mutations)
+		// so the top-level $state signal changes, reliably triggering the
+		// persistence $effect in all browsers (including Firefox).
+		unifiedStorage.value = {
+			...unifiedStorage.value,
+			selectedContent: { text: '' },
+			result: undefined,
+			reasoning: undefined,
+			contextEnabled: false,
+			contextText: '',
+		}
+		apiRequest.value = { ...apiRequest.value, state: 'EMPTY' }
 	}
 
 	function toggleContext() {

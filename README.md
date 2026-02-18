@@ -44,21 +44,21 @@ If you want to install a specific version or contribute to development, you can 
 Steps:
 
 1. Clone repo: [https://github.com/caboe/fact-check-extention](https://github.com/caboe/fact-check-extention)
-2. Run the build command: `bun run build`. This will generate a `fact-check-extension.zip` file in the `dist/` directory.
+2. Run the build command: `bun run build`. This will build the extension in the `dist-chrome/` directory.
 3. Open Chrome and go to `chrome://extensions/`.
 4. Enable "Developer mode" using the toggle in the top right corner.
 5. Click the "Load unpacked" button.
-6. Navigate to the `dist/` folder within the extension's directory and select it.
+6. Navigate to the `dist-chrome/` folder within the extension's directory and select it.
 7. The extension should now appear in your list of installed extensions.
 
 ### Install in Firefox (Developer Edition / Temporary)
 
 To run the extension in Firefox:
 
-1. Run the build command: `bun run build:firefox`. This will build the extension in the `dist/` directory using the Firefox-compatible manifest.
+1. Run the build command: `bun run build:firefox`. This will build the extension in the `dist-firefox/` directory using the Firefox-compatible manifest.
 2. Open Firefox and go to `about:debugging#/runtime/this-firefox`.
 3. Click "Load Temporary Add-on...".
-4. Navigate to the `dist/` folder and select `manifest.json`.
+4. Navigate to the `dist-firefox/` folder and select `manifest.json`.
 5. The extension is now temporarily installed and ready to use.
 
 ## Usage

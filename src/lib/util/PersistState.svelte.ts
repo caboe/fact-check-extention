@@ -43,7 +43,13 @@ export class PersistState<T> {
 		$effect.root(() => {
 			$effect(() => {
 				if (this.#value) {
-					this.#setUnifiedState(this.#value)
+					// Serialize directly in the effect body so that all nested
+					// property reads go through the $state proxy synchronously,
+					// establishing fine-grained reactive dependencies.
+					// This avoids cross-browser differences (Chrome V8 vs Firefox
+					// SpiderMonkey) with JSON.stringify inside async/Promise wrappers.
+					const serialized = JSON.stringify(this.#value)
+					this.#writeToStorage(serialized)
 				} else {
 					this.deleteUnifiedState()
 				}
@@ -77,14 +83,15 @@ export class PersistState<T> {
 		}
 	}
 
-	async #setUnifiedState(state: T): Promise<void> {
+	/**
+	 * Write a pre-serialized state string to storage.
+	 * Uses the MV3 Promise-based API (no callback wrapper) for reliable
+	 * persistence in both Chrome and Firefox.
+	 */
+	#writeToStorage(serialized: string): void {
 		if (isChromeStorage(this.#storage)) {
-			return new Promise<void>((resolve) => {
-				const serialized = JSON.stringify(state)
-				this.#storage.set({ [this.#key]: serialized }, () => resolve())
-			})
+			this.#storage.set({ [this.#key]: serialized })
 		} else {
-			const serialized = JSON.stringify(state)
 			this.#storage.setItem(this.#key, serialized)
 		}
 	}
