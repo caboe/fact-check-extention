@@ -15,6 +15,7 @@ export default ts.config(
 			globals: {
 				...globals.browser,
 				...globals.node,
+				...globals.webextensions,
 			},
 		},
 	},

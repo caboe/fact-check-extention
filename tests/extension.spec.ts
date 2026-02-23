@@ -98,7 +98,7 @@ test.describe('Extension Tests', () => {
 		await expect(checkBtn).toBeEnabled()
 		await checkBtn.click()
 
-		let copyBtn = page.getByTestId('response-copy-btn')
+		const copyBtn = page.getByTestId('response-copy-btn')
 		await expect(copyBtn).toBeVisible({ timeout: 30000 })
 
 		// Navigate back to input for second check
