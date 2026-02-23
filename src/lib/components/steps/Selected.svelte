@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
-	import { isSelectedImage, isSelectedText, type SelectedContent } from '../../../TSelectedContent'
-	import { processImage } from '../../util/imageProcessing'
+	import { isSelectedImage, isSelectedText } from '../../../TSelectedContent'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
 	import view from '../../state/view.svelte'
+	import { processImage } from '../../util/imageProcessing'
 	import unifiedStorage from '../../util/unifiedStorage.svelte'
-	import CommentsIcon from '../icons/CommentsIcon.svelte'
-	import TextIcon from '../icons/TextIcon.svelte'
-	import ImageIcon from '../icons/ImageIcon.svelte'
 	import CloseIcon from '../icons/CloseIcon.svelte'
+	import CommentsIcon from '../icons/CommentsIcon.svelte'
 	interface Props {
 		open: boolean
 	}

@@ -45,13 +45,18 @@ chrome.runtime.onInstalled.addListener(() => {
 
 updateContextMenus()
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
 	if (info.menuItemId === 'fact-check-image') {
-		try {
-			// @ts-ignore - openPopup might not be in type definitions yet
-			await chrome.action.openPopup()
-		} catch (err) {
-			// Fallback if openPopup is not supported or fails
+		// Save pending image to storage (fire-and-forget, don't await)
+		// This must happen before openPopup to ensure data is available
+		const storage = chrome.storage.session || chrome.storage.local
+		storage.set({ pendingContextMenuImage: info.srcUrl }).catch((err) => {
+			console.error('Failed to save pending image:', err)
+		})
+
+		// Open popup synchronously (required for Firefox user gesture context)
+		chrome.action.openPopup().catch((err) => {
+			// Fallback if openPopup fails
 			console.warn('Failed to open popup, falling back to content script notification', err)
 
 			if (tab?.id) {
@@ -68,37 +73,30 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 					},
 				)
 			}
-		}
-		// Save pending image to session storage
-		if (chrome.storage.session) {
-			await chrome.storage.session.set({ pendingContextMenuImage: info.srcUrl })
-		} else {
-			await chrome.storage.local.set({ pendingContextMenuImage: info.srcUrl })
-		}
+		})
 	} else if (info.menuItemId === 'fact-check-text') {
-		try {
-			// @ts-ignore - openPopup might not be in type definitions yet
-			await chrome.action.openPopup()
-		} catch (err) {
+		// Save pending text to storage (fire-and-forget, don't await)
+		// This must happen before openPopup to ensure data is available
+		const storage = chrome.storage.session || chrome.storage.local
+		storage.set({ pendingContextMenuText: info.selectionText }).catch((err) => {
+			console.error('Failed to save pending text:', err)
+		})
+
+		// Open popup synchronously (required for Firefox user gesture context)
+		chrome.action.openPopup().catch((err) => {
 			console.warn('Failed to open popup', err)
-		}
-		// Save pending text to session storage
-		if (chrome.storage.session) {
-			await chrome.storage.session.set({ pendingContextMenuText: info.selectionText })
-		} else {
-			await chrome.storage.local.set({ pendingContextMenuText: info.selectionText })
-		}
+		})
 	} else if (info.menuItemId === 'fact-check-text-context') {
-		try {
-			// @ts-ignore
-			await chrome.action.openPopup()
-		} catch (err) {
+		// Save pending context to storage (fire-and-forget, don't await)
+		// This must happen before openPopup to ensure data is available
+		const storage = chrome.storage.session || chrome.storage.local
+		storage.set({ pendingContextMenuContext: info.selectionText }).catch((err) => {
+			console.error('Failed to save pending context:', err)
+		})
+
+		// Open popup synchronously (required for Firefox user gesture context)
+		chrome.action.openPopup().catch((err) => {
 			console.warn('Failed to open popup', err)
-		}
-		if (chrome.storage.session) {
-			await chrome.storage.session.set({ pendingContextMenuContext: info.selectionText })
-		} else {
-			await chrome.storage.local.set({ pendingContextMenuContext: info.selectionText })
-		}
+		})
 	}
 })
