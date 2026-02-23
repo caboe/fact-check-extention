@@ -9,8 +9,8 @@ This project uses Playwright for end-to-end tests targeting the built extension 
 
 ## Build the extension
 
-- Run `bun run build` to produce the `dist` folder used in tests.
-- Tests load the built extension from `dist` (`tests/extension.spec.ts:12`–`tests/extension.spec.ts:22`).
+- Run `bun run build` to produce the `dist-chrome` folder used in tests.
+- Tests load the built extension from `dist-chrome` (`tests/extension.spec.ts:12`–`tests/extension.spec.ts:22`).
 
 ## Configure test credentials
 

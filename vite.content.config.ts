@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import path from 'path'
 
+const outDir = process.env.OUT_DIR || 'dist-chrome'
+
 export default defineConfig({
 	build: {
-		outDir: 'dist',
+		outDir,
 		emptyOutDir: false, // Don't wipe the dist folder, the main build does that
 		rollupOptions: {
 			input: {

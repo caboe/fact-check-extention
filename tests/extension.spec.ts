@@ -9,7 +9,7 @@ test.describe('Extension Tests', () => {
 
 	test.beforeAll(async () => {
 		const __dirname = path.dirname(new URL(import.meta.url).pathname)
-		const pathToExtension = path.join(__dirname, '../dist')
+		const pathToExtension = path.join(__dirname, '../dist-chrome')
 		const userDataDir = `/tmp/test-user-data-dir-${Date.now()}`
 
 		console.log(`Loading extension from: ${pathToExtension}`)
