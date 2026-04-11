@@ -43,7 +43,35 @@
 			if (pendingContext) {
 				await chrome.storage.session.remove('pendingContextMenuContext')
 				unifiedStorage.value.contextEnabled = true
-				unifiedStorage.value.contextText = pendingContext
+
+				// Update active context or create new one
+				if (!unifiedStorage.value.activeContextId) {
+					const id = crypto.randomUUID()
+					if (!unifiedStorage.value.contexts) unifiedStorage.value.contexts = []
+					unifiedStorage.value.contexts.push({
+						id,
+						name: 'Context from Menu',
+						content: pendingContext,
+					})
+					unifiedStorage.value.activeContextId = id
+				} else {
+					const ctx = unifiedStorage.value.contexts?.find(
+						(c) => c.id === unifiedStorage.value.activeContextId,
+					)
+					if (ctx) {
+						ctx.content = pendingContext
+					} else {
+						// Fallback if ID exists but context missing
+						if (!unifiedStorage.value.contexts) unifiedStorage.value.contexts = []
+						unifiedStorage.value.contexts.push({
+							id: unifiedStorage.value.activeContextId,
+							name: 'Context from Menu',
+							content: pendingContext,
+						})
+					}
+				}
+				unifiedStorage.value.contextText = pendingContext // Keep synced for now
+
 				unifiedStorage.value.result = undefined
 				apiRequest.value.state = 'EMPTY'
 				// Skip querying tab (preserve existing main content)
@@ -124,6 +152,20 @@
 			isSelectedText(unifiedStorage.value.selectedContent),
 	)
 
+	let activeContextContent = $derived(
+		unifiedStorage.value.activeContextId
+			? unifiedStorage.value.contexts?.find((c) => c.id === unifiedStorage.value.activeContextId)
+					?.content || ''
+			: unifiedStorage.value.contextText || '',
+	)
+
+	let activeContextName = $derived(
+		unifiedStorage.value.activeContextId
+			? unifiedStorage.value.contexts?.find((c) => c.id === unifiedStorage.value.activeContextId)
+					?.name || ''
+			: '',
+	)
+
 	function selectedTokenLength() {
 		if (!unifiedStorage.value.selectedContent) return 0
 		if (isSelectedImage(unifiedStorage.value.selectedContent)) return 0
@@ -138,6 +180,61 @@
 		if (option) option.selected = true
 	}
 
+	function createNewContext() {
+		const id = crypto.randomUUID()
+		if (!unifiedStorage.value.contexts) unifiedStorage.value.contexts = []
+		unifiedStorage.value.contexts.push({
+			id,
+			name: 'New Context',
+			content: '',
+		})
+		unifiedStorage.value.activeContextId = id
+		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
+	}
+
+	function deleteActiveContext() {
+		if (!unifiedStorage.value.activeContextId || !unifiedStorage.value.contexts) return
+
+		const index = unifiedStorage.value.contexts.findIndex(
+			(c) => c.id === unifiedStorage.value.activeContextId,
+		)
+
+		if (index > -1) {
+			unifiedStorage.value.contexts.splice(index, 1)
+
+			if (unifiedStorage.value.contexts.length > 0) {
+				// Switch to the previous context or the first one
+				const newIndex = Math.max(0, index - 1)
+				unifiedStorage.value.activeContextId = unifiedStorage.value.contexts[newIndex].id
+			} else {
+				// Create a default context if list is empty
+				const id = crypto.randomUUID()
+				unifiedStorage.value.contexts.push({
+					id,
+					name: 'Default Context',
+					content: '',
+				})
+				unifiedStorage.value.activeContextId = id
+			}
+		}
+		unifiedStorage.value.result = undefined
+		apiRequest.value.state = 'EMPTY'
+	}
+
+	function updateContextName(event: Event) {
+		const target = event.target as HTMLInputElement
+		const name = target.value
+		if (unifiedStorage.value.activeContextId && unifiedStorage.value.contexts) {
+			const ctx = unifiedStorage.value.contexts.find(
+				(c) => c.id === unifiedStorage.value.activeContextId,
+			)
+			if (ctx) {
+				ctx.name = name
+			}
+		}
+	}
+
 	function textChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.selectedContent = { text: target.value }
@@ -146,6 +243,15 @@
 	}
 
 	function reset() {
+		// Update active context content to empty string if it exists
+		const newContexts =
+			unifiedStorage.value.contexts?.map((c) => {
+				if (c.id === unifiedStorage.value.activeContextId) {
+					return { ...c, content: '' }
+				}
+				return c
+			}) || []
+
 		// Assign a new object through the setter (not just nested mutations)
 		// so the top-level $state signal changes, reliably triggering the
 		// persistence $effect in all browsers (including Firefox).
@@ -156,6 +262,7 @@
 			reasoning: undefined,
 			contextEnabled: false,
 			contextText: '',
+			contexts: newContexts,
 		}
 		apiRequest.value = { ...apiRequest.value, state: 'EMPTY' }
 	}
@@ -164,6 +271,12 @@
 		// unifiedStorage.value.contextEnabled = !unifiedStorage.value.contextEnabled
 		if (!unifiedStorage.value.contextEnabled) {
 			unifiedStorage.value.contextText = ''
+			if (unifiedStorage.value.activeContextId) {
+				const ctx = unifiedStorage.value.contexts?.find(
+					(c) => c.id === unifiedStorage.value.activeContextId,
+				)
+				if (ctx) ctx.content = ''
+			}
 		}
 		unifiedStorage.value.result = undefined
 		apiRequest.value.state = 'EMPTY'
@@ -172,6 +285,32 @@
 	function contextChange(event: Event) {
 		const target = event.target as HTMLTextAreaElement
 		unifiedStorage.value.contextText = target.value
+
+		if (unifiedStorage.value.activeContextId) {
+			const ctx = unifiedStorage.value.contexts?.find(
+				(c) => c.id === unifiedStorage.value.activeContextId,
+			)
+			if (ctx) {
+				ctx.content = target.value
+			} else {
+				if (!unifiedStorage.value.contexts) unifiedStorage.value.contexts = []
+				unifiedStorage.value.contexts.push({
+					id: unifiedStorage.value.activeContextId,
+					name: 'Default Context',
+					content: target.value,
+				})
+			}
+		} else {
+			const id = crypto.randomUUID()
+			if (!unifiedStorage.value.contexts) unifiedStorage.value.contexts = []
+			unifiedStorage.value.contexts.push({
+				id,
+				name: 'Default Context',
+				content: target.value,
+			})
+			unifiedStorage.value.activeContextId = id
+		}
+
 		unifiedStorage.value.result = undefined
 		apiRequest.value.state = 'EMPTY'
 	}
@@ -292,9 +431,36 @@
 				<span class="text-sm font-medium">Add Context</span>
 			</label>
 			{#if unifiedStorage.value.contextEnabled}
+				<div class="mb-2 flex gap-2">
+					<select
+						class="select flex-grow"
+						bind:value={unifiedStorage.value.activeContextId}
+						onchange={() => {
+							unifiedStorage.value.result = undefined
+							apiRequest.value.state = 'EMPTY'
+						}}
+					>
+						{#each unifiedStorage.value.contexts || [] as context}
+							<option value={context.id}>{context.name}</option>
+						{/each}
+					</select>
+					<button class="variant-filled-primary btn" onclick={createNewContext}>New</button>
+					<button class="variant-filled-error btn" onclick={deleteActiveContext}>Delete</button>
+				</div>
+
+				<div class="mb-2 flex items-center gap-2">
+					<span class="text-sm font-medium">Name:</span>
+					<input
+						class="input px-2 py-1"
+						type="text"
+						value={activeContextName}
+						oninput={updateContextName}
+					/>
+				</div>
+
 				<textarea
 					id="context-text"
-					value={unifiedStorage.value.contextText}
+					value={activeContextContent}
 					onchange={contextChange}
 					class="textarea max-h-64 min-h-24"
 					rows="1"

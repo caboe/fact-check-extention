@@ -14,8 +14,20 @@ export default function getSystemRole(person: string | null, range: number): str
 	finalRole = finalRole.replace(/{wordCount}/g, String(range))
 
 	// Add context information if enabled and contains content
-	if (unifiedStorage.value.contextEnabled && unifiedStorage.value.contextText.trim()) {
-		finalRole += `\n\n--ADDITIONAL CONTEXT--:\nThe user has provided the following context, which should be taken into account when fact-checking: "${unifiedStorage.value.contextText.trim()}". Use this information to make your fact-checking more precise and relevant.`
+	let contextContent = ''
+	if (unifiedStorage.value.activeContextId) {
+		const activeContext = unifiedStorage.value.contexts?.find(
+			(c) => c.id === unifiedStorage.value.activeContextId,
+		)
+		if (activeContext) {
+			contextContent = activeContext.content
+		}
+	} else if (unifiedStorage.value.contextText) {
+		contextContent = unifiedStorage.value.contextText
+	}
+
+	if (unifiedStorage.value.contextEnabled && contextContent.trim()) {
+		finalRole += `\n\n--ADDITIONAL CONTEXT--:\nThe user has provided the following context, which should be taken into account when fact-checking: "${contextContent.trim()}". Use this information to make your fact-checking more precise and relevant.`
 	}
 
 	return finalRole
