@@ -69,7 +69,11 @@ export default async function checkFact() {
 		content = unifiedStorage.value.selectedContent.text
 	}
 
-	if (!content) throw new Error('No content selected')
+	if (!content) {
+		unifiedStorage.value.result = 'No content selected'
+		apiRequest.value.state = 'ERROR'
+		return
+	}
 
 	type RequestBody = {
 		model?: string
@@ -249,12 +253,13 @@ export default async function checkFact() {
 					errorResponse[0]?.error?.message || errorResponse.error?.message || errorResponse.message
 				if (message) {
 					unifiedStorage.value.result = message
-					apiRequest.value.state = 'ERROR'
-					return
+				} else {
+					unifiedStorage.value.result = `HTTP Error ${response.status}: ${response.statusText}`
 				}
 			} catch (e) {
-				unifiedStorage.value.result = `HTTP-Error!  ${e}`
+				unifiedStorage.value.result = `HTTP Error ${response.status}: ${response.statusText}`
 			}
+			apiRequest.value.state = 'ERROR'
 			return
 		}
 
@@ -269,7 +274,8 @@ export default async function checkFact() {
 			unifiedStorage.value.result = undefined // Clear potentially partial results
 		} else {
 			console.error('Error during fact check:', err)
-			unifiedStorage.value.result = 'Error during fact check: ' + (err as Error).message
+			const message = err instanceof Error ? err.message : String(err)
+			unifiedStorage.value.result = 'Error during fact check: ' + message
 			apiRequest.value.state = 'ERROR'
 		}
 	} finally {

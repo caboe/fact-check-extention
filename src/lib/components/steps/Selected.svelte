@@ -40,8 +40,11 @@
 			const pendingText = items?.pendingContextMenuText
 			const pendingContext = items?.pendingContextMenuContext
 
+			// Use the same storage backend for removal as for reading
+			const sessionOrLocal = chrome.storage.session || chrome.storage.local
+
 			if (pendingContext) {
-				await chrome.storage.session.remove('pendingContextMenuContext')
+				await sessionOrLocal.remove('pendingContextMenuContext')
 				unifiedStorage.value.contextEnabled = true
 				unifiedStorage.value.contextText = pendingContext
 				unifiedStorage.value.result = undefined
@@ -52,7 +55,7 @@
 
 			if (pendingImage) {
 				// We have a pending image, use it!
-				await chrome.storage.session.remove('pendingContextMenuImage')
+				await sessionOrLocal.remove('pendingContextMenuImage')
 				try {
 					const processed = await processImage(pendingImage)
 					unifiedStorage.value.selectedContent = { image: processed }
@@ -65,7 +68,7 @@
 				return
 			} else if (pendingText) {
 				// We have pending text from context menu, use it!
-				await chrome.storage.session.remove('pendingContextMenuText')
+				await sessionOrLocal.remove('pendingContextMenuText')
 				unifiedStorage.value.selectedContent = { text: pendingText }
 				unifiedStorage.value.result = undefined
 				apiRequest.value.state = 'EMPTY'

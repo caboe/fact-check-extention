@@ -69,16 +69,24 @@ const imageClickHandler = async (event: MouseEvent) => {
 
 	const target = event.target as HTMLElement
 	if (target.tagName === 'IMG') {
-		image = await processImage((target as HTMLImageElement).src)
-
-		showNotification('image copied to extension')
+		try {
+			image = await processImage((target as HTMLImageElement).src)
+			showNotification('image copied to extension')
+		} catch (err) {
+			console.error('Fact Check: Failed to process image', err)
+			showNotification('Failed to process image')
+		}
 
 		removeImageHoverStyles()
 		if (imageClickHandler) {
 			document.removeEventListener('click', imageClickHandler)
 		}
 		// Notify the extension that image was selected
-		chrome.runtime.sendMessage({ action: 'imageSelected' })
+		try {
+			chrome.runtime.sendMessage({ action: 'imageSelected' })
+		} catch (e) {
+			console.warn('Fact Check: Failed to send message to extension (context may be invalidated)', e)
+		}
 	}
 }
 

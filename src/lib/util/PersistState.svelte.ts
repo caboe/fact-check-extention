@@ -72,14 +72,26 @@ export class PersistState<T> {
 			return new Promise<T>((resolve) => {
 				this.#storage.get(this.#key, (items: Record<string, string>) => {
 					const rawState = items[this.#key]
-					const state: T = rawState ? JSON.parse(rawState) : undefined
-					resolve(state)
+					try {
+						const state: T = rawState ? JSON.parse(rawState) : undefined
+						resolve(state)
+					} catch (e) {
+						console.error('Failed to parse persisted state, clearing corrupt data', e)
+						this.#storage.remove(this.#key)
+						resolve(undefined as T)
+					}
 				})
 			})
 		} else {
 			const item = this.#storage.getItem(this.#key)
-			const state: T = item ? JSON.parse(item) : undefined
-			return state
+			try {
+				const state: T = item ? JSON.parse(item) : undefined
+				return state
+			} catch (e) {
+				console.error('Failed to parse persisted state, clearing corrupt data', e)
+				this.#storage.removeItem(this.#key)
+				return undefined as T
+			}
 		}
 	}
 

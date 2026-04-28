@@ -21,6 +21,7 @@ class Endpoints extends PersistState<{
 	}
 
 	async load() {
+		await this.ready
 		if (this.value.list.length > 0) {
 			const lastUsedTitle = this.value.lastUsed
 			this.value.selected =
