@@ -4,9 +4,11 @@ import type { SelectedContent } from './TSelectedContent'
 import { processImage } from './lib/util/imageProcessing'
 
 let image: string | null = null
+let imageSelectActive = false
 
-const suppessEvents = ['mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend']
-const noop = (event: Event) => {
+const suppressEvents = ['mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend']
+
+const suppressHandler = (event: Event) => {
 	event.stopPropagation()
 	event.preventDefault()
 }
@@ -14,16 +16,16 @@ const noop = (event: Event) => {
 function addImageSelectStyles() {
 	if (document.getElementById('dynamic-img-hover')) return
 	const style = document.createElement('style')
-	style.id = 'dynamic-img-hover' // Eindeutige ID für spätere Referenz
+	style.id = 'dynamic-img-hover'
 	style.textContent = `
-	  img {
-	  	cursor: crosshair !important;
-	  }
-	  img:hover {
-	  	box-shadow: 0 0 1px 1px red !important;
-		z-index: 99999 !important; 
-		transition: all 0.3s; 
-	  }
+		img {
+			cursor: crosshair !important;
+		}
+		img:hover {
+			box-shadow: 0 0 1px 1px red !important;
+			transition: box-shadow 0.15s ease;
+			will-change: box-shadow;
+		}
 	`
 	document.head.appendChild(style)
 }
@@ -54,7 +56,6 @@ function showNotification(message: string) {
 
 	document.body.appendChild(notificationBox)
 
-	// Auto-remove after 3 seconds
 	setTimeout(() => {
 		if (document.body.contains(notificationBox)) {
 			document.body.removeChild(notificationBox)
@@ -62,8 +63,26 @@ function showNotification(message: string) {
 	}, 3000)
 }
 
+function removeImageSelectListeners() {
+	suppressEvents.forEach((event) => {
+		document.removeEventListener(event, suppressHandler)
+	})
+	document.removeEventListener('click', imageClickHandler)
+	imageSelectActive = false
+}
+
+function addImageSelectListeners() {
+	if (imageSelectActive) {
+		removeImageSelectListeners()
+	}
+	imageSelectActive = true
+	suppressEvents.forEach((event) => {
+		document.addEventListener(event, suppressHandler)
+	})
+	document.addEventListener('click', imageClickHandler)
+}
+
 const imageClickHandler = async (event: MouseEvent) => {
-	// Always prevent default behavior for any click during image selection mode
 	event.stopPropagation()
 	event.preventDefault()
 
@@ -78,10 +97,8 @@ const imageClickHandler = async (event: MouseEvent) => {
 		}
 
 		removeImageHoverStyles()
-		if (imageClickHandler) {
-			document.removeEventListener('click', imageClickHandler)
-		}
-		// Notify the extension that image was selected
+		removeImageSelectListeners()
+
 		try {
 			chrome.runtime.sendMessage({ action: 'imageSelected' })
 		} catch (e) {
@@ -93,37 +110,21 @@ const imageClickHandler = async (event: MouseEvent) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request.action === 'enableImageSelect') {
 		addImageSelectStyles()
-
-		// Remove potential existing listeners to avoid duplicates
-		suppessEvents.forEach((event) => {
-			document.removeEventListener(event, noop)
-		})
-		document.removeEventListener('click', imageClickHandler)
-
-		suppessEvents.forEach((event) => {
-			document.addEventListener(event, noop)
-		})
-		document.addEventListener('click', imageClickHandler)
+		addImageSelectListeners()
 		sendResponse(true)
-		return true // Keep the message channel open for async response
+		return true
 	}
 	if (request.action === 'disableImageSelect') {
 		removeImageHoverStyles()
-
+		removeImageSelectListeners()
 		image = null
-		if (imageClickHandler) {
-			document.removeEventListener('click', imageClickHandler)
-			suppessEvents.forEach((event) => {
-				document.removeEventListener(event, noop)
-			})
-		}
 		sendResponse(true)
-		return true // Keep the message channel open for async response
+		return true
 	}
 	if (request.action === 'enableTextSelect') {
 		image = null
 		sendResponse(true)
-		return true // Keep the message channel open for async response
+		return true
 	}
 	if (request.action === 'getSelectedContent') {
 		let selectedContent: SelectedContent = undefined
@@ -135,7 +136,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 
 		sendResponse(selectedContent)
-		return true // Keep the message channel open for async response
+		return true
 	}
 
 	if (request.action === 'contextMenuImageSelected') {
