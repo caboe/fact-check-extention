@@ -104,6 +104,7 @@
 					bind:this={endpointSelect}
 					class="select"
 					id="endpoints"
+					data-testid="endpoint-selector"
 					onchange={(event) => {
 						const selectedEndpoint = availableEndpoints.find(
 							(ep) => ep.title === (event.target as HTMLSelectElement).value,

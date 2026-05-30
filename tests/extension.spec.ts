@@ -364,4 +364,284 @@ test.describe('Extension Tests', () => {
 		const inputArea = page.getByTestId('selected-text-input').first()
 		await expect(inputArea).toBeVisible()
 	})
+
+	test('Selected Endpoint Preserved After Multiple Requests', async () => {
+		page = await browserContext.newPage()
+		await initializeExtension(page)
+
+		// Add a second endpoint so we can test selection persistence
+		const configBtn = page.getByTestId('connection-icon-settings')
+		if (!(await configBtn.isVisible({ timeout: 2000 }).catch(() => false))) {
+			// Navigate to config to add second endpoint
+			await page.evaluate(async () => {
+				const { endpoints } = (await chrome.storage.local.get('endpoints'))
+				if (endpoints) {
+					const state = JSON.parse(endpoints)
+					if (state.list.length < 2) {
+						state.list.push({
+							title: 'Test GPT',
+							url: 'https://openrouter.ai/api/v1/chat/completions',
+							apiKey: state.list[0].apiKey,
+							model: 'openai/gpt-4.1-nano',
+							canProcessImages: false,
+							rolePlacement: 'system',
+						})
+						await chrome.storage.local.set({ endpoints: JSON.stringify(state) })
+					}
+				}
+			})
+			await page.reload()
+			await expect(page.locator('body')).toBeVisible()
+			await page.waitForTimeout(500)
+		}
+
+		// Open connection accordion
+		const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+		await expect(connectionAccordion).toBeVisible()
+		await connectionAccordion.click()
+
+		// Select the second endpoint
+		const endpointSelect = page.getByTestId('endpoint-selector')
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await endpointSelect.selectOption('Test GPT')
+
+		// Verify the second endpoint is selected
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		// Open the "Marked Text" accordion
+		const markedTextAccordion = page
+			.locator('label')
+			.filter({ hasText: /marked text|selected/i })
+			.first()
+		if (await markedTextAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await markedTextAccordion.click()
+		}
+
+		// First request
+		const inputArea = page.getByTestId('selected-text-input').first()
+		await expect(inputArea).toBeVisible()
+		await inputArea.fill(testConfig.texts.default)
+
+		const checkBtn = page.getByTestId('fact-check-btn')
+		await expect(checkBtn).toBeEnabled()
+		await checkBtn.click()
+
+		const copyBtn = page.getByTestId('response-copy-btn')
+		await expect(copyBtn).toBeVisible({ timeout: 30000 })
+
+		// After first request, verify the endpoint is still the second one
+		// Reopen connection accordion to check
+		if (await connectionAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await connectionAccordion.click()
+		}
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		// Go back and do second request
+		if (await markedTextAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await markedTextAccordion.click()
+		}
+		await expect(inputArea).toBeVisible()
+		await inputArea.fill(testConfig.texts.complex)
+		await expect(checkBtn).toBeEnabled()
+		await checkBtn.click()
+		await expect(copyBtn).toBeVisible({ timeout: 30000 })
+
+		// After second request, endpoint should still be the second one
+		if (await connectionAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await connectionAccordion.click()
+		}
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		test.setTimeout(120000)
+	})
+
+	test('Endpoint Selection Persists Across Page Reloads', async () => {
+		page = await browserContext.newPage()
+		await initializeExtension(page)
+
+		// Add a second endpoint
+		await page.evaluate(async () => {
+			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			if (endpoints) {
+				const state = JSON.parse(endpoints)
+				if (state.list.length < 2) {
+					state.list.push({
+						title: 'Test GPT',
+						url: 'https://openrouter.ai/api/v1/chat/completions',
+						apiKey: state.list[0].apiKey,
+						model: 'openai/gpt-4.1-nano',
+						canProcessImages: false,
+						rolePlacement: 'system',
+					})
+					await chrome.storage.local.set({ endpoints: JSON.stringify(state) })
+				}
+			}
+		})
+		await page.reload()
+		await expect(page.locator('body')).toBeVisible()
+		await page.waitForTimeout(500)
+
+		// Open connection accordion and select the second endpoint
+		const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+		await expect(connectionAccordion).toBeVisible()
+		await connectionAccordion.click()
+
+		const endpointSelect = page.getByTestId('endpoint-selector')
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await endpointSelect.selectOption('Test GPT')
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		// Close and reopen the popup
+		await page.close()
+		page = await browserContext.newPage()
+		await page.goto(`chrome-extension://${extensionId}/popup.html`)
+		await expect(page.locator('body')).toBeVisible()
+		await page.waitForTimeout(500)
+
+		// Reopen accordion and verify endpoint is still selected
+		const newConnectionAccordion = page.getByTestId('connection-accordion-toggle')
+		await expect(newConnectionAccordion).toBeVisible()
+		await newConnectionAccordion.click()
+
+		const newEndpointSelect = page.getByTestId('endpoint-selector')
+		await expect(newEndpointSelect).toBeVisible({ timeout: 5000 })
+		await expect(newEndpointSelect).toHaveValue('Test GPT')
+	})
+
+	test('Switching Between Endpoints Works Correctly', async () => {
+		page = await browserContext.newPage()
+		await initializeExtension(page)
+
+		// Add a second endpoint
+		await page.evaluate(async () => {
+			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			if (endpoints) {
+				const state = JSON.parse(endpoints)
+				if (state.list.length < 2) {
+					state.list.push({
+						title: 'Test GPT',
+						url: 'https://openrouter.ai/api/v1/chat/completions',
+						apiKey: state.list[0].apiKey,
+						model: 'openai/gpt-4.1-nano',
+						canProcessImages: false,
+						rolePlacement: 'system',
+					})
+					await chrome.storage.local.set({ endpoints: JSON.stringify(state) })
+				}
+			}
+		})
+		await page.reload()
+		await expect(page.locator('body')).toBeVisible()
+		await page.waitForTimeout(500)
+
+		const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+		await expect(connectionAccordion).toBeVisible()
+		await connectionAccordion.click()
+
+		const endpointSelect = page.getByTestId('endpoint-selector')
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+
+		// Get available options
+		const options = await endpointSelect.locator('option').all()
+		expect(options.length).toBeGreaterThanOrEqual(2)
+
+		// Switch between endpoints multiple times
+		const firstTitle = testConfig.secondEndpoint.title
+		const secondTitle = 'Test Gemini'
+
+		await endpointSelect.selectOption(firstTitle)
+		await expect(endpointSelect).toHaveValue(firstTitle)
+		await page.waitForTimeout(300)
+
+		await endpointSelect.selectOption(secondTitle)
+		await expect(endpointSelect).toHaveValue(secondTitle)
+		await page.waitForTimeout(300)
+
+		await endpointSelect.selectOption(firstTitle)
+		await expect(endpointSelect).toHaveValue(firstTitle)
+		await page.waitForTimeout(300)
+
+		await endpointSelect.selectOption(secondTitle)
+		await expect(endpointSelect).toHaveValue(secondTitle)
+
+		// Verify both endpoints can be used for requests
+		const markedTextAccordion = page
+			.locator('label')
+			.filter({ hasText: /marked text|selected/i })
+			.first()
+		if (await markedTextAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await markedTextAccordion.click()
+		}
+
+		const inputArea = page.getByTestId('selected-text-input').first()
+		await expect(inputArea).toBeVisible()
+		await inputArea.fill(testConfig.texts.default)
+
+		const checkBtn = page.getByTestId('fact-check-btn')
+		await expect(checkBtn).toBeEnabled()
+		await checkBtn.click()
+
+		const copyBtn = page.getByTestId('response-copy-btn')
+		await expect(copyBtn).toBeVisible({ timeout: 30000 })
+	})
+
+	test('Selected Endpoint Not Changing Without User Interaction', async () => {
+		page = await browserContext.newPage()
+		await initializeExtension(page)
+
+		// Add a second endpoint
+		await page.evaluate(async () => {
+			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			if (endpoints) {
+				const state = JSON.parse(endpoints)
+				if (state.list.length < 2) {
+					state.list.push({
+						title: 'Test GPT',
+						url: 'https://openrouter.ai/api/v1/chat/completions',
+						apiKey: state.list[0].apiKey,
+						model: 'openai/gpt-4.1-nano',
+						canProcessImages: false,
+						rolePlacement: 'system',
+					})
+					await chrome.storage.local.set({ endpoints: JSON.stringify(state) })
+				}
+			}
+		})
+		await page.reload()
+		await expect(page.locator('body')).toBeVisible()
+		await page.waitForTimeout(500)
+
+		const connectionAccordion = page.getByTestId('connection-accordion-toggle')
+		await expect(connectionAccordion).toBeVisible()
+		await connectionAccordion.click()
+
+		const endpointSelect = page.getByTestId('endpoint-selector')
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await endpointSelect.selectOption('Test GPT')
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		// Close and reopen the accordion (simulates UI interactions without changing endpoint)
+		await connectionAccordion.click()
+		await page.waitForTimeout(300)
+		await connectionAccordion.click()
+
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await expect(endpointSelect).toHaveValue('Test GPT')
+
+		// Switch to Selected accordion and come back
+		const markedTextAccordion = page
+			.locator('label')
+			.filter({ hasText: /marked text|selected/i })
+			.first()
+		if (await markedTextAccordion.isVisible({ timeout: 2000 }).catch(() => false)) {
+			await markedTextAccordion.click()
+		}
+		await page.waitForTimeout(300)
+
+		await connectionAccordion.click()
+		await expect(endpointSelect).toBeVisible({ timeout: 5000 })
+		await expect(endpointSelect).toHaveValue('Test GPT')
+	})
 })

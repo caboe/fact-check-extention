@@ -31,7 +31,7 @@ export default async function checkFact() {
 	await unifiedStorage.ready
 	await ragEndpoints.ready
 
-	unifiedStorage.value.lastUsed = endpoints.value.selected.title
+	endpoints.value.lastUsed = endpoints.value.selected.title
 	apiRequest.value.state = 'LOADING'
 	unifiedStorage.value.result = undefined
 	unifiedStorage.value.reasoning = undefined

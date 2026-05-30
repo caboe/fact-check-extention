@@ -3,7 +3,6 @@ import { PersistState } from './PersistState.svelte'
 import { basicRoles } from './role.svelte'
 
 interface IUnifiedState {
-	lastUsed: string | null
 	selectedRole: string
 	hasSeenIntroduction: boolean
 	selectedContent: SelectedContent | null
@@ -18,7 +17,6 @@ interface IUnifiedState {
 class UnifiedStorage extends PersistState<IUnifiedState> {
 	constructor() {
 		const initialValue: IUnifiedState = {
-			lastUsed: null,
 			selectedRole: basicRoles[0].id,
 			hasSeenIntroduction: false,
 			selectedContent: null,
