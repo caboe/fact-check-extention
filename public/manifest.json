@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Fact Spreader",
-	"version": "4.0.4",
+	"version": "4.0.5",
 	"description": "Fact-check any text or image on the web using AI. Supports ChatGPT, Claude, Gemini, Ollama & local LLMs. Privacy-first. Compare multiple AI responses side-by-side.",
 	"permissions": [
 		"storage",

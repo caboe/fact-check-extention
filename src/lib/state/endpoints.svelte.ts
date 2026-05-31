@@ -16,17 +16,6 @@ class Endpoints extends PersistState<{
 }> {
 	constructor() {
 		super('endpoints', { selected: null, list: [], lastUsed: undefined })
-
-		this.load()
-	}
-
-	async load() {
-		await this.ready
-		if (this.value.list.length > 0) {
-			const lastUsedTitle = this.value.lastUsed
-			this.value.selected =
-				this.value.list.find((endpoint) => endpoint.title === lastUsedTitle) || this.value.list[0]
-		}
 	}
 
 	async add(newEndpoint: Endpoint) {
@@ -39,6 +28,12 @@ class Endpoints extends PersistState<{
 		await this.ready
 		const others = this.value.list.filter((endpoint) => endpoint.title !== title)
 		this.value.list = others
+		if (this.value.selected?.title === title) {
+			this.value.selected = null
+		}
+		if (this.value.lastUsed === title) {
+			this.value.lastUsed = undefined
+		}
 	}
 
 	async edit(originalTitle: string, updatedEndpoint: Endpoint) {
