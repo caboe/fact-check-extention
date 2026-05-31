@@ -1,4 +1,4 @@
-import { isSelectedImage, isSelectedText } from '../../TSelectedContent'
+import { isSelectedImage, isSelectedMixed, isSelectedText } from '../../TSelectedContent'
 import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
 import ragEndpoints from '../state/ragEndpoints.svelte'
@@ -65,7 +65,19 @@ export default async function checkFact() {
 		]
 	}
 
+	console.log(unifiedStorage.value.selectedContent)
+	if (isSelectedMixed(unifiedStorage.value.selectedContent)) {
+		console.log('is mixed')
+		content = unifiedStorage.value.selectedContent.content.map((item) => {
+			if (item.type === 'image') {
+				return { type: 'image_url' as const, image_url: { url: item.image } }
+			}
+			return { type: 'text' as const, text: item.text }
+		})
+	}
+
 	if (isSelectedText(unifiedStorage.value.selectedContent)) {
+		console.log('is text')
 		content = unifiedStorage.value.selectedContent.text
 	}
 

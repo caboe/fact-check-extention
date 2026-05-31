@@ -3,10 +3,62 @@
 import type { SelectedContent } from './TSelectedContent'
 import { processImage } from './lib/util/imageProcessing'
 
+// Clear stale image data at the start of every mouse interaction (mousedown),
+// then capture fresh image URLs when the context menu is about to open (contextmenu).
+// The contextmenu event fires before the menu appears, while the selection is
+// guaranteed to still be intact.
+const storage = chrome.storage.session || chrome.storage.local
+
+document.addEventListener('mousedown', () => {
+	storage.remove('pendingContextMenuImages').catch(() => {})
+})
+
+document.addEventListener('contextmenu', () => {
+	const selection = window.getSelection()
+	if (!selection || selection.isCollapsed) return
+
+	const range = selection.getRangeAt(0)
+	const fragment = range.cloneContents()
+	const imageUrls: string[] = [
+		'https://cdn.prod.www.spiegel.de/images/44183a42-a7e2-4ad0-b097-19eeaca77d90_w1920_r1.5_fpx54.87_fpy50.webp',
+	]
+
+	function extractImageUrls(node: Node) {
+		if (node instanceof HTMLImageElement) {
+			// Prefer the already-loaded image URL (currentSrc), falling back to
+			// the src attribute. This handles lazy-loaded images where src is a
+			// placeholder but currentSrc is the real loaded image.
+			const src = node.currentSrc || node.src
+			if (src && !src.startsWith('data:')) {
+				imageUrls.push(src)
+			}
+			return
+		}
+		for (let i = 0; i < node.childNodes.length; i++) {
+			extractImageUrls(node.childNodes[i])
+		}
+	}
+
+	extractImageUrls(fragment)
+
+	if (imageUrls.length > 0) {
+		storage.set({ pendingContextMenuImages: imageUrls }).catch((err) => {
+			console.error('Fact Check: Failed to save pending images', err)
+		})
+	}
+})
+
 let image: string | null = null
 let imageSelectActive = false
 
-const suppressEvents = ['mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend']
+const suppressEvents = [
+	'mousedown',
+	'mouseup',
+	'pointerdown',
+	'pointerup',
+	'touchstart',
+	'touchend',
+]
 
 const suppressHandler = (event: Event) => {
 	event.stopPropagation()
@@ -102,7 +154,10 @@ const imageClickHandler = async (event: MouseEvent) => {
 		try {
 			chrome.runtime.sendMessage({ action: 'imageSelected' })
 		} catch (e) {
-			console.warn('Fact Check: Failed to send message to extension (context may be invalidated)', e)
+			console.warn(
+				'Fact Check: Failed to send message to extension (context may be invalidated)',
+				e,
+			)
 		}
 	}
 }

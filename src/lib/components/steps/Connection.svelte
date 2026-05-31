@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import popupState from '../../../popupState.svelte'
-	import { isSelectedImage } from '../../../TSelectedContent'
+	import { isSelectedImage, isSelectedMixed } from '../../../TSelectedContent'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
@@ -33,10 +33,13 @@
 		view.step = 1
 	}
 
-	let isImageSelected = $derived(isSelectedImage(unifiedStorage.value.selectedContent))
+	let hasImageContent = $derived(
+		isSelectedImage(unifiedStorage.value.selectedContent) ||
+			isSelectedMixed(unifiedStorage.value.selectedContent),
+	)
 
 	let availableEndpoints = $derived(
-		isImageSelected
+		hasImageContent
 			? endpoints.value.list.filter((ep) => ep.canProcessImages)
 			: endpoints.value.list,
 	)
@@ -89,7 +92,7 @@
 				<div class="text-md">{L.configureApi()}</div>
 				<Settings />
 			</div>
-			{#if isImageSelected && availableEndpoints.length === 0}
+			{#if hasImageContent && availableEndpoints.length === 0}
 				<div class="alert variant-soft-warning flex flex-col items-center gap-2 p-2 text-center">
 					<span>{L.noImageEndpoint()}</span>
 					<button

@@ -82,6 +82,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 			console.error('Failed to save pending text:', err)
 		})
 
+		// Note: images in the selection are captured proactively by the content
+		// script's mouseup listener and stored in pendingContextMenuImages.
+
 		// Open popup synchronously (required for Firefox user gesture context)
 		chrome.action.openPopup().catch((err) => {
 			console.warn('Failed to open popup', err)

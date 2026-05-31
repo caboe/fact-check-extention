@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
 	import { onMount } from 'svelte'
-	import { isSelectedImage, isSelectedText } from '../../../TSelectedContent'
+	import type { ContentItem, SelectedMixed } from '../../../TSelectedContent'
+	import { isSelectedImage, isSelectedMixed, isSelectedText } from '../../../TSelectedContent'
 	import apiRequest from '../../state/apiRequest.svelte'
 	import endpoints from '../../state/endpoints.svelte'
 	import L from '../../state/L.svelte'
@@ -39,6 +40,7 @@
 			const pendingImage = items?.pendingContextMenuImage
 			const pendingText = items?.pendingContextMenuText
 			const pendingContext = items?.pendingContextMenuContext
+			const pendingImages = items?.pendingContextMenuImages
 
 			// Use the same storage backend for removal as for reading
 			const sessionOrLocal = chrome.storage.session || chrome.storage.local
@@ -69,10 +71,58 @@
 			} else if (pendingText) {
 				// We have pending text from context menu, use it!
 				await sessionOrLocal.remove('pendingContextMenuText')
-				unifiedStorage.value.selectedContent = { text: pendingText }
+
+				// Check for images that the content script captured from the DOM selection
+				// (proactively stored on mouseup by the content script)
+				let pendingImagesResult: Record<string, any> = {}
+				if (chrome.storage.session) {
+					pendingImagesResult = await chrome.storage.session.get('pendingContextMenuImages')
+				} else {
+					pendingImagesResult = await chrome.storage.local.get('pendingContextMenuImages')
+				}
+
+				const imageUrls: string[] = pendingImagesResult?.pendingContextMenuImages || []
+
+				if (imageUrls.length > 0) {
+					await sessionOrLocal.remove('pendingContextMenuImages')
+
+					const items: ContentItem[] = [{ type: 'text', text: pendingText }]
+					for (const url of imageUrls) {
+						try {
+							const processed = await processImage(url)
+							items.push({ type: 'image', image: processed })
+						} catch (err) {
+							console.warn('Fact Check: Failed to process mixed selection image', err)
+						}
+					}
+
+					unifiedStorage.value.selectedContent = { content: items } as SelectedMixed
+				} else {
+					unifiedStorage.value.selectedContent = { text: pendingText }
+				}
 				unifiedStorage.value.result = undefined
 				apiRequest.value.state = 'EMPTY'
 				// Skip querying tab
+				return
+			} else if (pendingImages && pendingImages.length > 0 && isSelectedText(unifiedStorage.value.selectedContent)) {
+				// Images arrived via onChanged after text was already consumed.
+				// Augment the existing text selection with the images.
+				await sessionOrLocal.remove('pendingContextMenuImages')
+
+				const existingText = unifiedStorage.value.selectedContent.text
+				const items: ContentItem[] = [{ type: 'text', text: existingText }]
+				for (const url of pendingImages) {
+					try {
+						const processed = await processImage(url)
+						items.push({ type: 'image', image: processed })
+					} catch (err) {
+						console.warn('Fact Check: Failed to process mixed selection image', err)
+					}
+				}
+
+				unifiedStorage.value.selectedContent = { content: items } as SelectedMixed
+				unifiedStorage.value.result = undefined
+				apiRequest.value.state = 'EMPTY'
 				return
 			}
 		}
@@ -85,12 +135,14 @@
 					'pendingContextMenuImage',
 					'pendingContextMenuText',
 					'pendingContextMenuContext',
+					'pendingContextMenuImages',
 				])
 			} else {
 				items = await chrome.storage.local.get([
 					'pendingContextMenuImage',
 					'pendingContextMenuText',
 					'pendingContextMenuContext',
+					'pendingContextMenuImages',
 				])
 			}
 
@@ -109,6 +161,8 @@
 					items.pendingContextMenuText = changes.pendingContextMenuText.newValue
 				if (changes.pendingContextMenuContext?.newValue)
 					items.pendingContextMenuContext = changes.pendingContextMenuContext.newValue
+				if (changes.pendingContextMenuImages?.newValue)
+					items.pendingContextMenuImages = changes.pendingContextMenuImages.newValue
 
 				if (Object.keys(items).length > 0) {
 					checkPendingContent(items)
@@ -124,12 +178,21 @@
 
 	let hasSelected = $derived(
 		isSelectedImage(unifiedStorage.value.selectedContent) ||
-			isSelectedText(unifiedStorage.value.selectedContent),
+			isSelectedText(unifiedStorage.value.selectedContent) ||
+			isSelectedMixed(unifiedStorage.value.selectedContent),
 	)
 
 	function selectedTokenLength() {
 		if (!unifiedStorage.value.selectedContent) return 0
 		if (isSelectedImage(unifiedStorage.value.selectedContent)) return 0
+		if (isSelectedMixed(unifiedStorage.value.selectedContent)) {
+			const textParts = unifiedStorage.value.selectedContent.content
+				.filter((item) => item.type === 'text')
+				.map((item) => (item as { type: 'text'; text: string }).text)
+				.join(' ')
+			if (textParts.replaceAll(' ', '').length === 0) return 0
+			return textParts.trim().split(' ').length
+		}
 		if (!isSelectedText(unifiedStorage.value.selectedContent)) throw new Error('Unknown type')
 		if (unifiedStorage.value.selectedContent.text.replaceAll(' ', '').length === 0) return 0
 		return unifiedStorage.value.selectedContent.text.trim().split(' ').length
@@ -273,6 +336,13 @@
 				{:else}
 					<button class="btn">{L.selectImage()}</button>
 				{/if}
+			{:else if isSelectedMixed(content)}
+				<span
+					>{L.markedText({ wordCount: selectedTokenLength() })}
+					<span class="text-xs font-normal text-surface-500">
+						(+{content.content.filter((item) => item.type === 'image').length} image(s))
+					</span>
+				</span>
 			{:else if isSelectedText(content)}
 				{#if content.text.replaceAll(' ', '').length === 0}
 					<span>{L.enterText()}</span>
@@ -329,6 +399,29 @@
 				placeholder={L.selectedText()}
 				data-testid="selected-text-input"
 			></textarea>
+		{:else if isSelectedMixed(unifiedStorage.value.selectedContent)}
+			{@const mixed = unifiedStorage.value.selectedContent}
+			<div class="flex flex-col gap-2">
+				<textarea
+					id="selected-text"
+					value={mixed.content
+						.filter((item) => item.type === 'text')
+						.map((item) => (item as { type: 'text'; text: string }).text)
+						.join('')}
+					oninput={textChange}
+					class="textarea"
+					rows="4"
+					placeholder={L.selectedText()}
+					data-testid="selected-text-input"
+				></textarea>
+				{#each mixed.content.filter((item) => item.type === 'image') as imageItem (imageItem.image)}
+					<img
+						src={(imageItem as { type: 'image'; image: string }).image}
+						alt="selected"
+						class="w-max-full mx-auto max-h-[150px] rounded border"
+					/>
+				{/each}
+			</div>
 		{:else if isSelectedImage(unifiedStorage.value.selectedContent)}
 			{#if unifiedStorage.value.selectedContent.image}
 				<img
