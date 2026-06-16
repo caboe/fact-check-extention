@@ -91,6 +91,8 @@ export default async function checkFact() {
 	async function fetchModel(signal: AbortSignal, ragContext: string = ''): Promise<Response> {
 		if (!endpoints.value.selected) throw new Error('No endpoint selected')
 
+		const apiType = endpoints.value.selected.apiType ?? 'openai'
+
 		function getInlineContent(content: Content): string {
 			let contentStr = ''
 			if (typeof content === 'string') {
@@ -109,6 +111,64 @@ export default async function checkFact() {
 		const systemRoleContent =
 			getSystemRole(unifiedStorage.value.selectedRole || '', apiRequest.value.range) +
 			(ragContext ? `\n\n${ragContext}` : '')
+
+		function convertToAnthropicBlocks(openaiContent: Content) {
+			const blocks: (
+				| { type: 'text'; text: string }
+				| { type: 'image'; source: { type: 'base64'; media_type: string; data: string } }
+			)[] = []
+
+			if (typeof openaiContent === 'string') {
+				blocks.push({ type: 'text', text: openaiContent })
+			} else if (Array.isArray(openaiContent)) {
+				for (const block of openaiContent) {
+					if (block.type === 'text') {
+						blocks.push({ type: 'text', text: block.text })
+					} else if (block.type === 'image_url') {
+						const dataUrl = block.image_url.url
+						const commaIndex = dataUrl.indexOf(',')
+						const header = dataUrl.substring(0, commaIndex)
+						const data = dataUrl.substring(commaIndex + 1)
+						const mediaType = header.split(':')[1]?.split(';')[0] ?? 'image/png'
+						blocks.push({
+							type: 'image',
+							source: { type: 'base64', media_type: mediaType, data },
+						})
+					}
+				}
+			}
+
+			return blocks
+		}
+
+		if (apiType === 'anthropic') {
+			const userContent =
+				apiRequest.value.rolePlacement === 'inline'
+					? [{ type: 'text' as const, text: getInlineContent(content) }]
+					: convertToAnthropicBlocks(content)
+
+			const requestBody: Record<string, unknown> = {
+				model: endpoints.value.selected.model,
+				max_tokens: 4096,
+				stream: true,
+				messages: [{ role: 'user', content: userContent }],
+			}
+
+			if (apiRequest.value.rolePlacement === 'system') {
+				requestBody.system = systemRoleContent
+			}
+
+			return await fetch(endpoints.value.selected.url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-api-key': endpoints.value.selected.apiKey,
+					'anthropic-version': '2023-06-01',
+				},
+				body: JSON.stringify(requestBody),
+				signal,
+			})
+		}
 
 		const requestBody: RequestBody = {
 			model: endpoints.value.selected.model,
@@ -137,7 +197,7 @@ export default async function checkFact() {
 				Authorization: `Bearer ${endpoints.value.selected.apiKey}`,
 			},
 			body: JSON.stringify(requestBody),
-			signal, // Pass the signal to fetch
+			signal,
 		})
 	}
 

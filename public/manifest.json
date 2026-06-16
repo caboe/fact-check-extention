@@ -1,17 +1,10 @@
 {
 	"manifest_version": 3,
 	"name": "Fact Spreader",
-	"version": "4.0.5",
+	"version": "4.0.6",
 	"description": "Fact-check any text or image on the web using AI. Supports DeepSeek, Kimi, ChatGPT, Claude & local LLMs. Privacy-first.",
-	"permissions": [
-		"storage",
-		"activeTab",
-		"clipboardWrite",
-		"contextMenus"
-	],
-	"host_permissions": [
-		"<all_urls>"
-	],
+	"permissions": ["storage", "activeTab", "clipboardWrite", "contextMenus"],
+	"host_permissions": ["<all_urls>"],
 	"action": {
 		"default_popup": "popup.html",
 		"default_icon": {
@@ -26,12 +19,8 @@
 	},
 	"content_scripts": [
 		{
-			"matches": [
-				"<all_urls>"
-			],
-			"js": [
-				"content.js"
-			]
+			"matches": ["<all_urls>"],
+			"js": ["content.js"]
 		}
 	],
 	"icons": {

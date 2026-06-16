@@ -6,7 +6,14 @@ import { processImage } from './lib/util/imageProcessing'
 let image: string | null = null
 let imageSelectActive = false
 
-const suppressEvents = ['mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend']
+const suppressEvents = [
+	'mousedown',
+	'mouseup',
+	'pointerdown',
+	'pointerup',
+	'touchstart',
+	'touchend',
+]
 
 const suppressHandler = (event: Event) => {
 	event.stopPropagation()
@@ -102,7 +109,10 @@ const imageClickHandler = async (event: MouseEvent) => {
 		try {
 			chrome.runtime.sendMessage({ action: 'imageSelected' })
 		} catch (e) {
-			console.warn('Fact Check: Failed to send message to extension (context may be invalidated)', e)
+			console.warn(
+				'Fact Check: Failed to send message to extension (context may be invalidated)',
+				e,
+			)
 		}
 	}
 }

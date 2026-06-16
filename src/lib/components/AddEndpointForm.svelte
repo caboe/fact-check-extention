@@ -13,6 +13,7 @@
 	let model = $state(initialEndpoint?.model ?? '')
 	let canProcessImages = $state(initialEndpoint?.canProcessImages ?? false)
 	let isInlineRolePlacement = $state(initialEndpoint?.rolePlacement === 'inline')
+	let apiType: 'openai' | 'anthropic' = $state(initialEndpoint?.apiType ?? 'openai')
 
 	type EndpointTemplate = Omit<Endpoint, 'apiKey' | 'canProcessImages'> & { apiKeyUrl?: string }
 	type EndpointTemplateMap = Record<string, EndpointTemplate>
@@ -23,6 +24,12 @@
 			url: 'https://openrouter.ai/api/v1/chat/completions',
 			model: 'google/gemini-3-flash-preview',
 			apiKeyUrl: 'https://openrouter.ai/keys',
+		},
+		mistral: {
+			title: 'Mistral',
+			url: 'https://api.mistral.ai/v1/chat/completions',
+			model: 'mistral-large-latest',
+			apiKeyUrl: 'https://console.mistral.ai/api-keys',
 		},
 		kimi: {
 			title: 'Kimi',
@@ -70,12 +77,17 @@
 			model: 'gpt-5',
 			apiKeyUrl: 'https://platform.openai.com/api-keys',
 		},
+		anthropic: {
+			title: 'Anthropic',
+			url: 'https://api.anthropic.com/v1/messages',
+			model: 'claude-sonnet-4-5-20250929',
+			apiKeyUrl: 'https://console.anthropic.com/settings/keys',
+		},
 	}
 
 	function prefillFields() {
 		if (!selectedValue) return
 		if (selectedValue in endpointTemplateMap) {
-			;({ title, url, model } = endpointTemplateMap[selectedValue])
 			;({ title, url, model } = endpointTemplateMap[selectedValue])
 			apiKeyInput.focus()
 
@@ -84,6 +96,8 @@
 			} else {
 				isInlineRolePlacement = false
 			}
+
+			apiType = selectedValue === 'anthropic' ? 'anthropic' : 'openai'
 		}
 		// selectedValue = undefined
 	}
@@ -107,6 +121,7 @@
 				model: model.trim(),
 				canProcessImages,
 				rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
+				apiType,
 			}
 			await endpoints.add(newEndpoint)
 			view.showAddEndpointForm = false
@@ -201,6 +216,13 @@
 	<label class="label mb-2 flex cursor-pointer items-center justify-between">
 		<span>{L.inlineUserMessage()}</span>
 		<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
+	</label>
+	<label class="label mb-2" for="apiType">
+		<span>API Type</span>
+		<select class="select" bind:value={apiType} id="apiType">
+			<option value="openai">OpenAI-compatible</option>
+			<option value="anthropic">Anthropic</option>
+		</select>
 	</label>
 	<div class="mt-4 flex justify-between">
 		<button class="variant-filled-warning btn" onclick={() => (view.showAddEndpointForm = false)}

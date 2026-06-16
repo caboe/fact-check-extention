@@ -134,11 +134,13 @@ bun run typesafe-i18n
 ### Components
 
 1. **Background service worker** (`src/background.ts`)
+
    - Creates context-menu entries on install: "Fact Check this image", "Fact Check marked text", "Add as Context".
    - On context-menu click, stores pending content in `chrome.storage.session` (or `local` as fallback) and calls `chrome.action.openPopup()`.
    - Translates context-menu labels using the browser UI language.
 
 2. **Content script** (`src/content.ts`)
+
    - Injected into all URLs (`<all_urls>`).
    - Supports an in-page image selection mode triggered by the popup: adds hover styles, suppresses click events, captures the clicked image, resizes it, base64-encodes it, and notifies the extension.
    - Exposes `getSelectedContent`, `enableImageSelect`, `disableImageSelect`, `enableTextSelect`, and `contextMenuImageSelected` actions via `chrome.runtime.onMessage`.
@@ -164,30 +166,30 @@ bun run typesafe-i18n
 
 All long-lived state is stored in `chrome.storage.local` via the `PersistState` class in `src/lib/util/PersistState.svelte.ts`. State classes use Svelte 5 runes and are singletons.
 
-| Module | Responsibility |
-|--------|----------------|
-| `endpoints.svelte.ts` | LLM endpoint list, selected endpoint, last used |
-| `ragEndpoints.svelte.ts` | RAG endpoint list |
-| `apiRequest.svelte.ts` | Request state (`EMPTY`, `LOADING`, `FETCHING_RAG`, `THINKING`, `STREAMING`, `FINISHED`, `ERROR`) and response-length slider |
-| `unifiedStorage.svelte.ts` | Selected content, result, reasoning, context text, selected RAG endpoints, role |
-| `view.svelte.ts` | UI-only transient state (accordion step, add/edit form visibility) |
-| `theme.svelte.ts` | Light/dark theme preference |
-| `L.svelte.ts` | i18n loader/translation accessor |
+| Module                     | Responsibility                                                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `endpoints.svelte.ts`      | LLM endpoint list, selected endpoint, last used                                                                             |
+| `ragEndpoints.svelte.ts`   | RAG endpoint list                                                                                                           |
+| `apiRequest.svelte.ts`     | Request state (`EMPTY`, `LOADING`, `FETCHING_RAG`, `THINKING`, `STREAMING`, `FINISHED`, `ERROR`) and response-length slider |
+| `unifiedStorage.svelte.ts` | Selected content, result, reasoning, context text, selected RAG endpoints, role                                             |
+| `view.svelte.ts`           | UI-only transient state (accordion step, add/edit form visibility)                                                          |
+| `theme.svelte.ts`          | Light/dark theme preference                                                                                                 |
+| `L.svelte.ts`              | i18n loader/translation accessor                                                                                            |
 
 `PersistState` handles the cross-browser differences between `chrome.storage.local` and `window.localStorage`, serializes inside `$effect` to establish fine-grained reactivity, and exposes a `ready` promise.
 
 ### `src/lib/util/` — Business Logic
 
-| Module | Responsibility |
-|--------|----------------|
-| `checkFact.svelte.ts` | Orchestrates RAG fetch (if enabled) and LLM fetch; handles abort |
-| `handleStreamResponse.svelte.ts` | Parses streaming SSE/JSON responses |
-| `getSystemRole.svelte.ts` | Builds the system prompt from role template + context |
-| `role.svelte.ts` | Built-in roles (`scientist`, `satirist`) and role template |
-| `customRoles.svelte.ts` | User-defined custom roles persistence |
-| `imageProcessing.ts` | Fetches, resizes (max 512px), and base64-encodes images |
-| `unifiedStorage.svelte.ts` | Central app state (also listed above) |
-| `PersistState.svelte.ts` | Base class for persisted reactive state |
+| Module                           | Responsibility                                                   |
+| -------------------------------- | ---------------------------------------------------------------- |
+| `checkFact.svelte.ts`            | Orchestrates RAG fetch (if enabled) and LLM fetch; handles abort |
+| `handleStreamResponse.svelte.ts` | Parses streaming SSE/JSON responses                              |
+| `getSystemRole.svelte.ts`        | Builds the system prompt from role template + context            |
+| `role.svelte.ts`                 | Built-in roles (`scientist`, `satirist`) and role template       |
+| `customRoles.svelte.ts`          | User-defined custom roles persistence                            |
+| `imageProcessing.ts`             | Fetches, resizes (max 512px), and base64-encodes images          |
+| `unifiedStorage.svelte.ts`       | Central app state (also listed above)                            |
+| `PersistState.svelte.ts`         | Base class for persisted reactive state                          |
 
 ### `src/lib/components/` — UI
 

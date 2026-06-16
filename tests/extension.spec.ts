@@ -374,7 +374,7 @@ test.describe('Extension Tests', () => {
 		if (!(await configBtn.isVisible({ timeout: 2000 }).catch(() => false))) {
 			// Navigate to config to add second endpoint
 			await page.evaluate(async () => {
-				const { endpoints } = (await chrome.storage.local.get('endpoints'))
+				const { endpoints } = await chrome.storage.local.get('endpoints')
 				if (endpoints) {
 					const state = JSON.parse(endpoints)
 					if (state.list.length < 2) {
@@ -463,7 +463,7 @@ test.describe('Extension Tests', () => {
 
 		// Add a second endpoint
 		await page.evaluate(async () => {
-			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			const { endpoints } = await chrome.storage.local.get('endpoints')
 			if (endpoints) {
 				const state = JSON.parse(endpoints)
 				if (state.list.length < 2) {
@@ -516,7 +516,7 @@ test.describe('Extension Tests', () => {
 
 		// Add a second endpoint
 		await page.evaluate(async () => {
-			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			const { endpoints } = await chrome.storage.local.get('endpoints')
 			if (endpoints) {
 				const state = JSON.parse(endpoints)
 				if (state.list.length < 2) {
@@ -593,7 +593,7 @@ test.describe('Extension Tests', () => {
 
 		// Add a second endpoint
 		await page.evaluate(async () => {
-			const { endpoints } = (await chrome.storage.local.get('endpoints'))
+			const { endpoints } = await chrome.storage.local.get('endpoints')
 			if (endpoints) {
 				const state = JSON.parse(endpoints)
 				if (state.list.length < 2) {

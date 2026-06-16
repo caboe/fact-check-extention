@@ -7,6 +7,7 @@ export interface Endpoint {
 	model: string
 	canProcessImages: boolean
 	rolePlacement?: 'system' | 'inline'
+	apiType?: 'openai' | 'anthropic'
 }
 
 class Endpoints extends PersistState<{

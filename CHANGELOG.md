@@ -4,6 +4,13 @@ All notable changes to the Fact Spreader browser extension.
 
 ## [4.0.6] – 2026-06-14
 
+### Added
+
+- Anthropic API support with native Messages API format, `x-api-key` auth, `max_tokens`, system prompt via top-level `system` field, image conversion from data URLs to base64 blocks, and streaming SSE parsing for `content_block_delta`/`thinking_delta` events
+- API type selector (`openai` / `anthropic`) in endpoint add/edit forms
+- Anthropic direct API template (`claude-sonnet-4-5-20250929`)
+- Re-added Mistral endpoint template (`mistral-small-latest`)
+
 ### Changed
 
 - Made satirist role text sound more natural

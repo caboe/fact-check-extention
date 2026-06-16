@@ -14,6 +14,7 @@
 	let model = $state(endpoint.model)
 	let canProcessImages = $state(endpoint.canProcessImages ?? false)
 	let isInlineRolePlacement = $state(endpoint.rolePlacement === 'inline')
+	let apiType: 'openai' | 'anthropic' = $state(endpoint.apiType ?? 'openai')
 
 	function handleSubmit() {
 		const updatedEndpoint: Endpoint = {
@@ -23,6 +24,7 @@
 			model: model.trim(),
 			canProcessImages,
 			rolePlacement: isInlineRolePlacement ? 'inline' : 'system',
+			apiType,
 		}
 		endpoints.edit(endpoint.title, updatedEndpoint)
 		view.showAddEndpointForm = false
@@ -69,6 +71,14 @@
 		<span>{L.inlineUserMessage()}</span>
 		<input type="checkbox" class="checkbox" bind:checked={isInlineRolePlacement} />
 	</label>
+
+	<div class="form-control">
+		<label class="label" for="apiType">API Type</label>
+		<select id="apiType" bind:value={apiType} class="select">
+			<option value="openai">OpenAI-compatible</option>
+			<option value="anthropic">Anthropic</option>
+		</select>
+	</div>
 
 	<button type="submit" class="variant-filled-success btn w-full"> {L.updateEndpoint()} </button>
 </form>

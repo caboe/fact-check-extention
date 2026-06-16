@@ -62,9 +62,8 @@ export default async function handleStreamResponse(response: Response, signal: A
 
 			for (const rawLine of lines) {
 				if (rawLine.trim() === '') continue
-				// Ignore SSE comments
 				if (rawLine.startsWith(':')) continue
-				// TODO: For unknown resaons, ChatGPT needs thsi
+				if (rawLine.startsWith('event: ')) continue
 				const line = rawLine.replace('data: ', '')
 
 				// Skip non-JSON lines like "[DONE]"
@@ -81,8 +80,16 @@ export default async function handleStreamResponse(response: Response, signal: A
 						return // Stop processing and exit
 					}
 
+					// Handle Anthropic response format
+					if (parsed.type === 'content_block_start' && parsed.content_block?.text) {
+						resultText += parsed.content_block.text
+					} else if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+						resultText += parsed.delta.text
+					} else if (parsed.type === 'thinking_delta' && parsed.delta?.thinking) {
+						reasoningText += parsed.delta.thinking
+					}
 					// Handle Gemini response format
-					if (parsed.candidates?.[0]?.content?.parts?.[0]?.text) {
+					else if (parsed.candidates?.[0]?.content?.parts?.[0]?.text) {
 						resultText += parsed.candidates[0].content.parts[0].text
 					}
 					// Fallback to OpenAI format for compatibility
