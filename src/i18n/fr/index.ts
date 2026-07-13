@@ -106,6 +106,15 @@ Votre personnage est le philosophe Emmanuel Kant.
 	extensionInstalled: 'Extension Fact Check installée.',
 	useRags: 'Utiliser {count:number} RAG{{s}}',
 	activateRags: 'Activer les RAGs',
+	// Advanced Model Parameters
+	advanced: 'Avancé',
+	parameters: 'Paramètres',
+	resetToDefault: 'Réinitialiser par défaut',
+	includeInRequest: 'Inclure dans la requête',
+	temperature: 'Température',
+	topP: 'Top P',
+	frequencyPenalty: 'Frequency Penalty',
+	presencePenalty: 'Presence Penalty',
 	// RAG Configuration
 	ragConfiguration: 'Configuration RAG',
 	ragEndpoints: 'Points de terminaison RAG',

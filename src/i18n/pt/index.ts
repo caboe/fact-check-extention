@@ -104,6 +104,15 @@ Sua persona é o filósofo Immanuel Kant.
 	extensionInstalled: 'Extensão Fact Check instalada.',
 	useRags: 'Usar {count:number} RAG{{s}}',
 	activateRags: 'Ativar RAGs',
+	// Advanced Model Parameters
+	advanced: 'Avançado',
+	parameters: 'Parâmetros',
+	resetToDefault: 'Restaurar padrão',
+	includeInRequest: 'Incluir na solicitação',
+	temperature: 'Temperatura',
+	topP: 'Top P',
+	frequencyPenalty: 'Frequency Penalty',
+	presencePenalty: 'Presence Penalty',
 	// RAG Configuration
 	ragConfiguration: 'Configuração RAG',
 	ragEndpoints: 'Endpoints RAG',

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AccordionItem } from '@skeletonlabs/skeleton'
+	import { fade } from 'svelte/transition'
 	import popupState from '../../../popupState.svelte'
 	import { isSelectedImage } from '../../../TSelectedContent'
 	import apiRequest from '../../state/apiRequest.svelte'
@@ -12,6 +13,7 @@
 	import { basicRoles } from '../../util/role.svelte'
 	import customRoles from '../../util/customRoles.svelte'
 	import ragEndpoints from '../../state/ragEndpoints.svelte'
+	import AdvancedParams from './AdvancedParams.svelte'
 
 	interface Props {
 		open: boolean
@@ -21,6 +23,7 @@
 	let { open, checkFact }: Props = $props()
 
 	let endpointSelect: HTMLSelectElement | null = $state(null)
+	let showAdvanced = $state(false)
 
 	// Combine basic and custom roles reactively
 	const allRoles = $derived([...basicRoles, ...customRoles.value.customRoles])
@@ -117,6 +120,21 @@
 						<option value={endpoint.title}>{endpoint.title}</option>
 					{/each}
 				</select>
+			{/if}
+
+			<button
+				type="button"
+				class="text-sm text-primary-500 underline"
+				onclick={() => (showAdvanced = !showAdvanced)}
+				aria-expanded={showAdvanced}
+				data-testid="advanced-toggle"
+			>
+				{L.advanced()}
+			</button>
+			{#if showAdvanced}
+				<div transition:fade>
+					<AdvancedParams />
+				</div>
 			{/if}
 
 			<div class="flex items-center justify-between">

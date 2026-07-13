@@ -372,7 +372,7 @@ type RootTranslation = {
 	 */
 	extensionInstalled: string
 	/**
-	 * U​s​e​ ​R​A​G​s​ ​(​{​c​o​u​n​t​}​)
+	 * U​s​e​ ​{​c​o​u​n​t​}​ ​R​A​G​{​{​s​}​}
 	 * @param {number} count
 	 */
 	useRags: RequiredParams<'count'>
@@ -380,6 +380,38 @@ type RootTranslation = {
 	 * A​c​t​i​v​a​t​e​ ​R​A​G​s
 	 */
 	activateRags: string
+	/**
+	 * A​d​v​a​n​c​e​d
+	 */
+	advanced: string
+	/**
+	 * P​a​r​a​m​e​t​e​r​s
+	 */
+	parameters: string
+	/**
+	 * R​e​s​e​t​ ​t​o​ ​d​e​f​a​u​l​t
+	 */
+	resetToDefault: string
+	/**
+	 * I​n​c​l​u​d​e​ ​i​n​ ​r​e​q​u​e​s​t
+	 */
+	includeInRequest: string
+	/**
+	 * T​e​m​p​e​r​a​t​u​r​e
+	 */
+	temperature: string
+	/**
+	 * T​o​p​ ​P
+	 */
+	topP: string
+	/**
+	 * F​r​e​q​u​e​n​c​y​ ​P​e​n​a​l​t​y
+	 */
+	frequencyPenalty: string
+	/**
+	 * P​r​e​s​e​n​c​e​ ​P​e​n​a​l​t​y
+	 */
+	presencePenalty: string
 	/**
 	 * R​A​G​ ​C​o​n​f​i​g​u​r​a​t​i​o​n
 	 */
@@ -788,13 +820,45 @@ Your persona is the philosopher Immanuel Kant.
 	 */
 	extensionInstalled: () => LocalizedString
 	/**
-	 * Use RAGs ({count})
+	 * Use {count} RAG{{s}}
 	 */
 	useRags: (arg: { count: number }) => LocalizedString
 	/**
 	 * Activate RAGs
 	 */
 	activateRags: () => LocalizedString
+	/**
+	 * Advanced
+	 */
+	advanced: () => LocalizedString
+	/**
+	 * Parameters
+	 */
+	parameters: () => LocalizedString
+	/**
+	 * Reset to default
+	 */
+	resetToDefault: () => LocalizedString
+	/**
+	 * Include in request
+	 */
+	includeInRequest: () => LocalizedString
+	/**
+	 * Temperature
+	 */
+	temperature: () => LocalizedString
+	/**
+	 * Top P
+	 */
+	topP: () => LocalizedString
+	/**
+	 * Frequency Penalty
+	 */
+	frequencyPenalty: () => LocalizedString
+	/**
+	 * Presence Penalty
+	 */
+	presencePenalty: () => LocalizedString
 	/**
 	 * RAG Configuration
 	 */

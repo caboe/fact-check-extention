@@ -103,6 +103,15 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	extensionInstalled: 'Fact Check Extension installiert.',
 	useRags: 'Verwende {count:number} RAG{{s}}',
 	activateRags: 'RAGs aktivieren',
+	// Advanced Model Parameters
+	advanced: 'Erweitert',
+	parameters: 'Parameter',
+	resetToDefault: 'Auf Standard zurücksetzen',
+	includeInRequest: 'In Anfrage einbeziehen',
+	temperature: 'Temperatur',
+	topP: 'Top P',
+	frequencyPenalty: 'Frequency Penalty',
+	presencePenalty: 'Presence Penalty',
 	// RAG Configuration
 	ragConfiguration: 'RAG Konfiguration',
 	ragEndpoints: 'RAG Endpunkte',

@@ -1,6 +1,7 @@
 import { isSelectedImage, isSelectedText } from '../../TSelectedContent'
 import apiRequest from '../state/apiRequest.svelte'
 import endpoints from '../state/endpoints.svelte'
+import modelParams from '../state/modelParams.svelte'
 import ragEndpoints from '../state/ragEndpoints.svelte'
 import view from '../state/view.svelte'
 import getSystemRole from './getSystemRole.svelte'
@@ -30,6 +31,7 @@ export default async function checkFact() {
 	await apiRequest.ready
 	await unifiedStorage.ready
 	await ragEndpoints.ready
+	await modelParams.ready
 
 	endpoints.value.lastUsed = endpoints.value.selected.title
 	apiRequest.value.state = 'LOADING'
@@ -86,12 +88,46 @@ export default async function checkFact() {
 		input?: {
 			prompt: string
 		}
+		temperature?: number
+		top_p?: number
+		frequency_penalty?: number
+		presence_penalty?: number
 	}
 
 	async function fetchModel(signal: AbortSignal, ragContext: string = ''): Promise<Response> {
 		if (!endpoints.value.selected) throw new Error('No endpoint selected')
 
 		const apiType = endpoints.value.selected.apiType ?? 'openai'
+
+		// Collect enabled sampling params, filtering out those unsupported by the endpoint apiType.
+		// Anthropic does not support frequency_penalty / presence_penalty.
+		function collectParams(): {
+			temperature?: number
+			top_p?: number
+			frequency_penalty?: number
+			presence_penalty?: number
+		} {
+			const all: Record<string, { value: number; enabled: boolean }> = {
+				temperature: modelParams.value.temperature,
+				top_p: modelParams.value.top_p,
+				frequency_penalty: modelParams.value.frequency_penalty,
+				presence_penalty: modelParams.value.presence_penalty,
+			}
+			const result: {
+				temperature?: number
+				top_p?: number
+				frequency_penalty?: number
+				presence_penalty?: number
+			} = {}
+			for (const [k, v] of Object.entries(all)) {
+				if (!v.enabled) continue
+				if (apiType === 'anthropic' && (k === 'frequency_penalty' || k === 'presence_penalty')) {
+					continue
+				}
+				;(result as Record<string, number>)[k] = v.value
+			}
+			return result
+		}
 
 		function getInlineContent(content: Content): string {
 			let contentStr = ''
@@ -152,6 +188,7 @@ export default async function checkFact() {
 				max_tokens: 4096,
 				stream: true,
 				messages: [{ role: 'user', content: userContent }],
+				...collectParams(),
 			}
 
 			if (apiRequest.value.rolePlacement === 'system') {
@@ -188,6 +225,7 @@ export default async function checkFact() {
 						apiRequest.value.rolePlacement === 'inline' ? getInlineContent(content) : content,
 				},
 			],
+			...collectParams(),
 		}
 
 		return await fetch(endpoints.value.selected.url, {
