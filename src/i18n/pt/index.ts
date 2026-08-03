@@ -127,6 +127,10 @@ Sua persona é o filósofo Immanuel Kant.
 	ragModeMix: 'Misto',
 	addRagEndpoint: 'Adicionar Endpoint RAG',
 	updateRagEndpoint: 'Atualizar Endpoint RAG',
+	// AI hint
+	showAiHint: 'Mostrar aviso de IA',
+	aiHintResponsibility:
+		'Nota: Ao ocultar o aviso de IA, você se compromete a verificar o conteúdo antes de publicá-lo. Você assume a responsabilidade editorial.',
 } satisfies BaseTranslation
 
 export default pt

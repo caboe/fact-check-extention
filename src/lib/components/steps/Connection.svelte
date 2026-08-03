@@ -122,6 +122,16 @@
 				</select>
 			{/if}
 
+			<label class="mt-2 flex items-center gap-2 text-sm">
+				<input type="checkbox" class="checkbox" bind:checked={apiRequest.value.showAiHint} />
+				<span>{L.showAiHint()}</span>
+			</label>
+			{#if !apiRequest.value.showAiHint}
+				<div class="alert variant-soft-warning text-sm" transition:fade>
+					{L.aiHintResponsibility()}
+				</div>
+			{/if}
+
 			<button
 				type="button"
 				class="text-sm text-primary-500 underline"

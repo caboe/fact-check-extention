@@ -13,6 +13,7 @@ interface IApiRequest {
 	range: number
 	state: ApiRequestState
 	rolePlacement: 'system' | 'inline'
+	showAiHint: boolean
 }
 
 class ApiRequest extends PersistState<IApiRequest> {
@@ -21,6 +22,7 @@ class ApiRequest extends PersistState<IApiRequest> {
 			range: 50,
 			state: 'EMPTY',
 			rolePlacement: 'system',
+			showAiHint: true,
 		}
 		super('apiRequest', initialValue)
 	}

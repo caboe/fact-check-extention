@@ -127,6 +127,10 @@ Tu persona es el filósofo Immanuel Kant.
 	ragModeMix: 'Mezcla',
 	addRagEndpoint: 'Añadir punto final RAG',
 	updateRagEndpoint: 'Actualizar punto final RAG',
+	// AI hint
+	showAiHint: 'Mostrar aviso de IA',
+	aiHintResponsibility:
+		'Nota: Al ocultar el aviso de IA, te comprometes a verificar el contenido antes de publicarlo. Asumes la responsabilidad editorial.',
 } satisfies BaseTranslation
 
 export default es

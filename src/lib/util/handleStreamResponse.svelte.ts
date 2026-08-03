@@ -121,6 +121,10 @@ export default async function handleStreamResponse(response: Response, signal: A
 
 		if (done) {
 			apiRequest.value.state = 'FINISHED'
+			if (apiRequest.value.showAiHint && resultText.trim().length > 0) {
+				resultText += '\n\nKI generierter Inhalt - gecheckt mit FactSpreader'
+			}
+			unifiedStorage.value.result = resultText
 		}
 	}
 }

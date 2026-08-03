@@ -125,6 +125,10 @@ Your persona is the philosopher Immanuel Kant.
 	ragModeMix: 'Mix',
 	addRagEndpoint: 'Add RAG Endpoint',
 	updateRagEndpoint: 'Update RAG Endpoint',
+	// AI hint
+	showAiHint: 'Show AI notice',
+	aiHintResponsibility:
+		'Note: By hiding the AI notice, you commit to verifying the result factually before posting it. You assume full editorial responsibility.',
 } satisfies BaseTranslation
 
 export default en

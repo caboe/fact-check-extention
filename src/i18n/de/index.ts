@@ -126,6 +126,10 @@ Deine Persona ist der Philosoph Immanuel Kant.
 	ragModeMix: 'Mix',
 	addRagEndpoint: 'RAG Endpunkt hinzufügen',
 	updateRagEndpoint: 'RAG Endpunkt aktualisieren',
+	// AI hint
+	showAiHint: 'Zeige KI Hinweis',
+	aiHintResponsibility:
+		'Hinweis: Wenn du den KI-Hinweis ausblendest, verpflichtest du dich, das Ergebnis inhaltlich zu prüfen, bevor du es postest. Du übernimmst damit die redaktionelle Verantwortung.',
 } satisfies BaseTranslation
 
 export default de
