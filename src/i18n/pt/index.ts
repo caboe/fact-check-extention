@@ -104,6 +104,15 @@ Sua persona é o filósofo Immanuel Kant.
 	extensionInstalled: 'Extensão Fact Check instalada.',
 	useRags: 'Usar {count:number} RAG{{s}}',
 	activateRags: 'Ativar RAGs',
+	// Advanced Model Parameters
+	advanced: 'Avançado',
+	parameters: 'Parâmetros',
+	resetToDefault: 'Restaurar padrão',
+	includeInRequest: 'Incluir na solicitação',
+	temperature: 'Temperatura',
+	topP: 'Top P',
+	frequencyPenalty: 'Frequency Penalty',
+	presencePenalty: 'Presence Penalty',
 	// RAG Configuration
 	ragConfiguration: 'Configuração RAG',
 	ragEndpoints: 'Endpoints RAG',
@@ -118,6 +127,10 @@ Sua persona é o filósofo Immanuel Kant.
 	ragModeMix: 'Misto',
 	addRagEndpoint: 'Adicionar Endpoint RAG',
 	updateRagEndpoint: 'Atualizar Endpoint RAG',
+	// AI hint
+	showAiHint: 'Mostrar aviso de IA',
+	aiHintResponsibility:
+		'Nota: Ao ocultar o aviso de IA, você se compromete a verificar o conteúdo antes de publicá-lo. Você assume a responsabilidade editorial.',
 } satisfies BaseTranslation
 
 export default pt
