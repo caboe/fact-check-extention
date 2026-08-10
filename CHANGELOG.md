@@ -2,6 +2,12 @@
 
 All notable changes to the Fact Spreader browser extension.
 
+## [5.0.0] – 2026-08-10
+
+### Added
+
+- Placeholder for upcoming major features
+
 ## [4.0.6] – 2026-06-14
 
 ### Added
